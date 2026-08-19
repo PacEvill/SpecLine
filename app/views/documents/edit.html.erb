@@ -30,12 +30,7 @@
       <!-- Icon/Emoji Selector (Overlapping Cover) -->
       <div class="mb-6">
         <div class="group relative inline-flex items-center justify-center w-[100px] h-[100px] rounded-2xl bg-white dark:bg-ink shadow-sm hover:bg-fable dark:hover:bg-ink-paper transition-colors cursor-pointer border-4 border-white dark:border-ink">
-          <%= form.text_field :icon, 
-              class: "w-full h-full text-[64px] leading-none bg-transparent border-none p-0 text-center cursor-pointer outline-none focus:ring-0", 
-              style: "box-shadow: none;", 
-              placeholder: "📄", 
-              oninput: "this.value = this.value.replace(/[a-zA-Z0-9]/g, ''); if(this.value.length > 2) this.value = this.value.slice(0, 2);",
-              title: "Cole um emoji aqui" %>
+          <%= form.text_field :icon, class: "w-full h-full text-[64px] leading-none bg-transparent border-none p-0 text-center cursor-pointer outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "📄", title: "Cole um emoji aqui", maxlength: 5 %>
           
           <div class="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[11px] font-medium py-1.5 px-3 rounded shadow-md whitespace-nowrap pointer-events-none z-10">
             Ícone (Win+. / Cmd+Ctrl+Space)
