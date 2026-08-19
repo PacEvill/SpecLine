@@ -2,14 +2,14 @@
   <%= form_with(model: [@workspace, @project, @document], class: "h-full flex flex-col") do |form| %>
     <%= form.hidden_field :parent_id %>
     
-    <!-- Editor Header with Actions -->
-    <header class="h-14 px-6 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-ink/80 backdrop-blur-xl z-50 border-b border-ink/5 dark:border-white/5">
+    <!-- Header fino sticky -->
+    <header class="h-14 px-4 sm:px-6 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-ink/80 backdrop-blur-xl z-50 border-b border-ink/5 dark:border-white/5">
       <div class="flex items-center gap-2">
-        <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-1.5 text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        <% end %>
-        <div class="text-sm text-ink-light dark:text-white/60 flex items-center gap-1.5 ml-1">
-          <span class="hover:text-ink dark:hover:text-fable transition-colors cursor-pointer"><%= @project.name %></span>
+        <button type="button" class="p-1.5 mr-2 text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors hidden md:flex" title="Alternar barra lateral">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+        </button>
+        <div class="text-sm text-ink-light dark:text-white/60 flex items-center gap-1.5">
+          <%= link_to @project.name, workspace_project_path(@workspace, @project, view: 'documents'), class: "hover:text-ink dark:hover:text-fable transition-colors cursor-pointer" %>
           <span class="text-ink/20 dark:text-white/20 text-xs">/</span>
           <span class="text-ink dark:text-fable font-medium truncate max-w-[200px]">Novo Documento</span>
         </div>
@@ -21,33 +21,45 @@
       </div>
     </header>
 
-    <!-- Document Cover Pattern -->
-    <div class="w-full h-48 lg:h-64 relative group" style="background-image: radial-gradient(circle at 2px 2px, rgba(150,150,150,0.15) 1px, transparent 0); background-size: 24px 24px;">
-      <div class="absolute inset-0 bg-gradient-to-br from-terracotta/5 via-transparent to-sage/10 dark:from-terracotta/10 dark:via-ink dark:to-sage/10"></div>
-    </div>
-
-    <!-- Editor Body -->
-    <main class="flex-1 w-full max-w-[800px] mx-auto px-6 sm:px-12 pb-32 -mt-16 lg:-mt-20 relative z-10">
+    <!-- Corpo do Editor -->
+    <main class="flex-1 w-full max-w-[800px] mx-auto px-6 sm:px-12 py-16 lg:py-24 relative z-10">
       
-      <!-- Icon/Emoji Selector (Overlapping Cover) -->
-      <div class="mb-6">
-        <div class="group relative inline-flex items-center justify-center w-[100px] h-[100px] rounded-2xl bg-white dark:bg-ink shadow-sm hover:bg-fable dark:hover:bg-ink-paper transition-colors cursor-pointer border-4 border-white dark:border-ink">
-          <%= form.text_field :icon, class: "w-full h-full text-[64px] leading-none bg-transparent border-none p-0 text-center cursor-pointer outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "📄", title: "Cole um emoji aqui", maxlength: 5 %>
-          
-          <div class="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[11px] font-medium py-1.5 px-3 rounded shadow-md whitespace-nowrap pointer-events-none z-10">
-            Ícone (Win+. / Cmd+Ctrl+Space)
-          </div>
-        </div>
+      <!-- Icon Selector (Simplificado) -->
+      <div class="mb-4">
+        <%= form.text_field :icon, 
+            class: "w-20 h-20 text-[56px] leading-none bg-transparent border-none p-0 cursor-pointer outline-none focus:ring-0 placeholder-ink/20 dark:placeholder-white/20", 
+            style: "box-shadow: none;", 
+            placeholder: "📄", 
+            maxlength: 5,
+            title: "Ícone" %>
       </div>
 
-      <!-- Title -->
+      <!-- Título Grande Serifado -->
       <div class="mb-10">
-        <%= form.text_area :title, rows: 1, class: "w-full text-5xl sm:text-6xl font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", autofocus: true, required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
+        <%= form.text_area :title, rows: 1, class: "w-full text-5xl sm:text-6xl font-serif font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", autofocus: true, required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
       </div>
 
-      <!-- ActionText Trix Editor Container -->
-      <div class="mt-4 trix-container relative">
-        <%= form.rich_text_area :content, class: "prose prose-ink dark:prose-invert max-w-none prose-p:text-[17px] prose-p:leading-loose prose-headings:font-bold prose-headings:tracking-tight prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-white/10 min-h-[500px] border-none outline-none focus:ring-0 p-0 m-0", style: "box-shadow: none;", placeholder: "Comece a escrever seu documento..." %>
+      <!-- Tiptap Editor Container -->
+      <div data-controller="tiptap" class="mt-4 relative">
+        <div class="hidden">
+          <%= form.rich_text_area :content %>
+        </div>
+        
+        <!-- Bubble Menu UI -->
+        <div data-tiptap-target="bubbleMenu" class="hidden flex items-center gap-1 p-1 rounded-lg bg-white dark:bg-[#2c2c24] border border-ink/10 dark:border-white/10 shadow-xl shadow-ink/5 dark:shadow-black/20">
+          <button type="button" data-action="click->tiptap#toggleBold" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-bold font-serif" title="Negrito">B</button>
+          <button type="button" data-action="click->tiptap#toggleItalic" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors italic font-serif" title="Itálico">I</button>
+          <button type="button" data-action="click->tiptap#toggleStrike" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors line-through font-serif" title="Riscado">S</button>
+          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1"></div>
+          <button type="button" data-action="click->tiptap#toggleH1" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold" title="Título 1">H1</button>
+          <button type="button" data-action="click->tiptap#toggleH2" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold" title="Título 2">H2</button>
+          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1"></div>
+          <button type="button" data-action="click->tiptap#toggleBulletList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors" title="Lista">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          </button>
+        </div>
+        
+        <div data-tiptap-target="editor" class="w-full"></div>
       </div>
     </main>
   <% end %>
