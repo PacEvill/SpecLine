@@ -7,17 +7,19 @@ import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
 
 export default class extends Controller {
-  static targets = ["editor", "input"]
+  static targets = ["editor"]
 
   connect() {
-    // Esconder o Trix original completamente (ActionText)
+    // Pegar o input oculto gerado pelo ActionText
+    const inputElement = this.element.querySelector("input[type='hidden']")
+    if (!inputElement) return;
+
+    // Esconder o Trix original completamente
     const trix = this.element.querySelector('trix-editor')
     const trixToolbar = this.element.querySelector('trix-toolbar')
     if (trix) trix.style.display = 'none'
     if (trixToolbar) trixToolbar.style.display = 'none'
 
-    // O input escondido real do ActionText
-    const inputElement = this.inputTarget
     const initialContent = inputElement.value
 
     this.editor = new Editor({
@@ -42,7 +44,6 @@ export default class extends Controller {
         },
       },
       onUpdate: ({ editor }) => {
-        // Atualiza o input original do ActionText com o HTML do Tiptap
         inputElement.value = editor.getHTML()
       },
     })
