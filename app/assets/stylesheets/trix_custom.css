@@ -1,9 +1,13 @@
-/* Trix Editor Clean Overrides */
+/* Trix Editor Ultra-Clean Notion-style Overrides */
+
 trix-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 0.5rem 0;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(150, 150, 150, 0.15);
+  background: transparent;
 }
 
 trix-toolbar .trix-button-group {
@@ -12,18 +16,20 @@ trix-toolbar .trix-button-group {
   border: 1px solid rgba(150, 150, 150, 0.2);
   border-radius: 0.5rem;
   overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
 trix-toolbar .trix-button {
   background-color: transparent;
   border: none;
   border-right: 1px solid rgba(150, 150, 150, 0.2);
-  padding: 0.25rem 0.5rem;
-  color: inherit;
+  padding: 0.4rem 0.6rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
+  opacity: 0.7;
 }
 
 trix-toolbar .trix-button:last-child {
@@ -32,10 +38,42 @@ trix-toolbar .trix-button:last-child {
 
 trix-toolbar .trix-button:hover {
   background-color: rgba(150, 150, 150, 0.1);
+  opacity: 1;
 }
 
 trix-toolbar .trix-button.trix-active {
-  background-color: rgba(150, 150, 150, 0.2);
+  background-color: rgba(150, 150, 150, 0.15);
+  opacity: 1;
+}
+
+/* Dark mode fix for Trix icons (they are black by default) */
+html.dark trix-toolbar .trix-button::before {
+  filter: invert(1);
+}
+
+html.dark trix-toolbar .trix-button-group {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+html.dark trix-toolbar .trix-button {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark trix-toolbar .trix-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+html.dark trix-toolbar .trix-button.trix-active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hide some unnecessary Trix buttons to keep it clean */
+trix-toolbar .trix-button-group--history-tools,
+trix-toolbar .trix-button--icon-strike,
+trix-toolbar .trix-button--icon-decrease-nesting-level,
+trix-toolbar .trix-button--icon-increase-nesting-level {
+  display: none !important;
 }
 
 trix-editor {
@@ -48,9 +86,4 @@ trix-editor {
 
 trix-editor:focus {
   outline: none !important;
-}
-
-/* Remove prose overrides that mess up the toolbar */
-.prose trix-toolbar {
-  font-family: ui-sans-serif, system-ui, sans-serif;
 }
