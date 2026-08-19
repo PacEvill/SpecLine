@@ -5,16 +5,15 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Link from '@tiptap/extension-link'
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
-import BubbleMenu from '@tiptap/extension-bubble-menu'
 
 export default class extends Controller {
-  static targets = ["editor", "bubbleMenu"]
+  static targets = ["editor", "toolbar"]
 
   connect() {
     const inputElement = this.element.querySelector("input[type='hidden']")
     if (!inputElement) return;
 
-    // Esconde o motor original Trix (se o rails ainda carregar)
+    // Remove Trix
     const trix = this.element.querySelector('trix-editor')
     const trixToolbar = this.element.querySelector('trix-toolbar')
     if (trix) trix.style.display = 'none'
@@ -22,9 +21,8 @@ export default class extends Controller {
 
     const initialContent = inputElement.value
     
-    // Tira as classes hidden do Bubble Menu para ele existir no DOM mas ser controlado pelo Tiptap
-    if (this.hasBubbleMenuTarget) {
-      this.bubbleMenuTarget.classList.remove('hidden')
+    if (this.hasToolbarTarget) {
+      this.toolbarTarget.classList.remove('hidden')
     }
 
     this.editor = new Editor({
@@ -35,12 +33,8 @@ export default class extends Controller {
         TaskList,
         TaskItem.configure({ nested: true }),
         Placeholder.configure({
-          placeholder: 'Pressione "/" para comandos ou comece a digitar...',
-        }),
-        BubbleMenu.configure({
-          element: this.hasBubbleMenuTarget ? this.bubbleMenuTarget : null,
-          tippyOptions: { duration: 150 },
-        }),
+          placeholder: 'Comece a digitar...',
+        })
       ],
       content: initialContent,
       editorProps: {
@@ -52,25 +46,27 @@ export default class extends Controller {
         inputElement.value = editor.getHTML()
       },
       onSelectionUpdate: () => {
-        this.updateBubbleMenuStates()
+        this.updateToolbarStates()
       }
     })
   }
 
-  // Ações chamadas pelos botões do menu
+  // Ações chamadas pelos botões
   toggleBold() { this.editor.chain().focus().toggleBold().run() }
   toggleItalic() { this.editor.chain().focus().toggleItalic().run() }
   toggleStrike() { this.editor.chain().focus().toggleStrike().run() }
   toggleCode() { this.editor.chain().focus().toggleCode().run() }
   toggleH1() { this.editor.chain().focus().toggleHeading({ level: 1 }).run() }
   toggleH2() { this.editor.chain().focus().toggleHeading({ level: 2 }).run() }
+  toggleH3() { this.editor.chain().focus().toggleHeading({ level: 3 }).run() }
   toggleBulletList() { this.editor.chain().focus().toggleBulletList().run() }
+  toggleOrderedList() { this.editor.chain().focus().toggleOrderedList().run() }
   toggleBlockquote() { this.editor.chain().focus().toggleBlockquote().run() }
 
-  updateBubbleMenuStates() {
-    if (!this.hasBubbleMenuTarget) return
+  updateToolbarStates() {
+    if (!this.hasToolbarTarget) return
     
-    const btns = this.bubbleMenuTarget.querySelectorAll('button')
+    const btns = this.toolbarTarget.querySelectorAll('button')
     btns.forEach(btn => {
       const action = btn.dataset.action.split('#')[1]
       let isActive = false
@@ -82,7 +78,9 @@ export default class extends Controller {
         case 'toggleCode': isActive = this.editor.isActive('code'); break;
         case 'toggleH1': isActive = this.editor.isActive('heading', { level: 1 }); break;
         case 'toggleH2': isActive = this.editor.isActive('heading', { level: 2 }); break;
+        case 'toggleH3': isActive = this.editor.isActive('heading', { level: 3 }); break;
         case 'toggleBulletList': isActive = this.editor.isActive('bulletList'); break;
+        case 'toggleOrderedList': isActive = this.editor.isActive('orderedList'); break;
         case 'toggleBlockquote': isActive = this.editor.isActive('blockquote'); break;
       }
 

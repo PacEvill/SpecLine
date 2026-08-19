@@ -7,6 +7,9 @@ import { application } from "./application"
 import DropdownController from "./dropdown_controller"
 application.register("dropdown", DropdownController)
 
+import EmojiPickerController from "./emoji_picker_controller"
+application.register("emoji-picker", EmojiPickerController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
@@ -36,6 +39,9 @@ application.register("sidebar", SidebarController)
 
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
+
+import TiptapController from "./tiptap_controller"
+application.register("tiptap", TiptapController)
 
 import ViewToggleController from "./view_toggle_controller"
 application.register("view-toggle", ViewToggleController)

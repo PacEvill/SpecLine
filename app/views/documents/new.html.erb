@@ -1,7 +1,6 @@
 <div class="flex-1 bg-white dark:bg-ink min-h-screen flex flex-col font-sans">
   <%= form_with(model: [@workspace, @project, @document], class: "h-full flex flex-col") do |form| %>
     <%= form.hidden_field :parent_id %>
-    
     <!-- Header fino sticky -->
     <header class="h-14 px-4 sm:px-6 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-ink/80 backdrop-blur-xl z-50 border-b border-ink/5 dark:border-white/5">
       <div class="flex items-center gap-2">
@@ -21,46 +20,66 @@
       </div>
     </header>
 
-    <!-- Corpo do Editor -->
-    <main class="flex-1 w-full max-w-[800px] mx-auto px-6 sm:px-12 py-16 lg:py-24 relative z-10">
-      
-      <!-- Icon Selector (Simplificado) -->
-      <div class="mb-4">
-        <%= form.text_field :icon, 
-            class: "w-20 h-20 text-[56px] leading-none bg-transparent border-none p-0 cursor-pointer outline-none focus:ring-0 placeholder-ink/20 dark:placeholder-white/20", 
-            style: "box-shadow: none;", 
-            placeholder: "📄", 
-            maxlength: 5,
-            title: "Ícone" %>
-      </div>
-
-      <!-- Título Grande Serifado -->
-      <div class="mb-10">
-        <%= form.text_area :title, rows: 1, class: "w-full text-5xl sm:text-6xl font-serif font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", autofocus: true, required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
-      </div>
-
-      <!-- Tiptap Editor Container -->
-      <div data-controller="tiptap" class="mt-4 relative">
-        <div class="hidden">
-          <%= form.rich_text_area :content %>
-        </div>
-        
-        <!-- Bubble Menu UI -->
-        <div data-tiptap-target="bubbleMenu" class="hidden flex items-center gap-1 p-1 rounded-lg bg-white dark:bg-[#2c2c24] border border-ink/10 dark:border-white/10 shadow-xl shadow-ink/5 dark:shadow-black/20">
-          <button type="button" data-action="click->tiptap#toggleBold" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-bold font-serif" title="Negrito">B</button>
-          <button type="button" data-action="click->tiptap#toggleItalic" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors italic font-serif" title="Itálico">I</button>
-          <button type="button" data-action="click->tiptap#toggleStrike" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors line-through font-serif" title="Riscado">S</button>
-          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1"></div>
-          <button type="button" data-action="click->tiptap#toggleH1" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold" title="Título 1">H1</button>
-          <button type="button" data-action="click->tiptap#toggleH2" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold" title="Título 2">H2</button>
-          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1"></div>
-          <button type="button" data-action="click->tiptap#toggleBulletList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors" title="Lista">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+    <div data-controller="tiptap" class="flex-1 w-full flex flex-col items-center">
+      <!-- Toolbar Estática Sticky Logo Abaixo do Header -->
+      <div class="w-full sticky top-14 z-40 bg-white/95 dark:bg-ink/95 backdrop-blur-md border-b border-ink/5 dark:border-white/5 flex justify-center py-2 px-4 shadow-sm">
+        <div data-tiptap-target="toolbar" class="hidden flex items-center gap-1 w-full max-w-[800px] overflow-x-auto hide-scrollbar">
+          <button type="button" data-action="click->tiptap#toggleH1" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 1">T1</button>
+          <button type="button" data-action="click->tiptap#toggleH2" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 2">T2</button>
+          <button type="button" data-action="click->tiptap#toggleH3" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 3">T3</button>
+          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1 shrink-0"></div>
+          
+          <button type="button" data-action="click->tiptap#toggleBold" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-bold font-serif shrink-0" title="Negrito">B</button>
+          <button type="button" data-action="click->tiptap#toggleItalic" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors italic font-serif shrink-0" title="Itálico">I</button>
+          <button type="button" data-action="click->tiptap#toggleStrike" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors line-through font-serif shrink-0" title="Riscado">S</button>
+          <button type="button" data-action="click->tiptap#toggleCode" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-mono shrink-0" title="Código">&lt;&gt;</button>
+          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1 shrink-0"></div>
+          
+          <button type="button" data-action="click->tiptap#toggleBulletList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Lista de Marcadores">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          </button>
+          <button type="button" data-action="click->tiptap#toggleOrderedList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Lista Numerada">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+          </button>
+          <button type="button" data-action="click->tiptap#toggleBlockquote" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Citação">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>
           </button>
         </div>
-        
-        <div data-tiptap-target="editor" class="w-full"></div>
       </div>
-    </main>
+
+      <!-- Corpo do Editor -->
+      <main class="w-full max-w-[800px] px-6 sm:px-12 py-10 lg:py-16">
+        
+        <!-- Emoji Picker Component -->
+        <div class="mb-6 relative" data-controller="emoji-picker">
+          <%= form.hidden_field :icon, data: { emoji_picker_target: "input" } %>
+          
+          <button type="button" 
+                  data-action="click->emoji-picker#togglePicker"
+                  data-emoji-picker-target="button"
+                  class="flex items-center justify-center w-[72px] h-[72px] text-[48px] rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-ink/10 dark:hover:border-white/10 leading-none">
+            <%= @document.icon.presence || "📄" %>
+          </button>
+          
+          <!-- Emoji Picker Popover -->
+          <div data-emoji-picker-target="pickerContainer" class="hidden absolute top-full left-0 z-50 mt-2 shadow-2xl rounded-xl overflow-hidden border border-ink/10 dark:border-white/10">
+            <!-- Web component goes here -->
+          </div>
+        </div>
+
+        <!-- Título Grande Serifado -->
+        <div class="mb-10">
+          <%= form.text_area :title, rows: 1, class: "w-full text-5xl sm:text-6xl font-serif font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", autofocus: true, required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
+        </div>
+
+        <!-- Tiptap Editor Root -->
+        <div class="relative">
+          <div class="hidden">
+            <%= form.rich_text_area :content %>
+          </div>
+          <div data-tiptap-target="editor" class="w-full"></div>
+        </div>
+      </main>
+    </div>
   <% end %>
 </div>
