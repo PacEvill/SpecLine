@@ -102,3 +102,12 @@ trix-editor:focus {
 .prose trix-toolbar {
   font-family: ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Tiptap Placeholder Extension CSS */
+.tiptap p.is-editor-empty:first-child::before {
+  color: rgba(150, 150, 150, 0.5);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

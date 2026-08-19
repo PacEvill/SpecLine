@@ -43,9 +43,12 @@
         <%= form.text_area :title, rows: 1, class: "w-full text-4xl sm:text-5xl font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
       </div>
 
-      <!-- ActionText Editor -->
-      <div class="mt-8">
-        <%= form.rich_text_area :content, class: "prose prose-ink dark:prose-invert max-w-none prose-p:text-[16px] prose-p:leading-relaxed prose-headings:font-bold prose-headings:tracking-tight prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-white/10 min-h-[500px] border-none outline-none focus:ring-0 p-0 m-0", style: "box-shadow: none;", placeholder: "Comece a digitar seu documento..." %>
+      <!-- Tiptap Editor Container -->
+      <div data-controller="tiptap" class="mt-8">
+        <div class="hidden">
+          <%= form.rich_text_area :content %>
+        </div>
+        <div data-tiptap-target="editor" class="w-full"></div>
       </div>
     </main>
   <% end %>
