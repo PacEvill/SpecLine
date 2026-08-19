@@ -27,8 +27,8 @@
       <!-- Icon/Emoji Selector -->
       <div class="mb-4">
         <div class="group relative inline-block">
-          <%= form.text_field :icon, class: "w-20 h-20 text-[56px] leading-none bg-transparent border-none p-0 hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl text-center transition-colors cursor-pointer outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "📄" %>
-          <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[11px] font-medium py-1 px-2.5 rounded whitespace-nowrap pointer-events-none z-10 shadow-sm">
+          <%= form.text_field :icon, class: "w-auto min-w-[80px] max-w-[120px] h-20 text-[56px] leading-none bg-transparent border-none p-0 hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "📄", maxlength: 3 %>
+          <div class="absolute -top-8 left-0 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[11px] font-medium py-1 px-2.5 rounded whitespace-nowrap pointer-events-none z-10 shadow-sm">
             Adicionar ícone
           </div>
         </div>
@@ -40,8 +40,8 @@
       </div>
 
       <!-- ActionText Editor -->
-      <div class="mt-4 prose prose-ink dark:prose-invert max-w-none prose-p:text-[16px] prose-p:leading-relaxed prose-headings:font-bold prose-headings:tracking-tight prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-white/10">
-        <%= form.rich_text_area :content, class: "min-h-[500px] border-none outline-none focus:ring-0 p-0 m-0", style: "box-shadow: none;", placeholder: "Comece a escrever..." %>
+      <div class="mt-4">
+        <%= form.rich_text_area :content, class: "prose prose-ink dark:prose-invert max-w-none prose-p:text-[16px] prose-p:leading-relaxed prose-headings:font-bold prose-headings:tracking-tight prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-white/10 min-h-[500px] border-none outline-none focus:ring-0 p-0 m-0", style: "box-shadow: none;", placeholder: "Comece a escrever..." %>
       </div>
     </main>
   <% end %>

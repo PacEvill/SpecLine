@@ -1,0 +1,56 @@
+/* Trix Editor Clean Overrides */
+trix-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+trix-toolbar .trix-button-group {
+  display: flex;
+  background-color: transparent;
+  border: 1px solid rgba(150, 150, 150, 0.2);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+trix-toolbar .trix-button {
+  background-color: transparent;
+  border: none;
+  border-right: 1px solid rgba(150, 150, 150, 0.2);
+  padding: 0.25rem 0.5rem;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+trix-toolbar .trix-button:last-child {
+  border-right: none;
+}
+
+trix-toolbar .trix-button:hover {
+  background-color: rgba(150, 150, 150, 0.1);
+}
+
+trix-toolbar .trix-button.trix-active {
+  background-color: rgba(150, 150, 150, 0.2);
+}
+
+trix-editor {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  min-height: 500px;
+}
+
+trix-editor:focus {
+  outline: none !important;
+}
+
+/* Remove prose overrides that mess up the toolbar */
+.prose trix-toolbar {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
