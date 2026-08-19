@@ -18,6 +18,7 @@ export default class extends Controller {
     this.picker.addEventListener('emoji-click', event => {
       this.inputTarget.value = event.detail.unicode;
       this.buttonTarget.innerText = event.detail.unicode;
+      this.inputTarget.dispatchEvent(new Event('input', { bubbles: true }));
       this.closePicker();
     });
 

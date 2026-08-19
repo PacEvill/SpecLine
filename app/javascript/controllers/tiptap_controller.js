@@ -19,6 +19,7 @@ export default class extends Controller {
     if (trix) trix.style.display = 'none'
     if (trixToolbar) trixToolbar.style.display = 'none'
 
+    // Lemos o valor do hidden_field (que agora vai ser HTML puro do atributo value)
     const initialContent = inputElement.value
     
     if (this.hasToolbarTarget) {
@@ -44,11 +45,16 @@ export default class extends Controller {
       },
       onUpdate: ({ editor }) => {
         inputElement.value = editor.getHTML()
+        inputElement.dispatchEvent(new Event('input', { bubbles: true }))
+        this.updateToc()
       },
       onSelectionUpdate: () => {
         this.updateToolbarStates()
       }
     })
+    
+    // Initial TOC render
+    setTimeout(() => this.updateToc(), 100)
   }
 
   // Ações chamadas pelos botões
@@ -62,6 +68,34 @@ export default class extends Controller {
   toggleBulletList() { this.editor.chain().focus().toggleBulletList().run() }
   toggleOrderedList() { this.editor.chain().focus().toggleOrderedList().run() }
   toggleBlockquote() { this.editor.chain().focus().toggleBlockquote().run() }
+
+  updateToc() {
+    const tocContainer = document.getElementById('document-toc')
+    if (!tocContainer) return
+
+    const headings = []
+    this.editor.state.doc.descendants((node, pos) => {
+      if (node.type.name === 'heading') {
+        headings.push({
+          level: node.attrs.level,
+          text: node.textContent,
+          pos: pos
+        })
+      }
+    })
+
+    if (headings.length === 0) {
+      tocContainer.innerHTML = '<div class="text-ink/40 dark:text-white/40 italic px-2 text-[13px]">Nenhum título ainda...</div>'
+      return
+    }
+
+    const html = headings.map(h => {
+      const padding = (h.level - 1) * 12
+      return `<div class="truncate py-1 rounded hover:text-ink dark:hover:text-fable cursor-pointer transition-colors text-[13px]" style="padding-left: ${padding + 8}px">${h.text || 'Sem título'}</div>`
+    }).join('')
+
+    tocContainer.innerHTML = html
+  }
 
   updateToolbarStates() {
     if (!this.hasToolbarTarget) return

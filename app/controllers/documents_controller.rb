@@ -16,6 +16,9 @@ class DocumentsController < ApplicationController
     
     # We will build a sidebar showing the tree of documents in the project
     @root_documents = @project.documents.roots.ordered
+    
+    # Render the editor directly on show
+    render :show
   end
 
   def new
@@ -23,6 +26,8 @@ class DocumentsController < ApplicationController
   end
 
   def edit
+    # Redireciona para o show, já que o show agora é o editor ativo
+    redirect_to workspace_project_document_path(@workspace, @project, @document)
   end
 
   def create
@@ -31,7 +36,7 @@ class DocumentsController < ApplicationController
     @document.author = current_user
 
     if @document.save
-      redirect_to workspace_project_document_path(@workspace, @project, @document), notice: "Documento criado com sucesso."
+      redirect_to workspace_project_document_path(@workspace, @project, @document)
     else
       render :new, status: :unprocessable_entity
     end
@@ -39,9 +44,15 @@ class DocumentsController < ApplicationController
 
   def update
     if @document.update(document_params)
-      redirect_to workspace_project_document_path(@workspace, @project, @document), notice: "Documento atualizado."
+      respond_to do |format|
+        format.html { redirect_to workspace_project_document_path(@workspace, @project, @document) }
+        format.json { render json: { status: 'success', id: @document.id } }
+      end
     else
-      render :edit, status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @document.errors, status: :unprocessable_entity }
+      end
     end
   end
 

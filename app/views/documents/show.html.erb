@@ -2,93 +2,161 @@
   <%= render "shared/workspace_sidebar", workspace: @workspace, current_project: @project %>
 <% end %>
 
-<div class="flex-1 bg-white dark:bg-ink min-h-screen flex flex-col font-sans">
-  <!-- Top Bar -->
-  <header class="h-14 px-4 sm:px-6 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-ink/80 backdrop-blur-xl z-50 border-b border-ink/5 dark:border-white/5">
-    <div class="flex items-center gap-2">
-      <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-1.5 mr-2 text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors hidden md:flex", title: "Voltar para documentos" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-      <% end %>
+<div class="flex-1 bg-white dark:bg-ink min-h-screen flex flex-row font-sans">
+  <!-- Layout Principal (Centro) -->
+  <div class="flex-1 flex flex-col min-w-0">
+    <!-- Autosave Form Container -->
+    <%= form_with(model: [@workspace, @project, @document], class: "h-full flex flex-col", data: { controller: "autosave", action: "input->autosave#schedule" }) do |form| %>
       
-      <!-- Breadcrumbs -->
-      <nav class="flex items-center text-sm text-ink-light dark:text-white/60">
-        <%= link_to @project.name, workspace_project_path(@workspace, @project, view: 'documents'), class: "hover:text-ink dark:hover:text-fable transition-colors cursor-pointer" %>
-        <span class="mx-1.5 text-ink/30 dark:text-white/30 text-xs">/</span>
-        <% if @document.parent %>
-          <%= link_to @document.parent.title, workspace_project_document_path(@workspace, @project, @document.parent), class: "hover:text-ink dark:hover:text-fable hover:underline transition-colors truncate max-w-[120px]" %>
-          <span class="mx-1.5 text-ink/30 dark:text-white/30 text-xs">/</span>
-        <% end %>
-        <span class="text-ink dark:text-fable font-medium truncate max-w-[200px]"><%= @document.title.presence || "Sem Título" %></span>
-      </nav>
-    </div>
-
-    <div class="flex items-center gap-1">
-      <div class="flex items-center gap-2 mr-3 text-[11px] text-ink-light/70 dark:text-white/50 font-medium">
-        <div class="w-5 h-5 rounded bg-ink/10 dark:bg-white/10 flex items-center justify-center font-bold text-[10px] text-ink dark:text-fable uppercase">
-          <%= @document.author.email[0] %>
+      <!-- Top Bar -->
+      <header class="h-14 px-4 sm:px-6 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-ink/80 backdrop-blur-xl z-50 border-b border-ink/5 dark:border-white/5">
+        <div class="flex items-center gap-2">
+          <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-1.5 mr-2 text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors hidden md:flex", title: "Voltar para documentos" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+          <% end %>
+          
+          <!-- Breadcrumbs -->
+          <nav class="flex items-center text-sm text-ink-light dark:text-white/60">
+            <%= link_to @project.name, workspace_project_path(@workspace, @project, view: 'documents'), class: "hover:text-ink dark:hover:text-fable transition-colors cursor-pointer" %>
+            <span class="mx-1.5 text-ink/30 dark:text-white/30 text-xs">/</span>
+            <% if @document.parent %>
+              <%= link_to @document.parent.title, workspace_project_document_path(@workspace, @project, @document.parent), class: "hover:text-ink dark:hover:text-fable hover:underline transition-colors truncate max-w-[120px]" %>
+              <span class="mx-1.5 text-ink/30 dark:text-white/30 text-xs">/</span>
+            <% end %>
+            <span class="text-ink dark:text-fable font-medium truncate max-w-[200px]"><%= @document.title.presence || "Sem Título" %></span>
+          </nav>
         </div>
-        <span><%= l(@document.updated_at.to_date, format: :short) %></span>
-      </div>
 
-      <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-2"></div>
+        <div class="flex items-center gap-1">
+          <!-- Status de Autosave -->
+          <div id="autosave-status" class="text-[11px] font-medium text-ink-light/50 dark:text-white/40 uppercase tracking-wider mr-4"></div>
 
-      <%= link_to new_workspace_project_document_path(@workspace, @project, parent_id: @document.id), class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors", title: "Adicionar Sub-página" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-      <% end %>
-
-      <%= link_to edit_workspace_project_document_path(@workspace, @project, @document), class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors", title: "Editar Documento" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
-      <% end %>
-
-      <%= button_to workspace_project_document_path(@workspace, @project, @document), method: :delete, data: { turbo_confirm: "Tem certeza? Esta ação apagará o documento e todas as suas sub-páginas." }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded transition-colors ml-1", title: "Excluir Documento" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
-      <% end %>
-    </div>
-  </header>
-
-  <!-- Document Content -->
-  <main class="flex-1 overflow-y-auto z-10">
-    <article class="w-full max-w-[800px] mx-auto px-6 sm:px-12 py-16 lg:py-24 group/article relative">
-      
-      <!-- Icon -->
-      <div class="mb-4">
-        <% if @document.icon.present? %>
-          <div class="text-[56px] leading-none"><%= @document.icon %></div>
-        <% else %>
-          <div class="text-[56px] leading-none opacity-0 group-hover/article:opacity-100 transition-opacity">
-            <%= link_to edit_workspace_project_document_path(@workspace, @project, @document), class: "inline-flex items-center text-sm font-medium text-ink-light dark:text-white/40 hover:text-ink dark:hover:text-fable" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-              Adicionar ícone
-            <% end %>
+          <div class="flex items-center gap-2 mr-3 text-[11px] text-ink-light/70 dark:text-white/50 font-medium hidden sm:flex">
+            <div class="w-5 h-5 rounded bg-ink/10 dark:bg-white/10 flex items-center justify-center font-bold text-[10px] text-ink dark:text-fable uppercase">
+              <%= @document.author.email[0] %>
+            </div>
+            <span><%= l(@document.updated_at.to_date, format: :short) %></span>
           </div>
-        <% end %>
-      </div>
 
-      <!-- Title -->
-      <h1 class="text-5xl sm:text-6xl font-serif font-bold tracking-tight text-ink dark:text-fable mb-10 leading-tight"><%= @document.title.presence || "Sem Título" %></h1>
+          <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-2"></div>
 
-      <!-- ActionText Content (Renders TipTap HTML perfectly) -->
-      <div class="mt-4 prose prose-ink dark:prose-invert max-w-none prose-p:text-[17px] prose-p:leading-loose prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-white/10">
-        <%= @document.content %>
-      </div>
+          <%= link_to new_workspace_project_document_path(@workspace, @project, parent_id: @document.id), class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/10 rounded transition-colors", title: "Adicionar Sub-página" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+          <% end %>
 
-      <!-- Sub-pages List -->
-      <% if @children.any? %>
-        <div class="mt-16 pt-8 border-t border-ink/5 dark:border-white/5">
-          <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-ink-light dark:text-white/40 mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-            Páginas Aninhadas
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <% @children.each do |child| %>
-              <%= link_to workspace_project_document_path(@workspace, @project, child), class: "flex items-center gap-4 p-4 rounded-xl border border-ink/5 dark:border-white/5 bg-[#FDFBF7] dark:bg-ink-paper hover:border-ink/20 dark:hover:border-white/20 hover:shadow-md hover:-translate-y-0.5 transition-all group" do %>
-                <span class="text-2xl shrink-0 leading-none"><%= child.icon.presence || "📄" %></span>
-                <span class="font-medium text-base text-ink dark:text-fable group-hover:text-terracotta transition-colors truncate"><%= child.title.presence || "Sem Título" %></span>
-              <% end %>
-            <% end %>
+          <%= button_to workspace_project_document_path(@workspace, @project, @document), method: :delete, data: { turbo_confirm: "Tem certeza? Esta ação apagará o documento e todas as suas sub-páginas." }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded transition-colors ml-1", title: "Excluir Documento" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+          <% end %>
+        </div>
+      </header>
+
+      <div data-controller="tiptap" class="flex-1 w-full flex flex-col items-center">
+        <!-- Toolbar Estática Sticky Logo Abaixo do Header -->
+        <div class="w-full sticky top-14 z-40 bg-white/95 dark:bg-ink/95 backdrop-blur-md border-b border-ink/5 dark:border-white/5 flex justify-center py-2 px-4 shadow-sm">
+          <div data-tiptap-target="toolbar" class="hidden flex items-center gap-1 w-full max-w-[800px] overflow-x-auto hide-scrollbar">
+            <button type="button" data-action="click->tiptap#toggleH1" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 1">T1</button>
+            <button type="button" data-action="click->tiptap#toggleH2" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 2">T2</button>
+            <button type="button" data-action="click->tiptap#toggleH3" class="px-2 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors text-xs font-bold whitespace-nowrap" title="Título 3">T3</button>
+            <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1 shrink-0"></div>
+            
+            <button type="button" data-action="click->tiptap#toggleBold" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-bold font-serif shrink-0" title="Negrito">B</button>
+            <button type="button" data-action="click->tiptap#toggleItalic" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors italic font-serif shrink-0" title="Itálico">I</button>
+            <button type="button" data-action="click->tiptap#toggleStrike" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors line-through font-serif shrink-0" title="Riscado">S</button>
+            <button type="button" data-action="click->tiptap#toggleCode" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors font-mono shrink-0" title="Código">&lt;&gt;</button>
+            <div class="w-px h-4 bg-ink/10 dark:bg-white/10 mx-1 shrink-0"></div>
+            
+            <button type="button" data-action="click->tiptap#toggleBulletList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Lista de Marcadores">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            </button>
+            <button type="button" data-action="click->tiptap#toggleOrderedList" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Lista Numerada">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"></line><line x1="10" y1="12" x2="21" y2="12"></line><line x1="10" y1="18" x2="21" y2="18"></line><path d="M4 6h1v4"></path><path d="M4 10h2"></path><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"></path></svg>
+            </button>
+            <button type="button" data-action="click->tiptap#toggleBlockquote" class="w-8 h-8 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors shrink-0" title="Citação">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path></svg>
+            </button>
           </div>
         </div>
-      <% end %>
-    </article>
-  </main>
+
+        <!-- Document Content -->
+        <main class="w-full max-w-[800px] px-6 sm:px-12 py-10 lg:py-16">
+          
+          <!-- Emoji Picker Component -->
+          <div class="mb-6 relative" data-controller="emoji-picker">
+            <%= form.hidden_field :icon, data: { emoji_picker_target: "input" } %>
+            
+            <button type="button" 
+                    data-action="click->emoji-picker#togglePicker"
+                    data-emoji-picker-target="button"
+                    class="flex items-center justify-center w-[72px] h-[72px] text-[48px] rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-ink/10 dark:hover:border-white/10 leading-none">
+              <%= @document.icon.presence || "📄" %>
+            </button>
+            
+            <!-- Emoji Picker Popover -->
+            <div data-emoji-picker-target="pickerContainer" class="hidden absolute top-full left-0 z-50 mt-2 shadow-2xl rounded-xl overflow-hidden border border-ink/10 dark:border-white/10">
+              <!-- Web component goes here -->
+            </div>
+          </div>
+
+          <!-- Title -->
+          <div class="mb-10">
+            <%= form.text_area :title, rows: 1, class: "w-full text-5xl sm:text-6xl font-serif font-bold tracking-tight bg-transparent border-none p-0 text-ink dark:text-fable placeholder-ink/20 dark:placeholder-white/20 resize-none overflow-hidden outline-none focus:ring-0", style: "box-shadow: none;", placeholder: "Título sem nome", required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
+          </div>
+
+          <!-- Tiptap Editor Root -->
+          <div class="relative">
+            <div class="hidden">
+              <!-- Substituindo rich_text_area problemático por hidden_field puro com o HTML string -->
+              <%= form.hidden_field :content, value: @document.content.to_s, id: "document_content_hidden" %>
+            </div>
+            <div data-tiptap-target="editor" class="w-full"></div>
+          </div>
+
+          <!-- Sub-pages List -->
+          <% if @children.any? %>
+            <div class="mt-16 pt-8 border-t border-ink/5 dark:border-white/5">
+              <div class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-ink-light dark:text-white/40 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                Páginas Aninhadas
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <% @children.each do |child| %>
+                  <%= link_to workspace_project_document_path(@workspace, @project, child), class: "flex items-center gap-4 p-4 rounded-xl border border-ink/5 dark:border-white/5 bg-[#FDFBF7] dark:bg-ink-paper hover:border-ink/20 dark:hover:border-white/20 hover:shadow-md hover:-translate-y-0.5 transition-all group" do %>
+                    <span class="text-2xl shrink-0 leading-none"><%= child.icon.presence || "📄" %></span>
+                    <span class="font-medium text-base text-ink dark:text-fable group-hover:text-terracotta transition-colors truncate"><%= child.title.presence || "Sem Título" %></span>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+
+        </main>
+      </div>
+    <% end %> <!-- fim do form -->
+  </div>
+
+  <!-- Barra Lateral Direita de Navegação (Navigation Pane) -->
+  <aside class="w-64 border-l border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink/50 backdrop-blur-xl hidden lg:flex flex-col sticky top-14 h-[calc(100vh-3.5rem)]">
+    <div class="p-4">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 mb-4">Neste Documento</h3>
+      <div id="document-toc" class="space-y-1.5 text-sm text-ink-light dark:text-white/60">
+        <!-- O índice será populado via JS pelo Tiptap futuramente. Por enquanto, um aviso visual -->
+        <div class="flex items-center gap-2 px-2 py-1.5 text-ink/40 dark:text-white/40 italic">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          Índice dinâmico...
+        </div>
+      </div>
+    </div>
+    
+    <div class="p-4 mt-4 border-t border-ink/5 dark:border-white/5 flex-1 overflow-y-auto">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 mb-4">Documentos</h3>
+      <div class="space-y-1 text-sm font-medium">
+        <% @root_documents.each do |doc| %>
+          <%= link_to workspace_project_document_path(@workspace, @project, doc), class: "flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/10 #{doc == @document ? 'text-ink dark:text-fable bg-ink/5 dark:bg-white/10' : 'text-ink-light dark:text-white/60'}" do %>
+            <span><%= doc.icon.presence || "📄" %></span>
+            <span class="truncate"><%= doc.title.presence || "Sem Título" %></span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </aside>
 </div>
