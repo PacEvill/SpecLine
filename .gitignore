@@ -1,0 +1,183 @@
+# ==============================================================================
+# SpecLine - .gitignore
+# Regras de arquivos e diretorios que NAO devem ir para o repositorio Git.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Variaveis de Ambiente e Chaves Secretas (Seguranca)
+# ------------------------------------------------------------------------------
+# Ignora todos os arquivos .env locais (ex: .env, .env.local, .env.development.local)
+/.env*
+# Permite arquivos de exemplo/template de variaveis de ambiente no repositorio
+!/.env.example
+!/.env*.example
+!/.env.sample
+!/.env*.sample
+
+# Chaves mestras e chaves de descriptografia de credenciais do Rails
+/config/*.key
+/config/credentials/*.key
+/config/credentials/production.key
+/config/credentials/development.key
+/config/credentials/test.key
+/config/master.key
+*.key
+*.pem
+
+# Kamal secrets locais
+.kamal/*.secret
+.kamal/secrets.local
+.kamal/secrets
+
+# ------------------------------------------------------------------------------
+# 2. Ruby, Bundler e Dependencias Vendored
+# ------------------------------------------------------------------------------
+# Configuracoes locais do Bundler
+/.bundle
+
+# Gems instaladas localmente pelo Bundler
+/vendor/bundle/
+/vendor/ruby/
+/vendor/cache/
+
+# Historico de debug e interpretadores
+/.byebug_history
+/.rbenv-gemsets
+/.ruby-lsp/
+
+# ------------------------------------------------------------------------------
+# 3. Node.js, NPM e Assets Compilados
+# ------------------------------------------------------------------------------
+# Modulos e dependencias do Node.js
+/node_modules/
+
+# Logs de gerenciadores de pacotes JavaScript
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Cache do Yarn / npm
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# Assets gerados em tempo de compilacao (esbuild, Tailwind CSS, Propshaft/Sprockets)
+/app/assets/builds/*
+!/app/assets/builds/.keep
+/public/assets
+/public/packs
+/public/packs-test
+/public/vite
+/public/vite-test
+
+# ------------------------------------------------------------------------------
+# 4. Logs, Arquivos Temporarios e PIDs do Rails
+# ------------------------------------------------------------------------------
+# Logs de execucao
+/log/*
+!/log/.keep
+
+# Diretorio temporario do Rails (cache, sockets, pids, bootsnap)
+/tmp/*
+!/tmp/.keep
+!/tmp/pids/
+!/tmp/pids/.keep
+!/tmp/sockets/
+!/tmp/sockets/.keep
+!/tmp/cache/
+!/tmp/cache/.keep
+!/tmp/storage/
+!/tmp/storage/.keep
+
+/tmp/pids/*
+/tmp/cache/*
+/tmp/sockets/*
+/tmp/storage/*
+/tmp/restart.txt
+
+# ------------------------------------------------------------------------------
+# 5. Banco de Dados Local e Armazenamento (Active Storage / SQLite)
+# ------------------------------------------------------------------------------
+# Armazenamento de uploads em desenvolvimento
+/storage/*
+!/storage/.keep
+
+# Bancos de dados SQLite e arquivos temporarios de transacao/WAL
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+*.dump
+*.sql.gz
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-wal
+/db/*.sqlite3-shm
+
+# ------------------------------------------------------------------------------
+# 6. Testes, Cobertura de Codigo e Auditoria de Seguranca
+# ------------------------------------------------------------------------------
+/coverage/
+/.rspec_status
+/spec/examples.txt
+/brakeman.html
+/brakeman.json
+/bundle-audit.json
+/test/reports/
+
+# ------------------------------------------------------------------------------
+# 7. IDEs, Editores de Codigo e Arquivos do Sistema Operacional
+# ------------------------------------------------------------------------------
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Linux
+*~
+.directory
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (RubyMine, IntelliJ, WebStorm)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Editores de texto (Vim, Emacs, Sublime)
+*.swp
+*.swo
+*.swn
+*.sublime-project
+*.sublime-workspace
+
+# ------------------------------------------------------------------------------
+# 8. Scripts Temporarios de Refatoracao e Agentes
+# ------------------------------------------------------------------------------
+# Scripts temporarios de refatoracao local
+/fix_*.rb
+/rewrite_*.rb
+/script_*.rb
+
+# Ignora links simbolicos locais de habilidades e ferramentas de agentes
+/.agents
+
+# Diretorio de codigo-fonte de referencia e benchmarking
+/reference/

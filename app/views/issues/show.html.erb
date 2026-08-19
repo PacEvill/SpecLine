@@ -1,0 +1,175 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace, current_project: @project %>
+<% end %>
+
+<div class="max-w-3xl mx-auto px-6 lg:px-8 py-8">
+  <!-- Breadcrumb + ID -->
+  <nav class="flex items-center gap-2 text-xs text-ink-light dark:text-white/60 mb-4">
+    <%= link_to @workspace.name, @workspace, class: "hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
+    <span>/</span>
+    <%= link_to @project.name, workspace_project_path(@workspace, @project), class: "hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
+    <span>/</span>
+    <span class="text-ink dark:text-fable font-mono font-semibold"><%= @issue.identifier %></span>
+  </nav>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Content -->
+    <div class="lg:col-span-2 space-y-6">
+      <!-- Title & Description -->
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-6">
+        <div class="flex items-start justify-between mb-4">
+          <h1 class="text-xl font-serif font-medium text-ink dark:text-fable leading-snug flex-1"><%= @issue.title %></h1>
+          <div class="flex items-center gap-2 shrink-0 ml-4">
+            <%= link_to edit_workspace_project_issue_path(@workspace, @project, @issue), class: "p-1.5 rounded-lg text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white hover:bg-ink/5 dark:hover:bg-white/5 transition-colors duration-500" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <% end %>
+            <%= link_to workspace_project_issue_path(@workspace, @project, @issue), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Excluir #{@issue.identifier}?" }, class: "p-1.5 rounded-lg text-ink-light dark:text-white/60 hover:text-red-500 hover:bg-red-50 transition-colors duration-500" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <% end %>
+          </div>
+        </div>
+
+        <% if @issue.description.present? %>
+          <div class="prose prose-sm text-ink-light dark:text-white/60 max-w-none">
+            <%= simple_format(@issue.description) %>
+          </div>
+        <% else %>
+          <p class="text-sm text-ink-light/40 dark:text-white/40 italic">Sem descrição.</p>
+        <% end %>
+      </div>
+
+      <!-- Comments Section -->
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-6">
+        <h2 class="text-sm font-semibold text-ink dark:text-fable mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Comentários (<%= @issue.comments.count %>)
+        </h2>
+
+        <% if @issue.comments.ordered.any? %>
+          <div class="space-y-4 mb-6">
+            <% @issue.comments.ordered.each do |comment| %>
+              <div class="flex gap-3">
+                <div class="w-7 h-7 rounded-full bg-ink text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+                  <%= comment.user.email[0].upcase %>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center gap-2 mb-1">
+                    <span class="text-xs font-semibold text-ink dark:text-fable"><%= comment.user.email.split("@").first %></span>
+                    <span class="text-[10px] text-ink-light dark:text-white/60"><%= time_ago_in_words(comment.created_at) %> atrás</span>
+                  </div>
+                  <div class="text-sm text-ink-light dark:text-white/60 leading-relaxed bg-[#FDFBF7] dark:bg-ink-darker rounded-xl px-3 py-2 border border-ink/[0.03] dark:border-white/[0.05]">
+                    <%= simple_format(comment.body) %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+
+        <!-- New Comment Form -->
+        <%= form_with(model: Comment.new, url: workspace_project_issue_comments_path(@workspace, @project, @issue), class: "flex gap-3") do |form| %>
+          <div class="w-7 h-7 rounded-full bg-terracotta text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+            <%= current_user.email[0].upcase %>
+          </div>
+          <div class="flex-1">
+            <%= form.text_area :body, rows: 2, class: "w-full px-3 py-2 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-500", placeholder: "Escreva um comentário..." %>
+            <div class="flex justify-end mt-2">
+              <%= form.submit "Comentar", class: "px-4 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors cursor-pointer duration-500" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Sidebar Properties -->
+    <div class="space-y-4">
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-5 space-y-4">
+        <!-- Status -->
+        <div>
+          <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Status</span>
+          <div class="mt-1.5">
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full" style="background-color: <%= @issue.issue_status.color %>15; color: <%= @issue.issue_status.color %>">
+              <span class="w-2 h-2 rounded-full" style="background-color: <%= @issue.issue_status.color %>"></span>
+              <%= @issue.issue_status.name %>
+            </span>
+          </div>
+        </div>
+
+        <!-- Priority -->
+        <div>
+          <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Prioridade</span>
+          <div class="mt-1.5">
+            <% priority_map = { "urgent" => ["🔴 Urgente", "text-red-700"], "high" => ["🟠 Alta", "text-orange-700"], "medium" => ["🟡 Média", "text-yellow-700"], "low" => ["🔵 Baixa", "text-blue-700"], "no_priority" => ["— Sem prioridade", "text-ink-light"] } %>
+            <% label, css = priority_map[@issue.priority] %>
+            <span class="text-xs font-medium <%= css %>"><%= label %></span>
+          </div>
+        </div>
+
+        <!-- Assignee -->
+        <div>
+          <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Responsável</span>
+          <div class="mt-1.5">
+            <% if @issue.assignee %>
+              <span class="flex items-center gap-2 text-xs text-ink dark:text-fable">
+                <span class="w-6 h-6 rounded-full bg-ink text-white flex items-center justify-center text-[9px] font-bold"><%= @issue.assignee.email[0].upcase %></span>
+                <%= @issue.assignee.email.split("@").first %>
+              </span>
+            <% else %>
+              <span class="text-xs text-ink-light/50 dark:text-white/50">Não atribuído</span>
+            <% end %>
+          </div>
+        </div>
+
+        <!-- Milestone -->
+        <% if @issue.milestone %>
+          <div>
+            <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Milestone</span>
+            <p class="mt-1.5 text-xs text-ink dark:text-fable font-medium"><%= @issue.milestone.title %></p>
+          </div>
+        <% end %>
+
+        <!-- Dates -->
+        <% if @issue.due_date %>
+          <div>
+            <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Prazo</span>
+            <p class="mt-1.5 text-xs <%= @issue.due_date < Date.current ? 'text-red-500 font-semibold' : 'text-ink' %>"><%= @issue.due_date.strftime("%d de %B de %Y") %></p>
+          </div>
+        <% end %>
+
+        <!-- Labels -->
+        <% if @issue.labels.any? %>
+          <div>
+            <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Labels</span>
+            <div class="mt-1.5 flex flex-wrap gap-1">
+              <% @issue.labels.each do |label| %>
+                <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full" style="background-color: <%= label.color %>20; color: <%= label.color %>"><%= label.name %></span>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Creator -->
+        <div class="pt-3 border-t border-ink/5 dark:border-white/5">
+          <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Criado por</span>
+          <p class="mt-1.5 text-xs text-ink-light dark:text-white/60"><%= @issue.creator.email.split("@").first %> · <%= time_ago_in_words(@issue.created_at) %> atrás</p>
+        </div>
+      </div>
+
+      <!-- Sub-tasks -->
+      <% if @issue.sub_issues.any? %>
+        <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-5">
+          <h3 class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider mb-3">Sub-tarefas (<%= @issue.sub_issues.count %>)</h3>
+          <div class="space-y-1.5">
+            <% @issue.sub_issues.each do |sub| %>
+              <%= link_to workspace_project_issue_path(@workspace, @project, sub), class: "flex items-center gap-2 text-xs text-ink dark:text-fable hover:text-terracotta transition-colors py-1 duration-500" do %>
+                <span class="w-1.5 h-1.5 rounded-full" style="background-color: <%= sub.issue_status.color %>"></span>
+                <span class="font-mono text-ink-light dark:text-white/60 text-[10px]"><%= sub.identifier %></span>
+                <span class="truncate"><%= sub.title %></span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

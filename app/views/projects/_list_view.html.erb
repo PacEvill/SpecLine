@@ -1,0 +1,78 @@
+<!-- List View (Linear-style) -->
+<div class="p-6 lg:p-8">
+  <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] overflow-hidden">
+    <!-- Table Header -->
+    <div class="grid grid-cols-12 gap-2 px-4 py-2.5 bg-[#FDFBF7] dark:bg-ink-darker border-b border-ink/5 dark:border-white/5 text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">
+      <div class="col-span-1">ID</div>
+      <div class="col-span-4">Título</div>
+      <div class="col-span-2">Status</div>
+      <div class="col-span-1">Prioridade</div>
+      <div class="col-span-2">Responsável</div>
+      <div class="col-span-2">Prazo</div>
+    </div>
+
+    <!-- Table Body -->
+    <% if issues.any? %>
+      <% issues.sort_by { |i| [-i.priority_before_type_cast, i.number] }.each do |issue| %>
+        <%= link_to workspace_project_issue_path(workspace, project, issue),
+            class: "grid grid-cols-12 gap-2 px-4 py-3 border-b border-ink/[0.03] dark:border-white/[0.05] hover:bg-terracotta/[0.02] transition-colors items-center group duration-500" do %>
+          
+          <div class="col-span-1 text-[11px] font-mono text-ink-light dark:text-white/60">
+            <%= issue.identifier %>
+          </div>
+          
+          <div class="col-span-4 flex flex-col justify-center">
+            <span class="text-sm font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors truncate duration-500">
+              <%= issue.title %>
+            </span>
+            <% if issue.labels.any? %>
+              <div class="flex flex-wrap gap-1 mt-1">
+                <% issue.labels.first(3).each do |label| %>
+                  <span class="text-[9px] font-semibold px-1.5 rounded-full" style="background-color: <%= label.color %>20; color: <%= label.color %>">
+                    <%= label.name %>
+                  </span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          
+          <div class="col-span-2">
+            <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold px-2 py-1 rounded-full" style="background-color: <%= issue.issue_status.color %>15; color: <%= issue.issue_status.color %>">
+              <span class="w-1.5 h-1.5 rounded-full" style="background-color: <%= issue.issue_status.color %>"></span>
+              <%= issue.issue_status.name %>
+            </span>
+          </div>
+          
+          <div class="col-span-1">
+            <% priority_labels = { "urgent" => ["Urgente", "text-red-600 bg-red-50"], "high" => ["Alta", "text-orange-600 bg-orange-50"], "medium" => ["Média", "text-yellow-600 bg-yellow-50"], "low" => ["Baixa", "text-blue-600 bg-blue-50"], "no_priority" => ["—", "text-ink-light"] } %>
+            <% label, css = priority_labels[issue.priority] %>
+            <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded <%= css %>"><%= label %></span>
+          </div>
+          
+          <div class="col-span-2 text-xs text-ink-light dark:text-white/60 truncate">
+            <% if issue.assignee %>
+              <span class="flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-full bg-ink text-white flex items-center justify-center text-[9px] font-bold shrink-0"><%= issue.assignee.email[0].upcase %></span>
+                <span class="truncate"><%= issue.assignee.email.split("@").first %></span>
+              </span>
+            <% else %>
+              <span class="text-ink-light/40 dark:text-white/40">Não atribuído</span>
+            <% end %>
+          </div>
+          
+          <div class="col-span-2 text-xs <%= issue.due_date && issue.due_date < Date.current ? 'text-red-500 font-semibold' : 'text-ink-light' %>">
+            <%= issue.due_date&.strftime("%d %b %Y") || "—" %>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <div class="px-8 py-16 text-center">
+        <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 flex items-center justify-center text-ink-light dark:text-white/60">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        </div>
+        <p class="text-sm text-ink-light dark:text-white/60 mb-4">Nenhuma issue criada neste projeto.</p>
+        <%= link_to "Criar primeira issue", new_workspace_project_issue_path(workspace, project), data: { turbo_frame: "modal" }, class: "text-sm font-medium text-terracotta hover:underline" %>
+      </div>
+    <% end %>
+  </div>
+</div>

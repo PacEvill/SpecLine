@@ -1,0 +1,20 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  workspace: one
+  project: one
+  author: one
+  title: Documento Um
+  content: Conteudo inicial do documento
+  icon: document
+  position: 1
+
+two:
+  workspace: two
+  project: two
+  author: two
+  title: Documento Dois
+  content: Conteudo do segundo documento
+  icon: document
+  position: 1
+

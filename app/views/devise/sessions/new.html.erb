@@ -1,0 +1,112 @@
+<div class="min-h-screen bg-fable dark:bg-ink-darker flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md animate-fade-in-up">
+    <a href="/" class="flex items-center justify-center space-x-3 group relative z-10 mb-8">
+      <!-- Lucide: Boxes -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <span class="font-serif font-semibold text-3xl tracking-tight text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-300">SpecLine</span>
+    </a>
+
+    <h2 class="text-center text-3xl font-serif font-semibold text-ink dark:text-fable tracking-tight mb-2">
+      Bem-vindo de volta
+    </h2>
+    <p class="text-center text-ink-light dark:text-white/60 font-sans text-sm">
+      Ou <%= link_to "crie uma nova conta", new_user_registration_path, class: "text-terracotta hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors font-medium duration-500" %>
+    </p>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md animate-fade-in-up-delay-1">
+    <div class="card p-8">
+      
+      <!-- OAUTH BUTTONS -->
+      <div class="space-y-3 mb-6">
+        <a href="#" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-ink/10 dark:border-white/10 rounded-md shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] bg-white dark:bg-ink-paper text-sm font-medium text-ink dark:text-fable hover:bg-fable hover:border-ink/20 transition-all duration-300">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Google
+        </a>
+
+        <a href="#" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-ink/10 dark:border-white/10 rounded-md shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] bg-white dark:bg-ink-paper text-sm font-medium text-ink dark:text-fable hover:bg-fable hover:border-ink/20 transition-all duration-300">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.285 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
+
+        <a href="#" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-ink/10 dark:border-white/10 rounded-md shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] bg-white dark:bg-ink-paper text-sm font-medium text-ink dark:text-fable hover:bg-fable hover:border-ink/20 transition-all duration-300">
+          <svg class="h-5 w-5" viewBox="0 0 384 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+          </svg>
+          Apple
+        </a>
+      </div>
+
+      <div class="relative mb-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-ink/10 dark:border-white/10"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white dark:bg-ink-paper text-ink-light dark:text-white/60 font-medium">Ou entre com e-mail</span>
+        </div>
+      </div>
+
+      <% if notice %>
+        <div class="bg-sage/10 text-sage-dark p-4 rounded-md text-sm mb-6 text-center font-medium">
+          <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="bg-red-50 text-red-600 p-4 rounded-md text-sm mb-6 text-center font-medium border border-red-100">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= form_for(resource, as: resource_name, url: user_session_path, html: { class: "space-y-5", data: { turbo: false } }) do |f| %>
+        
+        <div>
+          <%= f.label :email, "E-mail", class: "block text-sm font-medium text-ink dark:text-fable mb-1" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-3 py-2.5 border border-ink/20 dark:border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-terracotta focus:border-transparent transition-all placeholder:text-ink-light/50 dark:placeholder:text-white/30 duration-500", placeholder: "voce@empresa.com" %>
+        </div>
+
+        <div data-controller="password-visibility">
+          <div class="flex items-center justify-between mb-1">
+            <%= f.label :password, "Senha", class: "block text-sm font-medium text-ink dark:text-fable" %>
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+              <%= link_to "Esqueceu a senha?", new_user_password_path, class: "text-xs font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
+            <% end %>
+          </div>
+          <div class="relative">
+            <%= f.password_field :password, autocomplete: "current-password", data: { password_visibility_target: "input" }, class: "w-full px-3 py-2.5 border border-ink/20 dark:border-white/20 rounded-md focus:outline-none focus:ring-2 focus:ring-terracotta focus:border-transparent transition-all pr-10 duration-500", placeholder: "••••••••" %>
+            <button type="button" data-action="password-visibility#toggle" class="absolute inset-y-0 right-0 px-3 flex items-center text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors focus:outline-none duration-500">
+              <!-- Eye Open Icon -->
+              <svg data-password-visibility-target="iconOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <!-- Eye Closed Icon -->
+              <svg data-password-visibility-target="iconClosed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 hidden">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="flex items-center gap-2">
+            <%= f.check_box :remember_me, class: "h-4 w-4 text-terracotta border-ink/20 dark:border-white/20 rounded focus:ring-terracotta" %>
+            <%= f.label :remember_me, "Lembrar de mim", class: "text-sm text-ink-light dark:text-white/60" %>
+          </div>
+        <% end %>
+
+        <div>
+          <%= f.submit "Entrar", class: "w-full flex justify-center btn-primary" %>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+</div>

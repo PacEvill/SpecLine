@@ -1,0 +1,133 @@
+
+
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
+    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
+      
+      <!-- Settings Sidebar inside Modal -->
+      <div class="w-64 border-r border-ink/10 dark:border-white/10 flex flex-col bg-white/50 dark:bg-ink-paper/50">
+        <div class="p-6 flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-serif font-medium text-ink dark:text-fable">Configurações</h2>
+            <p class="text-xs text-ink-light dark:text-white/60 font-sans">Gerencie sua conta</p>
+          </div>
+          <button data-action="click->modal#close" class="p-2 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <%= render "shared/settings_sidebar" %>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker">
+        <%= turbo_frame_tag "settings_content" do %>
+        <div class="max-w-3xl mx-auto px-8 py-10">
+
+    <div class="mb-8">
+      <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-2">Preferências</h1>
+      <p class="text-sm text-ink-light dark:text-white/60 font-sans">Personalize sua experiência no SpecLine.</p>
+    </div>
+
+    <%= form_with url: preferences_path, method: :patch, class: "space-y-8" do |f| %>
+
+      <!-- Theme Section -->
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]" data-controller="theme">
+        <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Aparência</h3>
+        
+        <div class="grid grid-cols-3 gap-4">
+          <!-- Light Theme -->
+          <label class="col-span-1 cursor-pointer group" data-action="click->theme#setLight">
+            <div class="border-2 border-transparent has-[:checked]:border-terracotta rounded-xl p-1 bg-white dark:bg-ink-paper mb-2 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-all hover:border-ink/20 duration-500">
+              <div class="bg-[#FDFBF7] rounded-lg h-24 border border-ink/5 p-2 flex flex-col gap-2">
+                <div class="h-2 w-12 bg-ink/10 rounded-full"></div>
+                <div class="h-2 w-full bg-ink/5 rounded-full"></div>
+                <div class="h-2 w-3/4 bg-ink/5 rounded-full"></div>
+              </div>
+              <input type="radio" name="theme" value="light" class="sr-only" data-theme-target="light">
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Claro</span>
+            </div>
+          </label>
+
+          <!-- Dark Theme -->
+          <label class="col-span-1 cursor-pointer group" data-action="click->theme#setDark">
+            <div class="border-2 border-transparent has-[:checked]:border-terracotta rounded-xl p-1 bg-white dark:bg-ink-paper mb-2 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-all hover:border-ink/20 duration-500">
+              <div class="bg-[#1A1A1B] rounded-lg h-24 border border-white/5 p-2 flex flex-col gap-2">
+                <div class="h-2 w-12 bg-white/10 rounded-full"></div>
+                <div class="h-2 w-full bg-white/5 rounded-full"></div>
+                <div class="h-2 w-3/4 bg-white/5 rounded-full"></div>
+              </div>
+              <input type="radio" name="theme" value="dark" class="sr-only" data-theme-target="dark">
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Escuro</span>
+            </div>
+          </label>
+
+          <!-- System Theme -->
+          <label class="col-span-1 cursor-pointer group" data-action="click->theme#setSystem">
+            <div class="border-2 border-transparent has-[:checked]:border-terracotta rounded-xl p-1 bg-white dark:bg-ink-paper mb-2 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-all hover:border-ink/20 duration-500">
+              <div class="bg-gradient-to-r from-[#FDFBF7] to-[#1A1A1B] rounded-lg h-24 border border-ink/5 dark:border-white/5 p-2 flex flex-col gap-2">
+                <div class="h-2 w-12 bg-ink/10 rounded-full mix-blend-difference"></div>
+                <div class="h-2 w-full bg-ink/5 dark:bg-white/5 rounded-full mix-blend-difference"></div>
+                <div class="h-2 w-3/4 bg-ink/5 dark:bg-white/5 rounded-full mix-blend-difference"></div>
+              </div>
+              <input type="radio" name="theme" value="system" class="sr-only" data-theme-target="system">
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Sistema</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Notifications Section -->
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+        <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Notificações</h3>
+        
+        <div class="space-y-4">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <div class="flex items-center h-5">
+              <input type="checkbox" name="email_mentions" checked class="w-4 h-4 text-terracotta border-ink/20 dark:border-white/20 rounded focus:ring-terracotta">
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-ink dark:text-fable">Menções</span>
+              <span class="text-xs text-ink-light dark:text-white/60">Receber email quando alguém mencionar você.</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <div class="flex items-center h-5">
+              <input type="checkbox" name="email_assignments" checked class="w-4 h-4 text-terracotta border-ink/20 dark:border-white/20 rounded focus:ring-terracotta">
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-ink dark:text-fable">Atribuições</span>
+              <span class="text-xs text-ink-light dark:text-white/60">Receber email quando uma tarefa for atribuída a você.</span>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 cursor-pointer">
+            <div class="flex items-center h-5">
+              <input type="checkbox" name="email_updates" class="w-4 h-4 text-terracotta border-ink/20 dark:border-white/20 rounded focus:ring-terracotta">
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm font-medium text-ink dark:text-fable">Atualizações de Tarefas</span>
+              <span class="text-xs text-ink-light dark:text-white/60">Receber email quando houver atualizações em tarefas que você segue.</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-4">
+        <%= f.submit "Salvar Preferências", class: "px-6 py-2 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-500" %>
+      </div>
+    <% end %>
+                    </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

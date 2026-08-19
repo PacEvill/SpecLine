@@ -1,0 +1,112 @@
+<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- Hero Section -->
+    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage/10 text-sage text-sm font-semibold tracking-wide uppercase mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+          Módulo de Ação
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight mb-6">Gestão de Tarefas.</h1>
+        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
+          Sem centenas de campos obrigatórios. Sem workflows engessados. Apenas o que importa: quem está fazendo o quê, em que estágio está, e qual o contexto para executar a ação.
+        </p>
+      </div>
+    </section>
+
+    <!-- Visual / Mockup Abstract -->
+    <section class="px-6 mb-24 max-w-6xl mx-auto">
+      <div class="card bg-white dark:bg-ink-paper p-8 md:p-12 border border-ink/5 dark:border-white/5 shadow-xl rounded-3xl relative overflow-hidden overflow-x-auto">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-sage/40 to-transparent"></div>
+        <div class="flex gap-6 min-w-[800px]">
+          <!-- Column 1 -->
+          <div class="flex-1 bg-fable-dark/50 rounded-xl p-4 space-y-4 border border-ink/5 dark:border-white/5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink dark:text-fable text-sm">To Do</span>
+              <span class="text-ink-light dark:text-white/60 text-xs bg-white dark:bg-ink-paper px-2 py-0.5 rounded-full border border-ink/10 dark:border-white/10">3</span>
+            </div>
+            <div class="bg-white dark:bg-ink-paper p-4 rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-ink/5 dark:border-white/5 space-y-3 hover:border-ink/20 transition-colors cursor-grab duration-500">
+              <div class="flex gap-2">
+                <span class="w-8 h-2 bg-terracotta/40 rounded-full"></span>
+                <span class="w-12 h-2 bg-sage/40 rounded-full"></span>
+              </div>
+              <div class="h-4 w-5/6 bg-ink/10 rounded"></div>
+              <div class="flex justify-between items-center pt-2">
+                <div class="w-6 h-6 rounded-full bg-ink/20"></div>
+                <div class="h-3 w-16 bg-ink/5 dark:bg-white/5 rounded"></div>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-ink-paper p-4 rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-ink/5 dark:border-white/5 space-y-3 hover:border-ink/20 transition-colors cursor-grab duration-500">
+              <div class="h-4 w-full bg-ink/10 rounded"></div>
+            </div>
+          </div>
+          <!-- Column 2 -->
+          <div class="flex-1 bg-fable-dark/50 rounded-xl p-4 space-y-4 border border-ink/5 dark:border-white/5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink dark:text-fable text-sm">In Progress</span>
+              <span class="text-ink-light dark:text-white/60 text-xs bg-white dark:bg-ink-paper px-2 py-0.5 rounded-full border border-ink/10 dark:border-white/10">1</span>
+            </div>
+            <div class="bg-white dark:bg-ink-paper p-4 rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-sage/30 ring-1 ring-sage/10 space-y-3 cursor-grab">
+              <div class="flex gap-2">
+                <span class="w-16 h-2 bg-ink/40 rounded-full"></span>
+              </div>
+              <div class="h-4 w-3/4 bg-ink/80 rounded"></div>
+              <div class="flex justify-between items-center pt-2">
+                <div class="w-6 h-6 rounded-full bg-sage text-white flex items-center justify-center text-[10px] font-bold">D</div>
+                <div class="h-3 w-12 bg-ink/10 rounded"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Column 3 -->
+          <div class="flex-1 bg-fable-dark/50 rounded-xl p-4 space-y-4 border border-ink/5 dark:border-white/5 opacity-70">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-semibold text-ink dark:text-fable text-sm">Done</span>
+              <span class="text-ink-light dark:text-white/60 text-xs bg-white dark:bg-ink-paper px-2 py-0.5 rounded-full border border-ink/10 dark:border-white/10">8</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Details -->
+    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/10 dark:border-white/10">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Board Personalizável</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Crie colunas que refletem a realidade do seu processo. Kanban clássico (To Do, Doing, Done) ou pipelines complexos de aprovação de design e QA. Você define os limites.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Performance Extrema</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Construído para ser rápido. Sem tempo de carregamento absurdo para abrir um modal. As atualizações arrastar-e-soltar (drag-and-drop) refletem imediatamente para toda a equipe.
+              </p>
+            </div>
+          </div>
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Propriedades que Importam</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Tags customizadas, responsáveis, datas de entrega e estimativas. Adicione apenas as propriedades que sua equipe realmente utiliza, mantendo o card limpo e direto ao ponto.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Busca e Filtros Instantâneos</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Navegue pelas centenas de tarefas ativas do seu projeto em milissegundos. Filtre por "Apenas minhas", "Bloqueadas" ou crie visualizações (Views) persistentes para a equipe.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

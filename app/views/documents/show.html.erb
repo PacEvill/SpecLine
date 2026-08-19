@@ -1,0 +1,79 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace, current_project: @project %>
+<% end %>
+
+<div class="flex-1 bg-white dark:bg-ink-darker min-h-screen flex flex-col">
+  <!-- Top Bar -->
+  <header class="h-14 px-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between sticky top-0 bg-white/90 dark:bg-ink-darker/90 backdrop-blur-sm z-10">
+    <div class="flex items-center gap-3">
+      <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <% end %>
+      
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center text-sm font-sans text-ink-light dark:text-white/60">
+        <%= link_to @project.name, workspace_project_path(@workspace, @project, view: 'documents'), class: "hover:text-ink dark:hover:text-fable transition-colors" %>
+        <span class="mx-2 text-ink/20 dark:text-white/20">/</span>
+        <% if @document.parent %>
+          <%= link_to @document.parent.title, workspace_project_document_path(@workspace, @project, @document.parent), class: "hover:text-ink dark:hover:text-fable transition-colors truncate max-w-[120px]" %>
+          <span class="mx-2 text-ink/20 dark:text-white/20">/</span>
+        <% end %>
+        <span class="text-ink dark:text-fable font-medium truncate max-w-[200px]"><%= @document.title %></span>
+      </nav>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 mr-4 text-xs font-sans text-ink-light dark:text-white/60">
+        <div class="w-5 h-5 rounded-full bg-ink/10 dark:bg-white/10 flex items-center justify-center font-serif text-[10px] text-ink dark:text-fable">
+          <%= @document.author.email[0].upcase %>
+        </div>
+        <span>Criado em <%= l(@document.created_at.to_date, format: :short) %></span>
+      </div>
+
+      <%= link_to new_workspace_project_document_path(@workspace, @project, parent_id: @document.id), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors", title: "Adicionar Sub-página" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+      <% end %>
+
+      <%= link_to edit_workspace_project_document_path(@workspace, @project, @document), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors", title: "Editar Documento" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+      <% end %>
+
+      <%= button_to workspace_project_document_path(@workspace, @project, @document), method: :delete, data: { turbo_confirm: "Tem certeza? Esta ação apagará o documento e todas as suas sub-páginas." }, class: "p-2 text-ink-light dark:text-white/60 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors", title: "Excluir Documento" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+      <% end %>
+    </div>
+  </header>
+
+  <!-- Document Content -->
+  <main class="flex-1 overflow-y-auto">
+    <article class="max-w-4xl w-full mx-auto p-8 lg:p-12 pb-32">
+      <!-- Icon -->
+      <% if @document.icon.present? %>
+        <div class="text-6xl mb-6"><%= @document.icon %></div>
+      <% end %>
+
+      <!-- Title -->
+      <h1 class="text-4xl lg:text-5xl font-serif font-bold text-ink dark:text-fable mb-10 tracking-tight leading-tight"><%= @document.title %></h1>
+
+      <!-- ActionText Content -->
+      <div class="prose prose-ink dark:prose-invert prose-lg max-w-none prose-headings:font-serif prose-a:text-terracotta hover:prose-a:text-terracotta-dark">
+        <%= @document.content %>
+      </div>
+
+      <!-- Sub-pages List -->
+      <% if @children.any? %>
+        <div class="mt-16 pt-8 border-t border-ink/10 dark:border-white/10">
+          <h3 class="text-sm font-semibold uppercase tracking-wider text-ink-light dark:text-white/60 mb-4">Páginas Filhas</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <% @children.each do |child| %>
+              <%= link_to workspace_project_document_path(@workspace, @project, child), class: "flex items-center gap-3 p-3 rounded-xl border border-ink/5 dark:border-white/5 hover:border-ink/20 dark:hover:border-white/20 hover:bg-ink/5 dark:hover:bg-white/5 transition-colors group" do %>
+                <span class="text-xl shrink-0"><%= child.icon.presence || "📄" %></span>
+                <span class="font-medium text-sm text-ink dark:text-fable group-hover:text-terracotta transition-colors truncate"><%= child.title %></span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </article>
+  </main>
+</div>

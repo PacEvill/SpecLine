@@ -1,0 +1,90 @@
+<!-- Project Header -->
+<header class="border-b border-ink/5 dark:border-white/5 bg-white/60 dark:bg-ink-paper/80 backdrop-blur-md sticky top-0 z-10 transition-colors duration-500">
+  <div class="px-6 lg:px-8 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <% if @project.logo.attached? %>
+          <%= image_tag @project.logo, class: "w-8 h-8 rounded-lg object-cover border border-ink/5 dark:border-white/5 shadow-sm shrink-0" %>
+        <% else %>
+          <div class="w-8 h-8 rounded-lg bg-sage/10 text-sage-dark flex items-center justify-center shrink-0 border border-ink/5 dark:border-white/5 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+        <% end %>
+        <div class="min-w-0">
+          <h1 class="text-lg font-serif font-medium text-ink dark:text-fable truncate"><%= @project.name %></h1>
+          <p class="text-[11px] text-ink-light dark:text-white/60 font-sans"><%= @project.issues.count %> issues · <%= @project.issues.joins(:issue_status).where(issue_statuses: { category: "done" }).count %> concluídas</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <%= link_to new_workspace_project_board_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-ink dark:text-fable bg-ink/5 dark:bg-white/5 rounded-lg hover:bg-ink/10 transition-colors duration-500" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          Novo Quadro
+        <% end %>
+
+        <%= link_to new_workspace_project_issue_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors duration-500" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Nova Issue
+        <% end %>
+
+        <!-- Project Settings Button -->
+        <%= link_to edit_workspace_project_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center justify-center w-8 h-8 text-ink-light dark:text-white/60 bg-ink/5 dark:bg-white/5 rounded-lg hover:bg-ink/10 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors ml-1 duration-500" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs Navigation -->
+  <nav class="px-6 lg:px-8 flex items-center justify-between bg-white dark:bg-ink-paper border-b border-transparent transition-colors duration-500">
+    <div class="flex items-center gap-1 -mb-px">
+      <%= link_to workspace_project_path(@workspace, @project, view: "board"),
+          class: "px-3 py-2.5 text-xs font-medium border-b-2 transition-colors #{@view == 'board' ? 'text-terracotta border-terracotta' : 'text-ink-light dark:text-white/60 border-transparent hover:text-ink dark:hover:text-fable dark:hover:text-white hover:border-ink/20'} duration-500" do %>
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Board
+        </span>
+      <% end %>
+      
+      <%= link_to workspace_project_path(@workspace, @project, view: "list"),
+          class: "px-3 py-2.5 text-xs font-medium border-b-2 transition-colors #{@view == 'list' ? 'text-terracotta border-terracotta' : 'text-ink-light dark:text-white/60 border-transparent hover:text-ink dark:hover:text-fable dark:hover:text-white hover:border-ink/20'} duration-500" do %>
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          Lista
+        </span>
+      <% end %>
+
+      <%= link_to workspace_project_path(@workspace, @project, view: "milestones"),
+          class: "px-3 py-2.5 text-xs font-medium border-b-2 transition-colors #{@view == 'milestones' ? 'text-terracotta border-terracotta' : 'text-ink-light dark:text-white/60 border-transparent hover:text-ink dark:hover:text-fable dark:hover:text-white hover:border-ink/20'} duration-500" do %>
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Milestones
+        </span>
+      <% end %>
+
+      <%= link_to workspace_project_path(@workspace, @project, view: "documents"),
+          class: "px-3 py-2.5 text-xs font-medium border-b-2 transition-colors #{@view == 'documents' ? 'text-terracotta border-terracotta' : 'text-ink-light dark:text-white/60 border-transparent hover:text-ink dark:hover:text-fable dark:hover:text-white hover:border-ink/20'} duration-500" do %>
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Documentos
+        </span>
+      <% end %>
+    </div>
+    
+    <% if @view == "board" %>
+      <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 text-xs">
+          <span class="text-ink-light dark:text-white/60 font-medium">Agrupar por:</span>
+          <%= form_with url: workspace_project_path(@workspace, @project), method: :get, data: { turbo_frame: "_top" }, class: "inline-block" do |f| %>
+            <%= f.hidden_field :view, value: "board" %>
+            <%= f.select :group_by, [["Nenhum", ""], ["Quadros", "board"], ["Responsável", "assignee"]], { selected: params[:group_by] }, class: "text-xs border-ink/10 dark:border-white/10 rounded-md bg-[#FDFBF7] dark:bg-ink-darker font-medium text-ink dark:text-fable focus:ring-terracotta/20 py-1 pl-2 pr-6 cursor-pointer", onchange: "this.form.submit()" %>
+          <% end %>
+        </div>
+        
+        <% if params[:group_by] == "board" %>
+          <div class="w-px h-4 bg-ink/10 mx-1"></div>
+        <% end %>
+      </div>
+    <% end %>
+  </nav>
+</header>

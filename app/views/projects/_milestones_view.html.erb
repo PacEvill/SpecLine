@@ -1,0 +1,59 @@
+<!-- Milestones View -->
+<div class="p-6 lg:p-8">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-base font-serif font-medium text-ink dark:text-fable">Milestones</h2>
+    <%= link_to new_workspace_project_milestone_path(workspace, project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-terracotta border border-terracotta/30 rounded-lg hover:bg-terracotta/5 transition-colors duration-500" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Nova Milestone
+    <% end %>
+  </div>
+
+  <% if milestones.any? %>
+    <div class="space-y-3">
+      <% milestones.each do |milestone| %>
+        <%= link_to edit_workspace_project_milestone_path(workspace, project, milestone), data: { turbo_frame: "modal" }, class: "block bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-5 hover:shadow-md transition-all duration-200 group" do %>
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <h3 class="text-sm font-serif font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500"><%= milestone.title %></h3>
+              <% if milestone.description.present? %>
+                <p class="text-xs text-ink-light dark:text-white/60 mt-1"><%= milestone.description.truncate(120) %></p>
+              <% end %>
+            </div>
+            <% status_colors = { "open" => "bg-yellow-50 text-yellow-700", "active" => "bg-blue-50 text-blue-700", "closed" => "bg-green-50 text-green-700" } %>
+            <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full <%= status_colors[milestone.status] %>">
+              <%= milestone.status == "open" ? "Planejada" : milestone.status == "active" ? "Ativa" : "Concluída" %>
+            </span>
+          </div>
+
+          <!-- Progress Bar -->
+          <% progress = milestone.progress_percentage %>
+          <div class="flex items-center gap-3">
+            <div class="flex-1 h-1.5 bg-ink/5 dark:bg-white/5 rounded-full overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-500 <%= progress == 100 ? 'bg-sage' : 'bg-terracotta' %>" style="width: <%= progress %>%"></div>
+            </div>
+            <span class="text-[10px] font-bold text-ink-light dark:text-white/60 w-8 text-right"><%= progress %>%</span>
+          </div>
+
+          <% if milestone.start_date || milestone.target_date %>
+            <div class="flex items-center gap-4 mt-3 text-[10px] text-ink-light dark:text-white/60">
+              <% if milestone.start_date %>
+                <span>Início: <strong class="text-ink dark:text-fable"><%= milestone.start_date.strftime("%d %b %Y") %></strong></span>
+              <% end %>
+              <% if milestone.target_date %>
+                <span>Meta: <strong class="<%= milestone.target_date < Date.current && milestone.status != 'closed' ? 'text-red-500' : 'text-ink' %>"><%= milestone.target_date.strftime("%d %b %Y") %></strong></span>
+              <% end %>
+            </div>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] px-8 py-16 text-center">
+      <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 flex items-center justify-center text-ink-light dark:text-white/60">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <p class="text-sm text-ink-light dark:text-white/60 mb-4">Nenhuma milestone criada.</p>
+      <%= link_to "Criar primeira milestone", new_workspace_project_milestone_path(workspace, project), data: { turbo_frame: "modal" }, class: "text-sm font-medium text-terracotta hover:underline" %>
+    </div>
+  <% end %>
+</div>

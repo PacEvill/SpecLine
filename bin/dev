@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+
+if ! command -v foreman &> /dev/null
+then
+    echo "Installing foreman..."
+    gem install foreman
+fi
+
+exec foreman start -f Procfile.dev "$@"

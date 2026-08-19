@@ -1,0 +1,103 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal" data-modal-open-value="true" class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-ink/30 backdrop-blur-sm transition-opacity duration-500" data-modal-target="backdrop" data-action="click->modal#close"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-end justify-end text-center sm:items-center sm:p-0">
+        <div class="relative transform overflow-hidden bg-[#FDFBF7] dark:bg-ink-darker text-left shadow-2xl transition-all sm:my-0 sm:w-full sm:max-w-2xl h-screen border-l border-ink/10 dark:border-white/10 flex flex-col duration-500" data-modal-target="panel">
+          
+          <!-- Header -->
+          <div class="flex items-center justify-between px-6 py-4 border-b border-ink/5 dark:border-white/5 bg-white dark:bg-ink-paper">
+            <h3 class="text-base font-serif font-medium text-ink dark:text-fable" id="modal-title">
+              <%= @document.new_record? ? "Novo Documento" : "Editar Documento" %>
+            </h3>
+            <button type="button" class="text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" data-action="modal#close">
+              <span class="sr-only">Fechar</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
+
+          <!-- Form Content -->
+          <div class="flex-1 overflow-y-auto px-6 py-6">
+            <%= form_with(model: [@workspace, @project, @document], data: { turbo_frame: "_top" }, html: { class: "space-y-6 flex flex-col h-full" }) do |f| %>
+              <% if @document.errors.any? %>
+                <div class="bg-red-50 text-red-600 p-4 rounded-xl text-sm border border-red-100">
+                  <p class="font-semibold mb-2">Não foi possível salvar:</p>
+                  <ul class="list-disc pl-5 space-y-1">
+                    <% @document.errors.full_messages.each do |message| %>
+                      <li><%= message %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <!-- Parent (hidden if set via URL) -->
+              <% if @document.parent_id.present? %>
+                <%= f.hidden_field :parent_id %>
+                <div class="flex items-center gap-2 text-xs text-ink-light dark:text-white/60 bg-sage/10 px-3 py-2 rounded-lg">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                  Sub-documento de: <strong class="text-ink dark:text-fable"><%= @document.parent&.title || Document.find_by(id: @document.parent_id)&.title %></strong>
+                </div>
+              <% end %>
+
+              <!-- Title -->
+              <div>
+                <%= f.label :title, "Título", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
+                <%= f.text_field :title, class: "w-full px-3 py-2 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500", placeholder: "Ex: Guia de Onboarding", required: true, autofocus: true %>
+              </div>
+
+              <!-- Icon -->
+              <div>
+                <%= f.label :icon, "Ícone", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
+                <div class="flex flex-wrap gap-2">
+                  <% [
+                    { id: "file-text", svg: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>' },
+                    { id: "folder", svg: '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>' },
+                    { id: "book", svg: '<path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>' },
+                    { id: "bookmark", svg: '<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>' },
+                    { id: "star", svg: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
+                    { id: "lock", svg: '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>' },
+                    { id: "edit", svg: '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>' },
+                    { id: "layers", svg: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 12 12 17 22 12"/><polyline points="2 17 12 22 22 17"/>' }
+                  ].each do |icon| %>
+                    <label class="cursor-pointer relative flex items-center justify-center">
+                      <%= f.radio_button :icon, icon[:id], class: "peer sr-only", checked: (f.object.icon == icon[:id] || (f.object.icon.blank? && icon[:id] == "file-text")) %>
+                      <div class="w-10 h-10 flex items-center justify-center rounded-lg border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-ink-light dark:text-white/60 peer-checked:border-terracotta peer-checked:text-terracotta peer-checked:bg-terracotta/5 hover:bg-ink/5 dark:hover:bg-white/5 transition-colors duration-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <%= icon[:svg].html_safe %>
+                        </svg>
+                      </div>
+                    </label>
+                  <% end %>
+                </div>
+              </div>
+
+              <!-- Content -->
+              <div class="flex-1 flex flex-col">
+                <%= f.label :content, "Conteúdo", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
+                <%= f.text_area :content, rows: 18, class: "flex-1 w-full px-4 py-3 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl text-sm text-ink dark:text-fable leading-relaxed focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 resize-none font-sans duration-500", placeholder: "Escreva o conteúdo do documento aqui...\n\nDica: Use linhas em branco para separar parágrafos." %>
+                <p class="text-[10px] text-ink-light dark:text-white/60 mt-1.5">Texto simples com formatação de parágrafos. Suporte a Markdown em breve.</p>
+              </div>
+
+              <!-- Actions -->
+              <div class="pt-6 mt-auto border-t border-ink/5 dark:border-white/5">
+                <div class="flex items-center justify-between">
+                  <% unless @document.new_record? %>
+                    <%= link_to "Excluir", workspace_project_document_path(@workspace, @project, @document), data: { turbo_method: :delete, turbo_confirm: "Excluir \"#{@document.title}\" e todos os sub-documentos?" }, class: "text-xs font-medium text-red-600 hover:underline" %>
+                  <% else %>
+                    <div></div>
+                  <% end %>
+                  <div class="flex items-center gap-3">
+                    <button type="button" class="px-4 py-2 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" data-action="modal#close">Cancelar</button>
+                    <%= f.submit (@document.new_record? ? "Criar Documento" : "Salvar Alterações"), class: "px-6 py-2 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-500" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

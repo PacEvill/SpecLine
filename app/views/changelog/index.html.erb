@@ -1,0 +1,86 @@
+<%= render "shared/marketing_header" %>
+
+<main class="min-h-screen bg-fable dark:bg-ink-darker pt-32 pb-24">
+  <div class="max-w-3xl mx-auto px-6">
+    <!-- Header -->
+    <div class="mb-16">
+      <h1 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable tracking-tight mb-4">Changelog</h1>
+      <p class="text-xl text-ink-light dark:text-white/60 font-sans">Acompanhe as últimas atualizações, melhorias e correções no SpecLine.</p>
+    </div>
+
+    <!-- Timeline / Updates -->
+    <div class="space-y-16">
+      
+      <!-- Update 1 -->
+      <div class="relative pl-8 md:pl-0">
+        <!-- Date indicator (md and up) -->
+        <div class="hidden md:block absolute left-[-140px] top-1 text-right w-[100px]">
+          <span class="text-sm font-medium text-ink-light dark:text-white/60">Hoje</span>
+        </div>
+        
+        <!-- Timeline line -->
+        <div class="absolute left-0 md:left-[-20px] top-2 bottom-[-4rem] w-px bg-ink/10"></div>
+        
+        <!-- Timeline dot -->
+        <div class="absolute left-[-4px] md:left-[-24px] top-2 w-2 h-2 rounded-full bg-terracotta ring-4 ring-fable"></div>
+        
+        <!-- Content -->
+        <div>
+          <span class="md:hidden text-sm font-medium text-ink-light dark:text-white/60 block mb-2">Hoje</span>
+          <details class="group">
+            <summary class="list-none cursor-pointer flex items-center justify-between outline-none">
+              <h2 class="text-2xl font-serif text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Segurança reforçada e novo login</h2>
+              <span class="text-ink-light dark:text-white/60 group-open:rotate-180 transition-transform duration-300">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </summary>
+            
+            <div class="mt-4 prose prose-ink max-w-none text-ink-light dark:text-white/60 font-sans space-y-4 animate-fade-in-up">
+              <p>Acabamos de lançar uma série de melhorias para garantir ainda mais segurança e fluidez na criação de contas no SpecLine.</p>
+              <ul class="list-disc pl-5 space-y-2">
+                <li><strong>Medidor de força de senha:</strong> Agora você recebe feedback em tempo real sobre a força da sua senha, com requisitos claros (letras, números, tamanho mínimo e caracteres especiais).</li>
+                <li><strong>Validação de confirmação:</strong> Adicionado alerta visual instantâneo para quando as senhas digitadas não coincidem.</li>
+                <li><strong>Novas integrações de SSO:</strong> Preparamos a interface para suporte futuro a login via GitHub e Apple, além do Google que já estava em andamento.</li>
+                <li><strong>Design unificado:</strong> Os botões de login foram padronizados para garantir uma experiência visual mais coesa.</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Update 2 -->
+      <div class="relative pl-8 md:pl-0">
+        <div class="hidden md:block absolute left-[-140px] top-1 text-right w-[100px]">
+          <span class="text-sm font-medium text-ink-light dark:text-white/60">12 Ago 2026</span>
+        </div>
+        <div class="absolute left-0 md:left-[-20px] top-2 bottom-[-4rem] w-px bg-ink/10"></div>
+        <div class="absolute left-[-4px] md:left-[-24px] top-2 w-2 h-2 rounded-full bg-ink/30 ring-4 ring-fable"></div>
+        
+        <div>
+          <span class="md:hidden text-sm font-medium text-ink-light dark:text-white/60 block mb-2">12 Ago 2026</span>
+          <details class="group">
+            <summary class="list-none cursor-pointer flex items-center justify-between outline-none">
+              <h2 class="text-2xl font-serif text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Apresentando o SpecLine</h2>
+              <span class="text-ink-light dark:text-white/60 group-open:rotate-180 transition-transform duration-300">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </summary>
+            
+            <div class="mt-4 prose prose-ink max-w-none text-ink-light dark:text-white/60 font-sans space-y-4 animate-fade-in-up">
+              <p>O início de tudo. Lançamos a primeira versão da nossa landing page e o manifesto do SpecLine. Acreditamos que a ferramenta dita o processo, e nosso objetivo é acabar com a fragmentação do trabalho combinando tarefas, documentos, diagramas e chat em uma única plataforma focada e sem distrações.</p>
+              <p>Fique ligado, pois grandes atualizações estão a caminho enquanto desenvolvemos o nosso ambiente de espaços de trabalho.</p>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<style>
+/* Remove default summary marker in Safari/Webkit */
+details > summary::-webkit-details-marker {
+  display: none;
+}
+</style>

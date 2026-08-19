@@ -1,0 +1,93 @@
+<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- Hero Section -->
+    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ink/5 dark:bg-white/5 text-ink dark:text-fable text-sm font-semibold tracking-wide uppercase mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Módulo de Comunicação
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight mb-6">Comunicação Focada.</h1>
+        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
+          Chega de mensagens perdidas em canais barulhentos. No SpecLine, a comunicação é assíncrona, estruturada e vive exatamente ao lado da tarefa ou documento em questão.
+        </p>
+      </div>
+    </section>
+
+    <!-- Visual / Mockup Abstract -->
+    <section class="px-6 mb-24 max-w-6xl mx-auto">
+      <div class="card bg-white dark:bg-ink-paper p-8 md:p-12 border border-ink/5 dark:border-white/5 shadow-xl rounded-3xl relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ink/80 to-transparent"></div>
+        <div class="max-w-2xl mx-auto space-y-6">
+          <!-- Chat bubble 1 -->
+          <div class="flex gap-4">
+            <div class="w-10 h-10 rounded-full bg-sage/20 flex-shrink-0 flex items-center justify-center text-sage font-bold">A</div>
+            <div class="bg-fable-dark dark:bg-ink-darker p-4 rounded-2xl rounded-tl-sm w-full space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="font-semibold text-ink dark:text-fable text-sm">Ana R.</span>
+                <span class="text-ink-light dark:text-white/60 text-xs">Hoje às 14:32</span>
+              </div>
+              <div class="h-3 w-5/6 bg-ink/10 rounded"></div>
+              <div class="h-3 w-3/4 bg-ink/10 rounded"></div>
+            </div>
+          </div>
+          <!-- Action Indicator -->
+          <div class="flex items-center gap-4 py-2 px-14">
+            <div class="h-px w-full bg-ink/5 dark:bg-white/5"></div>
+            <div class="text-xs text-ink-light dark:text-white/60 whitespace-nowrap bg-white dark:bg-ink-paper px-2">Atualizou o status para In Progress</div>
+            <div class="h-px w-full bg-ink/5 dark:bg-white/5"></div>
+          </div>
+          <!-- Chat bubble 2 (Self) -->
+          <div class="flex gap-4 flex-row-reverse">
+            <div class="w-10 h-10 rounded-full bg-ink/10 flex-shrink-0 border border-ink/20 dark:border-white/20"></div>
+            <div class="bg-ink text-white p-4 rounded-2xl rounded-tr-sm w-[80%] space-y-2">
+              <div class="h-3 w-4/6 bg-white/20 rounded"></div>
+              <div class="h-3 w-full bg-white/20 rounded"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Details -->
+    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/10 dark:border-white/10">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Threads Contextuais</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Esqueça o canal #geral. A conversa acontece no card da tarefa ou nos comentários do documento. Quando a tarefa é concluída, a discussão é arquivada como histórico, nunca perdida.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Design Assíncrono</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Sem pontos verdes de "online". Sem expectativa de resposta em 3 segundos. O SpecLine respeita seu fluxo de trabalho, agrupando notificações para quando você decidir checar seu Inbox.
+              </p>
+            </div>
+          </div>
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Inbox Zero</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Uma central única onde você revisa todas as menções e atualizações de forma triada. Leia, responda, resolva e esvazie sua caixa de entrada para voltar ao trabalho focado.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Histórico Interligado</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                A linha do tempo do chat não é apenas texto. Alterações de status, edições no documento e mudança de responsáveis aparecem na mesma thread, oferecendo a auditoria perfeita do projeto.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

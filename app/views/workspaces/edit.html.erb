@@ -1,0 +1,24 @@
+<div class="h-full overflow-y-auto bg-[#FDFBF7] dark:bg-ink-darker flex flex-col">
+  <!-- Top Navigation -->
+  <header class="bg-transparent pt-8 px-8">
+    <%= link_to workspaces_path, class: "inline-flex items-center gap-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors font-sans text-sm group duration-500" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-1 transition-transform duration-300"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Voltar para o Painel
+    <% end %>
+  </header>
+
+  <main class="flex-1 flex justify-center p-6 pt-12 pb-24">
+    <div class="w-full max-w-3xl animate-fade-in-up">
+      <!-- Icon/Header -->
+      <div class="text-center mb-10">
+        <div class="w-16 h-16 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-fable"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </div>
+        <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-2">Configurações do Workspace</h1>
+        <p class="text-ink-light dark:text-white/60 font-sans text-base">Altere os dados do seu espaço de trabalho.</p>
+      </div>
+
+        <%= render "form", workspace: @workspace, button_text: "Salvar Alterações" %>
+    </div>
+  </main>
+</div>

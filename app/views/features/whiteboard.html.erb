@@ -1,0 +1,95 @@
+<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- Hero Section -->
+    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto">
+      <div class="max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sand-dark/30 text-ink dark:text-fable text-sm font-semibold tracking-wide uppercase mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          Módulo Visual
+        </div>
+        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight mb-6">Quadros & Diagramas.</h1>
+        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
+          Pensamento visual sem precisar abrir outras ferramentas de lousa virtual. Desenhe arquiteturas, rabisque wireframes ou escreva diagramas complexos via código. O seu quadro branco, integrado ao ecossistema.
+        </p>
+      </div>
+    </section>
+
+    <!-- Visual / Mockup Abstract -->
+    <section class="px-6 mb-24 max-w-6xl mx-auto">
+      <div class="card bg-[#EAE8E2] p-8 md:p-12 border border-ink/5 dark:border-white/5 shadow-xl rounded-3xl relative overflow-hidden" style="background-image: radial-gradient(#d1cfc9 1px, transparent 1px); background-size: 20px 20px;">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ink/30 to-transparent"></div>
+        <div class="h-[300px] relative w-full flex items-center justify-center">
+          
+          <!-- Nodes and arrows abstract -->
+          <div class="absolute top-10 left-10 md:left-32 w-32 h-16 bg-white dark:bg-ink-paper border-2 border-ink dark:border-ink-darker rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center justify-center">
+            <div class="h-2 w-16 bg-ink/20 rounded"></div>
+          </div>
+          
+          <div class="absolute top-10 right-10 md:right-32 w-32 h-16 bg-white dark:bg-ink-paper border-2 border-terracotta rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center justify-center">
+            <div class="h-2 w-16 bg-terracotta/40 rounded"></div>
+          </div>
+
+          <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-40 h-24 bg-white dark:bg-ink-paper border-2 border-sage rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center gap-2">
+            <div class="h-2 w-20 bg-sage/40 rounded"></div>
+            <div class="h-2 w-12 bg-sage/40 rounded"></div>
+          </div>
+
+          <!-- Abstract connecting lines (SVG) -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 200 80 Q 300 80 400 80" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" stroke-dasharray="4" opacity="0.3"/>
+            <path d="M 200 80 Q 200 200 450 200" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" opacity="0.3"/>
+            <path d="M 600 80 Q 600 200 450 200" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" opacity="0.3"/>
+          </svg>
+
+          <!-- Cursor -->
+          <div class="absolute top-20 left-1/2 transform translate-x-10 translate-y-10">
+            <svg class="w-5 h-5 text-terracotta drop-shadow-md" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
+            <span class="bg-terracotta text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] absolute left-3 top-3">Felipe</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature Details -->
+    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/10 dark:border-white/10">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Diagramas como Código (Mermaid)</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Para engenheiros e arquitetos, gerencie diagramas da mesma forma que você gerencia código. Use a sintaxe Mermaid para criar fluxogramas, diagramas de sequência e gráficos de Gantt instantaneamente.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Canvas Infinito de Forma Livre</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Precisa apenas rabiscar? Nosso quadro branco infinito suporta desenho à mão livre, formas perfeitas, setas auto-conectáveis e post-its. Perfeito para sessões rápidas de brainstorming.
+              </p>
+            </div>
+          </div>
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Multiplayer em Tempo Real</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                Trabalhe com dezenas de pessoas no mesmo quadro sem lag. Veja cursores se movendo, ideias surgindo em tempo real e colabore de forma fluida durante as reuniões de planejamento.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Link Direto para Documentos</h3>
+              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
+                O quadro branco não é uma ilha isolada. Você pode incorporar um quadro inteiro dentro de uma especificação (Documento), e qualquer alteração no quadro reflete magicamente na documentação.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

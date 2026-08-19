@@ -1,0 +1,116 @@
+<!-- Kanban Board View -->
+<div class="p-6 lg:p-8" data-controller="kanban" data-kanban-move-url-value="<%= workspace_project_path(workspace, project) %>">
+  <div class="flex gap-4 overflow-x-auto pb-4" style="min-height: calc(100vh - 200px);" data-kanban-target="board">
+    <% statuses.each do |status| %>
+      <div class="flex-shrink-0 w-72 flex flex-col" data-kanban-target="column" data-status-id="<%= status.id %>">
+        
+        <!-- Column Header -->
+        <div class="flex items-center justify-between mb-3 px-1 column-drag-handle cursor-grab active:cursor-grabbing">
+          <div class="flex items-center gap-2">
+            <div class="w-2.5 h-2.5 rounded-full" style="background-color: <%= status.color %>"></div>
+            <h3 class="text-xs font-bold text-ink dark:text-fable uppercase tracking-wider"><%= status.name %></h3>
+            <span class="text-[10px] text-ink-light dark:text-white/60 bg-ink/5 dark:bg-white/5 px-1.5 py-0.5 rounded-full font-semibold">
+              <%= issues.select { |i| i.issue_status_id == status.id }.count %>
+            </span>
+          </div>
+          
+          <div class="flex items-center gap-0.5">
+            <%= link_to new_workspace_project_issue_path(workspace, project, issue_status_id: status.id), data: { turbo_frame: "modal" }, class: "w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer duration-500", title: "Adicionar Issue" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <% end %>
+
+            <details class="relative" data-controller="dropdown" data-action="click->dropdown#toggle keydown.window->dropdown#closeOnEsc">
+              <summary class="list-none w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer focus:outline-none duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+              </summary>
+            
+            <div class="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow-lg p-1 z-50">
+              <%= link_to edit_workspace_project_issue_status_path(workspace, project, status), data: { turbo_frame: "modal" }, class: "flex items-center gap-2 px-3 py-2 text-sm text-ink dark:text-fable hover:bg-[#FDFBF7] dark:hover:bg-white/5 rounded-lg transition-colors w-full text-left duration-500" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-light dark:text-white/60"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                Editar Coluna
+              <% end %>
+              <div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div>
+              <%= button_to workspace_project_issue_status_path(workspace, project, status), method: :delete, data: { turbo_confirm: "Tem certeza que deseja excluir esta coluna?" }, class: "flex items-center gap-2 px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors w-full text-left duration-500" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                Excluir Coluna
+              <% end %>
+            </div>
+          </details>
+          </div>
+        </div>
+
+        <!-- Cards Container (Sortable) -->
+        <div class="flex-1 space-y-2 p-1 rounded-xl bg-ink/[0.02] border border-ink/[0.03] dark:border-white/[0.05] min-h-[100px]"
+             data-kanban-target="list"
+             data-status-id="<%= status.id %>"
+             data-project-id="<%= project.id %>"
+             <%= "data-assignee-id=\"#{local_assigns[:assignee_id]}\"".html_safe if local_assigns.has_key?(:assignee_id) %>
+             <%= "data-board-id=\"#{local_assigns[:board_id]}\"".html_safe if local_assigns.has_key?(:board_id) %>>
+          <% issues.select { |i| i.issue_status_id == status.id }.sort_by { |i| i.position || i.number }.each do |issue| %>
+            <div class="bg-white dark:bg-ink-paper rounded-xl p-3.5 border border-ink/5 dark:border-white/5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-md hover:border-ink/15 dark:hover:border-white/15 transition-all duration-200 cursor-grab active:cursor-grabbing group"
+                 data-issue-id="<%= issue.id %>"
+                 data-kanban-target="card">
+              
+              <!-- Priority & ID -->
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-[10px] font-mono font-semibold text-ink-light dark:text-white/60"><%= issue.identifier %></span>
+                <% case issue.priority %>
+                <% when "urgent" %>
+                  <span class="w-4 h-4 text-red-500"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 3v10h-2V3h2zm0 14v2h-2v-2h2z"/></svg></span>
+                <% when "high" %>
+                  <span class="w-4 h-4 text-orange-500"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg></span>
+                <% when "medium" %>
+                  <span class="w-4 h-4 text-yellow-500"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></span>
+                <% when "low" %>
+                  <span class="w-4 h-4 text-blue-400"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span>
+                <% end %>
+              </div>
+
+              <!-- Title & Description -->
+              <%= link_to edit_workspace_project_issue_path(workspace, project, issue),
+                  data: { turbo_frame: "modal" },
+                  class: "block mb-2.5 group-hover:text-terracotta transition-colors duration-500" do %>
+                <h4 class="text-sm font-medium text-ink dark:text-fable leading-snug line-clamp-2 mb-1 group-hover:text-terracotta transition-colors duration-500"><%= issue.title %></h4>
+                <% if issue.description.present? %>
+                  <p class="text-[11px] text-ink-light dark:text-white/60 line-clamp-2 leading-relaxed"><%= issue.description %></p>
+                <% end %>
+              <% end %>
+
+              <!-- Footer: Labels + Assignee -->
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex flex-wrap gap-1">
+                  <% issue.labels.first(2).each do |label| %>
+                    <span class="text-[9px] font-semibold px-1.5 py-0.5 rounded-full" style="background-color: <%= label.color %>20; color: <%= label.color %>">
+                      <%= label.name %>
+                    </span>
+                  <% end %>
+                </div>
+
+                <% if issue.assignee %>
+                  <div class="w-6 h-6 rounded-full bg-ink border-2 border-white flex items-center justify-center text-[9px] text-white font-bold shrink-0" title="<%= issue.assignee.email %>">
+                    <%= issue.assignee.email[0].upcase %>
+                  </div>
+                <% end %>
+              </div>
+
+              <% if issue.due_date.present? %>
+                <div class="flex items-center gap-1 mt-2 text-[10px] <%= issue.due_date < Date.current ? 'text-red-500' : 'text-ink-light' %>">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                  <%= issue.due_date.strftime("%d %b") %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Add New Column Button -->
+    <div class="flex-shrink-0 w-72 flex flex-col pt-1">
+      <%= link_to new_workspace_project_issue_status_path(workspace, project), data: { turbo_frame: "modal" }, class: "flex items-center gap-2 p-3 rounded-xl border border-dashed border-ink/20 dark:border-white/20 text-ink-light dark:text-white/60 hover:text-terracotta hover:border-terracotta hover:bg-terracotta/5 transition-all group cursor-pointer duration-500" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:scale-110 transition-transform duration-500"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span class="text-sm font-medium">Adicionar Coluna</span>
+      <% end %>
+    </div>
+  </div>
+</div>

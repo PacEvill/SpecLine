@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  commentable: one (Issue)
+  body: Comentario da tarefa um
+
+two:
+  user: two
+  commentable: two (Issue)
+  body: Comentario da tarefa dois
+

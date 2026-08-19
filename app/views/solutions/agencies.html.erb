@@ -1,0 +1,135 @@
+<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- Hero Section -->
+    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto text-center border-b border-ink/10 dark:border-white/10">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="inline-block px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-sm font-semibold tracking-wide uppercase mb-2">Para Agências e Consultorias</div>
+        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight">O fim do caos entre projetos.</h1>
+        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
+          Gerenciar 10 clientes diferentes não deveria exigir abas infinitas no navegador nem mensagens perdidas em chats informais. Com a separação rígida de projetos do SpecLine, sua agência ganha escalabilidade e profissionalismo.
+        </p>
+        <div class="pt-4">
+          <a href="/register" class="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2">
+            Organizar minha Agência
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Problem Section -->
+    <section class="py-24 px-6 bg-white dark:bg-ink-paper">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div class="order-2 lg:order-1 bg-fable dark:bg-ink-darker p-8 rounded-2xl border border-ink/10 dark:border-white/10 relative overflow-hidden">
+            <div class="space-y-6">
+              <!-- Mock Client A -->
+              <div class="bg-white dark:bg-ink-paper p-4 rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-ink/5 dark:border-white/5">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="font-serif font-semibold text-ink dark:text-fable">Cliente Alpha</div>
+                  <span class="text-xs px-2 py-1 bg-terracotta/10 text-terracotta rounded">Urgente</span>
+                </div>
+                <div class="text-sm text-ink-light dark:text-white/60 font-sans">"Vocês viram a mensagem que mandei no chat corporativo sobre a logo nova? Onde está o link da nuvem?"</div>
+              </div>
+              <!-- Mock Client B -->
+              <div class="bg-white dark:bg-ink-paper p-4 rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-ink/5 dark:border-white/5 opacity-50">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="font-serif font-semibold text-ink dark:text-fable">Cliente Beta</div>
+                </div>
+                <div class="text-sm text-ink-light dark:text-white/60 font-sans">Aguardando aprovação de escopo...</div>
+              </div>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-fable via-transparent to-transparent"></div>
+          </div>
+          <div class="order-1 lg:order-2">
+            <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-6">Sua margem de lucro vaza nas falhas de comunicação.</h2>
+            <div class="space-y-6 text-lg text-ink-light dark:text-white/60 font-sans leading-relaxed">
+              <p>O maior gargalo de uma agência ou consultoria não é a execução do trabalho, é a orquestração do cliente. Quando aprovações se perdem em threads de e-mail e arquivos finais ficam espalhados na nuvem, a confiança do cliente cai e o seu retrabalho aumenta.</p>
+              <p>O SpecLine atua como o seu <strong>Portal do Cliente</strong>. Um ambiente seguro onde tudo o que pertence ao Cliente A fica estritamente no Workspace do Cliente A.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Benefits -->
+    <section class="py-24 px-6 bg-fable dark:bg-ink-darker max-w-6xl mx-auto">
+      <div class="text-center mb-16 max-w-2xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-4">Escalabilidade com Qualidade</h2>
+        <p class="text-lg text-ink-light dark:text-white/60 font-sans">Entregue uma experiência premium para o seu cliente final enquanto mantém sua equipe sã e organizada.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300 border-t-4 border-t-ink">
+          <div class="w-12 h-12 rounded-xl bg-ink/5 dark:bg-white/5 flex items-center justify-center text-ink dark:text-fable mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Isolamento de Contexto</h3>
+          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Cada cliente tem sua própria Wiki, seu próprio Kanban e seu próprio Chat. Quando você entra no espaço do Cliente A, você literalmente não enxerga nada do Cliente B. Foco absoluto no que está na sua frente.</p>
+        </div>
+        
+        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300 border-t-4 border-t-terracotta">
+          <div class="w-12 h-12 rounded-xl bg-terracotta/10 flex items-center justify-center text-terracotta mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Gestão de Demandas Clara</h3>
+          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Diga adeus às dezenas de mensagens em apps de chat pedindo "como está aquela tarefa?". Com a comunicação grudada no Card, o histórico daquela demanda está sempre impecável e auditável pelo cliente.</p>
+        </div>
+
+        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300 border-t-4 border-t-sage">
+          <div class="w-12 h-12 rounded-xl bg-sage/10 flex items-center justify-center text-sage mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M7 7h10"/><path d="M7 12h10"/><path d="M7 17h10"/></svg>
+          </div>
+          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Entregáveis Seguros</h3>
+          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Mantenha os links de design, credenciais temporárias e assets do projeto em Documentos estruturados na Wiki. Chega de buscar aquela senha que alguém mandou num chat efêmero há 3 meses.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Workflow -->
+    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/5 dark:border-white/5">
+      <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16 max-w-2xl mx-auto">
+          <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-4">A Jornada do seu Cliente.</h2>
+          <p class="text-lg text-ink-light dark:text-white/60 font-sans">Como o SpecLine transforma a percepção de valor do seu serviço.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-full bg-ink text-fable flex items-center justify-center font-serif text-xl">1</div>
+            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Onboarding Limpo</h3>
+            <p class="text-ink-light dark:text-white/60 font-sans text-sm leading-relaxed">Você convida o cliente para o Workspace dele. Ele não vê as configurações da sua agência nem outros clientes, apenas o projeto dele com a sua marca.</p>
+          </div>
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-full bg-ink/80 text-fable flex items-center justify-center font-serif text-xl">2</div>
+            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Wiki Central</h3>
+            <p class="text-ink-light dark:text-white/60 font-sans text-sm leading-relaxed">Na página inicial do projeto, você deixa o Contrato, o Briefing, os Manuais de Marca e links vitais. O cliente sabe exatamente onde encontrar o que precisa.</p>
+          </div>
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-full bg-ink/60 text-fable flex items-center justify-center font-serif text-xl">3</div>
+            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Acompanhamento</h3>
+            <p class="text-ink-light dark:text-white/60 font-sans text-sm leading-relaxed">O cliente entra no Kanban e vê a coluna "Aguardando Aprovação". Ele clica no card, vê o design anexado, aprova nos comentários do próprio card.</p>
+          </div>
+          <div class="space-y-4">
+            <div class="w-12 h-12 rounded-full bg-ink/40 text-fable flex items-center justify-center font-serif text-xl">4</div>
+            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Entrega Sem Atrito</h3>
+            <p class="text-ink-light dark:text-white/60 font-sans text-sm leading-relaxed">O projeto termina. Todos os assets, histórico de aprovações e links estão salvos no Workspace, gerando um dossiê perfeito do seu trabalho.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="py-32 px-6 max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable font-semibold mb-6">Profissionalize suas Entregas</h2>
+      <p class="text-xl text-ink-light dark:text-white/60 mb-10 font-sans">Seus clientes percebem a diferença entre uma agência caótica e uma operação de elite. Torne-se a segunda opção.</p>
+      <a href="/register" class="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2">
+        Criar Workspace da Agência
+      </a>
+    </section>
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

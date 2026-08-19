@@ -1,0 +1,28 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  creator: one
+  issue_status: one
+  title: Tarefa Um
+  description: Descricao da tarefa um
+  number: 1
+  identifier: PROJ-1
+  priority: 1
+  due_date: 2026-08-18
+  start_date: 2026-08-18
+  position: 1.5
+
+two:
+  project: two
+  creator: two
+  issue_status: two
+  title: Tarefa Dois
+  description: Descricao da tarefa dois
+  number: 2
+  identifier: PROJ-2
+  priority: 1
+  due_date: 2026-08-18
+  start_date: 2026-08-18
+  position: 2.5
+

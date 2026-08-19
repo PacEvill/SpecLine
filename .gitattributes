@@ -1,0 +1,79 @@
+# ==============================================================================
+# SpecLine - .gitattributes
+# Configuracoes de atributos do Git (Line endings, linguist, diffs, binarios)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Normalizacao de Quebras de Linha (Line Endings)
+# ------------------------------------------------------------------------------
+# Define quebras de linha Unix (LF) como padrao para arquivos de texto,
+# evitando problemas de CRLF entre Windows, macOS, Linux e containers Docker.
+* text=auto eol=lf
+
+# Scripts executaveis e utilitarios de shell DEVEM usar LF obrigatoriamente
+bin/* text eol=lf
+*.sh text eol=lf
+Procfile.dev text eol=lf
+Dockerfile text eol=lf
+
+# Codigo-fonte e arquivos de configuracao
+*.rb text eol=lf
+*.erb text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+
+# ------------------------------------------------------------------------------
+# 2. Arquivos Binarios (Evita diffs/merges indevidos em arquivos binarios)
+# ------------------------------------------------------------------------------
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.svg text
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.tgz binary
+*.sqlite3 binary
+
+# ------------------------------------------------------------------------------
+# 3. Estatisticas do GitHub Linguist & Arquivos Gerados
+# ------------------------------------------------------------------------------
+# Esquemas de banco de dados gerados automaticamente pelo Rails
+db/schema.rb linguist-generated
+db/cable_schema.rb linguist-generated
+db/cache_schema.rb linguist-generated
+db/queue_schema.rb linguist-generated
+
+# Arquivos de Lock de dependencias
+Gemfile.lock linguist-generated
+package-lock.json linguist-generated
+yarn.lock linguist-generated
+
+# Diretorio de vendors
+vendor/* linguist-vendored
+
+# Documentacao
+*.md linguist-documentation
+docs/* linguist-documentation
+
+# ------------------------------------------------------------------------------
+# 4. Custom Diff Drivers do Rails
+# ------------------------------------------------------------------------------
+# Permite diff inteligente de credenciais criptografadas do Rails
+config/credentials.yml.enc diff=rails_credentials
+config/credentials/*.yml.enc diff=rails_credentials
+config/credentials/production.yml.enc diff=rails_credentials
+config/credentials/development.yml.enc diff=rails_credentials
+config/credentials/test.yml.enc diff=rails_credentials

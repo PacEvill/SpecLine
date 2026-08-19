@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  deadline: 2026-08-17
+  progress: 1
+  status: MyString
+  workspace: one
+
+two:
+  name: MyString
+  description: MyText
+  deadline: 2026-08-17
+  progress: 1
+  status: MyString
+  workspace: two

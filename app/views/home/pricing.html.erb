@@ -1,0 +1,329 @@
+<div class="min-h-screen flex flex-col bg-[#FDFBF7] dark:bg-ink-darker transition-colors duration-500">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow max-w-7xl mx-auto px-6 py-24 md:py-32 w-full flex flex-col items-center" data-controller="pricing">
+    <div class="text-center space-y-6 mb-16 max-w-3xl">
+      <h1 class="text-5xl md:text-7xl font-serif text-[#212122] dark:text-fable tracking-tight">Um preço simples.</h1>
+      <p class="text-xl md:text-2xl font-serif text-[#212122]/80 dark:text-fable/80">Acreditamos em transparência. Sem limites complexos, sem letras miúdas. Você foca no seu trabalho, nós cuidamos do resto.</p>
+    </div>
+
+    <!-- Pricing Toggle -->
+    <div class="flex items-center justify-center gap-4 mb-16 font-sans font-medium text-[#212122]/80 dark:text-fable/80">
+      <span data-action="click->pricing#toggle" class="cursor-pointer select-none">Mensal</span>
+      <div data-action="click->pricing#toggle" class="w-12 h-6 bg-[#D97A5E]/20 rounded-full p-1 cursor-pointer flex items-center shadow-inner relative">
+        <div data-pricing-target="toggle" class="absolute w-4 h-4 bg-[#D97A5E] rounded-full shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-transform duration-300"></div>
+      </div>
+      <span data-action="click->pricing#toggle" class="text-[#212122] dark:text-fable cursor-pointer select-none">Anual <span class="text-xs text-[#D97A5E] font-bold ml-1 uppercase tracking-wider">Economize 20%</span></span>
+    </div>
+
+    <!-- Plans -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto mb-24">
+      
+      <!-- Starter Plan -->
+      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-white/5">
+        <div class="mb-8">
+          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Starter</h3>
+          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">Ideal para testar a ferramenta e organizar as primeiras ideias.</p>
+        </div>
+        <div class="mb-10 relative h-[60px]">
+          <div class="flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[#212122] dark:text-fable">Grátis</span>
+            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ R$ 0</span>
+          </div>
+        </div>
+        
+        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            1 usuário
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Até 3 workspaces e 10 projetos
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Issues ilimitadas
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            5GB de armazenamento
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Relatórios básicos
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Suporte na comunidade
+          </li>
+        </ul>
+        <a href="/register" class="block w-full py-3 px-4 bg-[#F3EFE6] dark:bg-white/5 text-[#212122] dark:text-fable font-sans font-medium text-center rounded-xl hover:bg-[#A5B5A1]/20 dark:hover:bg-white/10 transition-colors duration-500">Começar grátis</a>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-xl shadow-[#D97A5E]/10 border-2 border-[#D97A5E] dark:border-terracotta relative scale-105 z-10">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#D97A5E] text-white font-sans text-xs font-bold uppercase tracking-widest py-1.5 px-4 rounded-full">
+          Mais Popular
+        </div>
+        <div class="mb-8">
+          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Pro</h3>
+          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">O pacote completo de foco e colaboração profunda para equipes.</p>
+        </div>
+        <div class="mb-10 relative h-[60px] overflow-hidden">
+          <!-- Monthly Price -->
+          <div data-pricing-target="monthlyPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-0 opacity-100 pointer-events-auto flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 49</span>
+            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês</span>
+          </div>
+          <!-- Annual Price -->
+          <div data-pricing-target="annualPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-4 opacity-0 pointer-events-none flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 39</span>
+            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês (anual)</span>
+          </div>
+        </div>
+        
+        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Até 25 usuários
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Workspaces, projetos e issues ilimitados
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            50GB de armazenamento
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Relatórios avançados e exportação em PDF
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Labels personalizadas e Milestones
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Acesso à API
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Suporte prioritário
+          </li>
+        </ul>
+        <a href="/register" class="block w-full py-3 px-4 bg-[#D97A5E] text-white font-sans font-medium text-center rounded-xl hover:bg-[#c4694f] transition-colors shadow-md duration-500">Assinar o Pro</a>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-white/5">
+        <div class="mb-8">
+          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Enterprise</h3>
+          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">Controle, segurança e escalabilidade para operações complexas.</p>
+        </div>
+        <div class="mb-10 relative h-[60px] overflow-hidden">
+          <!-- Monthly Price -->
+          <div data-pricing-target="monthlyPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-0 opacity-100 pointer-events-auto flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 149</span>
+            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês</span>
+          </div>
+          <!-- Annual Price -->
+          <div data-pricing-target="annualPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-4 opacity-0 pointer-events-none flex items-baseline gap-2">
+            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 119</span>
+            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês (anual)</span>
+          </div>
+        </div>
+        
+        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Usuários ilimitados
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            500GB de armazenamento
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            SSO/SAML
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Logs de auditoria
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Opção On-Premise
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Integrações customizadas
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            SLA de 99.9% e Suporte dedicado
+          </li>
+        </ul>
+        <a href="/contact" class="block w-full py-3 px-4 bg-[#212122] dark:bg-fable text-white dark:text-ink font-sans font-medium text-center rounded-xl hover:bg-[#212122]/90 dark:hover:bg-fable/90 transition-colors duration-500">Falar com Vendas</a>
+      </div>
+
+    </div>
+
+    <!-- Self-Hosted Option -->
+    <div class="w-full max-w-5xl mx-auto mb-32 bg-[#212122] dark:bg-fable text-white dark:text-ink rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden transition-colors duration-500">
+      <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#D97A5E]/20 rounded-full blur-3xl"></div>
+      <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-[#A5B5A1]/20 rounded-full blur-3xl"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row gap-12 items-center">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-4 text-[#A5B5A1] dark:text-[#6a7c66]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            <h3 class="text-xl font-sans font-semibold uppercase tracking-wider">Self-Hosted / On-Premise</h3>
+          </div>
+          <h4 class="text-3xl md:text-4xl font-serif mb-4">Seu servidor, seus dados.</h4>
+          <p class="text-white/70 dark:text-ink/70 font-sans text-lg mb-6">
+            O SpecLine pode rodar na sua própria infraestrutura. Implementação via Docker, soberania total de dados e segurança máxima.
+          </p>
+          <ul class="space-y-3 font-sans text-white/80 dark:text-ink/80 mb-8">
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Soberania total de dados
+            </li>
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Deploy simples com Docker & Kamal
+            </li>
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              100% Gratuito e Open-Source
+            </li>
+          </ul>
+        </div>
+        <div class="md:w-72 bg-white/5 dark:bg-ink/5 rounded-2xl p-6 border border-white/10 dark:border-ink/10 text-center flex flex-col justify-center items-center backdrop-blur-sm">
+          <span class="text-lg font-sans text-white/70 dark:text-ink/70 mb-2">Self-Hosted</span>
+          <span class="text-5xl font-serif mb-4">Grátis</span>
+          <span class="text-xs text-white/50 dark:text-ink/50 mb-6">Você arca apenas com os custos da sua própria infraestrutura e hardware.</span>
+          <a href="/self-hosted" class="block w-full py-3 px-4 bg-white dark:bg-ink-paper text-[#212122] dark:text-fable font-sans font-medium rounded-xl hover:bg-white/90 dark:hover:bg-ink transition-colors border dark:border-white/10 duration-500">Ver Documentação</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature Comparison -->
+    <div class="w-full max-w-5xl mx-auto mb-32">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-serif text-[#212122] dark:text-fable">Compare os planos</h2>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr>
+              <th class="py-4 border-b-2 border-gray-200 dark:border-white/10 font-sans font-semibold text-[#212122]/70 dark:text-fable/70 uppercase tracking-wider text-sm w-1/4">Recursos</th>
+              <th class="py-4 px-4 border-b-2 border-gray-200 dark:border-white/10 font-serif font-semibold text-xl text-[#212122] dark:text-fable text-center w-1/4">Starter</th>
+              <th class="py-4 px-4 border-b-2 border-[#D97A5E] dark:border-terracotta font-serif font-semibold text-xl text-[#D97A5E] text-center w-1/4 bg-[#D97A5E]/5 dark:bg-terracotta/10 rounded-t-xl">Pro</th>
+              <th class="py-4 px-4 border-b-2 border-gray-200 dark:border-white/10 font-serif font-semibold text-xl text-[#212122] dark:text-fable text-center w-1/4">Enterprise</th>
+            </tr>
+          </thead>
+          <tbody class="font-sans text-[#212122]/80 dark:text-fable/80 text-sm">
+            <% 
+              features = [
+                ['Workspaces', 'Até 3', 'Ilimitado', 'Ilimitado'],
+                ['Projetos', 'Até 10', 'Ilimitado', 'Ilimitado'],
+                ['Issues', 'Ilimitado', 'Ilimitado', 'Ilimitado'],
+                ['Documents', true, true, true],
+                ['Kanban Board', true, true, true],
+                ['Time Tracking', false, true, true],
+                ['Reports', 'Básicos', 'Avançados', 'Avançados'],
+                ['PDF Export', false, true, true],
+                ['API', false, true, true],
+                ['Storage', '5GB', '50GB', '500GB'],
+                ['Users', '1 Usuário', 'Até 25', 'Ilimitados'],
+                ['Support', 'Comunidade', 'Prioritário', 'Dedicado'],
+                ['SSO', false, false, true],
+                ['Audit Logs', false, false, true],
+                ['Self-Hosted', false, false, true],
+                ['Custom Domain', false, false, true]
+              ]
+            %>
+            
+            <% features.each_with_index do |row, i| %>
+              <tr class="border-b border-gray-100 dark:border-white/5 hover:bg-[#F3EFE6]/50 dark:hover:bg-white/5 transition-colors duration-500">
+                <td class="py-4 font-medium text-[#212122] dark:text-fable"><%= row[0] %></td>
+                
+                <!-- Starter Col -->
+                <td class="py-4 px-4 text-center">
+                  <% if row[1] == true %>
+                    <svg class="w-5 h-5 mx-auto text-[#A5B5A1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <% elsif row[1] == false %>
+                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <% else %>
+                    <%= row[1] %>
+                  <% end %>
+                </td>
+                
+                <!-- Pro Col -->
+                <td class="py-4 px-4 text-center bg-[#D97A5E]/5 dark:bg-terracotta/10 font-medium text-[#212122] dark:text-fable <%= i == features.length - 1 ? 'rounded-b-xl' : '' %>">
+                  <% if row[2] == true %>
+                    <svg class="w-5 h-5 mx-auto text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <% elsif row[2] == false %>
+                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <% else %>
+                    <%= row[2] %>
+                  <% end %>
+                </td>
+                
+                <!-- Enterprise Col -->
+                <td class="py-4 px-4 text-center">
+                  <% if row[3] == true %>
+                    <svg class="w-5 h-5 mx-auto text-[#A5B5A1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <% elsif row[3] == false %>
+                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  <% else %>
+                    <%= row[3] %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="w-full max-w-3xl mx-auto mb-24">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-serif text-[#212122] dark:text-fable">Perguntas Frequentes</h2>
+      </div>
+      
+      <div class="space-y-6 font-sans">
+        <!-- Q1 -->
+        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Posso mudar de plano depois?</h4>
+          <p class="text-[#212122]/70 dark:text-fable/70">Sim! Você pode fazer upgrade ou downgrade a qualquer momento. Se fizer um upgrade, o valor será calculado pro-rata pelo restante do ciclo.</p>
+        </div>
+        
+        <!-- Q2 -->
+        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Como funciona a versão Self-Hosted? Tem custos?</h4>
+          <p class="text-[#212122]/70 dark:text-fable/70">O SpecLine é 100% gratuito e open-source para você rodar na sua própria infraestrutura. Nós não cobramos nenhuma taxa de setup ou mensalidade. Você arcará apenas com os custos dos seus próprios servidores (hardware/nuvem) para manter a aplicação online.</p>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Projetos de código aberto têm desconto?</h4>
+          <p class="text-[#212122]/70 dark:text-fable/70">Sim. Oferecemos o plano Pro gratuitamente para projetos open-source, e a licença Self-Hosted também é gratuita. Entre em contato com nossa equipe para aplicar.</p>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Preciso de cartão de crédito para o plano Grátis?</h4>
+          <p class="text-[#212122]/70 dark:text-fable/70">Não. O plano Starter é totalmente gratuito e não exige informações de pagamento para criar sua conta e começar a usar.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>
