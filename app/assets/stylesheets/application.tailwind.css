@@ -45,3 +45,40 @@ details > summary {
 details > summary::-webkit-details-marker {
   display: none;
 }
+
+/* Trix Editor Modern Overrides */
+trix-toolbar {
+  @apply bg-white dark:bg-ink-darker border-b border-ink/5 dark:border-white/5 sticky top-14 z-10 px-0 py-2 flex flex-wrap gap-1 mb-8;
+}
+
+trix-toolbar .trix-button-group {
+  @apply border-none bg-transparent m-0 flex gap-1 rounded-none;
+}
+
+trix-toolbar .trix-button {
+  @apply bg-ink/5 dark:bg-white/5 border-none rounded-lg text-ink-light dark:text-white/60 w-8 h-8 flex items-center justify-center transition-colors;
+}
+
+trix-toolbar .trix-button:hover {
+  @apply bg-ink/10 dark:bg-white/10 text-ink dark:text-fable;
+}
+
+trix-toolbar .trix-button.trix-active {
+  @apply bg-ink dark:bg-fable text-white dark:text-ink;
+}
+
+trix-toolbar .trix-button::before {
+  @apply opacity-70;
+}
+
+trix-editor {
+  @apply border-none bg-transparent p-0 outline-none text-lg text-ink dark:text-fable min-h-[500px];
+}
+
+trix-editor:focus {
+  @apply border-none ring-0 outline-none;
+}
+
+trix-editor [data-trix-attachment] {
+  @apply border-none rounded-xl overflow-hidden;
+}

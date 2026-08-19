@@ -1,48 +1,48 @@
 <div class="flex-1 bg-white dark:bg-ink-darker min-h-screen flex flex-col">
-  <!-- Editor Header -->
-  <header class="h-14 px-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between sticky top-0 bg-white/90 dark:bg-ink-darker/90 backdrop-blur-sm z-10">
-    <div class="flex items-center gap-3">
-      <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      <% end %>
-      <div class="text-sm font-sans text-ink-light dark:text-white/60 flex items-center gap-2">
-        <span><%= @project.name %></span>
-        <span class="text-ink/20 dark:text-white/20">/</span>
-        <span class="text-ink dark:text-fable font-medium">Novo Documento</span>
+  <%= form_with(model: [@workspace, @project, @document], class: "h-full flex flex-col") do |form| %>
+    <%= form.hidden_field :parent_id %>
+    
+    <!-- Editor Header with Actions -->
+    <header class="h-14 px-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between sticky top-0 bg-white/90 dark:bg-ink-darker/90 backdrop-blur-md z-20">
+      <div class="flex items-center gap-3">
+        <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <% end %>
+        <div class="text-sm font-sans text-ink-light dark:text-white/60 flex items-center gap-2">
+          <span><%= @project.name %></span>
+          <span class="text-ink/20 dark:text-white/20">/</span>
+          <span class="text-ink dark:text-fable font-medium">Novo Documento</span>
+        </div>
       </div>
-    </div>
-  </header>
-
-  <!-- Editor Body -->
-  <main class="flex-1 max-w-4xl w-full mx-auto p-8 lg:p-12">
-    <%= form_with(model: [@workspace, @project, @document], class: "h-full flex flex-col") do |form| %>
-      <%= form.hidden_field :parent_id %>
       
-      <!-- Icon/Emoji Selector (Simplified for now) -->
+      <div class="flex items-center gap-2">
+        <span class="text-xs text-ink-light/60 dark:text-white/40 mr-2">Salvamento automático habilitado</span>
+        <%= link_to "Descartar", workspace_project_path(@workspace, @project, view: 'documents'), class: "px-3 py-1.5 text-xs font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors" %>
+        <%= form.submit "Publicar", class: "px-4 py-1.5 bg-ink text-white dark:bg-fable dark:text-ink text-xs font-medium rounded-lg shadow-sm hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white hover:-translate-y-0.5 transition-all cursor-pointer" %>
+      </div>
+    </header>
+
+    <!-- Editor Body -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-8 py-16 lg:px-12">
+      <!-- Icon/Emoji Selector -->
       <div class="mb-6 flex">
         <div class="group relative">
-          <%= form.text_field :icon, class: "w-16 h-16 text-4xl bg-transparent border-none focus:ring-0 p-0 hover:bg-ink/5 dark:hover:bg-white/5 rounded-2xl text-center transition-colors cursor-pointer", placeholder: "📄" %>
-          <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[10px] py-1 px-2 rounded whitespace-nowrap pointer-events-none">
-            Ícone do doc
+          <%= form.text_field :icon, class: "w-20 h-20 text-6xl bg-transparent border border-transparent hover:border-ink/10 dark:hover:border-white/10 focus:border-ink/20 dark:focus:border-white/20 focus:ring-0 p-0 hover:bg-ink/5 dark:hover:bg-white/5 rounded-2xl text-center transition-all cursor-pointer outline-none", placeholder: "📄" %>
+          <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink dark:bg-fable text-white dark:text-ink text-[10px] py-1 px-2 rounded whitespace-nowrap pointer-events-none z-10">
+            Adicionar ícone
           </div>
         </div>
       </div>
 
       <!-- Title -->
-      <div class="mb-8">
-        <%= form.text_field :title, class: "w-full text-4xl lg:text-5xl font-serif font-bold bg-transparent border-none focus:ring-0 p-0 text-ink dark:text-fable placeholder-ink-light/30 dark:placeholder-white/20 resize-none overflow-hidden", placeholder: "Título do Documento", autofocus: true, required: true %>
+      <div class="mb-2">
+        <%= form.text_area :title, rows: 1, class: "w-full text-4xl lg:text-5xl font-serif font-bold bg-transparent border-none focus:ring-0 p-0 text-ink dark:text-fable placeholder-ink-light/30 dark:placeholder-white/20 resize-none overflow-hidden", placeholder: "Título sem nome", autofocus: true, required: true, oninput: "this.style.height = ''; this.style.height = this.scrollHeight + 'px'" %>
       </div>
 
       <!-- ActionText Editor -->
-      <div class="flex-1 prose prose-ink dark:prose-invert prose-lg max-w-none prose-headings:font-serif prose-a:text-terracotta focus-within:prose-a:text-terracotta">
-        <%= form.rich_text_area :content, class: "min-h-[500px] border-none focus:ring-0 p-0 outline-none", placeholder: "Comece a escrever..." %>
+      <div class="flex-1 prose prose-ink dark:prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:font-semibold prose-a:text-terracotta hover:prose-a:text-[#c26244] prose-img:rounded-2xl prose-pre:bg-ink-paper prose-pre:border prose-pre:border-ink/10 dark:prose-pre:border-white/10">
+        <%= form.rich_text_area :content, class: "min-h-[600px] border-none focus:ring-0 p-0 outline-none block mt-8", placeholder: "Pressione '/' para comandos ou comece a escrever..." %>
       </div>
-
-      <!-- Sticky Footer Actions -->
-      <div class="fixed bottom-6 right-6 lg:right-12 flex items-center gap-3 animate-fade-in-up">
-        <%= link_to "Cancelar", workspace_project_path(@workspace, @project, view: 'documents'), class: "px-5 py-2.5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink dark:text-fable text-sm font-medium rounded-full shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300" %>
-        <%= form.submit "Salvar Documento", class: "px-5 py-2.5 bg-terracotta text-white text-sm font-medium rounded-full shadow-lg shadow-terracotta/20 hover:shadow-xl hover:shadow-terracotta/30 hover:-translate-y-0.5 hover:bg-[#c26244] transition-all cursor-pointer duration-300" %>
-      </div>
-    <% end %>
-  </main>
+    </main>
+  <% end %>
 </div>
