@@ -75,7 +75,8 @@
         <!-- Tiptap Editor Root -->
         <div class="relative">
           <div class="hidden">
-            <%= form.rich_text_area :content %>
+            <!-- Foi trocado o rich_text_area problemático por hidden_field puro com o HTML string -->
+            <%= form.hidden_field :content, value: @document.content.to_s, id: "document_content_hidden" %>
           </div>
           <div data-tiptap-target="editor" class="w-full"></div>
         </div>

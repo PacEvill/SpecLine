@@ -21,14 +21,16 @@ export default class extends Controller {
 
     const form = this.element
     const formData = new FormData(form)
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
     
-    // O Rails usa `_method=patch` via form hidden field. Precisamos enviar como POST.
     try {
       const response = await fetch(form.action, {
-        method: 'POST', // FormData will contain _method=patch
+        method: 'POST',
         body: formData,
         headers: {
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-Token': csrfToken
         }
       })
       
