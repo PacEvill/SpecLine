@@ -63,18 +63,17 @@
             </thead>
             <tbody class="divide-y divide-ink/5 dark:divide-white/5 text-ink dark:text-fable">
               <% @projects.each do |project| %>
-                <tr class="hover:bg-ink/5 dark:hover:bg-white/5 transition-colors group relative">
-                  <td class="px-6 py-4 font-medium flex items-center gap-3 relative">
-                    <%= link_to "", workspace_project_path(@workspace, project), class: "absolute inset-0 z-0", title: "Abrir #{project.name}" %>
+                <tr class="hover:bg-ink/5 dark:hover:bg-white/5 transition-colors group cursor-pointer" onclick="if(!event.target.closest('a')) Turbo.visit('<%= workspace_project_path(@workspace, project) %>')">
+                  <td class="px-6 py-4 font-medium flex items-center gap-3">
                     <% if project.logo.attached? %>
-                      <%= image_tag project.logo, class: "w-8 h-8 rounded-lg object-cover shrink-0 border border-ink/10 dark:border-white/10 relative z-10 pointer-events-none" %>
+                      <%= image_tag project.logo, class: "w-8 h-8 rounded-lg object-cover shrink-0 border border-ink/10 dark:border-white/10" %>
                     <% else %>
-                      <div class="w-8 h-8 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-xs shrink-0 relative z-10 pointer-events-none">
+                      <div class="w-8 h-8 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-xs shrink-0">
                         <%= project.identifier_prefix.presence || project.name[0..1].upcase %>
                       </div>
                     <% end %>
-                    <div class="relative z-10 pointer-events-none">
-                      <div class="font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors"><%= project.name %></div>
+                    <div>
+                      <%= link_to project.name, workspace_project_path(@workspace, project), class: "font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors block" %>
                       <div class="text-[11px] text-ink-light dark:text-white/40 line-clamp-1"><%= project.description.presence || "Sem descrição." %></div>
                     </div>
                   </td>
@@ -104,8 +103,8 @@
                       </div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 text-right relative z-10">
-                    <%= link_to "Abrir →", workspace_project_path(@workspace, project), class: "font-semibold text-terracotta hover:underline" %>
+                  <td class="px-6 py-4 text-right">
+                    <%= link_to "Abrir →", workspace_project_path(@workspace, project), class: "font-semibold text-terracotta hover:underline inline-block" %>
                   </td>
                 </tr>
               <% end %>
@@ -120,14 +119,10 @@
         
         <% if @projects.any? %>
           <% @projects.each do |project| %>
-            <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-terracotta/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between relative group overflow-hidden">
-              
-              <!-- Stretched link over whole card -->
-              <%= link_to "", workspace_project_path(@workspace, project), class: "absolute inset-0 z-0", title: "Abrir #{project.name}" %>
-
-              <div class="relative z-10">
+            <%= link_to workspace_project_path(@workspace, project), class: "bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-6 shadow-xs hover:shadow-md hover:border-terracotta/40 hover:-translate-y-0.5 transition-all duration-300 flex flex-col justify-between relative group cursor-pointer block" do %>
+              <div>
                 <div class="flex items-start justify-between mb-4">
-                  <div class="flex items-center gap-3 pointer-events-none">
+                  <div class="flex items-center gap-3">
                     <% if project.logo.attached? %>
                       <%= image_tag project.logo, class: "w-10 h-10 rounded-xl object-cover shrink-0 border border-ink/5 dark:border-white/5" %>
                     <% else %>
@@ -143,19 +138,19 @@
                     </div>
                   </div>
                   
-                  <div class="flex items-center gap-1 relative z-20">
-                    <%= link_to edit_workspace_project_path(@workspace, project), data: { turbo_frame: "modal" }, onclick: "event.stopPropagation();", class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer", title: "Configurações" do %>
+                  <div class="flex items-center gap-1" onclick="event.preventDefault(); event.stopPropagation();">
+                    <%= link_to edit_workspace_project_path(@workspace, project), data: { turbo_frame: "modal" }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer", title: "Configurações" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     <% end %>
                   </div>
                 </div>
 
-                <p class="text-xs text-ink-light dark:text-white/70 font-sans mb-4 line-clamp-2 leading-relaxed pointer-events-none">
+                <p class="text-xs text-ink-light dark:text-white/70 font-sans mb-4 line-clamp-2 leading-relaxed">
                   <%= project.description.presence || "Sem descrição informada para este projeto." %>
                 </p>
 
                 <!-- Ecosystem Quick Metrics -->
-                <div class="flex items-center gap-2 mb-4 text-[11px] text-ink-light dark:text-white/50 pointer-events-none">
+                <div class="flex items-center gap-2 mb-4 text-[11px] text-ink-light dark:text-white/50">
                   <span class="inline-flex items-center gap-1.5 bg-ink/5 dark:bg-white/5 px-2 py-0.5 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
                     <span><%= project.issues.count %> issues</span>
@@ -172,7 +167,7 @@
               </div>
 
               <!-- Progress bar & Footer -->
-              <div class="pt-3 border-t border-ink/5 dark:border-white/5 relative z-10 pointer-events-none">
+              <div class="pt-3 border-t border-ink/5 dark:border-white/5">
                 <div class="flex items-center justify-between mb-1.5 text-xs">
                   <span class="text-[11px] font-semibold text-ink-light dark:text-white/40">Progresso</span>
                   <span class="font-bold text-ink dark:text-fable"><%= project.progress || 0 %>%</span>
@@ -181,7 +176,7 @@
                   <div class="h-full bg-terracotta rounded-full transition-all duration-500" style="width: <%= project.progress || 0 %>%"></div>
                 </div>
               </div>
-            </div>
+            <% end %>
           <% end %>
         <% end %>
 
