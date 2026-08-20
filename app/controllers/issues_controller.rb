@@ -5,7 +5,7 @@ class IssuesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :move]
-  before_action :prepare_project_context, only: [:new, :edit]
+  before_action :prepare_project_context, only: [:new, :edit, :create, :update]
 
   def show
   end

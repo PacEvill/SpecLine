@@ -2,7 +2,7 @@ class BoardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_workspace
   before_action :set_project
-  before_action :prepare_project_context, only: [:new, :edit]
+  before_action :prepare_project_context, only: [:new, :edit, :create, :update]
 
   def new
     @board = @project.boards.build

@@ -138,6 +138,11 @@ To support monetization and advanced user capabilities, the following integratio
 - **Sentry / AppSignal:** Real-time error tracking and performance tracing to identify N+1 queries and frontend JavaScript exceptions.
 - **Logster / Better Stack:** Centralized logging for security auditing and SLA/SLO incident management.
 
+### 6.4. Persistent Object Storage (Cloudflare R2 / Supabase)
+
+- **Current (Local Storage):** To maintain a strict zero-friction onboarding during the MVP phase (bypassing mandatory credit card requirements for anti-bot verification on cloud providers), Active Storage is configured to use local ephemeral disk storage.
+- **Future Migration (Cloudflare R2):** As soon as persistent storage for user avatars, document attachments, and rich media becomes critical, the application will transition to **Cloudflare R2**. R2 provides 10 GB of free S3-compatible storage with zero egress fees, making it the most cost-effective and highly scalable solution for the platform's long-term media handling.
+
 ---
 
 ## 7. Total Cost of Ownership (TCO) Matrix

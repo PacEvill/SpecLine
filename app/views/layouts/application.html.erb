@@ -7,7 +7,9 @@
     <meta name="application-name" content="Spec Line">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+    <% if ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'].present? %>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer data-turbo-track="reload"></script>
+    <% end %>
 
     <%= yield :head %>
 

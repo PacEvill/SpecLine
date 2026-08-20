@@ -47,7 +47,9 @@ Rails.application.routes.draw do
 
   # Autenticação
   devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
   }
   devise_scope :user do
     get '/register', to: 'devise/registrations#new'

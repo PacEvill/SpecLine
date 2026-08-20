@@ -5,7 +5,7 @@ class MilestonesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_milestone, only: [:edit, :update, :destroy]
-  before_action :prepare_project_context, only: [:new, :edit]
+  before_action :prepare_project_context, only: [:new, :edit, :create, :update]
 
   def new
     @milestone = @project.milestones.build

@@ -201,4 +201,94 @@ class ExhaustivePlatformTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: /#{@project_a.name}/i
   end
+
+  test "full end-to-end user workspace and project lifecycle" do
+    sign_in @user_a
+
+    # 1. Workspaces index
+    get workspaces_url
+    assert_response :success
+
+    # 2. Create new workspace
+    get new_workspace_url
+    assert_response :success
+
+    post workspaces_url, params: {
+      workspace: {
+        name: "Workspace Integracao Total",
+        description: "Espaco de trabalho corporativo",
+        industry: "Tecnologia",
+        team_size: "2-10"
+      }
+    }
+    assert_response :redirect
+    follow_redirect!
+    new_ws = @user_a.workspaces.find_by!(name: "Workspace Integracao Total")
+    assert_equal workspace_path(new_ws), path
+
+    # 3. Create project in new workspace
+    get new_workspace_project_url(new_ws)
+    assert_response :success
+
+    post workspace_projects_url(new_ws), params: {
+      project: {
+        name: "Projeto Integrado Alpha",
+        identifier_prefix: "ALPHA",
+        default_view: "overview"
+      }
+    }
+    assert_response :redirect
+    follow_redirect!
+    new_proj = new_ws.projects.find_by!(name: "Projeto Integrado Alpha")
+    assert_equal workspace_project_path(new_ws, new_proj), path
+
+    # 4. Access all 6 Project Views
+    %w[overview board list milestones documents whiteboards].each do |view_mode|
+      get workspace_project_url(new_ws, new_proj, view: view_mode)
+      assert_response :success
+    end
+
+    # 5. Create Issue
+    status = new_proj.issue_statuses.first
+    post workspace_project_issues_url(new_ws, new_proj), params: {
+      issue: {
+        title: "Tarefa Alpha 1",
+        description: "Descricao detalhada",
+        issue_status_id: status.id,
+        priority: "urgent"
+      }
+    }
+    assert_response :redirect
+    follow_redirect!
+    assert_equal 1, new_proj.issues.count
+
+    # 6. Create Milestone
+    post workspace_project_milestones_url(new_ws, new_proj), params: {
+      milestone: {
+        title: "Sprint Alpha",
+        status: "active"
+      }
+    }
+    assert_response :redirect
+    assert_equal 1, new_proj.milestones.count
+
+    # 7. Create Document
+    post workspace_project_documents_url(new_ws, new_proj), params: {
+      document: {
+        title: "Documento de Arquitetura",
+        icon: "file-text"
+      }
+    }
+    assert_response :redirect
+    assert_equal 1, new_proj.documents.count
+
+    # 8. Create Whiteboard
+    post workspace_project_whiteboards_url(new_ws, new_proj), params: {
+      whiteboard: {
+        title: "Canvas de Modelagem"
+      }
+    }
+    assert_response :redirect
+    assert_equal 1, new_proj.whiteboards.count
+  end
 end

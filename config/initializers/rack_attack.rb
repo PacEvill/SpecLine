@@ -5,6 +5,13 @@ class Rack::Attack
   Rack::Attack.cache.store = ActiveSupport::Cache::MemoryStore.new(size: 16.megabytes)
 
   # ---------------------------------------------------------------------
+  # 0. SAFELIST LOCALHOST IN DEV & TEST
+  # ---------------------------------------------------------------------
+  safelist("allow-localhost") do |req|
+    (Rails.env.development? || Rails.env.test?) && (req.ip == "127.0.0.1" || req.ip == "::1")
+  end
+
+  # ---------------------------------------------------------------------
   # 1. MALICIOUS USER-AGENTS BLOCKLIST
   # ---------------------------------------------------------------------
   bad_agents = /libwww-perl|nikto|sqlmap|python-requests|curl\/7\.[0-5]|dirbuster|gobuster/i

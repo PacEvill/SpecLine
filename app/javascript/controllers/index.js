@@ -31,6 +31,9 @@ application.register("image-preview", ImagePreviewController)
 import KanbanController from "./kanban_controller"
 application.register("kanban", KanbanController)
 
+import MobileDrawerController from "./mobile_drawer_controller"
+application.register("mobile-drawer", MobileDrawerController)
+
 import ModalController from "./modal_controller"
 application.register("modal", ModalController)
 
@@ -55,12 +58,11 @@ application.register("theme", ThemeController)
 import TiptapController from "./tiptap_controller"
 application.register("tiptap", TiptapController)
 
+import TurnstileController from "./turnstile_controller"
+application.register("turnstile", TurnstileController)
+
 import ViewToggleController from "./view_toggle_controller"
 application.register("view-toggle", ViewToggleController)
 
 import WhiteboardController from "./whiteboard_controller"
 application.register("whiteboard", WhiteboardController)
-
-import MobileDrawerController from "./mobile_drawer_controller"
-application.register("mobile-drawer", MobileDrawerController)
-

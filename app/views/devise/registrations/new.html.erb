@@ -56,6 +56,18 @@
         </div>
       </div>
 
+      <% if notice %>
+        <div class="bg-sage/10 text-sage-dark p-4 rounded-md text-sm mb-6 text-center font-medium">
+          <%= notice %>
+        </div>
+      <% end %>
+      
+      <% if alert %>
+        <div class="bg-red-50 text-red-600 p-4 rounded-md text-sm mb-6 text-center font-medium border border-red-100">
+          <%= alert %>
+        </div>
+      <% end %>
+
       <%= form_for(resource, as: resource_name, url: user_registration_path, html: { class: "space-y-5", data: { turbo: false, controller: "password-match" } }) do |f| %>
         <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -140,6 +152,10 @@
           </div>
           <div data-password-match-target="message" class="hidden"></div>
         </div>
+
+        <% if ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'].present? %>
+          <div data-controller="turnstile" data-turnstile-sitekey-value="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>" class="my-4 flex justify-center"></div>
+        <% end %>
 
         <div>
           <%= f.submit "Criar conta", class: "w-full flex justify-center btn-primary" %>
