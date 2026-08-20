@@ -10,16 +10,16 @@
 <% end %>
 
 <%= turbo_frame_tag "modal" do %>
-  <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-50 flex items-center justify-center p-4" data-controller="modal" data-action="click->modal#closeBackground">
+  <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4" data-controller="modal" data-action="click->modal#closeBackground">
     <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
-      <div class="px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between">
-        <h2 class="text-lg font-serif font-medium text-ink dark:text-fable"><%= @board.new_record? ? "Novo Quadro Kanban" : "Editar Quadro" %></h2>
+      <div class="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between">
+        <h2 class="text-base sm:text-lg font-serif font-medium text-ink dark:text-fable"><%= @board.new_record? ? "Novo Quadro Kanban" : "Editar Quadro" %></h2>
         <button data-action="modal#close" class="text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors p-1 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 duration-500">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
 
-      <div class="p-6">
+      <div class="p-4 sm:p-6">
         <%= form_with model: [@workspace, @project, @board], class: "space-y-4", data: { turbo_frame: "_top" } do |f| %>
           <div>
             <%= f.label :name, "Nome do Quadro", class: "block text-xs font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider mb-1.5" %>
@@ -31,11 +31,11 @@
             <%= f.text_area :description, rows: 3, class: "w-full px-3 py-2 bg-ink/5 dark:bg-white/5 border-none rounded-xl text-sm text-ink dark:text-fable placeholder:text-ink-light/50 dark:placeholder:text-white/30 focus:ring-2 focus:ring-terracotta/20 resize-none" %>
           </div>
 
-          <div class="pt-4 flex items-center justify-end gap-2">
-            <button type="button" data-action="modal#close" class="px-4 py-2 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">
+          <div class="pt-4 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-2">
+            <button type="button" data-action="modal#close" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500 text-center">
               Cancelar
             </button>
-            <%= f.submit (@board.new_record? ? "Criar Quadro" : "Salvar Alterações"), class: "px-4 py-2 text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors cursor-pointer duration-500" %>
+            <%= f.submit (@board.new_record? ? "Criar Quadro" : "Salvar Alterações"), class: "w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors cursor-pointer duration-500 text-center" %>
           </div>
         <% end %>
       </div>

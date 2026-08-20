@@ -4,21 +4,21 @@
 
 <%= turbo_frame_tag "modal" do %>
   <!-- Backdrop -->
-  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 bg-ink/20 dark:bg-black/40 backdrop-blur-sm z-40 flex items-center justify-center p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 bg-ink/20 dark:bg-black/40 backdrop-blur-sm z-40 flex items-center justify-center p-3 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
     <!-- Modal Container -->
-    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-y-auto flex flex-col pointer-events-auto scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10" data-modal-target="container">
+    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-y-auto flex flex-col pointer-events-auto scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10 max-h-[92dvh] sm:max-h-[90vh]" data-modal-target="container">
       
       <!-- Header -->
-      <div class="sticky top-0 bg-white/90 dark:bg-ink-paper/90 backdrop-blur-sm px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between z-10">
-        <h1 class="text-xl font-serif font-medium text-ink dark:text-fable">Novo Projeto</h1>
-        <button data-action="click->modal#close" class="p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors duration-500">
+      <div class="sticky top-0 bg-white/90 dark:bg-ink-paper/90 backdrop-blur-sm px-4 sm:px-6 py-3.5 sm:py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between z-10">
+        <h1 class="text-lg sm:text-xl font-serif font-medium text-ink dark:text-fable">Novo Projeto</h1>
+        <button data-action="click->modal#close" class="p-1 rounded-lg text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 transition-colors duration-500">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
       </div>
 
       <!-- Form Content -->
-      <div class="p-6">
-        <%= form_with(model: [@workspace, @project], class: "space-y-6", data: { turbo_frame: "_top" }) do |form| %>
+      <div class="p-4 sm:p-6">
+        <%= form_with(model: [@workspace, @project], class: "space-y-5 sm:space-y-6", data: { turbo_frame: "_top" }) do |form| %>
           <% if @project.errors.any? %>
             <div class="bg-red-50 border border-red-200 rounded-xl p-4">
               <p class="text-sm font-medium text-red-800"><%= pluralize(@project.errors.count, "erro") %> encontrado(s):</p>
@@ -32,41 +32,41 @@
 
           <!-- Name -->
           <div>
-            <%= form.label :name, "Nome do Projeto", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :name, "Nome do Projeto", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.text_field :name, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta focus:bg-white dark:focus:bg-ink-paper outline-none transition-all duration-500", placeholder: "Ex: Redesign do App", autofocus: true, required: true %>
           </div>
 
           <!-- Description -->
           <div>
-            <%= form.label :description, "Descrição", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :description, "Descrição", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta focus:bg-white dark:focus:bg-ink-paper outline-none transition-all resize-none duration-500", placeholder: "Descreva o objetivo deste projeto..." %>
           </div>
 
           <!-- Prefix & View -->
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <%= form.label :identifier_prefix, "Prefixo das Issues", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+              <%= form.label :identifier_prefix, "Prefixo das Issues", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
               <%= form.text_field :identifier_prefix, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta focus:bg-white dark:focus:bg-ink-paper outline-none uppercase transition-colors duration-500", placeholder: "Ex: SPEC" %>
               <p class="text-[10px] text-ink-light dark:text-white/60 mt-1">Gera IDs como SPEC-1</p>
             </div>
             <div>
-              <%= form.label :default_view, "Visualização Padrão", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+              <%= form.label :default_view, "Visualização Padrão", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
               <%= form.select :default_view, [["Board (Kanban)", "board"], ["Lista", "list"], ["Milestones", "milestones"]], {}, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta focus:bg-white dark:focus:bg-ink-paper outline-none transition-colors duration-500" %>
             </div>
           </div>
 
           <!-- Deadline -->
           <div>
-            <%= form.label :deadline, "Data de Entrega", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :deadline, "Data de Entrega", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.date_field :deadline, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta focus:bg-white dark:focus:bg-ink-paper outline-none transition-colors duration-500" %>
           </div>
 
           <!-- Actions -->
-          <div class="flex items-center gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
-            <%= form.submit "Criar Projeto", class: "px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500" %>
-            <button type="button" data-action="click->modal#close" class="px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl transition-colors duration-500">
+          <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
+            <button type="button" data-action="click->modal#close" class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl transition-colors duration-500 text-center">
               Cancelar
             </button>
+            <%= form.submit "Criar Projeto", class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500 text-center" %>
           </div>
         <% end %>
       </div>

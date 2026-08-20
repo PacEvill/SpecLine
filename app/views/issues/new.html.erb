@@ -15,21 +15,21 @@
     <div class="fixed inset-0 bg-ink/30 backdrop-blur-sm transition-opacity duration-500" data-modal-target="backdrop" data-action="click->modal#close"></div>
 
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-      <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div class="relative transform overflow-hidden bg-white dark:bg-ink-paper text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:rounded-2xl border border-ink/10 dark:border-white/10 flex flex-col duration-500 max-h-[90vh]" data-modal-target="panel">
+      <div class="flex min-h-full items-center justify-center p-3 sm:p-0">
+        <div class="relative transform overflow-hidden bg-white dark:bg-ink-paper text-left shadow-2xl transition-all sm:my-8 w-full max-w-2xl rounded-2xl border border-ink/10 dark:border-white/10 flex flex-col duration-500 max-h-[92dvh] sm:max-h-[90vh]" data-modal-target="panel">
           
-          <div class="flex items-center justify-between px-6 py-4 border-b border-ink/5 dark:border-white/5 bg-[#FDFBF7] dark:bg-ink-darker sticky top-0 z-10">
+          <div class="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-ink/5 dark:border-white/5 bg-[#FDFBF7] dark:bg-ink-darker sticky top-0 z-10">
             <h3 class="text-base font-serif font-semibold text-ink dark:text-white" id="modal-title">
               Nova Issue
             </h3>
-            <button type="button" class="text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-300" data-action="modal#close">
+            <button type="button" class="p-1 rounded-lg text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-300" data-action="modal#close">
               <span class="sr-only">Fechar</span>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
           </div>
 
-          <div class="px-6 py-6 overflow-y-auto">
-            <%= form_with(model: @issue, url: workspace_project_issues_path(@workspace, @project), class: "space-y-6", html: { target: "_top" }) do |form| %>
+          <div class="px-4 sm:px-6 py-5 sm:py-6 overflow-y-auto">
+            <%= form_with(model: @issue, url: workspace_project_issues_path(@workspace, @project), class: "space-y-5 sm:space-y-6", html: { target: "_top" }) do |form| %>
               <% if @issue.errors.any? %>
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                   <p class="text-sm font-medium text-red-800"><%= pluralize(@issue.errors.count, "erro") %> encontrado(s):</p>
@@ -48,10 +48,10 @@
 
               <div>
                 <%= form.label :description, "Descrição", class: "block text-[11px] uppercase tracking-wider font-semibold text-ink-light dark:text-white/60 mb-1.5" %>
-                <%= form.text_area :description, rows: 5, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-white placeholder-ink-light/40 dark:placeholder-white/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-300", placeholder: "Descreva o que precisa ser feito..." %>
+                <%= form.text_area :description, rows: 4, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-white placeholder-ink-light/40 dark:placeholder-white/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-300", placeholder: "Descreva o que precisa ser feito..." %>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <%= form.label :issue_status_id, "Status", class: "block text-[11px] uppercase tracking-wider font-semibold text-ink-light dark:text-white/60 mb-1.5" %>
                   <%= form.select :issue_status_id, @project.issue_statuses.ordered.map { |s| [s.name, s.id] }, {}, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-white focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none duration-300" %>
@@ -62,7 +62,7 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <%= form.label :assignee_id, "Responsável", class: "block text-[11px] uppercase tracking-wider font-semibold text-ink-light dark:text-white/60 mb-1.5" %>
                   <%= form.select :assignee_id, [[current_user.email, current_user.id]], { include_blank: "Não atribuído" }, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-white focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none duration-300" %>
@@ -73,7 +73,7 @@
                 </div>
               </div>
 
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <%= form.label :start_date, "Data de Início", class: "block text-[11px] uppercase tracking-wider font-semibold text-ink-light dark:text-white/60 mb-1.5" %>
                   <%= form.date_field :start_date, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-white focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none duration-300" %>
@@ -97,9 +97,9 @@
                 </div>
               </div>
 
-              <div class="flex items-center justify-end gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
-                <button type="button" class="px-5 py-2 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-300" data-action="modal#close">Cancelar</button>
-                <%= form.submit "Criar Issue", class: "px-6 py-2 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-300" %>
+              <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
+                <button type="button" class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-300 text-center" data-action="modal#close">Cancelar</button>
+                <%= form.submit "Criar Issue", class: "w-full sm:w-auto px-6 py-2.5 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-300 text-center" %>
               </div>
             <% end %>
           </div>

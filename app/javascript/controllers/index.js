@@ -60,3 +60,7 @@ application.register("view-toggle", ViewToggleController)
 
 import WhiteboardController from "./whiteboard_controller"
 application.register("whiteboard", WhiteboardController)
+
+import MobileDrawerController from "./mobile_drawer_controller"
+application.register("mobile-drawer", MobileDrawerController)
+

@@ -1,11 +1,11 @@
 
 
 <%= turbo_frame_tag "modal" do %>
-  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
-    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-3 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
+    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
       
-      <!-- Settings Sidebar inside Modal -->
-      <div class="w-64 border-r border-ink/10 dark:border-white/10 flex flex-col bg-white/50 dark:bg-ink-paper/50">
+      <!-- Settings Sidebar inside Modal (Desktop) -->
+      <div class="hidden sm:flex flex-col w-64 border-r border-ink/10 dark:border-white/10 bg-white/50 dark:bg-ink-paper/50 shrink-0">
         <div class="p-6 flex items-center justify-between">
           <div>
             <h2 class="text-base font-serif font-medium text-ink dark:text-fable">Configurações</h2>
@@ -21,25 +21,35 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker">
-        <%= turbo_frame_tag "settings_content" do %>
-        <div class="max-w-3xl mx-auto px-8 py-10">
+      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker flex flex-col">
+        <!-- Mobile Header Bar inside Modal -->
+        <div class="sm:hidden flex items-center justify-between p-4 border-b border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink-paper/50 shrink-0">
+          <div>
+            <h2 class="text-sm font-serif font-medium text-ink dark:text-fable">Editar Perfil</h2>
+          </div>
+          <button data-action="click->modal#close" class="p-1.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
 
-    <div class="mb-8">
-      <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-2">Editar Perfil</h1>
-      <p class="text-sm text-ink-light dark:text-white/60 font-sans">Gerencie suas informações pessoais e credenciais.</p>
+        <%= turbo_frame_tag "settings_content" do %>
+        <div class="max-w-3xl mx-auto px-4 sm:px-8 py-6 sm:py-10">
+
+    <div class="mb-6 sm:mb-8">
+      <h1 class="text-2xl sm:text-3xl font-serif text-ink dark:text-fable tracking-tight mb-1 sm:mb-2">Editar Perfil</h1>
+      <p class="text-xs sm:text-sm text-ink-light dark:text-white/60 font-sans">Gerencie suas informações pessoais e credenciais.</p>
     </div>
 
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-8" }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "space-y-6 sm:space-y-8" }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <!-- Basic Info Section -->
-      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-        <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Informações Pessoais</h3>
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-4 sm:p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+        <h3 class="text-xs sm:text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-4 sm:mb-6">Informações Pessoais</h3>
         
-        <div class="flex gap-8 items-start mb-6 pb-6 border-b border-ink/5 dark:border-white/5">
-          <div class="flex flex-col items-center gap-3">
-            <div class="w-24 h-24 rounded-full bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 overflow-hidden flex items-center justify-center text-4xl text-ink/20 dark:text-white/20 font-serif relative group cursor-pointer" data-controller="image-preview">
+        <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start mb-6 pb-6 border-b border-ink/5 dark:border-white/5">
+          <div class="flex flex-col items-center gap-2 sm:gap-3">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 overflow-hidden flex items-center justify-center text-3xl sm:text-4xl text-ink/20 dark:text-white/20 font-serif relative group cursor-pointer" data-controller="image-preview">
               <% if resource.avatar.attached? %>
                 <%= image_tag resource.avatar, class: "w-full h-full object-cover", data: { image_preview_target: "preview" } %>
               <% else %>
@@ -54,7 +64,7 @@
             <p class="text-[10px] text-ink-light dark:text-white/60 text-center">JPG, GIF ou PNG.<br>Tamanho max. 5MB</p>
           </div>
 
-          <div class="flex-1 grid grid-cols-2 gap-4">
+          <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
             <div class="col-span-1">
               <%= f.label :first_name, "Nome", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
               <%= f.text_field :first_name, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
@@ -63,35 +73,35 @@
               <%= f.label :last_name, "Sobrenome", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
               <%= f.text_field :last_name, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
             </div>
-            <div class="col-span-2">
+            <div class="col-span-1 sm:col-span-2">
               <%= f.label :job_title, "Cargo", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
               <%= f.text_field :job_title, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
             </div>
           </div>
         </div>
 
-        <div class="col-span-2 mb-6">
+        <div class="mb-4 sm:mb-6">
           <%= f.label :bio, "Biografia", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
           <%= f.text_area :bio, rows: 3, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
         </div>
 
-        <div class="col-span-2">
+        <div>
           <%= f.label :email, "Endereço de Email", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
           <%= f.email_field :email, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
         </div>
       </div>
 
       <!-- Security Section -->
-      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-        <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Segurança</h3>
+      <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-4 sm:p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+        <h3 class="text-xs sm:text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-4 sm:mb-6">Segurança</h3>
         
-        <div class="grid grid-cols-2 gap-6">
-          <div class="col-span-2 md:col-span-1">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div class="col-span-1">
             <%= f.label :password, "Nova Senha", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
             <%= f.password_field :password, autocomplete: "new-password", placeholder: "Deixe em branco para manter a atual", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
             <p class="text-[10px] text-ink-light dark:text-white/60 mt-1">Mínimo de <%= @minimum_password_length %> caracteres</p>
           </div>
-          <div class="col-span-2 md:col-span-1">
+          <div class="col-span-1">
             <%= f.label :password_confirmation, "Confirmar Nova Senha", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
             <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
           </div>
@@ -99,8 +109,8 @@
       </div>
 
       <!-- Current Password Requirement -->
-      <div class="bg-sage/10 rounded-2xl border border-sage/20 p-6">
-        <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-2">Confirmação</h3>
+      <div class="bg-sage/10 rounded-2xl border border-sage/20 p-4 sm:p-6">
+        <h3 class="text-xs sm:text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-2">Confirmação</h3>
         <p class="text-xs text-ink-light dark:text-white/60 mb-4">Para sua segurança, precisamos da sua senha atual para salvar as alterações.</p>
         
         <div class="max-w-md">
@@ -109,12 +119,12 @@
         </div>
       </div>
 
-      <div class="flex items-center justify-between pt-4">
-        <%= button_to registration_path(resource_name), data: { confirm: "Tem certeza que deseja excluir sua conta?", turbo_confirm: "Tem certeza que deseja excluir sua conta?" }, method: :delete, class: "text-xs font-medium text-red-600 hover:text-red-700 hover:underline" do %>
+      <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-4 pt-4 pb-6 sm:pb-0">
+        <%= button_to registration_path(resource_name), data: { confirm: "Tem certeza que deseja excluir sua conta?", turbo_confirm: "Tem certeza que deseja excluir sua conta?" }, method: :delete, class: "text-xs font-medium text-red-600 hover:text-red-700 hover:underline text-center sm:text-left" do %>
           Excluir Conta Permanentemente
         <% end %>
 
-        <%= f.submit "Salvar Alterações", class: "px-6 py-2 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-500" %>
+        <%= f.submit "Salvar Alterações", class: "w-full sm:w-auto px-6 py-2.5 bg-ink text-white text-sm font-medium rounded-lg hover:bg-terracotta transition-colors shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] cursor-pointer duration-500 text-center" %>
       </div>
     <% end %>
           </div>

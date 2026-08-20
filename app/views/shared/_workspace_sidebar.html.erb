@@ -1,5 +1,5 @@
-<% current_ws = local_assigns[:workspace] || @workspace || current_user&.workspaces&.first %>
-<% if current_ws %>
+<% current_ws = local_assigns[:workspace] || (@workspace&.persisted? ? @workspace : nil) || current_user&.workspaces&.first %>
+<% if current_ws&.persisted? %>
 <!-- 2. Context Panel (Workspace Specific) -->
 <aside class="w-72 bg-white dark:bg-ink-paper border-r border-ink/5 dark:border-white/5 flex flex-col shrink-0 z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)] overflow-y-auto hidden md:flex transition-all duration-300">
   
@@ -28,7 +28,7 @@
         <%= image_tag current_ws.logo, class: "w-8 h-8 rounded-xl object-cover border border-ink/10 dark:border-white/10 shrink-0" %>
       <% else %>
         <div class="w-8 h-8 rounded-xl flex items-center justify-center font-serif text-sm font-bold shrink-0 shadow-sm" style="background-color: <%= current_ws.color.presence || '#D97A5E' %>15; color: <%= current_ws.color.presence || '#D97A5E' %>; border: 1px solid <%= current_ws.color.presence || '#D97A5E' %>40;">
-          <%= current_ws.name[0].upcase %>
+          <%= current_ws.name.presence&.[](0)&.upcase || 'W' %>
         </div>
       <% end %>
       <div class="flex flex-col min-w-0">
@@ -122,7 +122,7 @@
             <% if ws.logo.attached? %>
               <%= image_tag ws.logo, class: "w-4 h-4 rounded object-cover border border-ink/10 dark:border-white/10 shrink-0" %>
             <% else %>
-              <div class="w-4 h-4 rounded flex items-center justify-center font-serif text-[9px] text-ink dark:text-fable font-bold shrink-0" style="background-color: <%= ws.color.presence || '#D97A5E' %>15; color: <%= ws.color.presence || '#D97A5E' %>;"><%= ws.name[0].upcase %></div>
+              <div class="w-4 h-4 rounded flex items-center justify-center font-serif text-[9px] text-ink dark:text-fable font-bold shrink-0" style="background-color: <%= ws.color.presence || '#D97A5E' %>15; color: <%= ws.color.presence || '#D97A5E' %>;"><%= ws.name.presence&.[](0)&.upcase || 'W' %></div>
             <% end %>
             <span class="truncate"><%= ws.name %></span>
           </div>

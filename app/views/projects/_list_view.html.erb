@@ -1,15 +1,16 @@
 <!-- List View -->
-<div class="p-6 lg:p-8">
-  <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] overflow-hidden">
-    <!-- Table Header -->
-    <div class="grid grid-cols-12 gap-2 px-4 py-2.5 bg-[#FDFBF7] dark:bg-ink-darker border-b border-ink/5 dark:border-white/5 text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">
-      <div class="col-span-1">ID</div>
-      <div class="col-span-4">Título</div>
-      <div class="col-span-2">Status</div>
-      <div class="col-span-1">Prioridade</div>
-      <div class="col-span-2">Responsável</div>
-      <div class="col-span-2">Prazo</div>
-    </div>
+<div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-20 md:pb-8">
+  <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] overflow-x-auto">
+    <div class="min-w-[680px]">
+      <!-- Table Header -->
+      <div class="grid grid-cols-12 gap-2 px-4 py-2.5 bg-[#FDFBF7] dark:bg-ink-darker border-b border-ink/5 dark:border-white/5 text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">
+        <div class="col-span-1">ID</div>
+        <div class="col-span-4">Título</div>
+        <div class="col-span-2">Status</div>
+        <div class="col-span-1">Prioridade</div>
+        <div class="col-span-2">Responsável</div>
+        <div class="col-span-2">Prazo</div>
+      </div>
 
     <!-- Table Body -->
     <% if issues.any? %>
@@ -74,5 +75,6 @@
         <%= link_to "Criar primeira issue", new_workspace_project_issue_path(workspace, project), data: { turbo_frame: "modal" }, class: "text-sm font-medium text-terracotta hover:underline" %>
       </div>
     <% end %>
+    </div>
   </div>
 </div>

@@ -3,11 +3,11 @@
 <% end %>
 
 <%= turbo_frame_tag "modal" do %>
-  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
-    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[85vh] min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-3 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
+    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
       
-      <!-- Project Settings Sidebar inside Modal -->
-      <div class="w-64 border-r border-ink/10 dark:border-white/10 flex flex-col bg-white/50 dark:bg-ink-paper/50">
+      <!-- Project Settings Sidebar inside Modal (Desktop) -->
+      <div class="hidden sm:flex flex-col w-64 border-r border-ink/10 dark:border-white/10 bg-white/50 dark:bg-ink-paper/50 shrink-0">
         <div class="p-6 flex items-center justify-between">
           <div class="min-w-0 pr-2">
             <h2 class="text-base font-serif font-medium text-ink dark:text-fable truncate"><%= @project.name %></h2>
@@ -42,16 +42,26 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker">
-        <%= turbo_frame_tag "project_settings_content" do %>
-          <div class="max-w-3xl mx-auto px-8 py-10">
+      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker flex flex-col">
+        <!-- Mobile Header Bar inside Modal -->
+        <div class="sm:hidden flex items-center justify-between p-4 border-b border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink-paper/50 shrink-0">
+          <div>
+            <h2 class="text-sm font-serif font-medium text-ink dark:text-fable truncate max-w-[200px]"><%= @project.name %></h2>
+          </div>
+          <button data-action="click->modal#close" class="p-1.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
 
-            <div class="mb-8">
-              <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-2">Geral</h1>
-              <p class="text-sm text-ink-light dark:text-white/60 font-sans">Configurações principais do projeto.</p>
+        <%= turbo_frame_tag "project_settings_content" do %>
+          <div class="max-w-3xl mx-auto px-4 sm:px-8 py-6 sm:py-10">
+
+            <div class="mb-6 sm:mb-8">
+              <h1 class="text-2xl sm:text-3xl font-serif text-ink dark:text-fable tracking-tight mb-1 sm:mb-2">Geral</h1>
+              <p class="text-xs sm:text-sm text-ink-light dark:text-white/60 font-sans">Configurações principais do projeto.</p>
             </div>
 
-            <%= form_with(model: [@workspace, @project], class: "space-y-8", data: { turbo_frame: "_top" }) do |form| %>
+            <%= form_with(model: [@workspace, @project], class: "space-y-6 sm:space-y-8", data: { turbo_frame: "_top" }) do |form| %>
               <% if @project.errors.any? %>
                 <div class="bg-red-50 border border-red-200 rounded-xl p-4">
                   <p class="text-sm font-medium text-red-800"><%= pluralize(@project.errors.count, "erro") %> encontrado(s):</p>
@@ -64,23 +74,23 @@
               <% end %>
 
               <!-- Visual Section -->
-              <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-                <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Visual do Projeto</h3>
+              <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-4 sm:p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                <h3 class="text-xs sm:text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-4 sm:mb-6">Visual do Projeto</h3>
                 
-                <div class="flex items-start gap-6">
+                <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
                   <div class="shrink-0">
                     <% if @project.logo.attached? %>
-                      <%= image_tag @project.logo, class: "w-20 h-20 rounded-2xl object-cover border border-ink/10 dark:border-white/10 shadow-sm" %>
+                      <%= image_tag @project.logo, class: "w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border border-ink/10 dark:border-white/10 shadow-sm" %>
                     <% else %>
-                      <div class="w-20 h-20 rounded-2xl bg-sage/10 text-sage-dark flex items-center justify-center border border-ink/5 dark:border-white/5 shadow-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-sage/10 text-sage-dark flex items-center justify-center border border-ink/5 dark:border-white/5 shadow-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                       </div>
                     <% end %>
                   </div>
                   
-                  <div class="flex-1">
-                    <p class="text-sm text-ink-light dark:text-white/60 mb-3">O ícone do projeto aparece nos quadros, listas e na barra lateral.</p>
-                    <label class="inline-flex items-center gap-2 px-4 py-2 bg-ink/5 dark:bg-white/5 hover:bg-ink/10 dark:hover:bg-white/10 text-ink dark:text-fable text-sm font-medium rounded-lg transition-colors cursor-pointer border border-ink/5 dark:border-white/5">
+                  <div class="flex-1 text-center sm:text-left">
+                    <p class="text-xs sm:text-sm text-ink-light dark:text-white/60 mb-3">O ícone do projeto aparece nos quadros, listas e na barra lateral.</p>
+                    <label class="inline-flex items-center gap-2 px-4 py-2 bg-ink/5 dark:bg-white/5 hover:bg-ink/10 dark:hover:bg-white/10 text-ink dark:text-fable text-xs sm:text-sm font-medium rounded-lg transition-colors cursor-pointer border border-ink/5 dark:border-white/5">
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
                       Upload Nova Imagem
                       <%= form.file_field :logo, class: "hidden", accept: "image/*" %>
@@ -90,44 +100,44 @@
               </div>
 
               <!-- Info Section -->
-              <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-                <h3 class="text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-6">Informações</h3>
+              <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-4 sm:p-6 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                <h3 class="text-xs sm:text-sm font-semibold text-ink dark:text-fable uppercase tracking-wider mb-4 sm:mb-6">Informações</h3>
                 
-                <div class="space-y-5">
+                <div class="space-y-4 sm:space-y-5">
                   <div>
-                    <%= form.label :name, "Nome do Projeto", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+                    <%= form.label :name, "Nome do Projeto", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
                     <%= form.text_field :name, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta outline-none transition-all duration-500" %>
                   </div>
 
                   <div>
-                    <%= form.label :description, "Descrição", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+                    <%= form.label :description, "Descrição", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
                     <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta outline-none transition-all resize-none duration-500" %>
                   </div>
 
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <%= form.label :identifier_prefix, "Prefixo das Issues", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+                      <%= form.label :identifier_prefix, "Prefixo das Issues", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
                       <%= form.text_field :identifier_prefix, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta outline-none uppercase transition-colors duration-500" %>
                     </div>
                     <div>
-                      <%= form.label :default_view, "Visualização Padrão", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+                      <%= form.label :default_view, "Visualização Padrão", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
                       <%= form.select :default_view, [["Board (Kanban)", "board"], ["Lista", "list"], ["Milestones", "milestones"], ["Wiki", "documents"]], {}, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta outline-none transition-colors duration-500" %>
                     </div>
                   </div>
 
                   <div>
-                    <%= form.label :deadline, "Data de Entrega", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+                    <%= form.label :deadline, "Data de Entrega", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
                     <%= form.date_field :deadline, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-[#FDFBF7] dark:bg-ink-darker text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta outline-none transition-colors duration-500" %>
                   </div>
                 </div>
               </div>
 
               <!-- Actions -->
-              <div class="flex items-center justify-end gap-3 pt-2">
-                <button type="button" data-action="click->modal#close" class="px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl transition-colors duration-500">
+              <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-2 pb-6 sm:pb-0">
+                <button type="button" data-action="click->modal#close" class="w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-xl transition-colors duration-500 text-center">
                   Cancelar
                 </button>
-                <%= form.submit "Salvar Configurações", class: "px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500 shadow-sm" %>
+                <%= form.submit "Salvar Configurações", class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500 shadow-sm text-center" %>
               </div>
             <% end %>
 

@@ -11,21 +11,21 @@
 
 <%= turbo_frame_tag "modal" do %>
   <!-- Backdrop -->
-  <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 flex items-center justify-center p-4 sm:p-6" data-controller="modal" data-action="click->modal#closeBackground">
+  <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 flex items-center justify-center p-3 sm:p-6" data-controller="modal" data-action="click->modal#closeBackground">
     <!-- Modal Container -->
-    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col pointer-events-auto" data-modal-target="container">
+    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-y-auto flex flex-col pointer-events-auto max-h-[92dvh] sm:max-h-[90vh]" data-modal-target="container">
       
       <!-- Header -->
-      <div class="px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between bg-white dark:bg-ink-paper">
-        <h1 class="text-xl font-serif font-medium text-ink dark:text-fable">Editar Milestone</h1>
-        <%= link_to workspace_project_path(@workspace, @project, view: 'milestones'), class: "p-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors duration-500", data: { action: "click->modal#close" } do %>
+      <div class="px-4 sm:px-6 py-3.5 sm:py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between bg-white dark:bg-ink-paper sticky top-0 z-10">
+        <h1 class="text-lg sm:text-xl font-serif font-medium text-ink dark:text-fable">Editar Milestone</h1>
+        <%= link_to workspace_project_path(@workspace, @project, view: 'milestones'), class: "p-1 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors duration-500", data: { action: "click->modal#close" } do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         <% end %>
       </div>
 
       <!-- Form Content -->
-      <div class="p-6">
-        <%= form_with(model: [@workspace, @project, @milestone], class: "space-y-6", data: { turbo_frame: "_top" }) do |form| %>
+      <div class="p-4 sm:p-6">
+        <%= form_with(model: [@workspace, @project, @milestone], class: "space-y-5 sm:space-y-6", data: { turbo_frame: "_top" }) do |form| %>
           <% if @milestone.errors.any? %>
             <div class="bg-red-50 border border-red-200 rounded-xl p-4">
               <p class="text-sm font-medium text-red-800"><%= pluralize(@milestone.errors.count, "erro") %> encontrado(s):</p>
@@ -39,42 +39,42 @@
 
           <!-- Título -->
           <div>
-            <%= form.label :title, "Título da Milestone", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :title, "Título da Milestone", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.text_field :title, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all duration-500", placeholder: "Ex: Release v1.0", autofocus: true %>
           </div>
 
           <!-- Descrição -->
           <div>
-            <%= form.label :description, "Descrição (opcional)", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :description, "Descrição (opcional)", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.text_area :description, rows: 3, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-500", placeholder: "Descreva o objetivo desta milestone..." %>
           </div>
 
           <!-- Grid: Status -->
           <div>
-            <%= form.label :status, "Status", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+            <%= form.label :status, "Status", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
             <%= form.select :status, [["Planejada", "open"], ["Ativa", "active"], ["Concluída", "closed"]], {}, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none" %>
           </div>
 
           <!-- Grid: Dates -->
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <%= form.label :start_date, "Data de Início", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+              <%= form.label :start_date, "Data de Início", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
               <%= form.date_field :start_date, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none" %>
             </div>
             <div>
-              <%= form.label :target_date, "Data Limite (Meta)", class: "block text-sm font-medium text-ink dark:text-fable mb-2" %>
+              <%= form.label :target_date, "Data Limite (Meta)", class: "block text-sm font-medium text-ink dark:text-fable mb-1.5 sm:mb-2" %>
               <%= form.date_field :target_date, class: "w-full px-4 py-2.5 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none" %>
             </div>
           </div>
 
           <!-- Actions -->
-          <div class="flex items-center justify-between pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
-            <div class="flex items-center gap-3">
-              <%= form.submit "Salvar Alterações", class: "px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500" %>
-              <%= link_to "Cancelar", workspace_project_path(@workspace, @project, view: 'milestones'), class: "px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500", data: { action: "click->modal#close" } %>
+          <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
+            <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <%= link_to "Cancelar", workspace_project_path(@workspace, @project, view: 'milestones'), class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500 text-center", data: { action: "click->modal#close" } %>
+              <%= form.submit "Salvar Alterações", class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500 text-center" %>
             </div>
             
-            <%= link_to workspace_project_milestone_path(@workspace, @project, @milestone), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta milestone?", turbo_frame: "_top" }, class: "px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors duration-500" do %>
+            <%= link_to workspace_project_milestone_path(@workspace, @project, @milestone), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta milestone?", turbo_frame: "_top" }, class: "px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-500 text-center sm:text-left" do %>
               Excluir
             <% end %>
           </div>

@@ -10,7 +10,12 @@
           <%= f.text_field :q, value: @query, placeholder: "Buscar documentos, tarefas, projetos...", autofocus: true, autocomplete: "off", class: "w-full bg-transparent border-none text-base text-ink dark:text-fable placeholder:text-ink-light/40 dark:placeholder:text-white/30 focus:ring-0 focus:outline-none p-0", oninput: "this.form.requestSubmit()" %>
         <% end %>
         
-        <kbd class="hidden sm:inline-flex items-center text-[10px] font-sans font-medium text-ink-light/60 dark:text-white/40 px-2 py-0.5 rounded bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5">ESC</kbd>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <kbd class="hidden sm:inline-flex items-center text-[10px] font-sans font-medium text-ink-light/60 dark:text-white/40 px-2 py-0.5 rounded bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5">ESC</kbd>
+          <button type="button" data-action="click->modal#close" class="sm:hidden p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer" aria-label="Fechar busca">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Results Container -->

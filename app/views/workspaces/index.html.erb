@@ -1,5 +1,5 @@
 <!-- Top Header Bar -->
-<header class="h-16 border-b border-ink/5 dark:border-white/5 flex items-center justify-between px-8 bg-[#FDFBF7]/80 dark:bg-ink-darker/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
+<header class="h-16 border-b border-ink/5 dark:border-white/5 flex items-center justify-between px-4 sm:px-8 bg-[#FDFBF7]/80 dark:bg-ink-darker/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
   <div class="flex items-center gap-3">
     <div class="w-8 h-8 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center text-ink dark:text-fable">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
@@ -7,7 +7,7 @@
     <h2 class="text-sm font-semibold text-ink dark:text-fable">Dashboard Global</h2>
   </div>
   
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-2 sm:gap-4">
     <!-- Global Search -->
     <div class="relative hidden md:block">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light dark:text-white/60"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -33,20 +33,20 @@
   </div>
 </header>
 
-<div class="p-8 lg:p-12 max-w-6xl mx-auto w-full">
+<div class="p-4 sm:p-8 lg:p-12 max-w-6xl mx-auto w-full pb-20 md:pb-12">
   <!-- Hero / Welcome Dashboard -->
   <!-- Classic Clean Hero Section -->
-  <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 animate-fade-in-up">
+  <div class="mb-8 sm:mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 animate-fade-in-up">
     <div>
-      <h1 class="text-3xl font-serif text-ink dark:text-fable font-medium mb-2">
+      <h1 class="text-2xl sm:text-3xl font-serif text-ink dark:text-fable font-medium mb-1 sm:mb-2">
         Bem-vindo de volta, <%= current_user.email.split('@').first.capitalize %>
       </h1>
-      <p class="text-ink-light dark:text-white/60 text-sm">
+      <p class="text-ink-light dark:text-white/60 text-xs sm:text-sm">
         Você tem <strong class="text-ink dark:text-fable font-medium"><%= @workspaces.count %> workspaces</strong> ativos no momento.
       </p>
     </div>
     
-    <%= link_to new_workspace_path, class: "inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors shrink-0 duration-500" do %>
+    <%= link_to new_workspace_path, class: "inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors shrink-0 duration-500" do %>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       Novo Workspace
     <% end %>
