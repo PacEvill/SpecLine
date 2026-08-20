@@ -91,8 +91,21 @@
       </div>
     <% end %>
 
+    <!-- Mobile Drawer Actions: Perfil & Preferencias -->
+    <div class="px-4 py-2 border-t border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink-paper/50 flex items-center justify-around gap-2">
+      <%= link_to edit_user_registration_path, data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-ink-light dark:text-white/70 hover:text-ink dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        Editar Perfil
+      <% end %>
+      
+      <%= link_to preferences_path, data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-ink-light dark:text-white/70 hover:text-ink dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        Preferências
+      <% end %>
+    </div>
+
     <!-- Drawer Footer: Profile & Logout -->
-    <div class="px-5 py-4 border-t border-ink/5 dark:border-white/5 mt-auto bg-[#FDFBF7] dark:bg-ink-darker flex items-center justify-between">
+    <div class="px-5 py-3 border-t border-ink/5 dark:border-white/5 mt-auto bg-[#FDFBF7] dark:bg-ink-darker flex items-center justify-between">
       <div class="flex items-center gap-2.5 min-w-0">
         <% if current_user&.avatar&.attached? %>
           <%= image_tag current_user.avatar, class: "w-8 h-8 rounded-full object-cover border border-ink/10 dark:border-white/10 shrink-0" %>
@@ -103,7 +116,7 @@
         <% end %>
         <div class="flex flex-col min-w-0">
           <span class="text-xs font-medium text-ink dark:text-fable truncate leading-tight"><%= current_user&.full_name %></span>
-          <span class="text-[10px] text-ink-light/60 dark:text-white/40 truncate"><%= current_user&.email %></span>
+          <span class="text-[10px] text-ink-light/60 dark:text-white/40 truncate"><%= current_user&.job_title.presence || current_user&.email %></span>
         </div>
       </div>
       <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-red-600 rounded-lg transition-colors cursor-pointer", title: "Sair" do %>
