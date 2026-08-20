@@ -19,12 +19,38 @@ O SpecLine aborda o problema critico da fragmentacao no desenvolvimento de softw
 ### Principais Diretrizes do Projeto
 
 - **Centralizacao Contextual:** Integracao nativa entre documentos de produto (PRDs) e tarefas no fluxo Kanban.
-- **Rastreabilidade de Decisoes:** Registros tecnicos vinculados diretamente aos artefatos impactados, preservando o historico de mudancas.
-- **Monolito Modular de Alta Eficiencia:** Arquitetura coesa em Ruby on Rails 8 que elimina servicos intermediarios dedicados (como instancias pagas de Redis), viabilizando operacao de alto desempenho com custo zero de infraestrutura.
+  - **Autenticação Descomplicada:** Suporte completo nativo a Google OAuth 2.0.
+  - **Monolito Modular de Alta Eficiência:** Arquitetura coesa em Ruby on Rails 8 que elimina serviços intermediários dedicados (como instâncias pagas de Redis), viabilizando operação de alto desempenho com custo zero de infraestrutura.
 
 ---
 
-## 2. Arquitetura do Sistema e Topologia
+## 2. Galeria da Plataforma (Screenshots)
+
+_Para adicionar os prints finais, basta salvar as imagens na pasta `docs/images/` e descomentar as linhas abaixo._
+
+### Painel Geral de Projetos
+
+![Painel de Projetos (Cole sua imagem em docs/images/projects-dashboard.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Painel+de+Projetos)
+_Visão central do Workspace, contendo as métricas principais e a lista de projetos ativos._
+
+### Quadro Kanban Interativo (Issues)
+
+![Quadro Kanban (Cole sua imagem em docs/images/kanban-board.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Kanban)
+_Gestão drag-and-drop de tarefas com edição diretamente em pop-ups rápidos (Turbo Frames)._
+
+### Documentações (Editor Contextual)
+
+![Documentos (Cole sua imagem em docs/images/documents-editor.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Editor+de+Documentos)
+_Editor no estilo Notion para especificações de produto e documentação técnica._
+
+### Gestão de Metas (Milestones)
+
+![Milestones (Cole sua imagem em docs/images/milestones-view.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+das+Metas)
+_Acompanhamento e organização de agrupamentos de entregas visando previsibilidade._
+
+---
+
+## 3. Arquitetura do Sistema e Topologia
 
 ```mermaid
 graph TD
@@ -46,31 +72,31 @@ graph TD
 
 ## 3. Modulos e Subsistemas
 
-| Subsistema | Escopo e Capacidades Tecnicas |
-| :--- | :--- |
-| **Quadro Kanban Contextual** | Gestao de fluxo com atualizacao em tempo real via Turbo Streams e persistencia assincrona. |
-| **Documentacao e Especificacoes** | Editor estruturado com suporte a Markdown, formatacao tecnica e anexos de midia. |
-| **Comunicacao Contextual** | Registro de mensagens e discussoes diretamente atrelado a cards e documentos. |
-| **Canvas e Prototipacao** | Area colaborativa para diagramacao de fluxos e especificacao visual. |
-| **Relatorios e Metricas** | Consolidacao de indicadores de desempenho e exportacao em PDF. |
-| **Autenticacao e Seguranca** | Gestao de sessoes, criptografia bcrypt via Devise e integracao Google OAuth2. |
+| Subsistema                        | Escopo e Capacidades Tecnicas                                                              |
+| :-------------------------------- | :----------------------------------------------------------------------------------------- |
+| **Quadro Kanban Contextual**      | Gestao de fluxo com atualizacao em tempo real via Turbo Streams e persistencia assincrona. |
+| **Documentacao e Especificacoes** | Editor estruturado com suporte a Markdown, formatacao tecnica e anexos de midia.           |
+| **Comunicacao Contextual**        | Registro de mensagens e discussoes diretamente atrelado a cards e documentos.              |
+| **Canvas e Prototipacao**         | Area colaborativa para diagramacao de fluxos e especificacao visual.                       |
+| **Relatorios e Metricas**         | Consolidacao de indicadores de desempenho e exportacao em PDF.                             |
+| **Autenticacao e Seguranca**      | Gestao de sessoes, criptografia bcrypt via Devise e integracao Google OAuth2.              |
 
 ---
 
 ## 4. Matriz Tecnologica
 
-| Camada | Tecnologia | Justificativa Arquitetural |
-| :--- | :--- | :--- |
-| **Backend & Core** | Ruby on Rails 8.1 | Framework full-stack coeso com arquitetura MVC e geradores de codigo. |
-| **Reatividade** | Hotwire (Turbo + Stimulus) | Reatividade em tempo real e navegacao acelerada sem complexidade de SPA. |
-| **Estilizacao** | Tailwind CSS 3.4 | Framework utilitario com pipeline PostCSS e design system semantico. |
-| **Filas e WebSockets** | Solid Queue & Solid Cable | Background jobs e mensageria em tempo real persistidos no PostgreSQL. |
-| **Banco Local** | SQLite3 | Banco relacional leve e sem dependencia externa para desenvolvimento. |
-| **Banco Producao** | Neon.tech PostgreSQL | Instancia serverless com auto-scaling e connection pooling integrado. |
-| **Servidor de Aplicacao** | Puma + Thruster | Servidor concorrente protegido por proxy HTTP/2 com cache de memoria. |
-| **Containerizacao** | Docker Multi-Stage | Imagem compacta e segura com otimizacao de memoria via `jemalloc`. |
-| **Armazenamento de Objetos** | Cloudflare R2 | Storage compativel com S3 com isencao total de taxas de transferencia. |
-| **E-mails Transacionais** | Resend | Servico de envio de e-mails transacionais de alta entregabilidade. |
+| Camada                       | Tecnologia                 | Justificativa Arquitetural                                               |
+| :--------------------------- | :------------------------- | :----------------------------------------------------------------------- |
+| **Backend & Core**           | Ruby on Rails 8.1          | Framework full-stack coeso com arquitetura MVC e geradores de codigo.    |
+| **Reatividade**              | Hotwire (Turbo + Stimulus) | Reatividade em tempo real e navegacao acelerada sem complexidade de SPA. |
+| **Estilizacao**              | Tailwind CSS 3.4           | Framework utilitario com pipeline PostCSS e design system semantico.     |
+| **Filas e WebSockets**       | Solid Queue & Solid Cable  | Background jobs e mensageria em tempo real persistidos no PostgreSQL.    |
+| **Banco Local**              | SQLite3                    | Banco relacional leve e sem dependencia externa para desenvolvimento.    |
+| **Banco Producao**           | Neon.tech PostgreSQL       | Instancia serverless com auto-scaling e connection pooling integrado.    |
+| **Servidor de Aplicacao**    | Puma + Thruster            | Servidor concorrente protegido por proxy HTTP/2 com cache de memoria.    |
+| **Containerizacao**          | Docker Multi-Stage         | Imagem compacta e segura com otimizacao de memoria via `jemalloc`.       |
+| **Armazenamento de Objetos** | Cloudflare R2              | Storage compativel com S3 com isencao total de taxas de transferencia.   |
+| **E-mails Transacionais**    | Resend                     | Servico de envio de e-mails transacionais de alta entregabilidade.       |
 
 ---
 
@@ -79,7 +105,7 @@ graph TD
 Especificacoes detalhadas de engenharia estao disponiveis no diretorio `docs/`:
 
 - [Especificacao da Stack Tecnica](docs/STACK.md): Detalhamento dos componentes, gems, pacotes e versoes.
-- [Documento de Arquitetura e Engenharia de Capacidade](docs/INFRAESTRUTURA_E_CAPACIDADE.md): Dimensionamento de volumetria, capacidade de usuarios simultaneos, analise de TCO e justificativa da estrategia zero-cost.
+- [Documento de Arquitetura e Engenharia de Capacidade](docs/INFRASTRUCTURE_AND_CAPACITY.md): Dimensionamento de volumetria, capacidade de usuarios simultaneos, analise de TCO e justificativa da estrategia zero-cost.
 
 ---
 

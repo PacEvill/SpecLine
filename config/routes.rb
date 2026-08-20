@@ -15,8 +15,21 @@ Rails.application.routes.draw do
         end
         resources :comments, only: [:create, :destroy]
       end
-      resources :milestones
-      resources :documents
+      resources :milestones, except: [:index]
+      resources :documents do
+        member do
+          post :duplicate
+          get :export
+          patch :move
+        end
+      end
+      resources :whiteboards do
+        member do
+          post :duplicate
+          get :export_json
+          get :export_svg
+        end
+      end
     end
   end
 
@@ -33,7 +46,9 @@ Rails.application.routes.draw do
   resource :preferences, only: [:show, :update]
 
   # Autenticação
-  devise_for :users
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
   devise_scope :user do
     get '/register', to: 'devise/registrations#new'
   end
@@ -56,6 +71,11 @@ Rails.application.routes.draw do
   get "solutions/startups", to: "solutions#startups"
   get "solutions/agencies", to: "solutions#agencies"
   get "solutions/product", to: "solutions#product"
+
+  # Legal & Institutional Pages
+  get "terms", to: "legal#terms"
+  get "privacy", to: "legal#privacy"
+  get "contact", to: "legal#contact"
 
   # Health Check
   get "up" => "rails/health#show", as: :rails_health_check

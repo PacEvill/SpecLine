@@ -1,0 +1,58 @@
+<div class="min-h-screen bg-[#FDFBF7] dark:bg-ink-darker text-ink dark:text-fable py-16 px-6">
+  <div class="max-w-3xl mx-auto space-y-12">
+    <!-- Header -->
+    <header class="text-center space-y-4">
+      <h1 class="text-4xl font-serif font-bold tracking-tight">Contato Institucional</h1>
+      <p class="text-ink-light dark:text-white/60">Estamos prontos para atender requisições comerciais, técnicas ou jurídicas.</p>
+    </header>
+
+    <!-- Content -->
+    <article class="prose prose-ink dark:prose-invert prose-headings:font-serif prose-a:text-terracotta max-w-none">
+      
+      <p>
+        O <strong>SpecLine</strong> foi concebido no contexto da disciplina de <em>Práticas Extensionistas Integradoras VI</em> pelo desenvolvedor **Diego Silva**. Nosso compromisso é o desenvolvimento em código limpo, open-source e com excelência em segurança da informação.
+      </p>
+
+      <h2>Canais de Atendimento</h2>
+      <p>Dependendo da natureza do seu contato, utilize os seguintes canais recomendados:</p>
+
+      <ul>
+        <li>
+          <strong>Proteção de Dados e DPO (LGPD / Privacidade):</strong><br>
+          Se você precisa exercer seus direitos de titular, solicitar uma exclusão manual de registros (Direito ao Esquecimento) ou reportar um potencial incidente de segurança cibernética (Security Breach Report), entre em contato via: <br>
+          <a href="mailto:privacy@specline.local">privacy@specline.local</a>
+        </li>
+        <li>
+          <strong>Comercial, Parcerias institucionais e Suporte SaaS:</strong><br>
+          Para relatar bugs no sistema (Kanban, Documentos), dúvidas técnicas de uso ou parcerias comerciais. <br>
+          <a href="mailto:suporte@specline.local">suporte@specline.local</a>
+        </li>
+        <li>
+          <strong>Código Fonte (Open-Source):</strong><br>
+          Se você for desenvolvedor e quiser contribuir para a stack em Ruby on Rails, por favor abra uma Issue no repositório oficial no GitHub.<br>
+          <a href="https://github.com/diego-silva/SpecLine" target="_blank" rel="noopener noreferrer">github.com/diego-silva/SpecLine</a>
+        </li>
+      </ul>
+
+      <h2>Informações de Sede Jurídica e Foro</h2>
+      <p>
+        <strong>Representação:</strong> Desenvolvido no contexto institucional universitário. Para fins de legislação brasileira sobre Marco Civil da Internet (Lei nº 12.965/2014) e da Lei Geral de Proteção de Dados, os servidores operacionais estão hospedados por intermédio da Render.com, Cloudflare e Neon.tech, e o domicílio referencial do mantenedor principal se encontra na jurisdição Brasileira. 
+      </p>
+
+      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 p-6 rounded-2xl shadow-sm my-8">
+        <h3 class="mt-0">Resposta e Prazos SLA</h3>
+        <p class="mb-0 text-sm">
+          A Lei Geral de Proteção de Dados Brasileira (LGPD) estipula o prazo de 15 dias corridos para resposta a requisições formais e completas do titular dos dados. No SpecLine, a meta é responder a todas as requisições técnicas de deleção (GDPR/LGPD) em um período interno não superior a 72 horas.
+        </p>
+      </div>
+
+    </article>
+    
+    <!-- Footer Link -->
+    <div class="pt-8 border-t border-ink/10 dark:border-white/10 text-center flex items-center justify-center gap-6">
+      <%= link_to "Termos de Serviço", terms_path, class: "text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink hover:underline transition-colors" %>
+      <%= link_to "Política de Privacidade", privacy_path, class: "text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink hover:underline transition-colors" %>
+      <%= link_to "Voltar à página inicial", root_path, class: "text-sm font-medium text-terracotta hover:underline ml-4" %>
+    </div>
+  </div>
+</div>

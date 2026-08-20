@@ -1,3 +1,14 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace %>
+<% end %>
+
+<% if defined?(@project) && @project&.persisted? %>
+  <div class="opacity-40 pointer-events-none filter blur-[1px] select-none h-full overflow-hidden">
+    <%= render "projects/header" %>
+    <%= render "projects/overview_view" %>
+  </div>
+<% end %>
+
 <%= turbo_frame_tag "modal" do %>
   <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-50 flex items-center justify-center p-4" data-controller="modal" data-action="click->modal#closeBackground">
     <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-md overflow-hidden">

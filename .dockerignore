@@ -45,7 +45,28 @@
 
 # Ignore development files
 /.devcontainer
+/test/
+/spec/
+/reference/
+/docs/
+/coverage/
+
+# Ignore database dumps and SQLite files
+*.sqlite3
+*.sqlite3-*
+*.db
+*.dump
+*.sql
+*.sql.gz
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# Ignore reports and audits
+*report*.json
+*output*.json
+*results*.json
 
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+render.yaml

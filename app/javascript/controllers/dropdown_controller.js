@@ -1,35 +1,45 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static targets = ["menu"]
+
   connect() {
-    this.closeMenuOutside = this.closeMenuOutside.bind(this)
-    document.addEventListener("click", this.closeMenuOutside)
+    this.closeOutside = this.closeOutside.bind(this)
+    document.addEventListener("click", this.closeOutside)
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") this.close()
+    })
   }
 
   disconnect() {
-    document.removeEventListener("click", this.closeMenuOutside)
-  }
-
-  closeOnEsc(event) {
-    if (event.key === "Escape" && this.element.hasAttribute("open")) {
-      this.element.removeAttribute("open")
-    }
+    document.removeEventListener("click", this.closeOutside)
   }
 
   toggle(event) {
-    if (this.element.hasAttribute("open")) {
-      event.preventDefault();
-      this.element.removeAttribute("open");
-    }
-  }
+    if (event) event.stopPropagation()
 
-  closeMenuOutside(event) {
-    if (!this.element.contains(event.target)) {
-      this.element.removeAttribute("open")
+    if (this.hasMenuTarget) {
+      this.menuTarget.classList.toggle("hidden")
+    } else if (this.element.tagName === "DETAILS") {
+      if (this.element.hasAttribute("open")) {
+        this.element.removeAttribute("open")
+      } else {
+        this.element.setAttribute("open", "")
+      }
     }
   }
 
   close() {
-    this.element.removeAttribute("open")
+    if (this.hasMenuTarget) {
+      this.menuTarget.classList.add("hidden")
+    } else if (this.element.tagName === "DETAILS") {
+      this.element.removeAttribute("open")
+    }
+  }
+
+  closeOutside(event) {
+    if (!this.element.contains(event.target)) {
+      this.close()
+    }
   }
 }

@@ -2,16 +2,16 @@
 
 one:
   project: one
-  title: MyString
-  description: MyText
+  title: Milestone v1.0
+  description: Primeira versão
   start_date: 2026-08-18
-  target_date: 2026-08-18
-  status: MyString
+  target_date: 2026-09-18
+  status: active
 
 two:
   project: two
-  title: MyString
-  description: MyText
+  title: Milestone v2.0
+  description: Segunda versão
   start_date: 2026-08-18
-  target_date: 2026-08-18
-  status: MyString
+  target_date: 2026-10-18
+  status: open

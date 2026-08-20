@@ -73,3 +73,25 @@ Para garantir que o projeto seja desenvolvido em um sprint ágil (3 a 4 dias) po
 - **GitHub Actions (`.github/workflows/ci.yml`):** Pipeline automático executando testes unitários, testes de sistema (`Capybara` + `Selenium`), verificação de segurança estática (**Brakeman**), auditoria de CVEs (**Bundler-Audit**) e linter de estilo (**RuboCop**).
 - **Dependabot:** Monitoramento automatizado de atualizações e segurança de dependências.
 - **Health Check Endpoint (`/up`):** Verificação de integridade e liveness probe do Rails para monitoramento contínuo de uptime.
+
+---
+
+## 6. Integrações e Escalabilidade Futura (Roadmap)
+
+Conforme o SpecLine amadurece e cresce além do MVP, novas camadas tecnológicas serão integradas para suportar recursos avançados e monetização, mantendo a filosofia do Monólito Modular:
+
+### 6.1. Faturamento e Pagamentos (Billing)
+- **Stripe / LemonSqueezy:** Integração via webhooks e APIs oficiais para gerenciar assinaturas SaaS, controle de cotas de workspaces e faturamento B2B/B2C, garantindo conformidade fiscal internacional (Merchant of Record).
+- **Pay (Gem):** Camada de abstração Ruby para gerenciar assinaturas, clientes e faturas independente do gateway de pagamento, facilitando trocas futuras se necessário.
+
+### 6.2. Inteligência Artificial e Agentes (AI)
+- **Model Context Protocol (MCP):** Adoção do padrão MCP para permitir que assistentes de IA se conectem de forma padronizada aos repositórios e bases de conhecimento do Workspace.
+- **Langchain.rb / Ruby-OpenAI:** Abstrações para construção de pipelines de RAG (Retrieval-Augmented Generation), vetorização de especificações (Pgvector) e interação com LLMs (Gemini, Claude, OpenAI) diretamente no Rails.
+- **Background AI Jobs:** Processamento de resumos, traduções ou análises preditivas via Solid Queue para não bloquear as threads principais.
+
+### 6.3. Tempo Real de Alta Escala (WebSockets)
+- Embora o **Solid Cable** atenda perfeitamente o estágio inicial, caso haja pico de acessos simultâneos (dezenas de milhares de conexões em chat e quadros colaborativos), haverá a migração contínua para o **AnyCable** (backend Go/Erlang) que remove a carga de manutenção de conexões longas dos processos Ruby/Puma.
+
+### 6.4. Observabilidade e Telemetria (APM)
+- **Sentry / AppSignal:** Monitoramento avançado de erros (Exceptions) em tempo real no frontend e backend, agregando tracing de performance para consultas lentas no PostgreSQL (N+1 queries).
+- **Logster / Better Stack:** Centralização estruturada de logs para auditoria de segurança avançada, painéis de resposta a incidentes e gerenciamento de SLA/SLO.

@@ -1,8 +1,12 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace %>
+<% end %>
+
 <%= turbo_frame_tag "modal" do %>
   <!-- Backdrop -->
-  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 flex items-center justify-center p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 bg-ink/20 dark:bg-black/40 backdrop-blur-sm z-40 flex items-center justify-center p-4 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
     <!-- Modal Container -->
-    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-y-auto flex flex-col pointer-events-auto scale-95 animate-[scale-in_0.2s_ease-out_forwards]" data-modal-target="container">
+    <div class="bg-white dark:bg-ink-paper rounded-2xl shadow-xl w-full max-w-lg overflow-y-auto flex flex-col pointer-events-auto scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10" data-modal-target="container">
       
       <!-- Header -->
       <div class="sticky top-0 bg-white/90 dark:bg-ink-paper/90 backdrop-blur-sm px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between z-10">

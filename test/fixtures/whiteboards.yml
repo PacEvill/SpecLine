@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Arquitetura Principal"
+  description: "Diagrama de arquitetura"
+  content: '{"elements":[]}'
+  mermaid_code: "graph TD\n  A-->B"
+  mode: "hybrid"
+  icon: "🎨"
+  position: 1
+  workspace: one
+  project: one
+  user: one
+
+two:
+  title: "Fluxo de Usuário"
+  description: "Diagrama de fluxo"
+  content: '{"elements":[]}'
+  mermaid_code: "sequenceDiagram\n  A->>B: Ping"
+  mode: "mermaid"
+  icon: "🔄"
+  position: 2
+  workspace: one
+  project: one
+  user: one

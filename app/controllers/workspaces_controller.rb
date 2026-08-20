@@ -8,7 +8,8 @@ class WorkspacesController < ApplicationController
   end
 
   def show
-    @view = params[:view].presence || "cards"
+    @projects = @workspace.projects.order(created_at: :desc)
+    @view = params[:view].presence || "grid"
   end
 
   def new

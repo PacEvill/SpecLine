@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-[#FDFBF7] dark:bg-ink-darker text-ink dark:text-fable py-16 px-6">
+  <div class="max-w-3xl mx-auto space-y-12">
+    <!-- Header -->
+    <header class="text-center space-y-4">
+      <h1 class="text-4xl font-serif font-bold tracking-tight">Política de Privacidade e Proteção de Dados</h1>
+      <p class="text-ink-light dark:text-white/60">Última atualização: <%= Time.current.strftime("%d de %B de %Y") %></p>
+    </header>
+
+    <!-- Content -->
+    <article class="prose prose-ink dark:prose-invert prose-headings:font-serif prose-a:text-terracotta max-w-none">
+      <p>
+        A transparência e o respeito à sua privacidade são os pilares da <strong>SpecLine</strong>.
+        Este documento (Política de Privacidade) descreve integralmente como coletamos, usamos, processamos e protegemos seus dados pessoais quando você acessa nosso sistema, interage com nossos recursos de gestão visual de demandas e redige documentos (PRDs).
+      </p>
+
+      <h2>1. Conformidade Regulatória (LGPD, GDPR e CCPA)</h2>
+      <p>Nossas práticas de privacidade são regidas por legislações rigorosas, garantindo os direitos globais e locais aos nossos usuários:</p>
+      <ul>
+        <li><strong>Brasil - Lei Geral de Proteção de Dados Pessoais (LGPD):</strong> Atuamos pautados pelos princípios de finalidade, necessidade, adequação e transparência. Seus direitos de confirmação de existência, acesso, retificação, portabilidade e eliminação (Art. 18) estão plenamente assegurados.</li>
+        <li><strong>União Europeia - GDPR:</strong> Para titulares de dados na UE, baseamos o processamento legal sob as hipóteses de execução de contrato (Art. 6(1)(b)) e interesses legítimos (Art. 6(1)(f)), respeitando integralmente as demandas de governança e limitação de armazenamento transfronteiriço.</li>
+        <li><strong>Califórnia, EUA - CCPA/CPRA:</strong> Não vendemos dados pessoais. Respeitamos os direitos de recusa ("Opt-out") e de acesso à composição informacional coletada sobre os consumidores locais.</li>
+      </ul>
+
+      <h2>2. Coleta de Dados Pessoais</h2>
+      <p>A SpecLine coleta apenas os dados essenciais para o funcionamento seguro e eficiente da plataforma:</p>
+      <ul>
+        <li><strong>Dados de Registro:</strong> Nome completo, endereço de e-mail e credenciais de acesso, bem como tokens de autorização caso utilize integrações sociais como <em>Google OAuth 2.0</em>.</li>
+        <li><strong>Dados Operacionais (Gerados pelo Usuário):</strong> O conteúdo criado por você, como Quadros Kanban, descrições de Issues, Comentários, Metas (Milestones) e Documentos. Vale ressaltar que os dados confidenciais redigidos nos artefatos pertencem ao Workspace que você gerencia.</li>
+        <li><strong>Dados de Infraestrutura:</strong> Endereços de IP, tipo de navegador e registros de log para garantir a segurança da plataforma e realizar depuração (debugging) sistêmica em nossa arquitetura isolada.</li>
+      </ul>
+
+      <h2>3. Finalidade e Utilização dos Dados</h2>
+      <p>Utilizamos os dados captados exclusivamente para:</p>
+      <ul>
+        <li>Fornecer a infraestrutura de engenharia e funcionalidades da plataforma SpecLine (Ex: Autenticação, notificações push, colaboração em tempo real).</li>
+        <li>Manter e melhorar nossa segurança cibernética (controle de acesso, mitigação de abusos, logs de rastreabilidade).</li>
+        <li>Comunicação operacional e transacional (Ex: envios de e-mail via serviço Resend, recuperação de senhas).</li>
+      </ul>
+
+      <h2>4. Compartilhamento e Suboperadores</h2>
+      <p>
+        <strong>Nós não vendemos, alugamos ou comercializamos seus dados pessoais.</strong>
+        O compartilhamento ocorre de forma estritamente controlada e criptografada (TLS 1.3) apenas com parceiros de infraestrutura essenciais (Suboperadores):
+      </p>
+      <ul>
+        <li><strong>Cloudflare / Render.com:</strong> Para hospedagem, balanceamento de carga e entrega (CDN e Edge caching).</li>
+        <li><strong>Neon.tech:</strong> Provedor de Banco de Dados Serverless (PostgreSQL) onde os dados são armazenados de forma segura.</li>
+        <li><strong>Cloudflare R2:</strong> Armazenamento estático imutável (Object Storage) para anexos de documentos e avatars.</li>
+        <li><strong>Provedores de E-mail (Ex: Resend):</strong> Exclusivamente para processamento e entrega de comunicações do sistema.</li>
+      </ul>
+
+      <h2>5. Proteção, Segurança e Criptografia</h2>
+      <p>
+        Levamos a arquitetura de segurança a sério. Utilizamos práticas de mercado que incluem criptografia Bcrypt para senhas locais, certificados SSL em todo o trânsito de rede (HTTPS/TLS) e a segregação lógica de informações em nossos bancos de dados para prevenir vazamentos. Todo tráfego passa por WAF (Web Application Firewall).
+      </p>
+
+      <h2>6. Direitos do Titular (Seus Direitos)</h2>
+      <p>
+        Você mantém total agência sobre suas informações e pode requisitar a qualquer momento:
+      </p>
+      <ul>
+        <li><strong>O Direito à Supressão (Direito de Ser Esquecido):</strong> Você pode excluir seu Workspace, sua conta e todos os documentos relacionados através das configurações do perfil. A exclusão persistente em bancos de dados relacionais e backups será efetivada no prazo técnico de até 30 dias.</li>
+        <li><strong>O Acesso e Correção:</strong> Visualize e edite diretamente na plataforma todas as suas informações de perfil e de configuração.</li>
+        <li><strong>Exportação:</strong> Nossas ferramentas de relatório e download em PDF ou Markdown permitem a saída e portabilidade das suas documentações.</li>
+      </ul>
+
+      <h2>7. Contato do Encarregado de Dados (DPO)</h2>
+      <p>
+        Em caso de requisições baseadas na LGPD, GDPR ou se desejar exercer qualquer direito relacionado à Privacidade, por favor, envie-nos uma solicitação através do e-mail <strong>privacy@specline.com</strong> (fictício) ou utilize a página de <strong>Contato</strong>. Analisaremos e responderemos as demandas técnicas rapidamente.
+      </p>
+
+    </article>
+    
+    <!-- Footer Link -->
+    <div class="pt-8 border-t border-ink/10 dark:border-white/10 text-center">
+      <%= link_to "Voltar à página inicial", root_path, class: "text-sm font-medium text-terracotta hover:underline" %>
+    </div>
+  </div>
+</div>

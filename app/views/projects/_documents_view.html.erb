@@ -5,22 +5,34 @@
       <p class="text-sm font-sans text-ink-light dark:text-white/60">Crie, organize e compartilhe conhecimento com seu time.</p>
     </div>
     
-    <%= link_to new_workspace_project_document_path(workspace, project), class: "inline-flex items-center justify-center gap-2 px-4 py-2 bg-ink dark:bg-fable text-white dark:text-ink text-sm font-medium rounded-xl hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white transition-colors duration-500 shadow-sm" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-      Novo Documento
-    <% end %>
+    <div class="flex items-center gap-2">
+      <%= link_to new_workspace_project_document_path(workspace, project, is_folder: true), class: "inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-ink/5 dark:bg-white/10 text-ink dark:text-fable text-xs font-semibold rounded-xl hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 dark:hover:text-white transition-all shadow-xs" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+        <span>Nova Pasta</span>
+      <% end %>
+
+      <%= link_to new_workspace_project_document_path(workspace, project), class: "inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-terracotta text-white text-xs font-semibold rounded-xl hover:bg-terracotta-hover transition-all shadow-xs" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Novo Documento</span>
+      <% end %>
+    </div>
   </div>
 
   <% if documents.any? %>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% documents.each do |doc| %>
-        <%= link_to workspace_project_document_path(workspace, project, doc), class: "group bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 hover:border-terracotta/40 hover:shadow-md transition-all duration-500 flex flex-col min-h-[140px]" do %>
+        <%= link_to workspace_project_document_path(workspace, project, doc), class: "group bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 hover:border-terracotta/40 hover:shadow-md transition-all duration-300 flex flex-col min-h-[140px]" do %>
           <div class="flex items-center gap-3 mb-3">
-            <div class="w-10 h-10 rounded-xl bg-sage/10 text-sage-dark flex items-center justify-center text-xl shrink-0">
-              <%= doc.icon.presence || "📄" %>
+            <div class="w-10 h-10 rounded-xl <%= doc.is_folder? ? 'bg-amber-500/10 text-amber-600 dark:bg-amber-500/20 dark:text-amber-400' : 'bg-terracotta/10 text-terracotta dark:bg-terracotta/20' %> flex items-center justify-center shrink-0 shadow-xs">
+              <%= document_icon_tag(doc, size_class: "w-5 h-5") %>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-base font-serif font-medium text-ink dark:text-fable truncate group-hover:text-terracotta transition-colors duration-500"><%= doc.title %></h3>
+              <div class="flex items-center gap-2">
+                <h3 class="text-base font-serif font-medium text-ink dark:text-fable truncate group-hover:text-terracotta transition-colors"><%= doc.title.presence || (doc.is_folder? ? "Nova Pasta" : "Sem Título") %></h3>
+                <% if doc.is_folder? %>
+                  <span class="px-1.5 py-0.2 text-[9px] font-bold rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">PASTA</span>
+                <% end %>
+              </div>
               <p class="text-[11px] text-ink-light dark:text-white/60 font-sans mt-0.5 truncate">
                 Atualizado por <%= doc.author.email.split('@').first %>
               </p>
@@ -32,7 +44,7 @@
             <% if doc.children.any? %>
               <span class="flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                <%= doc.children.count %> subdocs
+                <%= doc.children.count %> <%= doc.is_folder? ? "itens" : "subdocs" %>
               </span>
             <% end %>
           </div>
@@ -46,12 +58,19 @@
       </div>
       <h3 class="text-lg font-serif font-medium text-ink dark:text-fable mb-2">Sua Wiki está vazia</h3>
       <p class="text-sm font-sans text-ink-light dark:text-white/60 mb-6 max-w-sm mx-auto">
-        Comece a criar documentos para centralizar especificações, atas de reunião e conhecimento técnico.
+        Comece a criar pastas e documentos para centralizar especificações, atas de reunião e conhecimento técnico.
       </p>
-      <%= link_to new_workspace_project_document_path(workspace, project), class: "inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-terracotta text-white text-sm font-medium rounded-xl hover:bg-[#c26244] transition-colors duration-500 shadow-sm hover:-translate-y-0.5" do %>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-        Criar meu primeiro documento
-      <% end %>
+      <div class="flex items-center justify-center gap-3">
+        <%= link_to new_workspace_project_document_path(workspace, project, is_folder: true), class: "inline-flex items-center justify-center gap-2 px-4 py-2 bg-ink/5 dark:bg-white/10 text-ink dark:text-fable text-sm font-semibold rounded-xl hover:bg-amber-500 hover:text-white transition-all shadow-xs" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+          Criar Pasta
+        <% end %>
+
+        <%= link_to new_workspace_project_document_path(workspace, project), class: "inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-terracotta text-white text-sm font-semibold rounded-xl hover:bg-terracotta-hover transition-all shadow-xs hover:-translate-y-0.5" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Criar Documento
+        <% end %>
+      </div>
     </div>
   <% end %>
 </div>

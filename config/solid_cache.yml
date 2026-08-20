@@ -1,0 +1,8 @@
+default: &default
+  store_options:
+    max_age: <%= 3.days.to_i %>
+    max_size: 30.megabytes
+  clear_frequency: 1.hour
+
+production:
+  <<: *default

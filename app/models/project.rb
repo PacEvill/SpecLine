@@ -1,13 +1,17 @@
 class Project < ApplicationRecord
+  include SecureAttachable
+
   belongs_to :workspace
   has_many :issues, dependent: :destroy
   has_many :issue_statuses, dependent: :destroy
   has_many :milestones, dependent: :destroy
   has_many :boards, dependent: :destroy
   has_many :documents, dependent: :destroy
+  has_many :whiteboards, dependent: :destroy
 
   has_one_attached :logo
   validates :name, presence: true
+  validate :validate_logo_attachment
 
   after_create :create_default_statuses
   after_create :set_identifier_prefix
@@ -27,6 +31,10 @@ class Project < ApplicationRecord
   end
 
   private
+
+  def validate_logo_attachment
+    validate_secure_attachment(:logo)
+  end
 
   def create_default_statuses
     IssueStatus.create_defaults_for(self)

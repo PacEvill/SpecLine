@@ -1,0 +1,35 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace, current_project: @project %>
+<% end %>
+
+<div class="flex-1 bg-[#FDFBF7] dark:bg-ink-darker min-h-screen p-6 sm:p-10 overflow-y-auto font-sans">
+  <div class="max-w-2xl mx-auto">
+    
+    <!-- Breadcrumb & Back -->
+    <div class="flex items-center gap-2 text-xs text-ink-light dark:text-white/60 mb-6">
+      <%= link_to @project.name, workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "hover:text-ink dark:hover:text-fable transition-colors" %>
+      <span>/</span>
+      <%= link_to "Quadros & Diagramas", workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "hover:text-ink dark:hover:text-fable transition-colors" %>
+      <span>/</span>
+      <span class="text-ink dark:text-fable font-semibold">Editar Quadro</span>
+    </div>
+
+    <!-- Main Card Form -->
+    <div class="bg-white dark:bg-ink-paper rounded-3xl border border-ink/10 dark:border-white/10 shadow-xl p-6 sm:p-8">
+      
+      <div class="flex items-center gap-3.5 mb-6 pb-6 border-b border-ink/5 dark:border-white/5">
+        <div class="w-12 h-12 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+          <%= whiteboard_icon_tag(@whiteboard, size_class: "w-6 h-6") %>
+        </div>
+        <div>
+          <h1 class="text-lg font-serif font-bold text-ink dark:text-fable">Configurações do Quadro</h1>
+          <p class="text-xs text-ink-light dark:text-white/60">Atualize o título, descrição, tipo de ícone e modo de operação.</p>
+        </div>
+      </div>
+
+      <%= render "form", workspace: @workspace, project: @project, whiteboard: @whiteboard %>
+
+    </div>
+
+  </div>
+</div>

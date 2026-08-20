@@ -2,14 +2,14 @@
 
 one:
   project: one
-  name: MyString
-  category: MyString
-  color: MyString
-  position: 1
+  name: Backlog
+  category: backlog
+  color: "#94a3b8"
+  position: 0
 
 two:
   project: two
-  name: MyString
-  category: MyString
-  color: MyString
+  name: Em Progresso
+  category: in_progress
+  color: "#3b82f6"
   position: 1

@@ -1,0 +1,9 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace, current_project: @project %>
+<% end %>
+
+<%= render "projects/header", workspace: @workspace, project: @project, view: "whiteboards" %>
+
+<div class="flex-1 overflow-y-auto">
+  <%= render "projects/whiteboards_view", whiteboards: @whiteboards, workspace: @workspace, project: @project %>
+</div>

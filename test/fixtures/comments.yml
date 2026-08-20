@@ -2,11 +2,13 @@
 
 one:
   user: one
-  commentable: one (Issue)
+  commentable: one
+  commentable_type: Issue
   body: Comentario da tarefa um
 
 two:
   user: two
-  commentable: two (Issue)
+  commentable: two
+  commentable_type: Issue
   body: Comentario da tarefa dois
 

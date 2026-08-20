@@ -1,0 +1,158 @@
+<div class="px-6 lg:px-8 py-6 max-w-7xl mx-auto font-sans">
+  
+  <!-- Header / Controls Bar -->
+  <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+    <div>
+      <h2 class="text-2xl font-serif text-ink dark:text-fable mb-1">Quadros & Diagramas</h2>
+      <p class="text-sm font-sans text-ink-light dark:text-white/60">Espaço visual integrado para ideação, post-its, fluxos livres, imagens e diagramação de arquitetura como código.</p>
+    </div>
+
+    <div class="flex items-center gap-2.5 w-full sm:w-auto">
+      <%= link_to new_workspace_project_whiteboard_path(workspace, project), 
+                  class: "inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-terracotta text-white rounded-xl text-xs font-semibold hover:bg-terracotta-hover transition-all shadow-xs shrink-0 cursor-pointer" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Novo Quadro</span>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Starter Blueprints Grid -->
+  <div class="mb-10">
+    <span class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 block mb-3">Modelos de Engenharia & Produto (Blueprints)</span>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+      <!-- 1. Arquitetura -->
+      <%= link_to new_workspace_project_whiteboard_path(workspace, project, template: 'architecture'), 
+                  class: "group p-4 bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 hover:border-terracotta/50 dark:hover:border-terracotta/50 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between" do %>
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <%= architecture_icon_svg(classes: "w-5 h-5") %>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">Arquitetura</span>
+          </div>
+          <h3 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors">Arquitetura de Sistemas</h3>
+          <p class="text-[11px] text-ink-light dark:text-white/60 mt-1 line-clamp-2 leading-relaxed">Microsserviços, gateway de API, filas de mensageria e banco de dados.</p>
+        </div>
+        <div class="mt-4 pt-2.5 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] font-medium text-terracotta">
+          <span>Criar com Modelo</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      <% end %>
+
+      <!-- 2. Sequência / Auth -->
+      <%= link_to new_workspace_project_whiteboard_path(workspace, project, template: 'sequence'), 
+                  class: "group p-4 bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 hover:border-terracotta/50 dark:hover:border-terracotta/50 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between" do %>
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+              <%= sequence_icon_svg(classes: "w-5 h-5") %>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">Sequência</span>
+          </div>
+          <h3 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors">Fluxo de Autenticação</h3>
+          <p class="text-[11px] text-ink-light dark:text-white/60 mt-1 line-clamp-2 leading-relaxed">Diagrama de sequência detalhado com cliente, autenticação JWT e banco de dados.</p>
+        </div>
+        <div class="mt-4 pt-2.5 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] font-medium text-terracotta">
+          <span>Criar com Modelo</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      <% end %>
+
+      <!-- 3. Brainstorming / User Story Map -->
+      <%= link_to new_workspace_project_whiteboard_path(workspace, project, template: 'brainstorm'), 
+                  class: "group p-4 bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 hover:border-terracotta/50 dark:hover:border-terracotta/50 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between" do %>
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 rounded-xl bg-amber-500/10 dark:bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+              <%= brainstorm_icon_svg(classes: "w-5 h-5") %>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">Ideação</span>
+          </div>
+          <h3 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors">Ideação & Post-its</h3>
+          <p class="text-[11px] text-ink-light dark:text-white/60 mt-1 line-clamp-2 leading-relaxed">Grid de notas adesivas e quadros para levantamento de requisitos de produto.</p>
+        </div>
+        <div class="mt-4 pt-2.5 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] font-medium text-terracotta">
+          <span>Criar com Modelo</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      <% end %>
+
+      <!-- 4. Banco de Dados / ER -->
+      <%= link_to new_workspace_project_whiteboard_path(workspace, project, template: 'er_diagram'), 
+                  class: "group p-4 bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 hover:border-terracotta/50 dark:hover:border-terracotta/50 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between" do %>
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 rounded-xl bg-purple-500/10 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+              <%= er_diagram_icon_svg(classes: "w-5 h-5") %>
+            </div>
+            <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-400">Banco de Dados</span>
+          </div>
+          <h3 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors">Modelo de Entidade (DER)</h3>
+          <p class="text-[11px] text-ink-light dark:text-white/60 mt-1 line-clamp-2 leading-relaxed">Modelagem de tabelas, relacionamentos (1:N, N:N) e integridade de dados.</p>
+        </div>
+        <div class="mt-4 pt-2.5 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] font-medium text-terracotta">
+          <span>Criar com Modelo</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Lista de Quadros Existentes -->
+  <div>
+    <div class="flex items-center justify-between mb-4">
+      <span class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Quadros do Projeto (<%= project.whiteboards.count %>)</span>
+    </div>
+
+    <% if project.whiteboards.any? %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% project.whiteboards.ordered.each do |whiteboard| %>
+          <div class="group relative bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 hover:border-terracotta/50 dark:hover:border-terracotta/50 hover:shadow-md transition-all flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-3 mb-3">
+                <div class="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+                  <%= whiteboard_icon_tag(whiteboard, size_class: "w-5 h-5") %>
+                </div>
+
+                <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <%= link_to edit_workspace_project_whiteboard_path(workspace, project, whiteboard), class: "p-1.5 text-ink-light hover:text-ink dark:text-white/60 dark:hover:text-white rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer", title: "Editar Título" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+                  <% end %>
+                  <%= button_to workspace_project_whiteboard_path(workspace, project, whiteboard), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir este quadro?" } }, class: "p-1.5 text-ink-light hover:text-red-600 dark:text-white/60 dark:hover:text-red-400 rounded-lg hover:bg-red-500/10 transition-colors cursor-pointer", title: "Excluir" do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg>
+                  <% end %>
+                </div>
+              </div>
+
+              <%= link_to workspace_project_whiteboard_path(workspace, project, whiteboard), class: "block cursor-pointer" do %>
+                <h3 class="text-sm font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors line-clamp-1"><%= whiteboard.title %></h3>
+                <p class="text-xs text-ink-light dark:text-white/60 mt-1 line-clamp-2 leading-relaxed">
+                  <%= whiteboard.description.presence || "Quadro visual e diagramação técnica deste projeto." %>
+                </p>
+              <% end %>
+            </div>
+
+            <div class="mt-5 pt-3 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] text-ink-light/70 dark:text-white/40">
+              <span>Atualizado <%= time_ago_in_words(whiteboard.updated_at) %> atrás</span>
+              <%= link_to "Abrir Canvas →", workspace_project_whiteboard_path(workspace, project, whiteboard), class: "font-semibold text-terracotta hover:underline cursor-pointer" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="text-center py-16 px-4 bg-white/50 dark:bg-ink-paper/50 rounded-3xl border border-dashed border-ink/15 dark:border-white/10">
+        <div class="w-12 h-12 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center mx-auto mb-3">
+          <%= canvas_icon_svg(classes: "w-6 h-6") %>
+        </div>
+        <h3 class="text-sm font-bold text-ink dark:text-fable mb-1">Nenhum quadro criado ainda</h3>
+        <p class="text-xs text-ink-light dark:text-white/60 max-w-sm mx-auto mb-5">Crie diagramas de arquitetura, anotações visuais com post-its e especificações visuais para este projeto.</p>
+        <%= link_to new_workspace_project_whiteboard_path(workspace, project), class: "inline-flex items-center gap-1.5 px-4 py-2 bg-terracotta text-white rounded-xl text-xs font-semibold hover:bg-terracotta-hover transition-all shadow-xs cursor-pointer" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Criar Primeiro Quadro</span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+</div>

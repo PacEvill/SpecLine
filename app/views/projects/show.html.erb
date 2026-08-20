@@ -93,5 +93,9 @@
     <%= render "projects/milestones_view", milestones: @milestones, workspace: @workspace, project: @project %>
   <% elsif @view == "documents" %>
     <%= render "projects/documents_view", documents: @documents, workspace: @workspace, project: @project %>
+  <% elsif @view == "whiteboards" %>
+    <%= render "projects/whiteboards_view", whiteboards: @whiteboards, workspace: @workspace, project: @project %>
+  <% elsif @view == "overview" %>
+    <%= render "projects/overview_view", workspace: @workspace, project: @project %>
   <% end %>
 </div>

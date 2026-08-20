@@ -5,12 +5,15 @@ class IssuesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_issue, only: [:show, :edit, :update, :destroy, :move]
+  before_action :prepare_project_context, only: [:new, :edit]
 
   def show
   end
 
   def new
     @issue = @project.issues.build
+    @issue.title = params[:title] if params[:title].present?
+    @issue.description = params[:description] if params[:description].present?
     @issue.issue_status_id = params[:issue_status_id] if params[:issue_status_id].present?
   end
 
@@ -79,9 +82,10 @@ class IssuesController < ApplicationController
 
   # PATCH /workspaces/:workspace_id/projects/:project_id/issues/:id/move
   # Endpoint para drag-and-drop do Kanban
-  # PATCH /workspaces/:workspace_id/projects/:project_id/issues/:id/move
-  # Endpoint para drag-and-drop do Kanban
   def move
+    old_status_id = @issue.issue_status_id
+    old_status_name = @issue.issue_status&.name
+
     update_params = {
       issue_status_id: params[:status_id],
       position: params[:position].to_f
@@ -101,14 +105,15 @@ class IssuesController < ApplicationController
 
     @issue.update!(update_params)
 
-    old_status_name = IssueStatus.find_by(id: @issue.issue_status_id_before_last_save)&.name
-    Activity.track(
-      user: current_user,
-      workspace: @workspace,
-      trackable: @issue,
-      action: "status_changed",
-      metadata: { from: old_status_name, to: @issue.issue_status.name }
-    )
+    if @issue.issue_status_id != old_status_id
+      Activity.track(
+        user: current_user,
+        workspace: @workspace,
+        trackable: @issue,
+        action: "status_changed",
+        metadata: { from: old_status_name, to: @issue.issue_status.name }
+      )
+    end
 
     head :ok
   end
@@ -125,6 +130,23 @@ class IssuesController < ApplicationController
 
   def set_issue
     @issue = @project.issues.find(params[:id])
+  end
+
+  def prepare_project_context
+    return if turbo_frame_request?
+    @statuses = @project.issue_statuses.ordered
+    @issues = @project.issues.includes(:issue_status, :assignee, :labels, :creator).ordered
+    @milestones = @project.milestones.ordered
+    @documents = @project.documents.roots.ordered
+    @whiteboards = @project.whiteboards.ordered
+    @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
+    @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
+    @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
+    
+    total_issues = @issues.count
+    done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
+    @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0
+    @view = "overview"
   end
 
   def issue_params

@@ -2,47 +2,59 @@ require "test_helper"
 
 class ProjectsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    @user = users(:one)
+    @workspace = workspaces(:one)
     @project = projects(:one)
+    sign_in @user
   end
 
   test "should get index" do
-    get projects_url
+    get workspace_projects_url(@workspace)
     assert_response :success
   end
 
   test "should get new" do
-    get new_project_url
+    get new_workspace_project_url(@workspace)
     assert_response :success
   end
 
   test "should create project" do
     assert_difference("Project.count") do
-      post projects_url, params: { project: { deadline: @project.deadline, description: @project.description, name: @project.name, progress: @project.progress, status: @project.status, workspace_id: @project.workspace_id } }
+      post workspace_projects_url(@workspace), params: {
+        project: {
+          name: "Novo Projeto Teste",
+          description: "Desc",
+          identifier_prefix: "TEST",
+          status: "Em Andamento"
+        }
+      }
     end
 
-    assert_redirected_to project_url(Project.last)
+    assert_redirected_to workspace_project_url(@workspace, Project.last)
   end
 
   test "should show project" do
-    get project_url(@project)
+    get workspace_project_url(@workspace, @project)
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_project_url(@project)
+    get edit_workspace_project_url(@workspace, @project)
     assert_response :success
   end
 
   test "should update project" do
-    patch project_url(@project), params: { project: { deadline: @project.deadline, description: @project.description, name: @project.name, progress: @project.progress, status: @project.status, workspace_id: @project.workspace_id } }
-    assert_redirected_to project_url(@project)
+    patch workspace_project_url(@workspace, @project), params: {
+      project: { name: "Nome Atualizado" }
+    }
+    assert_redirected_to workspace_project_url(@workspace, @project)
   end
 
   test "should destroy project" do
     assert_difference("Project.count", -1) do
-      delete project_url(@project)
+      delete workspace_project_url(@workspace, @project)
     end
 
-    assert_redirected_to projects_url
+    assert_redirected_to workspace_url(@workspace)
   end
 end

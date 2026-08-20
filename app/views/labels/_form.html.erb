@@ -1,3 +1,7 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace %>
+<% end %>
+
 <%= turbo_frame_tag "modal" do %>
   <div data-controller="modal" data-modal-open-value="true" class="relative z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-ink/30 backdrop-blur-sm transition-opacity duration-500" data-modal-target="backdrop" data-action="click->modal#close"></div>

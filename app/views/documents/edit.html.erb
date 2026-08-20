@@ -57,7 +57,11 @@
                   data-action="click->emoji-picker#togglePicker"
                   data-emoji-picker-target="button"
                   class="flex items-center justify-center w-[72px] h-[72px] text-[48px] rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-ink/10 dark:hover:border-white/10 leading-none">
-            <%= @document.icon.presence || "📄" %>
+            <% if @document.icon.present? %>
+              <span><%= @document.icon %></span>
+            <% else %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-terracotta"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <% end %>
           </button>
           
           <!-- Emoji Picker Popover -->

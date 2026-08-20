@@ -5,10 +5,7 @@ class MilestonesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_milestone, only: [:edit, :update, :destroy]
-
-  def index
-    @milestones = @project.milestones.ordered
-  end
+  before_action :prepare_project_context, only: [:new, :edit]
 
   def new
     @milestone = @project.milestones.build
@@ -54,7 +51,24 @@ class MilestonesController < ApplicationController
     @milestone = @project.milestones.find(params[:id])
   end
 
+  def prepare_project_context
+    return if turbo_frame_request?
+    @statuses = @project.issue_statuses.ordered
+    @issues = @project.issues.includes(:issue_status, :assignee, :labels, :creator).ordered
+    @milestones = @project.milestones.ordered
+    @documents = @project.documents.roots.ordered
+    @whiteboards = @project.whiteboards.ordered
+    @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
+    @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
+    @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
+    
+    total_issues = @issues.count
+    done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
+    @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0
+    @view = "overview"
+  end
+
   def milestone_params
-    params.require(:milestone).permit(:title, :description, :status, :start_date, :target_date)
+    params.require(:milestone).permit(:title, :description, :target_date, :status)
   end
 end

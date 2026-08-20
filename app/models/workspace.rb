@@ -1,16 +1,24 @@
 class Workspace < ApplicationRecord
+  include SecureAttachable
+
   belongs_to :user
   has_many :projects, dependent: :destroy
   has_many :labels, dependent: :destroy
   has_many :documents, dependent: :destroy
+  has_many :whiteboards, dependent: :destroy
   has_many :activities, dependent: :destroy
   has_one_attached :logo
 
   validates :name, presence: true
+  validate :validate_logo_attachment
 
   after_create :create_default_labels
 
   private
+
+  def validate_logo_attachment
+    validate_secure_attachment(:logo)
+  end
 
   def create_default_labels
     [

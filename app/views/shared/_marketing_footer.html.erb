@@ -7,9 +7,9 @@
     </div>
     <p class="font-sans text-sm text-ink-light dark:text-white/60">© 2026 SpecLine. Desenhado para o foco.</p>
     <div class="flex space-x-6 text-sm text-ink-light dark:text-white/60">
-      <a href="#" class="hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">Termos</a>
-      <a href="#" class="hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">Privacidade</a>
-      <a href="#" class="hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">Contato</a>
+      <%= link_to "Termos", terms_path, class: "hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
+      <%= link_to "Privacidade", privacy_path, class: "hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
+      <%= link_to "Contato", contact_path, class: "hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500" %>
     </div>
   </div>
 </footer>

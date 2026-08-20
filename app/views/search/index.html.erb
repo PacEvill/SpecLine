@@ -1,0 +1,140 @@
+<%= turbo_frame_tag "modal" do %>
+  <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-start justify-center pt-16 sm:pt-24 bg-ink/40 dark:bg-black/60 backdrop-blur-md p-4 opacity-0 animate-[fade-in_0.15s_ease-out_forwards]">
+    <div class="bg-white dark:bg-ink-paper w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col scale-95 animate-[scale-in_0.15s_ease-out_forwards] border border-ink/10 dark:border-white/10 max-h-[80vh]">
+      
+      <!-- Search Input Bar -->
+      <div class="p-4 border-b border-ink/5 dark:border-white/5 flex items-center gap-3 bg-[#FDFBF7] dark:bg-ink-darker">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-light dark:text-white/60 shrink-0"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        
+        <%= form_with url: search_path, method: :get, data: { turbo_frame: "modal" }, class: "flex-1 flex items-center" do |f| %>
+          <%= f.text_field :q, value: @query, placeholder: "Buscar documentos, tarefas, projetos...", autofocus: true, autocomplete: "off", class: "w-full bg-transparent border-none text-base text-ink dark:text-fable placeholder:text-ink-light/40 dark:placeholder:text-white/30 focus:ring-0 focus:outline-none p-0", oninput: "this.form.requestSubmit()" %>
+        <% end %>
+        
+        <kbd class="hidden sm:inline-flex items-center text-[10px] font-sans font-medium text-ink-light/60 dark:text-white/40 px-2 py-0.5 rounded bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5">ESC</kbd>
+      </div>
+
+      <!-- Results Container -->
+      <div class="p-4 overflow-y-auto space-y-6">
+        
+        <!-- Documents Section -->
+        <% if @documents.any? %>
+          <div>
+            <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40 flex items-center justify-between">
+              <span>Documentos e Especificações</span>
+              <span class="text-[9px] font-normal"><%= @documents.count %> encontrados</span>
+            </div>
+            <div class="space-y-1">
+              <% @documents.each do |doc| %>
+                <%= link_to workspace_project_document_path(doc.workspace, doc.project, doc), data: { turbo_frame: "_top" }, class: "flex items-center justify-between p-2.5 rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 text-ink dark:text-fable transition-colors group" do %>
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-6 h-6 rounded-lg <%= doc.is_folder? ? 'bg-amber-500/10 text-amber-600' : 'bg-terracotta/10 text-terracotta' %> flex items-center justify-center shrink-0">
+                      <%= document_icon_tag(doc, size_class: "w-4 h-4") %>
+                    </span>
+                    <div class="truncate">
+                      <div class="text-sm font-medium truncate group-hover:text-terracotta transition-colors"><%= doc.title %></div>
+                      <div class="text-[11px] text-ink-light dark:text-white/50 truncate"><%= doc.project&.name || doc.workspace.name %></div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-ink-light/40 dark:text-white/30 group-hover:text-ink dark:group-hover:text-fable shrink-0 ml-2">→</span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Whiteboards & Diagrams Section -->
+        <% if @whiteboards.any? %>
+          <div>
+            <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40 flex items-center justify-between">
+              <span>Quadros & Diagramas</span>
+              <span class="text-[9px] font-normal"><%= @whiteboards.count %> encontrados</span>
+            </div>
+            <div class="space-y-1">
+              <% @whiteboards.each do |wb| %>
+                <%= link_to workspace_project_whiteboard_path(wb.workspace, wb.project, wb), data: { turbo_frame: "_top" }, class: "flex items-center justify-between p-2.5 rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 text-ink dark:text-fable transition-colors group" do %>
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="w-6 h-6 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+                      <%= whiteboard_icon_tag(wb, size_class: "w-4 h-4") %>
+                    </span>
+                    <div class="truncate">
+                      <div class="text-sm font-medium truncate group-hover:text-terracotta transition-colors"><%= wb.title %></div>
+                      <div class="text-[11px] text-ink-light dark:text-white/50 truncate"><%= wb.project.name %></div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-ink-light/40 dark:text-white/30 group-hover:text-ink dark:group-hover:text-fable shrink-0 ml-2">→</span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Issues Section -->
+        <% if @issues.any? %>
+          <div>
+            <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40 flex items-center justify-between">
+              <span>Tarefas & Issues</span>
+              <span class="text-[9px] font-normal"><%= @issues.count %> encontradas</span>
+            </div>
+            <div class="space-y-1">
+              <% @issues.each do |issue| %>
+                <%= link_to edit_workspace_project_issue_path(issue.project.workspace, issue.project, issue), data: { turbo_frame: "modal" }, class: "flex items-center justify-between p-2.5 rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 text-ink dark:text-fable transition-colors group" do %>
+                  <div class="flex items-center gap-3 min-w-0">
+                    <span class="text-xs font-mono font-semibold text-ink-light dark:text-white/60 shrink-0 bg-ink/5 dark:bg-white/5 px-1.5 py-0.5 rounded"><%= issue.identifier %></span>
+                    <div class="truncate">
+                      <div class="text-sm font-medium truncate group-hover:text-terracotta transition-colors"><%= issue.title %></div>
+                      <div class="text-[11px] text-ink-light dark:text-white/50 truncate"><%= issue.project.name %> • <%= issue.issue_status.name %></div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-ink-light/40 dark:text-white/30 group-hover:text-ink dark:group-hover:text-fable shrink-0 ml-2">→</span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Projects Section -->
+        <% if @projects.any? %>
+          <div>
+            <div class="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40 flex items-center justify-between">
+              <span>Projetos</span>
+              <span class="text-[9px] font-normal"><%= @projects.count %> encontrados</span>
+            </div>
+            <div class="space-y-1">
+              <% @projects.each do |project| %>
+                <%= link_to workspace_project_path(project.workspace, project), data: { turbo_frame: "_top" }, class: "flex items-center justify-between p-2.5 rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 text-ink dark:text-fable transition-colors group" do %>
+                  <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-7 h-7 rounded-lg bg-sage/10 text-sage-dark flex items-center justify-center shrink-0 text-xs font-bold font-mono">
+                      <%= project.identifier_prefix.presence || project.name[0..1].upcase %>
+                    </div>
+                    <div class="truncate">
+                      <div class="text-sm font-medium truncate group-hover:text-terracotta transition-colors"><%= project.name %></div>
+                      <div class="text-[11px] text-ink-light dark:text-white/50 truncate"><%= project.workspace.name %></div>
+                    </div>
+                  </div>
+                  <span class="text-xs text-ink-light/40 dark:text-white/30 group-hover:text-ink dark:group-hover:text-fable shrink-0 ml-2">→</span>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @documents.empty? && @issues.empty? && @projects.empty? && @whiteboards.empty? %>
+          <div class="text-center py-12">
+            <div class="w-12 h-12 rounded-full bg-ink/5 dark:bg-white/5 flex items-center justify-center mx-auto mb-3 text-ink-light dark:text-white/40">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <p class="text-sm font-medium text-ink dark:text-fable">Nenhum resultado para "<%= @query %>"</p>
+            <p class="text-xs text-ink-light dark:text-white/50 mt-1">Tente pesquisar por palavras-chave ou identificador (ex: PRJ-1).</p>
+          </div>
+        <% end %>
+
+      </div>
+
+      <!-- Footer Info -->
+      <div class="px-4 py-2.5 bg-[#FDFBF7] dark:bg-ink-darker border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[11px] text-ink-light/60 dark:text-white/40">
+        <span>Navegue com o mouse ou teclado</span>
+        <span>SpecLine Quick Search</span>
+      </div>
+    </div>
+  </div>
+<% end %>

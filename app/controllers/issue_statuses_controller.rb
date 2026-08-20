@@ -3,6 +3,7 @@ class IssueStatusesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_issue_status, only: %i[edit update destroy move]
+  before_action :prepare_project_context, only: [:new, :edit]
 
   def new
     @issue_status = @project.issue_statuses.build(position: @project.issue_statuses.count)
@@ -69,6 +70,23 @@ class IssueStatusesController < ApplicationController
 
   def set_issue_status
     @issue_status = @project.issue_statuses.find(params[:id])
+  end
+
+  def prepare_project_context
+    return if turbo_frame_request?
+    @statuses = @project.issue_statuses.ordered
+    @issues = @project.issues.includes(:issue_status, :assignee, :labels, :creator).ordered
+    @milestones = @project.milestones.ordered
+    @documents = @project.documents.roots.ordered
+    @whiteboards = @project.whiteboards.ordered
+    @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
+    @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
+    @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
+    
+    total_issues = @issues.count
+    done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
+    @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0
+    @view = "overview"
   end
 
   def issue_status_params

@@ -1,0 +1,46 @@
+<%= form_with(model: [workspace, project, whiteboard], local: true, class: "space-y-6") do |f| %>
+  <% if whiteboard.errors.any? %>
+    <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-xs text-red-600 dark:text-red-400 space-y-1">
+      <h4 class="font-bold">Erros encontrados:</h4>
+      <ul class="list-disc list-inside">
+        <% whiteboard.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :mode, value: "hybrid" %>
+
+  <!-- Título e Ícone -->
+  <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+    <div class="sm:col-span-1">
+      <%= f.label :icon, "Tipo de Ícone", class: "block text-xs font-semibold text-ink-light dark:text-white/70 mb-1.5" %>
+      <%= f.select :icon, [
+        ["Quadro Geral", "canvas"],
+        ["Arquitetura de Sistemas", "architecture"],
+        ["Fluxo & Sequência", "sequence"],
+        ["Ideação & Brainstorming", "brainstorm"],
+        ["Banco de Dados & Schema", "er_diagram"],
+        ["Diagrama Declarativo", "mermaid"]
+      ], {}, class: "w-full px-3 py-2.5 text-xs bg-[#FDFBF7] dark:bg-ink-darker border border-ink/15 dark:border-white/15 rounded-xl text-ink dark:text-fable focus:outline-none focus:border-terracotta" %>
+    </div>
+
+    <div class="sm:col-span-3">
+      <%= f.label :title, "Título do Quadro", class: "block text-xs font-semibold text-ink-light dark:text-white/70 mb-1.5" %>
+      <%= f.text_field :title, class: "w-full px-3.5 py-2.5 text-sm bg-[#FDFBF7] dark:bg-ink-darker border border-ink/15 dark:border-white/15 rounded-xl text-ink dark:text-fable focus:outline-none focus:border-terracotta placeholder-ink-light/40", placeholder: "Ex: Arquitetura do Core, Jornada do Usuário, Ideação de UI...", autofocus: true, required: true %>
+    </div>
+  </div>
+
+  <!-- Descrição -->
+  <div>
+    <%= f.label :description, "Descrição / Objetivo (Opcional)", class: "block text-xs font-semibold text-ink-light dark:text-white/70 mb-1.5" %>
+    <%= f.text_area :description, rows: 2, class: "w-full px-3.5 py-2.5 text-xs bg-[#FDFBF7] dark:bg-ink-darker border border-ink/15 dark:border-white/15 rounded-xl text-ink dark:text-fable focus:outline-none focus:border-terracotta placeholder-ink-light/40", placeholder: "Descreva brevemente o propósito deste quadro ou diagrama..." %>
+  </div>
+
+  <!-- Ações -->
+  <div class="flex items-center justify-end gap-3 pt-4 border-t border-ink/10 dark:border-white/10">
+    <%= link_to "Cancelar", workspace_project_path(workspace, project, view: 'whiteboards'), class: "px-4 py-2 text-xs font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors" %>
+    <%= f.submit whiteboard.persisted? ? "Salvar Alterações" : "Criar Quadro no Canvas", class: "px-5 py-2.5 bg-terracotta text-white rounded-xl text-xs font-semibold hover:bg-terracotta-hover transition-all shadow-xs cursor-pointer" %>
+  </div>
+<% end %>

@@ -1,4 +1,6 @@
 class Issue < ApplicationRecord
+  include HtmlSanitizer
+
   belongs_to :project, counter_cache: :issues_count
   belongs_to :issue_status
   belongs_to :assignee, class_name: "User", optional: true
@@ -23,8 +25,13 @@ class Issue < ApplicationRecord
   enum :priority, { no_priority: 0, low: 1, medium: 2, high: 3, urgent: 4 }
 
   before_validation :set_number_and_identifier, on: :create
+  before_save :sanitize_description
 
   private
+
+  def sanitize_description
+    self.description = sanitize_html_field(description) if description.present?
+  end
 
   def set_number_and_identifier
     return if number.present?

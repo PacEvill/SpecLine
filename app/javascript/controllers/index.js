@@ -4,6 +4,18 @@
 
 import { application } from "./application"
 
+import AutosaveController from "./autosave_controller"
+application.register("autosave", AutosaveController)
+
+import CommandPaletteController from "./command_palette_controller"
+application.register("command-palette", CommandPaletteController)
+
+import DocumentActionsController from "./document_actions_controller"
+application.register("document-actions", DocumentActionsController)
+
+import DocumentTreeController from "./document_tree_controller"
+application.register("document-tree", DocumentTreeController)
+
 import DropdownController from "./dropdown_controller"
 application.register("dropdown", DropdownController)
 
@@ -45,3 +57,6 @@ application.register("tiptap", TiptapController)
 
 import ViewToggleController from "./view_toggle_controller"
 application.register("view-toggle", ViewToggleController)
+
+import WhiteboardController from "./whiteboard_controller"
+application.register("whiteboard", WhiteboardController)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_20_013655) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -84,10 +84,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.integer "author_id", null: false
+    t.integer "author_id"
     t.text "content"
+    t.string "cover_image"
     t.datetime "created_at", null: false
     t.string "icon"
+    t.boolean "is_folder", default: false
     t.integer "parent_id"
     t.integer "position", default: 0
     t.integer "project_id"
@@ -124,7 +126,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
     t.integer "assignee_id"
     t.integer "board_id"
     t.datetime "created_at", null: false
-    t.integer "creator_id", null: false
+    t.integer "creator_id"
     t.text "description"
     t.date "due_date"
     t.string "identifier", null: false
@@ -171,10 +173,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
   end
 
   create_table "projects", force: :cascade do |t|
+    t.string "color"
     t.datetime "created_at", null: false
     t.date "deadline"
     t.string "default_view", default: "board"
     t.text "description"
+    t.string "icon"
     t.string "identifier_prefix"
     t.integer "issues_count", default: 0
     t.string "name"
@@ -193,12 +197,34 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
     t.string "first_name"
     t.string "job_title"
     t.string "last_name"
+    t.string "provider"
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.string "uid"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "whiteboards", force: :cascade do |t|
+    t.text "content"
+    t.string "cover_image"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "icon"
+    t.text "mermaid_code"
+    t.string "mode", default: "hybrid", null: false
+    t.integer "position", default: 0, null: false
+    t.integer "project_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "workspace_id", null: false
+    t.index ["project_id"], name: "index_whiteboards_on_project_id"
+    t.index ["user_id"], name: "index_whiteboards_on_user_id"
+    t.index ["workspace_id"], name: "index_whiteboards_on_workspace_id"
   end
 
   create_table "workspaces", force: :cascade do |t|
@@ -241,5 +267,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_042344) do
   add_foreign_key "labels", "workspaces"
   add_foreign_key "milestones", "projects"
   add_foreign_key "projects", "workspaces"
+  add_foreign_key "whiteboards", "projects"
+  add_foreign_key "whiteboards", "users"
+  add_foreign_key "whiteboards", "workspaces"
   add_foreign_key "workspaces", "users"
 end

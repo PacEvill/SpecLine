@@ -1,0 +1,8 @@
+production:
+  dispatchers:
+    - polling_interval: 2
+      batch_size: 100
+  workers:
+    - queues: [ default, mailers ]
+      threads: 2
+      polling_interval: 2

@@ -1,23 +1,48 @@
 require "test_helper"
 
 class WorkspacesControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    @user = users(:one)
+    @workspace = workspaces(:one)
+    sign_in @user
+  end
+
   test "should get index" do
-    get workspaces_index_url
+    get workspaces_url
     assert_response :success
   end
 
   test "should get show" do
-    get workspaces_show_url
+    get workspace_url(@workspace)
     assert_response :success
   end
 
   test "should get new" do
-    get workspaces_new_url
+    get new_workspace_url
     assert_response :success
   end
 
   test "should get edit" do
-    get workspaces_edit_url
+    get edit_workspace_url(@workspace)
     assert_response :success
+  end
+
+  test "should create workspace" do
+    assert_difference("Workspace.count") do
+      post workspaces_url, params: { workspace: { name: "Novo Workspace", description: "Desc", color: "#D97A5E" } }
+    end
+    assert_redirected_to workspace_url(Workspace.last)
+  end
+
+  test "should update workspace" do
+    patch workspace_url(@workspace), params: { workspace: { name: "Nome Atualizado" } }
+    assert_redirected_to workspace_url(@workspace)
+  end
+
+  test "should destroy workspace" do
+    assert_difference("Workspace.count", -1) do
+      delete workspace_url(@workspace)
+    end
+    assert_redirected_to workspaces_url
   end
 end

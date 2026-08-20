@@ -1,16 +1,38 @@
-<p style="color: green"><%= notice %></p>
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace %>
+<% end %>
 
-<% content_for :title, "Projects" %>
+<div class="px-8 py-10 max-w-6xl mx-auto w-full">
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-1">Projetos</h1>
+      <p class="text-sm font-sans text-ink-light dark:text-white/60">Todos os projetos do workspace <%= @workspace.name %>.</p>
+    </div>
 
-<h1>Projects</h1>
+    <%= link_to new_workspace_project_path(@workspace), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-2 px-4 py-2 bg-ink dark:bg-fable text-white dark:text-ink text-sm font-medium rounded-xl hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white transition-colors duration-300" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      Novo Projeto
+    <% end %>
+  </div>
 
-<div id="projects">
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <% @projects.each do |project| %>
+      <%= link_to workspace_project_path(@workspace, project), class: "group bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-6 hover:border-terracotta/40 hover:shadow-md transition-all duration-300 flex flex-col" do %>
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-sage/10 text-sage-dark flex items-center justify-center font-bold text-sm">
+            <%= project.identifier_prefix.presence || project.name[0..1].upcase %>
+          </div>
+          <div>
+            <h3 class="text-base font-serif font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors"><%= project.name %></h3>
+            <span class="text-[11px] text-ink-light dark:text-white/60 font-mono"><%= project.identifier_prefix %></span>
+          </div>
+        </div>
+        <p class="text-xs text-ink-light dark:text-white/60 line-clamp-2 mb-4"><%= project.description.presence || "Sem descrição." %></p>
+        <div class="mt-auto pt-3 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-xs text-ink-light dark:text-white/60">
+          <span><%= project.issues.count %> issues</span>
+          <span><%= project.progress %>% progresso</span>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
-
-<%= link_to "New project", new_project_path %>
