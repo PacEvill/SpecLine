@@ -14,14 +14,14 @@
     <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap" rel="stylesheet">
-    <script>
+    <%= javascript_tag nonce: true do %>
       // Apply theme before render to prevent flash
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
-    </script>
+    <% end %>
   </head>
   <body data-controller="command-palette mobile-drawer" class="bg-[#FDFBF7] dark:bg-ink-darker text-ink dark:text-fable overflow-hidden h-[100dvh] flex flex-col md:flex-row transition-colors duration-500">
     

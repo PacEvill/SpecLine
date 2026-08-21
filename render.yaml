@@ -38,3 +38,11 @@ services:
         sync: false
       - key: SMTP_PORT
         value: "587"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: CLOUDFLARE_TURNSTILE_SITE_KEY
+        sync: false
+      - key: CLOUDFLARE_TURNSTILE_SECRET_KEY
+        sync: false

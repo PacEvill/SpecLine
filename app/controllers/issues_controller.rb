@@ -4,8 +4,8 @@ class IssuesController < ApplicationController
 
   before_action :set_workspace
   before_action :set_project
-  before_action :set_issue, only: [:show, :edit, :update, :destroy, :move]
-  before_action :prepare_project_context, only: [:new, :edit, :create, :update]
+  before_action :set_issue, only: [ :show, :edit, :update, :destroy, :move ]
+  before_action :prepare_project_context, only: [ :new, :edit, :create, :update ]
 
   def show
   end
@@ -90,7 +90,7 @@ class IssuesController < ApplicationController
       issue_status_id: params[:status_id],
       position: params[:position].to_f
     }
-    
+
     if params.has_key?(:assignee_id)
       update_params[:assignee_id] = params[:assignee_id].presence
     end
@@ -142,7 +142,7 @@ class IssuesController < ApplicationController
     @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
     @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
     @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
-    
+
     total_issues = @issues.count
     done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
     @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0

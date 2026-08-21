@@ -17,11 +17,11 @@ class ProjectsController < ApplicationController
     @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
     @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
     @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
-    
+
     total_issues = @issues.count
     done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
     @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0
-    
+
     @view = params[:view].presence || "overview"
   end
 

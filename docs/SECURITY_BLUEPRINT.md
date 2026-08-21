@@ -39,6 +39,7 @@ Given the strict constraints of the free infrastructure (512 MB RAM on Render an
 ```
 
 ### 1.1 Edge Controls and Rate Limiting (Rack::Attack)
+
 Blocks brute-force, credential-stuffing, and DoS attacks at the application layer before they consume Puma threads or database queries.
 
 Create `config/initializers/rack_attack.rb`:
@@ -121,6 +122,7 @@ end
 ```
 
 ### 1.2 Security Headers and Content Security Policy (CSP)
+
 Configure `config/environments/production.rb` and `config/initializers/content_security_policy.rb`:
 
 ```ruby
@@ -166,6 +168,7 @@ end
 ```
 
 ### 1.3 Active Storage + Cloudflare R2 Protection (Magic Bytes Validation)
+
 Prevents malicious file uploads by inspecting the actual binary header via the Marcel gem.
 Create `app/models/concerns/secure_attachable.rb`:
 
@@ -212,6 +215,7 @@ end
 ```
 
 ### 1.4 Rich Text Sanitization (TipTap / Markdown)
+
 Prevents Stored XSS attacks in collaborative document editing.
 Create `app/models/concerns/html_sanitizer.rb`:
 
@@ -246,6 +250,7 @@ end
 ```
 
 ### 1.5 Multi-Tenant Authorization & IDOR Protection
+
 Ensures that requests never access resources outside the authenticated user's workspace.
 
 ```ruby
@@ -292,6 +297,7 @@ end
 ```
 
 ### 1.6 Solid Stack Retention and Trimming (500 MB Limit on Neon)
+
 Prevents cache tables and background queues from exceeding the free storage quota.
 
 ```yaml
@@ -319,9 +325,11 @@ production:
 ```
 
 ## 2. Local Offensive Testing Roadmap (DAST, SAST, and Stress)
+
 Run this test suite on your local machine against the development environment (`http://localhost:3000`) to stress-test the application before deploying to production.
 
 ### Phase 1: Static Code Analysis and Secrets Scanning (SAST)
+
 ```bash
 # 1. Check for API keys or hardcoded passwords in the repository
 gitleaks detect --source . --report-format json --report-path gitleaks-report.json -v
@@ -337,7 +345,9 @@ semgrep scan --config=p/ruby --config=p/owasp-top-ten --json --output=semgrep-re
 ```
 
 ### Phase 2: Dynamic Runtime Attacks (DAST)
+
 Start the application locally in terminal:
+
 ```bash
 RAILS_ENV=development bin/rails server -p 3000
 ```
@@ -345,6 +355,7 @@ RAILS_ENV=development bin/rails server -p 3000
 In another terminal tab, run:
 
 #### A. Directory and Route Fuzzing (ffuf)
+
 ```bash
 # Download the standard web route wordlist
 curl -s -o wordlist.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/common.txt
@@ -354,6 +365,7 @@ ffuf -w wordlist.txt -u http://localhost:3000/FUZZ -mc 200,301,302,401,403,500 -
 ```
 
 #### B. Web Vulnerability Scanning (Nuclei)
+
 ```bash
 nuclei -u http://localhost:3000 \
   -tags cve,exposure,auth,xss,sqli,config \
@@ -362,6 +374,7 @@ nuclei -u http://localhost:3000 \
 ```
 
 #### C. SQL Injection Testing (SQLmap)
+
 ```bash
 sqlmap -u "http://localhost:3000/cards?search=test" \
   --batch \
@@ -371,14 +384,18 @@ sqlmap -u "http://localhost:3000/cards?search=test" \
 ```
 
 ### Phase 3: Stress, Load, and Memory Testing
+
 #### A. Rate Limiting Verification via Apache Bench
+
 ```bash
 # Fire 100 simultaneous requests at login (Rack::Attack should block after 5 requests)
 ab -n 100 -c 10 http://localhost:3000/users/sign_in
 ```
 
 #### B. Load & Concurrency Testing via k6
+
 Create `stress_test.js`:
+
 ```javascript
 import http from 'k6/http';
 import { check, sleep } from 'k6';
@@ -407,16 +424,19 @@ export default function () {
 ```
 
 Run the stress test:
+
 ```bash
 k6 run stress_test.js
 ```
 
 In parallel, monitor Puma's RAM consumption:
+
 ```bash
 ps aux | grep puma | awk '{print $6/1024 " MB"}'
 ```
 
 ## 3. Automated Security Pipeline (GitHub Actions $0.00)
+
 Create `.github/workflows/security.yml`:
 
 ```yaml
@@ -469,28 +489,32 @@ jobs:
 ```
 
 ## 4. Unified Master Prompt for CLI AI Agents (Claude Code / Antigravity)
+
 This prompt is designed to be executed by an AI agent in the terminal. It commands the execution of scanning tools, reads structured JSON outputs, applies required refactorings to the codebase, and validates them via regression tests.
 
 > You are a Principal Software Security Engineer specialized in the Ruby on Rails 8 framework.  
 > Your objective is to run a complete security audit on the SpecLine project, identify vulnerabilities, and apply all fixes directly to the source code.
-> 
+>
 > **STEP 1: SCANNER EXECUTION (SAST & SECRETS)**  
 > Run the following commands in the terminal and capture structured JSON outputs:  
+>
 > 1. `gitleaks detect --report-format json --report-path leaks.json -v`  
 > 2. `bundle exec bundle-audit check --update`  
 > 3. `bundle exec brakeman -f json -o brakeman.json --ensure-latest -w1`  
 > 4. `semgrep scan --config=p/ruby --config=p/owasp-top-ten --json --output=semgrep.json`  
-> 
+>
 > **STEP 2: AUTOMATED ANALYSIS & REMEDIATION**  
 > Read the generated JSON files (`brakeman.json`, `semgrep.json`, `leaks.json`) and the `bundle-audit` log, applying the following refactoring rules:  
+>
 > - **For SQL Injection:** Convert raw SQL string concatenations into parameterized ActiveRecord queries or use `ActiveRecord::Base.sanitize_sql`.  
 > - **For IDOR (Insecure Direct Object References):** Ensure all Controller queries are strictly scoped through `current_workspace` or `current_user`.  
 > - **For XSS / Stored HTML:** Apply strict whitelist sanitization on the document model (TipTap fields) using `ActionController::Base.helpers.sanitize`.  
 > - **For Uploads:** Ensure Active Storage models include validation for maximum file size (5 MB) and content type verified via Magic Bytes (`Marcel`).  
 > - **For Secret Leaks:** Remove exposed keys from code, move them to environment variables (`ENV['...']`), and add placeholders to `.env.example`.  
 > - **For Vulnerable Gems:** Update dependencies using `bundle update <gem_name>`.  
-> 
+>
 > **STEP 3: VALIDATION AND CLEANUP**  
+>
 > 1. Run the project test suite: `bin/rails test`. Ensure all features continue to work as expected.  
 > 2. Re-run `bundle exec brakeman -q` to confirm 0 remaining warnings.  
 > 3. Delete all temporary JSON reports created (`leaks.json`, `brakeman.json`, `semgrep.json`).

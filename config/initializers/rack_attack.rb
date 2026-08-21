@@ -8,7 +8,7 @@ class Rack::Attack
   # 0. SAFELIST LOCALHOST IN DEV & TEST
   # ---------------------------------------------------------------------
   safelist("allow-localhost") do |req|
-    (Rails.env.development? || Rails.env.test?) && (req.ip == "127.0.0.1" || req.ip == "::1")
+    (Rails.env.development? || Rails.env.test?) && (req.ip == "127.0.0.1" || req.ip == "::1") && !(req.user_agent =~ /libwww-perl|nikto|sqlmap|python-requests|curl\/7\.[0-5]|dirbuster|gobuster/i)
   end
 
   # ---------------------------------------------------------------------
@@ -76,6 +76,6 @@ class Rack::Attack
       error: "Rate limit exceeded. Please wait #{retry_after} seconds."
     }.to_json
 
-    [429, headers, [body]]
+    [ 429, headers, [ body ] ]
   end
 end

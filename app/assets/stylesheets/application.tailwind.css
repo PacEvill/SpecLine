@@ -240,11 +240,13 @@ body.zen-mode-active .bg-white.dark\:bg-ink {
   height: 100vh !important;
 }
 
-/* Hide normal sidebars & headers */
+/* Hide normal sidebars, headers, mobile header, and mobile bottom nav */
 body.zen-mode-active aside[data-controller="sidebar"],
 body.zen-mode-active aside.w-72,
 body.zen-mode-active #document-right-sidebar,
 body.zen-mode-active header.sticky,
+body.zen-mode-active header.md\:hidden,
+body.zen-mode-active nav.md\:hidden,
 body.zen-mode-active div.sticky.top-14,
 body.zen-mode-active #zen-floating-indicator,
 body.zen-mode-active div[data-document-actions-target="coverContainer"] {
@@ -258,9 +260,15 @@ body.zen-mode-active #word-mode-ribbon {
 }
 
 body.zen-mode-active #word-mode-nav-panel {
-  display: flex !important;
-  width: 18rem !important;
-  min-width: 18rem !important;
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  body.zen-mode-active #word-mode-nav-panel {
+    display: flex !important;
+    width: 18rem !important;
+    min-width: 18rem !important;
+  }
 }
 
 body.zen-mode-active #word-mode-status-bar {
@@ -273,15 +281,26 @@ body.zen-mode-active #document-main-canvas,
 body.zen-mode-active .document-sheet-canvas {
   max-width: 860px !important;
   width: 100% !important;
-  min-height: 1100px !important;
-  margin: 2rem auto 4rem auto !important;
+  min-height: calc(100vh - 120px) !important;
+  margin: 0.75rem auto 2rem auto !important;
   background-color: #242424 !important;
   color: #FFFFFF !important;
-  padding: 4.5rem 5.5rem !important;
-  border-radius: 2px !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  padding: 1.5rem 1rem !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 768px) {
+  body.zen-mode-active #document-main-canvas,
+  body.zen-mode-active .document-sheet-canvas {
+    min-height: 1100px !important;
+    margin: 2rem auto 4rem auto !important;
+    padding: 4.5rem 5.5rem !important;
+    border-radius: 2px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+  }
 }
 
 body.zen-mode-active .prose {

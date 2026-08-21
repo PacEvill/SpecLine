@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   include TurnstileVerifiable
-  before_action :verify_turnstile, only: [:create]
+  before_action :verify_turnstile, only: [ :create ]
   # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in

@@ -1,7 +1,7 @@
 import { Turbo } from "@hotwired/turbo-rails"
 import "./controllers"
 
-Turbo.setConfirmMethod((message, element) => {
+const customConfirm = (message, element) => {
   return new Promise((resolve) => {
     const isDestructive = element.hasAttribute('data-turbo-method') && element.getAttribute('data-turbo-method') === 'delete'
     const confirmText = element.getAttribute('data-confirm-text') || (isDestructive ? 'Excluir' : 'Confirmar')
@@ -61,4 +61,10 @@ Turbo.setConfirmMethod((message, element) => {
       if (e.target === backdrop) close(false)
     })
   })
-})
+}
+
+if (Turbo.config && Turbo.config.forms) {
+  Turbo.config.forms.confirm = customConfirm
+} else if (Turbo.setConfirmMethod) {
+  Turbo.setConfirmMethod(customConfirm)
+}

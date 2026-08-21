@@ -4,12 +4,12 @@ class Users::OmniauthCallbacksControllerTest < ActionDispatch::IntegrationTest
   setup do
     OmniAuth.config.test_mode = true
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
-      provider: 'google_oauth2',
-      uid: '12345',
+      provider: "google_oauth2",
+      uid: "12345",
       info: {
-        email: 'callback@example.com',
-        first_name: 'Callback',
-        last_name: 'User'
+        email: "callback@example.com",
+        first_name: "Callback",
+        last_name: "User"
       }
     })
     Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]

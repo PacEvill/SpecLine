@@ -11,8 +11,8 @@ class DocumentTreeSprintTest < ActionDispatch::IntegrationTest
   end
 
   test "sprint: should move document into parent folder / document" do
-    patch move_workspace_project_document_url(@workspace, @project, @doc1), 
-          params: { parent_id: @doc2.id, position: 1 }, 
+    patch move_workspace_project_document_url(@workspace, @project, @doc1),
+          params: { parent_id: @doc2.id, position: 1 },
           as: :json
 
     assert_response :success
@@ -24,8 +24,8 @@ class DocumentTreeSprintTest < ActionDispatch::IntegrationTest
   test "sprint: should move document back to root" do
     @doc1.update!(parent_id: @doc2.id)
 
-    patch move_workspace_project_document_url(@workspace, @project, @doc1), 
-          params: { parent_id: nil, position: 0 }, 
+    patch move_workspace_project_document_url(@workspace, @project, @doc1),
+          params: { parent_id: nil, position: 0 },
           as: :json
 
     assert_response :success
@@ -36,7 +36,7 @@ class DocumentTreeSprintTest < ActionDispatch::IntegrationTest
 
   test "sprint: should create document marked as folder" do
     assert_difference("Document.count", 1) do
-      post workspace_project_documents_url(@workspace, @project), 
+      post workspace_project_documents_url(@workspace, @project),
            params: {
              document: {
                title: "Arquitetura e Backend",

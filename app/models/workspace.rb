@@ -22,11 +22,11 @@ class Workspace < ApplicationRecord
 
   def create_default_labels
     [
-      { name: 'Bug', color: '#e11d48' },
-      { name: 'Feature', color: '#2563eb' },
-      { name: 'Enhancement', color: '#16a34a' },
-      { name: 'Design', color: '#d946ef' },
-      { name: 'Documentation', color: '#64748b' }
+      { name: "Bug", color: "#e11d48" },
+      { name: "Feature", color: "#2563eb" },
+      { name: "Enhancement", color: "#16a34a" },
+      { name: "Design", color: "#d946ef" },
+      { name: "Documentation", color: "#64748b" }
     ].each do |label_attrs|
       labels.create!(label_attrs)
     end

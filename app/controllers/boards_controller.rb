@@ -2,7 +2,7 @@ class BoardsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_workspace
   before_action :set_project
-  before_action :prepare_project_context, only: [:new, :edit, :create, :update]
+  before_action :prepare_project_context, only: [ :new, :edit, :create, :update ]
 
   def new
     @board = @project.boards.build
@@ -56,7 +56,7 @@ class BoardsController < ApplicationController
     @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
     @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
     @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
-    
+
     total_issues = @issues.count
     done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
     @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0

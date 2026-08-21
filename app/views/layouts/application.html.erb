@@ -7,8 +7,9 @@
     <meta name="application-name" content="Spec Line">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <% if ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'].present? %>
-      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer data-turbo-track="reload"></script>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer data-turbo-track="reload" <%= "nonce=\"#{content_security_policy_nonce}\"".html_safe if content_security_policy_nonce.present? %>></script>
     <% end %>
 
     <%= yield :head %>
@@ -28,14 +29,14 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-    <script>
+    <%= javascript_tag nonce: true do %>
       // Apply theme before render to prevent flash
       if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark');
       } else {
         document.documentElement.classList.remove('dark');
       }
-    </script>
+    <% end %>
   </head>
 
   <body>

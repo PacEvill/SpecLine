@@ -3,7 +3,7 @@ class IssueStatusesController < ApplicationController
   before_action :set_workspace
   before_action :set_project
   before_action :set_issue_status, only: %i[edit update destroy move]
-  before_action :prepare_project_context, only: [:new, :edit]
+  before_action :prepare_project_context, only: [ :new, :edit ]
 
   def new
     @issue_status = @project.issue_statuses.build(position: @project.issue_statuses.count)
@@ -11,7 +11,7 @@ class IssueStatusesController < ApplicationController
 
   def create
     @issue_status = @project.issue_statuses.build(issue_status_params)
-    
+
     if @issue_status.save
       redirect_to workspace_project_path(@workspace, @project, view: "board", group_by: "board"), notice: "Coluna criada com sucesso."
     else
@@ -41,20 +41,20 @@ class IssueStatusesController < ApplicationController
 
   def move
     new_position = params[:position].to_i
-    
+
     # Obter todas as colunas ordenadas (removendo a que está sendo movida)
     statuses = @project.issue_statuses.where.not(id: @issue_status.id).order(:position).to_a
-    
+
     # Inserir a coluna na nova posição
     statuses.insert(new_position, @issue_status)
-    
+
     # Atualizar todas as posições em sequência
     IssueStatus.transaction do
       statuses.each_with_index do |status, index|
         status.update_column(:position, index)
       end
     end
-    
+
     head :ok
   end
 
@@ -82,7 +82,7 @@ class IssueStatusesController < ApplicationController
     @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
     @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
     @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)
-    
+
     total_issues = @issues.count
     done_issues = @issues.select { |i| i.issue_status&.category == "done" }.count
     @completion_rate = total_issues > 0 ? ((done_issues.to_f / total_issues) * 100).round : 0

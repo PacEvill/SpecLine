@@ -7,7 +7,7 @@ class WhiteboardsController < ApplicationController
 
   def index
     @whiteboards = @project.whiteboards.ordered
-    
+
     if params[:q].present?
       @whiteboards = @whiteboards.where("LOWER(title) LIKE ?", "%#{params[:q].downcase}%")
     end
@@ -43,7 +43,7 @@ class WhiteboardsController < ApplicationController
     if @whiteboard.update(whiteboard_params)
       respond_to do |format|
         format.html { redirect_to workspace_project_whiteboard_path(@workspace, @project, @whiteboard), notice: "Quadro atualizado com sucesso." }
-        format.json { render json: { status: 'success', id: @whiteboard.id, updated_at: @whiteboard.updated_at.iso8601 } }
+        format.json { render json: { status: "success", id: @whiteboard.id, updated_at: @whiteboard.updated_at.iso8601 } }
       end
     else
       respond_to do |format|
@@ -73,13 +73,13 @@ class WhiteboardsController < ApplicationController
   def export_json
     send_data @whiteboard.content.presence || "{}",
               filename: "#{@whiteboard.title.parameterize}-spec.json",
-              type: 'application/json'
+              type: "application/json"
   end
 
   def export_svg
     send_data @whiteboard.mermaid_code.presence || "",
               filename: "#{@whiteboard.title.parameterize}-diagram.mmd",
-              type: 'text/plain'
+              type: "text/plain"
   end
 
   private

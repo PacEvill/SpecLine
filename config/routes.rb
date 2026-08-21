@@ -1,21 +1,21 @@
 Rails.application.routes.draw do
   # App Core (Autenticado)
   resources :workspaces do
-    resources :labels, except: [:index, :show]
+    resources :labels, except: [ :index, :show ]
     resources :projects do
-      resources :issue_statuses, except: [:index, :show] do
+      resources :issue_statuses, except: [ :index, :show ] do
         member do
           patch :move
         end
       end
-      resources :boards, only: [:new, :create, :edit, :update, :destroy]
-      resources :issues, except: [:index] do
+      resources :boards, only: [ :new, :create, :edit, :update, :destroy ]
+      resources :issues, except: [ :index ] do
         member do
           patch :move  # Para drag-and-drop do Kanban
         end
-        resources :comments, only: [:create, :destroy]
+        resources :comments, only: [ :create, :destroy ]
       end
-      resources :milestones, except: [:index]
+      resources :milestones, except: [ :index ]
       resources :documents do
         member do
           post :duplicate
@@ -43,16 +43,16 @@ Rails.application.routes.draw do
   get "activities", to: "activities#index"
 
   # Preferências do Usuário
-  resource :preferences, only: [:show, :update]
+  resource :preferences, only: [ :show, :update ]
 
   # Autenticação
   devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    omniauth_callbacks: "users/omniauth_callbacks",
+    sessions: "users/sessions",
+    registrations: "users/registrations"
   }
   devise_scope :user do
-    get '/register', to: 'devise/registrations#new'
+    get "/register", to: "devise/registrations#new"
   end
 
   # Marketing / Institucional

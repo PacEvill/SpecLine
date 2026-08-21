@@ -94,7 +94,7 @@ class ExhaustivePlatformTest < ActionDispatch::IntegrationTest
       description: "Modelagem visual da arquitetura de backend",
       mode: "whiteboard",
       icon: "architecture",
-      content: { nodes: [{ id: "n1", type: "system", label: "API Gateway" }], edges: [] }.to_json,
+      content: { nodes: [ { id: "n1", type: "system", label: "API Gateway" } ], edges: [] }.to_json,
       workspace: @workspace_a,
       user: @user_a
     )

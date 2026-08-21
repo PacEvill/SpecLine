@@ -33,7 +33,7 @@ module SecureAttachable
         begin
           blob.open do |file|
             detected_type = Marcel::MimeType.for(file, name: blob.filename.to_s)
-            
+
             unless ALLOWED_MIME_TYPES.include?(detected_type)
               errors.add(attachment_field, "contém um formato de arquivo não permitido (#{detected_type})")
               blob.purge_later if blob.persisted?

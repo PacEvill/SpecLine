@@ -12,7 +12,7 @@ class SecurityHardeningTest < ActionDispatch::IntegrationTest
   test "html sanitizer strips malicious script tags from documents" do
     sign_in @user
     malicious_content = "<p>Texto normal</p><script>alert('XSS')</script><img src=x onerror=alert(1)>"
-    
+
     doc = @project.documents.create!(
       title: "Doc Seguro",
       content: malicious_content,
@@ -44,5 +44,32 @@ class SecurityHardeningTest < ActionDispatch::IntegrationTest
     assert Workspace.included_modules.include?(SecureAttachable)
     assert Project.included_modules.include?(SecureAttachable)
     assert User.included_modules.include?(SecureAttachable)
+  end
+
+  test "multi-tenant idor protection prevents accessing unowned workspace" do
+    other_workspace = workspaces(:two)
+    sign_in @user
+
+    # Attempt to access another user's workspace
+    get workspace_path(other_workspace)
+    assert_response :not_found # Strict IDOR protection returns 404 Not Found
+  end
+
+  test "rack attack blocks malicious user agents" do
+    Rack::Attack.enabled = true
+    Rack::Attack.reset!
+
+    get root_path, headers: { "HTTP_USER_AGENT" => "sqlmap/1.5#stable" }
+    assert_response :forbidden
+  ensure
+    Rack::Attack.enabled = false
+  end
+
+  test "response includes core security headers" do
+    get root_path
+    assert_response :success
+    assert_equal "nosniff", response.headers["X-Content-Type-Options"]
+    assert_equal "strict-origin-when-cross-origin", response.headers["Referrer-Policy"]
+    assert response.headers["Content-Security-Policy"].present?
   end
 end

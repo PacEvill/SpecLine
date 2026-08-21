@@ -7,22 +7,22 @@ class DocumentsController < ApplicationController
 
   def index
     # Redirect to project show with documents view
-    redirect_to workspace_project_path(@workspace, @project, view: 'documents')
+    redirect_to workspace_project_path(@workspace, @project, view: "documents")
   end
 
   def show
     # Nested documents support
     @children = @document.children.ordered
-    
+
     # We will build a sidebar showing the tree of documents in the project
     @root_documents = @project.documents.roots.ordered
-    
+
     # Render the editor directly on show
     render :show
   end
 
   def new
-    @document = @project.documents.build(parent_id: params[:parent_id], is_folder: params[:is_folder] == 'true')
+    @document = @project.documents.build(parent_id: params[:parent_id], is_folder: params[:is_folder] == "true")
     @document.icon = "📁" if @document.is_folder?
   end
 
@@ -48,7 +48,7 @@ class DocumentsController < ApplicationController
     if @document.update(document_params)
       respond_to do |format|
         format.html { redirect_to workspace_project_document_path(@workspace, @project, @document) }
-        format.json { render json: { status: 'success', id: @document.id } }
+        format.json { render json: { status: "success", id: @document.id } }
       end
     else
       respond_to do |format|
@@ -61,17 +61,17 @@ class DocumentsController < ApplicationController
   def move
     parent_id = params[:parent_id].presence
     position = params[:position].to_i
-    
+
     if parent_id.present?
       if parent_id.to_s == @document.id.to_s || @document.descendant_ids.map(&:to_s).include?(parent_id.to_s)
-        return render json: { status: 'error', message: 'Não é permitido mover um item para dentro de si mesmo ou de suas sub-pastas.' }, status: :unprocessable_entity
+        return render json: { status: "error", message: "Não é permitido mover um item para dentro de si mesmo ou de suas sub-pastas." }, status: :unprocessable_entity
       end
     end
 
     if @document.update(parent_id: parent_id, position: position)
       respond_to do |format|
         format.html { redirect_to workspace_project_document_path(@workspace, @project, @document), notice: "Documento movido com sucesso." }
-        format.json { render json: { status: 'success', id: @document.id, parent_id: @document.parent_id, position: @document.position } }
+        format.json { render json: { status: "success", id: @document.id, parent_id: @document.parent_id, position: @document.position } }
       end
     else
       respond_to do |format|
@@ -95,11 +95,11 @@ class DocumentsController < ApplicationController
   def destroy
     parent_id = @document.parent_id
     @document.destroy
-    
+
     if parent_id
       redirect_to workspace_project_document_path(@workspace, @project, parent_id), notice: "Documento excluído."
     else
-      redirect_to workspace_project_path(@workspace, @project, view: 'documents'), notice: "Documento excluído."
+      redirect_to workspace_project_path(@workspace, @project, view: "documents"), notice: "Documento excluído."
     end
   end
 

@@ -1,78 +1,147 @@
 <%= render "shared/marketing_header" %>
 
-<main class="min-h-screen bg-fable dark:bg-ink-darker pt-32 pb-24">
-  <div class="max-w-3xl mx-auto px-6">
+<main class="min-h-screen bg-fable dark:bg-ink-darker pt-28 sm:pt-32 pb-24 transition-colors duration-500">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
     <!-- Header -->
-    <div class="mb-16">
-      <h1 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable tracking-tight mb-4">Changelog</h1>
-      <p class="text-xl text-ink-light dark:text-white/60 font-sans">Acompanhe as últimas atualizações, melhorias e correções no SpecLine.</p>
+    <div class="mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-semibold uppercase tracking-wider mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Registro de Atualizações
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-serif text-ink dark:text-fable tracking-tight mb-3 sm:mb-4">Changelog Oficial</h1>
+      <p class="text-base sm:text-lg text-ink-light dark:text-white/60 font-sans max-w-2xl">Acompanhe todas as versões, melhorias de arquitetura, correções de segurança e novas funcionalidades do SpecLine.</p>
     </div>
 
-    <!-- Timeline / Updates -->
-    <div class="space-y-16">
+    <!-- Timeline / Updates Container -->
+    <div class="space-y-12 sm:space-y-16">
       
-      <!-- Update 1 -->
-      <div class="relative pl-8 md:pl-0">
-        <!-- Date indicator (md and up) -->
-        <div class="hidden md:block absolute left-[-140px] top-1 text-right w-[100px]">
-          <span class="text-sm font-medium text-ink-light dark:text-white/60">Hoje</span>
+      <!-- Release 1.2.0 -->
+      <article class="relative pl-6 sm:pl-0">
+        <!-- Date indicator (Desktop) -->
+        <div class="hidden sm:block absolute left-[-150px] top-1.5 text-right w-[110px]">
+          <span class="text-xs font-bold uppercase tracking-wider text-terracotta block">21 Ago 2026</span>
+          <span class="text-[11px] text-ink-light/70 dark:text-white/40">v1.2.0</span>
         </div>
         
-        <!-- Timeline line -->
-        <div class="absolute left-0 md:left-[-20px] top-2 bottom-[-4rem] w-px bg-ink/10"></div>
+        <!-- Timeline line & dot -->
+        <div class="absolute left-0 sm:left-[-24px] top-2 bottom-[-3rem] w-px bg-ink/10 dark:bg-white/10"></div>
+        <div class="absolute left-[-4px] sm:left-[-28px] top-2 w-2.5 h-2.5 rounded-full bg-terracotta ring-4 ring-fable dark:ring-ink-darker shadow-sm"></div>
         
-        <!-- Timeline dot -->
-        <div class="absolute left-[-4px] md:left-[-24px] top-2 w-2 h-2 rounded-full bg-terracotta ring-4 ring-fable"></div>
-        
-        <!-- Content -->
-        <div>
-          <span class="md:hidden text-sm font-medium text-ink-light dark:text-white/60 block mb-2">Hoje</span>
-          <details class="group">
-            <summary class="list-none cursor-pointer flex items-center justify-between outline-none">
-              <h2 class="text-2xl font-serif text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Segurança reforçada e novo login</h2>
-              <span class="text-ink-light dark:text-white/60 group-open:rotate-180 transition-transform duration-300">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
-            </summary>
-            
-            <div class="mt-4 prose prose-ink max-w-none text-ink-light dark:text-white/60 font-sans space-y-4 animate-fade-in-up">
-              <p>Acabamos de lançar uma série de melhorias para garantir ainda mais segurança e fluidez na criação de contas no SpecLine.</p>
-              <ul class="list-disc pl-5 space-y-2">
-                <li><strong>Medidor de força de senha:</strong> Agora você recebe feedback em tempo real sobre a força da sua senha, com requisitos claros (letras, números, tamanho mínimo e caracteres especiais).</li>
-                <li><strong>Validação de confirmação:</strong> Adicionado alerta visual instantâneo para quando as senhas digitadas não coincidem.</li>
-                <li><strong>Novas integrações de SSO:</strong> Preparamos a interface para suporte futuro a login via GitHub e Apple, além do Google que já estava em andamento.</li>
-                <li><strong>Design unificado:</strong> Os botões de login foram padronizados para garantir uma experiência visual mais coesa.</li>
+        <!-- Content Card -->
+        <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 sm:p-8 shadow-sm dark:shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-md bg-terracotta text-white text-[11px] font-mono font-bold tracking-tight">v1.2.0</span>
+              <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold uppercase tracking-wide">Versão Atual</span>
+            </div>
+            <span class="sm:hidden text-xs font-semibold text-ink-light dark:text-white/60">21 de Agosto de 2026</span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-fable font-semibold mb-3">Produção Blindada, Google OAuth & Refinamento Mobile</h2>
+          <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 leading-relaxed mb-6 font-sans">Esta versão consolida o endurecimento para o ambiente de produção (Render / Neon / Cloudflare R2), corrige conflitos de CSP e aperfeiçoa a experiência em smartphones e tablets.</p>
+
+          <div class="space-y-4 text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans">
+            <!-- Adicionado -->
+            <div class="border-t border-ink/5 dark:border-white/5 pt-4">
+              <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                Novidades & Funcionalidades
+              </div>
+              <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                <li><strong>Autenticação Social com Google:</strong> Login e cadastro com um clique via Google OAuth 2.0 com vinculação de contas e extração de avatar.</li>
+                <li><strong>Proteção Cloudflare Turnstile:</strong> Verificação invisível e inteligente contra abusos e bots nos formulários de acesso.</li>
+                <li><strong>Navegação de Preferências Mobile:</strong> Nova barra de abas horizontal com rolagem suave no modal de configurações para smartphones.</li>
+                <li><strong>Pacote Completo de Ícones:</strong> Geração universal de <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">icon.png</code>, <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">favicon.ico</code> e <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">icon.svg</code> com status 200 OK.</li>
               </ul>
             </div>
-          </details>
-        </div>
-      </div>
 
-      <!-- Update 2 -->
-      <div class="relative pl-8 md:pl-0">
-        <div class="hidden md:block absolute left-[-140px] top-1 text-right w-[100px]">
-          <span class="text-sm font-medium text-ink-light dark:text-white/60">12 Ago 2026</span>
-        </div>
-        <div class="absolute left-0 md:left-[-20px] top-2 bottom-[-4rem] w-px bg-ink/10"></div>
-        <div class="absolute left-[-4px] md:left-[-24px] top-2 w-2 h-2 rounded-full bg-ink/30 ring-4 ring-fable"></div>
-        
-        <div>
-          <span class="md:hidden text-sm font-medium text-ink-light dark:text-white/60 block mb-2">12 Ago 2026</span>
-          <details class="group">
-            <summary class="list-none cursor-pointer flex items-center justify-between outline-none">
-              <h2 class="text-2xl font-serif text-ink dark:text-fable group-hover:text-terracotta transition-colors duration-500">Apresentando o SpecLine</h2>
-              <span class="text-ink-light dark:text-white/60 group-open:rotate-180 transition-transform duration-300">
-                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-              </span>
-            </summary>
-            
-            <div class="mt-4 prose prose-ink max-w-none text-ink-light dark:text-white/60 font-sans space-y-4 animate-fade-in-up">
-              <p>O início de tudo. Lançamos a primeira versão da nossa landing page e o manifesto do SpecLine. Acreditamos que a ferramenta dita o processo, e nosso objetivo é acabar com a fragmentação do trabalho combinando tarefas, documentos, diagramas e chat em uma única plataforma focada e sem distrações.</p>
-              <p>Fique ligado, pois grandes atualizações estão a caminho enquanto desenvolvemos o nosso ambiente de espaços de trabalho.</p>
+            <!-- Corrigido -->
+            <div class="border-t border-ink/5 dark:border-white/5 pt-4">
+              <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                Correções & Ajustes
+              </div>
+              <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                <li><strong>Menu Hambúrguer & CSP:</strong> Migração de atributos inline para o Stimulus Controller oficial (<code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">dropdown</code>), eliminando bloqueios de segurança <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">script-src-attr</code>.</li>
+                <li><strong>Imersão no Modo Zen (Mobile):</strong> Ocultação automática das barras superior e inferior durante o modo de foco, evitando sobreposição com o botão de saída.</li>
+                <li><strong>Compatibilidade Docker & PostgreSQL:</strong> Adicionados pacotes <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">libpq5</code> e <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">libpq-dev</code> ao <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">Dockerfile</code> para conexão otimizada com o Neon PostgreSQL.</li>
+              </ul>
             </div>
-          </details>
+
+            <!-- Segurança -->
+            <div class="border-t border-ink/5 dark:border-white/5 pt-4">
+              <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Segurança & Qualidade
+              </div>
+              <p class="leading-relaxed">Aprovado na pipeline <code class="px-1 py-0.5 rounded bg-ink/5 dark:bg-white/10 font-mono text-[11px]">bin/ci</code> com 0 vulnerabilidades no Brakeman, 0 CVEs no Bundler-Audit, 0 falhas no NPM Audit e 118 testes automatizados 100% aprovados.</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </article>
+
+      <!-- Release 1.1.0 -->
+      <article class="relative pl-6 sm:pl-0">
+        <div class="hidden sm:block absolute left-[-150px] top-1.5 text-right w-[110px]">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-light dark:text-white/60 block">19 Ago 2026</span>
+          <span class="text-[11px] text-ink-light/70 dark:text-white/40">v1.1.0</span>
+        </div>
+        
+        <div class="absolute left-0 sm:left-[-24px] top-2 bottom-[-3rem] w-px bg-ink/10 dark:bg-white/10"></div>
+        <div class="absolute left-[-4px] sm:left-[-28px] top-2 w-2.5 h-2.5 rounded-full bg-ink/30 dark:bg-white/30 ring-4 ring-fable dark:ring-ink-darker"></div>
+        
+        <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 sm:p-8 shadow-sm dark:shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-0.5 rounded-md bg-ink/10 dark:bg-white/10 text-ink dark:text-fable text-[11px] font-mono font-bold tracking-tight">v1.1.0</span>
+            <span class="sm:hidden text-xs font-semibold text-ink-light dark:text-white/60">19 de Agosto de 2026</span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-fable font-semibold mb-3">Quadro Branco, Árvore de Documentos & Chat Integrado</h2>
+          <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 leading-relaxed mb-6 font-sans">Expansão do ecossistema central do SpecLine com ferramentas integradas de planejamento, documentação colaborativa e comunicação por projeto.</p>
+
+          <div class="space-y-4 text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans">
+            <div class="border-t border-ink/5 dark:border-white/5 pt-4">
+              <div class="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 mb-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                Novidades
+              </div>
+              <ul class="list-disc pl-5 space-y-1.5 leading-relaxed">
+                <li><strong>Whiteboard & Diagramas:</strong> Criação de quadros visuais com Mermaid.js e estética de desenho a mão livre via Rough.js.</li>
+                <li><strong>Documentos em Árvore & Modo Word:</strong> Editor TipTap completo com aninhamento infinito, ordenação posicional e modo de escrita focada.</li>
+                <li><strong>Chat de Projeto em Tempo Real:</strong> Mensagens contextuais com ActionCable e Turbo Streams sobre o Solid Cable.</li>
+                <li><strong>Quadro Kanban Completo:</strong> Gerenciamento ágil com arrastar e soltar, status personalizados e controle de entregas (Milestones).</li>
+                <li><strong>Validação Marcel de Magic Bytes:</strong> Uploads seguros para Cloudflare R2 com inspeção de cabeçalhos binários reais contra spoofing de extensões.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Release 1.0.0 -->
+      <article class="relative pl-6 sm:pl-0">
+        <div class="hidden sm:block absolute left-[-150px] top-1.5 text-right w-[110px]">
+          <span class="text-xs font-bold uppercase tracking-wider text-ink-light dark:text-white/60 block">12 Ago 2026</span>
+          <span class="text-[11px] text-ink-light/70 dark:text-white/40">v1.0.0</span>
+        </div>
+        
+        <div class="absolute left-0 sm:left-[-24px] top-2 bottom-0 w-px bg-ink/10 dark:bg-white/10"></div>
+        <div class="absolute left-[-4px] sm:left-[-28px] top-2 w-2.5 h-2.5 rounded-full bg-ink/20 dark:bg-white/20 ring-4 ring-fable dark:ring-ink-darker"></div>
+        
+        <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-5 sm:p-8 shadow-sm dark:shadow-[0_1px_3px_rgba(0,0,0,0.4)]">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <span class="px-2.5 py-0.5 rounded-md bg-ink/10 dark:bg-white/10 text-ink dark:text-fable text-[11px] font-mono font-bold tracking-tight">v1.0.0</span>
+            <span class="sm:hidden text-xs font-semibold text-ink-light dark:text-white/60">12 de Agosto de 2026</span>
+          </div>
+
+          <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-fable font-semibold mb-3">Lançamento da Plataforma SpecLine</h2>
+          <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 leading-relaxed mb-4 font-sans">Fundação da plataforma unificada de engenharia de produto. Um monólito moderno em Rails 8 Solid Stack, eliminando ferramentas fragmentadas em favor de um fluxo de trabalho hiperfocado.</p>
+          <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm text-ink-light dark:text-white/70">
+            <li>Arquitetura Solid Stack (Cache, Queue e Cable) em banco de dados único.</li>
+            <li>Autenticação de alta segurança com Devise e sessões criptografadas.</li>
+            <li>Design System com Tailwind CSS e suporte a tema claro e escuro.</li>
+          </ul>
+        </div>
+      </article>
 
     </div>
   </div>
@@ -84,3 +153,4 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 </style>
+
