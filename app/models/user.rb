@@ -56,7 +56,7 @@ class User < ApplicationRecord
     end
 
     # 5. Se o Google enviou uma foto de perfil e o usuário não tem uma, anexamos de forma segura
-    if auth.info.image.present? && !user.avatar.attached?
+    if user.persisted? && auth.info.image.present? && !user.avatar.attached?
       begin
         downloaded_image = URI.open(auth.info.image)
         user.avatar.attach(io: downloaded_image, filename: "google_avatar_#{user.id}.jpg")
