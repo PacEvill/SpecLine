@@ -28,12 +28,6 @@
           <%= notice %>
         </div>
       <% end %>
-      
-      <% if alert %>
-        <div class="bg-red-50 text-red-600 p-4 rounded-md text-sm mb-6 text-center font-medium border border-red-100">
-          <%= alert %>
-        </div>
-      <% end %>
 
       <%= form_for(resource, as: resource_name, url: user_session_path, html: { class: "space-y-5", data: { turbo: false } }) do |f| %>
         

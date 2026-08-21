@@ -15,10 +15,11 @@ Este documento registra ideias, inspirações e propostas de funcionalidades par
 ## Referências e Inspirações Visuais
 
 - **Referências do X (Twitter):**
+
   - [Referência de Design/Feature 1](https://x.com/artntek/status/2090533166696014035)
   - [Referência de Design/Feature 2](https://x.com/Tanjim38/status/2090364755634692234)
-
 - **Inspiração de Interface (Planejador / Timer):**
+
   - Referência visual focada na gestão de tempo e estudos/trabalho. O design sugere:
     - Um cronômetro/timer central (estilo Pomodoro ou *time-tracking*) para registro de horas gastas em *issues* ou projetos.
     - Barra lateral para organização de matérias, categorias ou *milestones* de forma compacta e com indicadores de progresso (barras coloridas de status).
