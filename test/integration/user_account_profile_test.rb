@@ -32,7 +32,7 @@ class UserAccountProfileTest < ActionDispatch::IntegrationTest
       }
     }
 
-    assert_redirected_to workspaces_path
+    assert_redirected_to edit_user_registration_path
     @user.reload
     assert_equal "Linus", @user.first_name
     assert_equal "Torvalds", @user.last_name
@@ -49,5 +49,33 @@ class UserAccountProfileTest < ActionDispatch::IntegrationTest
 
     patch preferences_path, params: { theme: "dark" }
     assert_redirected_to preferences_path
+  end
+
+  test "remember me functionality sets cookie and timestamp on user" do
+    post user_session_path, params: {
+      user: {
+        email: @user.email,
+        password: "password123",
+        remember_me: "1"
+      }
+    }
+
+    assert_redirected_to workspaces_path
+    @user.reload
+    assert_not_nil @user.remember_created_at
+    assert_not_nil cookies["remember_user_token"]
+  end
+
+  test "login without remember me does not set remember cookie" do
+    post user_session_path, params: {
+      user: {
+        email: @user.email,
+        password: "password123",
+        remember_me: "0"
+      }
+    }
+
+    assert_redirected_to workspaces_path
+    assert_nil cookies["remember_user_token"]
   end
 end

@@ -1,6 +1,11 @@
 require "test_helper"
 
 class SolutionsControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    get solutions_url
+    assert_response :success
+  end
+
   test "should get startups" do
     get solutions_startups_url
     assert_response :success

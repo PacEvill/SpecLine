@@ -23,7 +23,7 @@
             <%= link_to edit_workspace_project_issue_path(@workspace, @project, @issue), class: "p-1.5 rounded-lg text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white hover:bg-ink/5 dark:hover:bg-white/5 transition-colors duration-500" do %>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             <% end %>
-            <%= link_to workspace_project_issue_path(@workspace, @project, @issue), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Excluir #{@issue.identifier}?" }, class: "p-1.5 rounded-lg text-ink-light dark:text-white/60 hover:text-red-500 hover:bg-red-50 transition-colors duration-500" do %>
+            <%= link_to workspace_project_issue_path(@workspace, @project, @issue), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Excluir #{@issue.identifier}?" }, class: "p-1.5 rounded-lg text-ink-light dark:text-white/60 hover:text-rust hover:bg-rust/10 transition-colors duration-500" do %>
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             <% end %>
           </div>
@@ -40,44 +40,20 @@
 
       <!-- Comments Section -->
       <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] p-6">
+        <%= turbo_stream_from @issue, :comments %>
         <h2 class="text-sm font-semibold text-ink dark:text-fable mb-4 flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
           Comentários (<%= @issue.comments.count %>)
         </h2>
 
-        <% if @issue.comments.ordered.any? %>
-          <div class="space-y-4 mb-6">
-            <% @issue.comments.ordered.each do |comment| %>
-              <div class="flex gap-3">
-                <div class="w-7 h-7 rounded-full bg-ink text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-                  <%= comment.user.email[0].upcase %>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex items-center gap-2 mb-1">
-                    <span class="text-xs font-semibold text-ink dark:text-fable"><%= comment.user.email.split("@").first %></span>
-                    <span class="text-[10px] text-ink-light dark:text-white/60"><%= time_ago_in_words(comment.created_at) %> atrás</span>
-                  </div>
-                  <div class="text-sm text-ink-light dark:text-white/60 leading-relaxed bg-[#FDFBF7] dark:bg-ink-darker rounded-xl px-3 py-2 border border-ink/[0.03] dark:border-white/[0.05]">
-                    <%= simple_format(comment.body) %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
+        <div id="comments_list" class="space-y-4 mb-6">
+          <% @issue.comments.ordered.each do |comment| %>
+            <%= render "comments/comment", comment: comment %>
+          <% end %>
+        </div>
 
         <!-- New Comment Form -->
-        <%= form_with(model: Comment.new, url: workspace_project_issue_comments_path(@workspace, @project, @issue), class: "flex gap-3") do |form| %>
-          <div class="w-7 h-7 rounded-full bg-terracotta text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
-            <%= current_user.email[0].upcase %>
-          </div>
-          <div class="flex-1">
-            <%= form.text_area :body, rows: 2, class: "w-full px-3 py-2 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-500", placeholder: "Escreva um comentário..." %>
-            <div class="flex justify-end mt-2">
-              <%= form.submit "Comentar", class: "px-4 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors cursor-pointer duration-500" %>
-            </div>
-          </div>
-        <% end %>
+        <%= render "comments/form", workspace: @workspace, project: @project, issue: @issue, comment: Comment.new %>
       </div>
     </div>
 
@@ -99,7 +75,7 @@
         <div>
           <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Prioridade</span>
           <div class="mt-1.5">
-            <% priority_map = { "urgent" => ["Urgente", "text-red-700 dark:text-red-400 bg-red-500/10"], "high" => ["Alta", "text-orange-700 dark:text-orange-400 bg-orange-500/10"], "medium" => ["Média", "text-yellow-700 dark:text-yellow-400 bg-yellow-500/10"], "low" => ["Baixa", "text-blue-700 dark:text-blue-400 bg-blue-500/10"], "no_priority" => ["Sem prioridade", "text-ink-light bg-ink/5 dark:bg-white/5"] } %>
+            <% priority_map = { "urgent" => ["Urgente", "text-rust dark:text-rust bg-rust/10"], "high" => ["Alta", "text-ochre dark:text-ochre bg-ochre/10"], "medium" => ["Média", "text-ochre dark:text-ochre bg-ochre/10"], "low" => ["Baixa", "text-slate dark:text-slate bg-slate/10"], "no_priority" => ["Sem prioridade", "text-ink-light bg-ink/5 dark:bg-white/5"] } %>
             <% label, css = priority_map[@issue.priority] %>
             <span class="inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-md <%= css %>"><%= label %></span>
           </div>
@@ -132,7 +108,7 @@
         <% if @issue.due_date %>
           <div>
             <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Prazo</span>
-            <p class="mt-1.5 text-xs <%= @issue.due_date < Date.current ? 'text-red-500 font-semibold' : 'text-ink' %>"><%= @issue.due_date.strftime("%d de %B de %Y") %></p>
+            <p class="mt-1.5 text-xs <%= @issue.due_date < Date.current ? 'text-rust font-semibold' : 'text-ink' %>"><%= @issue.due_date.strftime("%d de %B de %Y") %></p>
           </div>
         <% end %>
 
@@ -160,7 +136,7 @@
         <h3 class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Ecossistema do Projeto</h3>
         
         <div class="space-y-1.5 text-xs">
-          <%= link_to workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "flex items-center justify-between p-2 rounded-xl bg-purple-500/5 hover:bg-purple-500/10 text-purple-600 dark:text-purple-400 transition-colors" do %>
+          <%= link_to workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "flex items-center justify-between p-2 rounded-xl bg-slate/5 hover:bg-slate/10 text-slate dark:text-slate transition-colors" do %>
             <div class="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
               <span class="font-medium">Diagramas & Canvas</span>
@@ -168,7 +144,7 @@
             <span class="text-[10px] opacity-60"><%= @project.whiteboards.count %></span>
           <% end %>
 
-          <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "flex items-center justify-between p-2 rounded-xl bg-blue-500/5 hover:bg-blue-500/10 text-blue-600 dark:text-blue-400 transition-colors" do %>
+          <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "flex items-center justify-between p-2 rounded-xl bg-slate/5 hover:bg-slate/10 text-slate dark:text-slate transition-colors" do %>
             <div class="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               <span class="font-medium">Especificações & PRDs</span>

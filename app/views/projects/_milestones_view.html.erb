@@ -19,7 +19,7 @@
                 <p class="text-xs text-ink-light dark:text-white/60 mt-1"><%= milestone.description.truncate(120) %></p>
               <% end %>
             </div>
-            <% status_colors = { "open" => "bg-yellow-50 text-yellow-700", "active" => "bg-blue-50 text-blue-700", "closed" => "bg-green-50 text-green-700" } %>
+            <% status_colors = { "open" => "bg-ochre/10 text-ochre", "active" => "bg-slate/10 text-slate", "closed" => "bg-sage/10 text-sage-dark" } %>
             <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full <%= status_colors[milestone.status] %>">
               <%= milestone.status == "open" ? "Planejada" : milestone.status == "active" ? "Ativa" : "Concluída" %>
             </span>
@@ -29,7 +29,7 @@
           <% progress = milestone.progress_percentage %>
           <div class="flex items-center gap-3">
             <div class="flex-1 h-1.5 bg-ink/5 dark:bg-white/5 rounded-full overflow-hidden">
-              <div class="h-full rounded-full transition-all duration-500 <%= progress == 100 ? 'bg-sage' : 'bg-terracotta' %>" style="width: <%= progress %>%"></div>
+              <div class="h-full rounded-full transition-all duration-500 <%= progress == 100 ? 'bg-sage' : 'bg-slate' %>" style="width: <%= progress %>%"></div>
             </div>
             <span class="text-[10px] font-bold text-ink-light dark:text-white/60 w-8 text-right"><%= progress %>%</span>
           </div>
@@ -40,7 +40,7 @@
                 <span>Início: <strong class="text-ink dark:text-fable"><%= milestone.start_date.strftime("%d %b %Y") %></strong></span>
               <% end %>
               <% if milestone.target_date %>
-                <span>Meta: <strong class="<%= milestone.target_date < Date.current && milestone.status != 'closed' ? 'text-red-500' : 'text-ink' %>"><%= milestone.target_date.strftime("%d %b %Y") %></strong></span>
+                <span>Meta: <strong class="<%= milestone.target_date < Date.current && milestone.status != 'closed' ? 'text-rust' : 'text-ink dark:text-fable' %>"><%= milestone.target_date.strftime("%d %b %Y") %></strong></span>
               <% end %>
             </div>
           <% end %>
@@ -49,7 +49,7 @@
     </div>
   <% else %>
     <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] px-8 py-16 text-center">
-      <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 flex items-center justify-center text-ink-light dark:text-white/60">
+      <div class="w-12 h-12 mx-auto mb-4 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 flex items-center justify-center text-ink-light dark:text-white/60">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <p class="text-sm text-ink-light dark:text-white/60 mb-4">Nenhuma milestone criada.</p>

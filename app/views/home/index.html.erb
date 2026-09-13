@@ -1,151 +1,416 @@
-<div class="min-h-screen flex flex-col overflow-x-clip">
+<div class="w-full min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white bg-grain selection:bg-terracotta/30 selection:text-ink font-sans">
+
   <%= render 'shared/marketing_header' %>
 
   <!-- Hero Section -->
-  <main class="flex-grow flex flex-col items-center justify-center px-6 py-24 md:py-32 text-center relative overflow-hidden">
-    <!-- Subtle background blob -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/40 rounded-full blur-3xl -z-10 animate-fade-in"></div>
-    
-    <div class="max-w-4xl space-y-10">
-      <h1 class="text-5xl md:text-7xl lg:text-8xl font-serif text-ink dark:text-fable tracking-tight leading-[1.1] animate-fade-in-up">
-        O seu trabalho, <br/>
-        <span class="text-terracotta italic font-light">em um só lugar.</span>
-      </h1>
-      <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed max-w-2xl mx-auto opacity-0 animate-fade-in-up-delay-1">
-        Diga adeus ao caos das abas infinitas. SpecLine unifica seus documentos, quadros de tarefas e chats em um ambiente minimalista, desenhado para o foco profundo.
-      </p>
-      
-      <div class="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-in-up-delay-2">
-        <a href="/register" class="btn-primary text-lg px-8 py-3.5 w-full sm:w-auto flex items-center justify-center gap-2 group">
-          Começar gratuitamente
-          <svg class="group-hover:translate-x-1 transition-transform duration-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+  <header class="grid grid-cols-1 md:grid-cols-12 min-h-[85vh] relative z-10 border-b border-ink/15 dark:border-white/10">
+    <!-- Left Column: Typography & Action -->
+    <div class="col-span-1 md:col-span-6 lg:col-span-6 flex flex-col justify-between p-8 md:p-16 lg:p-20 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 relative overflow-hidden bg-fable-light dark:bg-[#18181A]">
+      <div class="space-y-6 relative z-10">
+        <h1 class="font-serif font-light text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight text-ink dark:text-fable">
+          O seu trabalho,<br>
+          <i class="text-terracotta font-serif-italic">em um só</i> <br>
+          lugar.
+        </h1>
+        
+        <p class="max-w-lg text-lg md:text-xl text-ink-light dark:text-white/60 leading-relaxed mt-8 font-serif italic">
+          Diga adeus ao caos das abas infinitas. SpecLine unifica seus documentos, quadros de tarefas e chats em um ambiente minimalista, desenhado para o foco profundo.
+        </p>
+      </div>
+
+      <div class="pt-12 relative z-10 flex flex-wrap gap-4">
+        <%= link_to new_user_registration_path, class: "group bg-ink dark:bg-fable-light text-fable-light dark:text-ink hover:bg-terracotta hover:text-white dark:hover:bg-terracotta dark:hover:text-white flex w-fit rounded-lg shadow-sm hover:shadow-md transition-all px-8 py-4 font-medium font-sans items-center gap-3 cursor-pointer" do %>
+          Começar Gratuitamente
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+
+        <%= link_to "/philosophy/vision", class: "group bg-transparent border border-sage/60 text-ink dark:text-fable hover:bg-sage hover:text-white dark:hover:bg-sage dark:hover:text-white hover:border-sage flex w-fit rounded-lg transition-all px-8 py-4 font-medium font-sans items-center gap-3 cursor-pointer" do %>
+          Explorar Filosofia
+        <% end %>
       </div>
     </div>
-  </main>
 
-  <!-- Manifesto / Value Prop -->
-  <section id="manifesto" class="py-24 px-6 border-t border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper transition-colors duration-500">
-      <div class="max-w-3xl mx-auto text-center space-y-6">
-        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-fable tracking-tight mb-4">A ferramenta dita o processo.</h2>
-        <p class="text-xl text-ink-light dark:text-white/60 font-sans leading-relaxed">
-        Nós acreditamos que a fragmentação do trabalho destrói a produtividade. Quando suas tarefas estão em um software de cards, seus documentos numa wiki separada e suas conversas em um app de chat genérico, você passa mais tempo procurando informações do que realmente trabalhando. O SpecLine foi criado para resolver esse problema pela raiz.
-        </p>
+    <!-- Right Column: UI Demonstration Cards (4 Interactive & Randomized Showcase Cards) -->
+    <div class="col-span-1 md:col-span-6 lg:col-span-6 relative bg-fable dark:bg-ink-darker overflow-hidden flex flex-col items-center justify-center min-h-[62vh] p-6 sm:p-12 lg:p-16 border-b md:border-b-0 border-ink/15 dark:border-white/10" data-controller="hero-randomizer">
+      <!-- Grid background -->
+      <div class="absolute inset-0 opacity-10 dark:opacity-20 pointer-events-none" style="background-image: radial-gradient(currentColor 1px, transparent 1px); background-size: 24px 24px;"></div>
+
+      <!-- Comp 1: Markdown & Floating Kanban (Alive & Large) -->
+      <div id="comp-1" data-hero-randomizer-target="comp" class="composition-block w-full max-w-lg lg:max-w-xl z-10 hidden relative pb-16 pr-4 sm:pr-8">
+        
+        <!-- Live Markdown Document Card -->
+        <div class="bg-white dark:bg-ink border border-ink/15 dark:border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl w-[94%] rotate-[-2deg] transition-all duration-500 hover:rotate-0 hover:scale-[1.02] relative z-10 group">
+          
+          <!-- Card Header / macOS style controls & live indicator -->
+          <div class="flex items-center justify-between mb-5 border-b border-ink/10 dark:border-white/10 pb-4">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-terracotta/80"></div>
+              <div class="w-3 h-3 rounded-full bg-ochre/80"></div>
+              <div class="w-3 h-3 rounded-full bg-sage/80"></div>
+              <span class="font-mono text-xs ml-2 text-ink dark:text-white font-semibold tracking-tight">architecture.md</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 text-[10px] font-mono uppercase tracking-wider bg-sage/15 text-sage font-bold rounded-full border border-sage/20">
+                <span class="w-2 h-2 rounded-full bg-sage animate-ping"></span> Live Sync
+              </span>
+            </div>
+          </div>
+
+          <!-- Document Body with Syntax Highlighting & Typing Cursor -->
+          <div class="space-y-4 font-mono text-xs sm:text-sm text-ink/80 dark:text-white/70">
+            <div class="flex items-baseline gap-2 text-ink dark:text-white font-bold text-base sm:text-lg tracking-tight">
+              <span class="text-terracotta">#</span> Core Infrastructure
+            </div>
+            
+            <div class="p-3 border-l-2 border-sage bg-sage/5 rounded-r text-xs font-sans text-ink-light dark:text-white/70 leading-relaxed">
+              <span class="text-sage font-bold font-mono text-xs">💡</span> Pipeline distribuído com latência zero e persistência local offline-first.
+            </div>
+
+            <div class="space-y-2 pt-1 text-xs sm:text-sm">
+              <div class="flex items-center gap-2.5 text-ink/80 dark:text-white/70">
+                <span class="text-sage font-bold text-base">✓</span> <span>[x] Cluster SolidQueue reconciliado</span>
+              </div>
+              <div class="flex items-center gap-2.5 text-ink/80 dark:text-white/70">
+                <span class="text-sage font-bold text-base">✓</span> <span>[x] Sync WebSocket em tempo real</span>
+              </div>
+            </div>
+
+            <div class="pt-2 flex items-baseline gap-2 text-ink dark:text-white font-bold text-sm sm:text-base">
+              <span class="text-sage">##</span> Database Schema
+            </div>
+
+            <!-- Active Line with blinking cursor -->
+            <div class="bg-ink/5 dark:bg-white/5 px-3 py-2 rounded-lg border border-ink/10 dark:border-white/10 text-xs sm:text-sm flex items-center text-ink dark:text-white font-mono">
+              <span class="text-terracotta font-semibold">has_many</span>&nbsp;<span>:projects, through: :teams</span>
+              <span class="inline-block w-2 h-4 bg-terracotta animate-blink ml-1.5"></span>
+            </div>
+          </div>
+
+          <!-- Floating Collaborator Badge -->
+          <div class="absolute -top-3.5 -right-3 bg-ink text-white dark:bg-white dark:text-ink px-3 py-1.5 rounded-full text-[11px] font-mono tracking-wider flex items-center gap-2 shadow-xl border border-white/20 dark:border-ink/20 animate-float">
+            <span class="w-2 h-2 rounded-full bg-sage"></span>
+            <span>Time Core editando</span>
+          </div>
+        </div>
+
+        <!-- Floating Kanban Task Card with Progress Bar & Linked Reference -->
+        <div class="absolute bottom-1 right-0 bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-6 shadow-2xl w-[90%] sm:w-[84%] rotate-[3deg] transition-all duration-500 hover:rotate-0 hover:-translate-y-2 z-20 animate-float">
+          
+          <div class="flex justify-between items-center mb-3 gap-2">
+            <div class="inline-flex items-center gap-1.5 text-[10px] font-mono tracking-widest bg-terracotta/15 text-terracotta px-3 py-1 rounded-full font-bold uppercase border border-terracotta/20">
+              <span class="w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse"></span>
+              IN PROGRESS
+            </div>
+            <span class="text-[11px] font-mono text-ink-light/50 dark:text-white/40 font-semibold">#Sprint-24</span>
+          </div>
+
+          <div class="font-sans font-bold text-ink dark:text-white text-base sm:text-lg mb-1">
+            Unificar arquitetura
+          </div>
+          
+          <div class="font-sans text-xs sm:text-sm text-ink-light dark:text-white/60 line-clamp-2 mb-4 leading-relaxed">
+            Garantir que as decisões técnicas estejam vinculadas aos quadros de tarefas automaticamente.
+          </div>
+
+          <!-- Animated Progress Bar -->
+          <div class="space-y-1.5 mb-4">
+            <div class="flex justify-between text-xs font-mono text-ink-light/60 dark:text-white/50">
+              <span>Progresso da Tarefa</span>
+              <span class="text-sage font-bold">75% (3/4)</span>
+            </div>
+            <div class="w-full h-2 bg-ink/10 dark:bg-white/10 rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-terracotta to-sage rounded-full w-[75%] transition-all duration-1000"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Card Meta & Linked Document Tag -->
+          <div class="flex items-center justify-between pt-3 border-t border-ink/10 dark:border-white/10 text-xs font-mono">
+            <div class="flex items-center gap-2 text-ink dark:text-white font-medium">
+              <div class="w-6 h-6 rounded-full bg-terracotta flex items-center justify-center text-white text-[10px] font-bold">TC</div>
+              <span>@core</span>
+            </div>
+            <span class="text-terracotta flex items-center gap-1.5 bg-terracotta/10 px-2.5 py-1 rounded font-medium">
+              📄 architecture.md
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Comp 2: Whiteboard Canvas (Rich, Animated & Large) -->
+      <div id="comp-2" data-hero-randomizer-target="comp" class="composition-block w-full max-w-lg lg:max-w-xl z-10 hidden pb-12">
+        <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl shadow-2xl w-full aspect-[4/3] relative overflow-hidden rotate-[1.5deg] transition-all duration-500 hover:rotate-0 p-6">
+          <div class="absolute inset-0 bg-grid opacity-20"></div>
+
+          <!-- Canvas Top Bar -->
+          <div class="flex items-center justify-between relative z-10 border-b border-ink/10 dark:border-white/10 pb-3 mb-4 text-xs font-mono">
+            <span class="text-ink-light/70 dark:text-white/60 font-semibold flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-ochre"></span>
+              Whiteboard // Fluxo de Dados
+            </span>
+            <span class="text-[10px] bg-ochre/15 text-ochre px-2 py-0.5 rounded font-bold uppercase">Zoom: 100%</span>
+          </div>
+
+          <!-- Post-it 1 -->
+          <div class="absolute top-16 left-8 w-44 bg-[#FFF4CE] dark:bg-[#3D3725] border border-ink/10 dark:border-white/10 p-4 shadow-xl rotate-[-4deg] rounded-lg transition-transform hover:scale-105 duration-300">
+            <div class="font-mono text-[10px] uppercase font-bold text-ink/70 dark:text-white/70 mb-1">📌 Decisão Core</div>
+            <div class="font-sans text-xs font-medium text-ink dark:text-white leading-snug">WebSockets com reconexão automática offline.</div>
+            <div class="mt-2 pt-1 border-t border-ink/10 flex justify-between text-[10px] font-mono text-ink/50 dark:text-white/40">
+              <span>RFC-089</span>
+              <span>👍 4</span>
+            </div>
+          </div>
+
+          <!-- Post-it 2 -->
+          <div class="absolute bottom-12 right-8 w-48 bg-[#E1F0DA] dark:bg-[#253826] border border-ink/10 dark:border-white/10 p-4 shadow-xl rotate-[3deg] rounded-lg transition-transform hover:scale-105 duration-300">
+            <div class="font-mono text-[10px] uppercase font-bold text-sage mb-1">🎯 Schema Validado</div>
+            <div class="font-sans text-xs font-medium text-ink dark:text-white leading-snug">Isolamento multi-inquilino por workspace.</div>
+            <div class="mt-2 pt-1 border-t border-ink/10 flex justify-between text-[10px] font-mono text-ink/50 dark:text-white/40">
+              <span>ADR-012</span>
+              <span>🔥 6</span>
+            </div>
+          </div>
+
+          <!-- Animated Connection Path -->
+          <svg class="absolute inset-0 w-full h-full pointer-events-none stroke-terracotta" stroke-width="2.5" stroke-dasharray="6 6" fill="none">
+            <path d="M 170 120 C 240 140, 220 220, 280 240" class="animate-dash" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Comp 3: Contextual Chat & Threads (Rich & Animated) -->
+      <div id="comp-3" data-hero-randomizer-target="comp" class="composition-block w-full max-w-lg lg:max-w-xl z-10 hidden pb-12">
+        <div class="bg-fable-light dark:bg-ink border border-ink/15 dark:border-white/10 rounded-2xl shadow-2xl w-full flex flex-col h-[380px] rotate-[-1deg] transition-all duration-500 hover:rotate-0 overflow-hidden">
+          
+          <div class="px-6 py-4 border-b border-ink/10 dark:border-white/10 flex items-center justify-between bg-white dark:bg-ink-paper">
+            <div class="flex items-center gap-2">
+              <span class="text-terracotta font-mono font-bold">#</span>
+              <span class="font-mono text-xs font-bold text-ink dark:text-white">sprint-24-core</span>
+            </div>
+            <div class="flex items-center gap-2 text-[10px] font-mono text-sage font-bold bg-sage/10 px-2.5 py-1 rounded-full">
+              <span class="w-2 h-2 rounded-full bg-sage animate-ping"></span> 3 membros ativos
+            </div>
+          </div>
+
+          <div class="p-5 space-y-4 flex-1 overflow-y-auto">
+            <div class="flex gap-3">
+              <div class="w-8 h-8 rounded-full bg-terracotta/20 text-terracotta flex items-center justify-center text-xs font-bold shrink-0">TC</div>
+              <div class="bg-white dark:bg-ink-paper p-3.5 rounded-xl text-xs space-y-1.5 border border-ink/5 dark:border-white/5 shadow-sm max-w-xs">
+                <div class="font-mono font-bold text-[10px] text-terracotta">Time de Arquitetura</div>
+                <div class="text-ink/90 dark:text-white/90">A especificação do Sync Engine foi aprovada. O backlog de tarefas já está sincronizado!</div>
+              </div>
+            </div>
+
+            <div class="flex gap-3 flex-row-reverse">
+              <div class="w-8 h-8 rounded-full bg-sage/20 text-sage flex items-center justify-center text-xs font-bold shrink-0">SL</div>
+              <div class="bg-sage/10 p-3.5 rounded-xl text-xs space-y-1.5 border border-sage/20 shadow-sm max-w-xs text-right">
+                <div class="font-mono font-bold text-[10px] text-sage">Lead de Engenharia</div>
+                <div class="text-ink/90 dark:text-white/90">Perfeito! Build verde, testes passando e PR vinculado à RFC.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-5 py-3 border-t border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper flex items-center justify-between text-xs font-mono text-ink-light/50 dark:text-white/40">
+            <span>Escreva sua mensagem...</span>
+            <kbd class="px-2 py-0.5 bg-ink/5 dark:bg-white/10 rounded text-[10px]">Enter ↵</kbd>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comp 4: Terminal / Engine View (Rich & Animated) -->
+      <div id="comp-4" data-hero-randomizer-target="comp" class="composition-block w-full max-w-lg lg:max-w-xl z-10 hidden pb-12">
+        <div class="bg-[#111112] border border-white/15 rounded-2xl shadow-2xl w-full rotate-[1deg] transition-all duration-500 hover:rotate-0 overflow-hidden font-mono text-xs text-white">
+          
+          <div class="bg-[#1C1C1E] px-5 py-3 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-terracotta"></div>
+              <div class="w-3 h-3 rounded-full bg-ochre"></div>
+              <div class="w-3 h-3 rounded-full bg-sage"></div>
+              <span class="ml-2 text-[11px] text-white/50">specline_engine.rb</span>
+            </div>
+            <span class="text-[10px] text-sage bg-sage/15 px-2 py-0.5 rounded font-bold">Latency: 12ms</span>
+          </div>
+
+          <div class="p-6 space-y-2 text-xs sm:text-sm">
+            <div class="text-white/40"># SpecLine Realtime Sync Daemon</div>
+            <div><span class="text-terracotta">class</span> <span class="text-sage">SyncEngine</span> &lt; Rails::Engine</div>
+            <div class="pl-4"><span class="text-terracotta">def</span> <span class="text-ochre">reconcile_state!(session)</span></div>
+            <div class="pl-8 text-white/70">SolidCable.broadcast_to(session.channel, payload)</div>
+            <div class="pl-8 text-sage">logger.info "[SYNC OK] 0 packet loss"</div>
+            <div class="pl-4"><span class="text-terracotta">end</span></div>
+            <div><span class="text-terracotta">end</span></div>
+            
+            <div class="pt-3 border-t border-white/10 text-xs text-white/40 flex justify-between">
+              <span>● SolidQueue: 0 falhas</span>
+              <span class="text-ochre">Cluster: Ativo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Marquee Dividers (3 stacked bars: Black, Orange, Green) -->
+  <div class="flex flex-col border-b border-ink/15 dark:border-white/10">
+    <!-- Bar 1: Black / Ink -->
+    <div class="py-2.5 bg-ink text-fable-light dark:bg-ink-paper dark:text-fable-light overflow-hidden flex whitespace-nowrap">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee opacity-90 flex items-center gap-8">
+        <span>A FERRAMENTA DITA O PROCESSO</span> <span class="text-terracotta">◆</span>
+        <span>O FOCO EXIGE SILÊNCIO</span> <span class="text-terracotta">◆</span>
+        <span>A ARQUITETURA PREVINE O CAOS</span> <span class="text-terracotta">◆</span>
+        <span>SISTEMAS RÍGIDOS, MENTES LIVRES</span> <span class="text-terracotta">◆</span>
+        <span>TRABALHO PROFUNDO</span> <span class="text-terracotta">◆</span>
+        <span>A FERRAMENTA DITA O PROCESSO</span> <span class="text-terracotta">◆</span>
+        <span>O FOCO EXIGE SILÊNCIO</span> <span class="text-terracotta">◆</span>
+        <span>A ARQUITETURA PREVINE O CAOS</span> <span class="text-terracotta">◆</span>
+        <span>SISTEMAS RÍGIDOS, MENTES LIVRES</span> <span class="text-terracotta">◆</span>
+        <span>TRABALHO PROFUNDO</span> <span class="text-terracotta">◆</span>
+      </div>
+    </div>
+    <!-- Bar 2: Orange / Terracotta (Reverse) -->
+    <div class="py-2.5 bg-terracotta text-white overflow-hidden flex whitespace-nowrap border-y border-ink/15 dark:border-white/10">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee-reverse opacity-90 flex items-center gap-8">
+        <span>TUDO ESTÁ CONECTADO</span> <span class="text-ink/30">■</span>
+        <span>REDUZA O RUÍDO VISUAL</span> <span class="text-ink/30">■</span>
+        <span>DADOS SEM CONTEXTO SÃO INÚTEIS</span> <span class="text-ink/30">■</span>
+        <span>A CLAREZA ANTECEDE A EXECUÇÃO</span> <span class="text-ink/30">■</span>
+        <span>O TRABALHO INVISÍVEL IMPORTA</span> <span class="text-ink/30">■</span>
+        <span>TUDO ESTÁ CONECTADO</span> <span class="text-ink/30">■</span>
+        <span>REDUZA O RUÍDO VISUAL</span> <span class="text-ink/30">■</span>
+        <span>DADOS SEM CONTEXTO SÃO INÚTEIS</span> <span class="text-ink/30">■</span>
+        <span>A CLAREZA ANTECEDE A EXECUÇÃO</span> <span class="text-ink/30">■</span>
+        <span>O TRABALHO INVISÍVEL IMPORTA</span> <span class="text-ink/30">■</span>
+      </div>
+    </div>
+    <!-- Bar 3: Green / Sage -->
+    <div class="py-2.5 bg-sage text-ink overflow-hidden flex whitespace-nowrap">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee opacity-90 flex items-center gap-8">
+        <span>CONSTRUA PARA O LONGO PRAZO</span> <span class="text-white/50">▲</span>
+        <span>MENOS ABAS, MAIS AÇÃO</span> <span class="text-white/50">▲</span>
+        <span>O CAOS NÃO ESCALA</span> <span class="text-white/50">▲</span>
+        <span>ORGANIZE-SE OU MORRA</span> <span class="text-white/50">▲</span>
+        <span>A VELOCIDADE VEM DA ORDEM</span> <span class="text-white/50">▲</span>
+        <span>CONSTRUA PARA O LONGO PRAZO</span> <span class="text-white/50">▲</span>
+        <span>MENOS ABAS, MAIS AÇÃO</span> <span class="text-white/50">▲</span>
+        <span>O CAOS NÃO ESCALA</span> <span class="text-white/50">▲</span>
+        <span>ORGANIZE-SE OU MORRA</span> <span class="text-white/50">▲</span>
+        <span>A VELOCIDADE VEM DA ORDEM</span> <span class="text-white/50">▲</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES (4 Pillars) -->
+  <section class="grid grid-cols-1 md:grid-cols-12 border-b border-ink/15 dark:border-white/10">
+    <div class="col-span-1 md:col-span-4 p-8 md:p-16 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <h2 class="text-4xl md:text-6xl font-serif text-ink dark:text-fable tracking-tight leading-[0.9] mb-6">
+        Tudo que <br><i class="text-sage font-serif-italic">sua equipe</i> <br>precisa.
+      </h2>
+      <p class="font-mono text-[11px] tracking-widest uppercase text-ink-light dark:text-white/40">Quatro pilares integrados perfeitamente.</p>
+    </div>
+
+    <!-- Feature 1 & 2 -->
+    <div class="col-span-1 md:col-span-4 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 grid grid-rows-2">
+      <div class="p-8 md:p-12 border-b border-ink/15 dark:border-white/10 group hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+        <div class="font-mono text-[10px] tracking-widest text-sage mb-6">[01] DOCS</div>
+        <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Documentos & Wiki</h3>
+        <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Escreva e colabore em tempo real. Um editor focado que entende Markdown e formatação rica, livre de distrações visuais.</p>
+      </div>
+      <div class="p-8 md:p-12 group hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+        <div class="font-mono text-[10px] tracking-widest text-terracotta mb-6">[02] KANBAN</div>
+        <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Gestão de Tarefas</h3>
+        <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Quadros Kanban fluidos e listas poderosas. Arraste, solte e organize o fluxo da equipe, com métricas nativas de tempo.</p>
+      </div>
+    </div>
+
+    <!-- Feature 3 & 4 -->
+    <div class="col-span-1 md:col-span-4 grid grid-rows-2">
+      <div class="p-8 md:p-12 border-b border-ink/15 dark:border-white/10 group hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+        <div class="font-mono text-[10px] tracking-widest text-ink dark:text-white mb-6">[03] CHAT</div>
+        <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Comunicação Contextual</h3>
+        <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Fóruns e chats dedicados por projeto. Chega de mensagens perdidas; a comunicação acontece junto do trabalho real.</p>
+      </div>
+      <div class="p-8 md:p-12 group hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+        <div class="font-mono text-[10px] tracking-widest text-sage mb-6">[04] WHITEBOARD</div>
+        <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Quadros e Diagramas</h3>
+        <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Esboce ideias, crie fluxogramas nativos com Mermaid.js ou mova post-its virtuais em nosso Whiteboard imersivo.</p>
+      </div>
     </div>
   </section>
 
-  <!-- Features Grid -->
-  <section id="features" class="bg-fable-dark dark:bg-ink-darker transition-colors duration-500 py-24 px-6 border-t border-ink/10 dark:border-white/10">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 space-y-4">
-        <h2 class="text-4xl font-serif text-ink dark:text-fable tracking-tight">Tudo que sua equipe precisa.</h2>
-        <p class="text-xl font-sans text-ink-light dark:text-white/60">Quatro pilares fundamentais perfeitamente integrados.</p>
-      </div>
-      
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-        <!-- Docs -->
-        <div class="card p-8 md:p-10 opacity-0 animate-fade-in-up-delay-1">
-          <div class="w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center mb-6 text-sage">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>
-          </div>
-          <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Documentos & Wiki</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-            Escreva e colabore em tempo real. Um editor focado que entende Markdown e formatação rica, livre de distrações visuais.
-          </p>
-        </div>
-
-        <!-- Kanban -->
-        <div class="card p-8 md:p-10 opacity-0 animate-fade-in-up-delay-2">
-          <div class="w-12 h-12 rounded-full bg-terracotta/20 flex items-center justify-center mb-6 text-terracotta">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="M14 8h.01"/><path d="M14 16h.01"/></svg>
-          </div>
-          <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Gestão de Tarefas</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-            Quadros Kanban fluidos e listas poderosas. Arraste, solte e organize o fluxo da equipe, com métricas nativas de tempo.
-          </p>
-        </div>
-
-        <!-- Chat -->
-        <div class="card p-8 md:p-10 opacity-0 animate-fade-in-up-delay-3">
-          <div class="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center mb-6 text-ink dark:text-fable">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </div>
-          <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Comunicação Contextual</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-            Fóruns e chats dedicados por projeto. Chega de mensagens perdidas; a comunicação acontece junto do trabalho real.
-          </p>
-        </div>
-
-        <!-- Whiteboard -->
-        <div class="card p-8 md:p-10 opacity-0 animate-fade-in-up-delay-3">
-          <div class="w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center mb-6 text-sage">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
-          </div>
-          <h3 class="text-2xl font-serif text-ink dark:text-fable mb-3">Quadros e Diagramas</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-            Esboce ideias, crie fluxogramas nativos com Mermaid.js ou mova post-its virtuais em nosso Whiteboard imersivo.
-          </p>
-        </div>
-      </div>
-    </div>
+  <!-- Manifesto Section -->
+  <section class="py-24 px-8 md:px-16 border-b border-ink/15 dark:border-white/10 text-center max-w-4xl mx-auto">
+    <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-fable tracking-tight mb-6">A ferramenta dita o processo.</h2>
+    <p class="text-xl text-ink-light dark:text-white/60 font-sans leading-relaxed">
+      Nós acreditamos que a fragmentação do trabalho destrói a produtividade. Quando suas tarefas estão em um software de cards, seus documentos numa wiki separada e suas conversas em um app de chat genérico, você passa mais tempo procurando informações do que realmente trabalhando. O SpecLine foi criado para resolver esse problema pela raiz.
+    </p>
   </section>
 
   <!-- Use Cases -->
-  <section class="py-24 px-6 border-t border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper transition-colors duration-500">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-16 space-y-4">
-        <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable tracking-tight">Onde o SpecLine brilha.</h2>
-        <p class="text-xl font-sans text-ink-light dark:text-white/60">Construído para disciplinas que exigem alta concentração.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-        <div class="card p-8 bg-fable-light dark:bg-white/5 hover:-translate-y-1 transition-all duration-300">
-          <div class="mb-6 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-terracotta/20 flex items-center justify-center text-terracotta font-bold">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
-            </div>
-            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Engenharia</h3>
-          </div>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">
-            Mantenha suas especificações técnicas (ADRs), diagramas Mermaid e o backlog de tarefas no mesmo contexto visual. Menos alternância de contexto significa mais tempo em flow.
-          </p>
-        </div>
-        
-        <div class="card p-8 bg-fable-light dark:bg-white/5 hover:-translate-y-1 transition-all duration-300">
-          <div class="mb-6 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center text-sage font-bold">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
-            </div>
-            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Produto & Design</h3>
-          </div>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">
-            Centralize as especificações de produto, PRDs e wireframes. O chat contextual garante que as decisões de design não fiquem perdidas em canais de chat genéricos e esquecidos.
-          </p>
-        </div>
-        
-        <div class="card p-8 bg-fable-light dark:bg-white/5 hover:-translate-y-1 transition-all duration-300">
-          <div class="mb-6 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-ink/10 flex items-center justify-center text-ink dark:text-fable font-bold">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-            </div>
-            <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold">Gestão Ágil</h3>
-          </div>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">
-            Uma visão clara do andamento dos projetos. Aproxime a gestão das tarefas reais que a equipe está executando, sem a sobrecarga de ferramentas excessivamente complexas.
-          </p>
-        </div>
-      </div>
+  <section class="grid grid-cols-1 md:grid-cols-3 border-b border-ink/15 dark:border-white/10">
+    <div class="p-8 md:p-16 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+      <h3 class="text-3xl font-serif text-ink dark:text-fable mb-6">Engenharia</h3>
+      <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Mantenha suas especificações técnicas (ADRs), diagramas Mermaid e o backlog de tarefas no mesmo contexto visual. Menos alternância de contexto significa mais tempo em flow.</p>
+    </div>
+    <div class="p-8 md:p-16 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+      <h3 class="text-3xl font-serif text-ink dark:text-fable mb-6">Produto & Design</h3>
+      <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Centralize as especificações de produto, PRDs e wireframes. O chat contextual garante que as decisões de design não fiquem perdidas em canais de chat genéricos e esquecidos.</p>
+    </div>
+    <div class="p-8 md:p-16 hover:bg-ink/5 dark:hover:bg-white/5 transition-colors">
+      <h3 class="text-3xl font-serif text-ink dark:text-fable mb-6">Gestão Ágil</h3>
+      <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Uma visão clara do andamento dos projetos. Aproxime a gestão das tarefas reais que a equipe está executando, sem a sobrecarga de ferramentas excessivamente complexas.</p>
     </div>
   </section>
-
-  <!-- Final CTA -->
-  <section class="py-24 px-6 border-t border-ink/10 dark:border-white/10 text-center">
-    <div class="max-w-3xl mx-auto space-y-8">
-      <h2 class="text-4xl font-serif text-ink dark:text-fable tracking-tight">Pronto para recuperar seu foco?</h2>
-      <p class="text-xl font-sans text-ink-light dark:text-white/60">Junte-se a equipes que já abandonaram o caos das múltiplas abas.</p>
-      <a href="/register" class="inline-flex btn-primary text-lg px-8 py-4">Criar meu Workspace</a>
+ 
+  <!-- Bottom Marquee Dividers (3 stacked bars: Black, Orange, Green) -->
+  <div class="flex flex-col border-b border-ink/15 dark:border-white/10">
+    <!-- Bar 1: Black / Ink -->
+    <div class="py-2.5 bg-ink text-fable-light dark:bg-ink-paper dark:text-fable-light overflow-hidden flex whitespace-nowrap">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee opacity-90 flex items-center gap-8">
+        <span>A FERRAMENTA DITA O PROCESSO</span> <span class="text-terracotta">◆</span>
+        <span>O FOCO EXIGE SILÊNCIO</span> <span class="text-terracotta">◆</span>
+        <span>A ARQUITETURA PREVINE O CAOS</span> <span class="text-terracotta">◆</span>
+        <span>SISTEMAS RÍGIDOS, MENTES LIVRES</span> <span class="text-terracotta">◆</span>
+        <span>TRABALHO PROFUNDO</span> <span class="text-terracotta">◆</span>
+        <span>A FERRAMENTA DITA O PROCESSO</span> <span class="text-terracotta">◆</span>
+        <span>O FOCO EXIGE SILÊNCIO</span> <span class="text-terracotta">◆</span>
+        <span>A ARQUITETURA PREVINE O CAOS</span> <span class="text-terracotta">◆</span>
+        <span>SISTEMAS RÍGIDOS, MENTES LIVRES</span> <span class="text-terracotta">◆</span>
+        <span>TRABALHO PROFUNDO</span> <span class="text-terracotta">◆</span>
+      </div>
     </div>
-  </section>
+    <!-- Bar 2: Orange / Terracotta (Reverse) -->
+    <div class="py-2.5 bg-terracotta text-white overflow-hidden flex whitespace-nowrap border-y border-ink/15 dark:border-white/10">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee-reverse opacity-90 flex items-center gap-8">
+        <span>TUDO ESTÁ CONECTADO</span> <span class="text-ink/30">■</span>
+        <span>REDUZA O RUÍDO VISUAL</span> <span class="text-ink/30">■</span>
+        <span>DADOS SEM CONTEXTO SÃO INÚTEIS</span> <span class="text-ink/30">■</span>
+        <span>A CLAREZA ANTECEDE A EXECUÇÃO</span> <span class="text-ink/30">■</span>
+        <span>O TRABALHO INVISÍVEL IMPORTA</span> <span class="text-ink/30">■</span>
+        <span>TUDO ESTÁ CONECTADO</span> <span class="text-ink/30">■</span>
+        <span>REDUZA O RUÍDO VISUAL</span> <span class="text-ink/30">■</span>
+        <span>DADOS SEM CONTEXTO SÃO INÚTEIS</span> <span class="text-ink/30">■</span>
+        <span>A CLAREZA ANTECEDE A EXECUÇÃO</span> <span class="text-ink/30">■</span>
+        <span>O TRABALHO INVISÍVEL IMPORTA</span> <span class="text-ink/30">■</span>
+      </div>
+    </div>
+    <!-- Bar 3: Green / Sage -->
+    <div class="py-2.5 bg-sage text-ink overflow-hidden flex whitespace-nowrap">
+      <div class="font-mono text-[10px] tracking-[0.25em] uppercase animate-marquee opacity-90 flex items-center gap-8">
+        <span>CONSTRUA PARA O LONGO PRAZO</span> <span class="text-white/50">▲</span>
+        <span>MENOS ABAS, MAIS AÇÃO</span> <span class="text-white/50">▲</span>
+        <span>O CAOS NÃO ESCALA</span> <span class="text-white/50">▲</span>
+        <span>ORGANIZE-SE OU MORRA</span> <span class="text-white/50">▲</span>
+        <span>A VELOCIDADE VEM DA ORDEM</span> <span class="text-white/50">▲</span>
+        <span>CONSTRUA PARA O LONGO PRAZO</span> <span class="text-white/50">▲</span>
+        <span>MENOS ABAS, MAIS AÇÃO</span> <span class="text-white/50">▲</span>
+        <span>O CAOS NÃO ESCALA</span> <span class="text-white/50">▲</span>
+        <span>ORGANIZE-SE OU MORRA</span> <span class="text-white/50">▲</span>
+        <span>A VELOCIDADE VEM DA ORDEM</span> <span class="text-white/50">▲</span>
+      </div>
+    </div>
+  </div>
 
+  <!-- Shared Lumen Studio Marketing Footer -->
   <%= render 'shared/marketing_footer' %>
 </div>

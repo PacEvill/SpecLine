@@ -6,7 +6,7 @@
   <!-- Drawer Sliding Container -->
   <div data-mobile-drawer-target="drawer" class="fixed inset-y-0 left-0 w-80 max-w-[85vw] h-full bg-white dark:bg-ink-paper border-r border-ink/10 dark:border-white/10 shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 flex flex-col overflow-y-auto">
     <!-- Header of Drawer -->
-    <div class="px-5 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between bg-[#FDFBF7] dark:bg-ink-darker">
+    <div class="px-5 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between bg-fable-light dark:bg-ink-darker">
       <div class="flex items-center gap-2.5">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
         <span class="font-serif font-bold text-base text-ink dark:text-fable">SpecLine</span>
@@ -71,12 +71,12 @@
 
         <!-- Ações do Workspace -->
         <div class="mt-4 pt-4 border-t border-ink/5 dark:border-white/5 space-y-1">
-          <%= link_to edit_workspace_path(current_ws), data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable transition-all" do %>
+          <%= link_to edit_workspace_path(current_ws), data: { turbo_frame: "_top", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable transition-all" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
             <span>Configurações do Workspace</span>
           <% end %>
 
-          <%= link_to new_workspace_path, data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-terracotta hover:bg-terracotta/10 transition-all" do %>
+          <%= link_to new_workspace_path, data: { turbo_frame: "_top", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium text-terracotta hover:bg-terracotta/10 transition-all" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <span>Criar Novo Workspace</span>
           <% end %>
@@ -132,7 +132,7 @@
     </div>
 
     <!-- Drawer Footer: Profile & Logout -->
-    <div class="px-5 py-3 border-t border-ink/5 dark:border-white/5 mt-auto bg-[#FDFBF7] dark:bg-ink-darker flex items-center justify-between">
+    <div class="px-5 py-3 border-t border-ink/5 dark:border-white/5 mt-auto bg-fable-light dark:bg-ink-darker flex items-center justify-between">
       <div class="flex items-center gap-2.5 min-w-0">
         <% if current_user&.avatar&.attached? %>
           <%= image_tag current_user.avatar, class: "w-8 h-8 rounded-full object-cover border border-ink/10 dark:border-white/10 shrink-0" %>
@@ -146,7 +146,7 @@
           <span class="text-[10px] text-ink-light/60 dark:text-white/40 truncate"><%= current_user&.job_title.presence || current_user&.email %></span>
         </div>
       </div>
-      <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-red-600 rounded-lg transition-colors cursor-pointer", title: "Sair" do %>
+      <%= button_to destroy_user_session_path, method: :delete, data: { turbo: false }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-rust rounded-lg transition-colors cursor-pointer", title: "Sair" do %>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
       <% end %>
     </div>

@@ -9,7 +9,7 @@
       <p class="text-sm font-sans text-ink-light dark:text-white/60">Todos os projetos do workspace <%= @workspace.name %>.</p>
     </div>
 
-    <%= link_to new_workspace_project_path(@workspace), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-2 px-4 py-2 bg-ink dark:bg-fable text-white dark:text-ink text-sm font-medium rounded-xl hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white transition-colors duration-300" do %>
+    <%= link_to new_workspace_project_path(@workspace), data: { turbo_frame: "modal" }, class: "inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-terracotta-dark transition-colors shrink-0 duration-500" do %>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       Novo Projeto
     <% end %>
@@ -17,19 +17,23 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
     <% @projects.each do |project| %>
-      <%= link_to workspace_project_path(@workspace, project), class: "group bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-6 hover:border-terracotta/40 hover:shadow-md transition-all duration-300 flex flex-col" do %>
+      <% 
+        colors = ['sage', 'olive', 'ochre', 'slate', 'rust', 'blush', 'terracotta']
+        color = colors[project.id % colors.length]
+      %>
+      <%= link_to workspace_project_path(@workspace, project), class: "group bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl p-6 hover:border-#{color}/40 hover:shadow-md transition-all duration-300 flex flex-col" do %>
         <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-sage/10 text-sage-dark flex items-center justify-center font-bold text-sm">
+          <div class="w-10 h-10 rounded-xl bg-<%= color %>/10 text-<%= color %> flex items-center justify-center font-bold text-sm">
             <%= project.identifier_prefix.presence || project.name[0..1].upcase %>
           </div>
           <div>
-            <h3 class="text-base font-serif font-medium text-ink dark:text-fable group-hover:text-terracotta transition-colors"><%= project.name %></h3>
+            <h3 class="text-base font-serif font-medium text-ink dark:text-fable group-hover:text-<%= color %> transition-colors"><%= project.name %></h3>
             <span class="text-[11px] text-ink-light dark:text-white/60 font-mono"><%= project.identifier_prefix %></span>
           </div>
         </div>
         <p class="text-xs text-ink-light dark:text-white/60 line-clamp-2 mb-4"><%= project.description.presence || "Sem descrição." %></p>
         <div class="mt-auto pt-3 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-xs text-ink-light dark:text-white/60">
-          <span><%= project.issues.count %> issues</span>
+          <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-<%= color %>"></span> <%= project.issues.count %> issues</span>
           <span><%= project.progress %>% progresso</span>
         </div>
       <% end %>

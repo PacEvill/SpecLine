@@ -1,329 +1,499 @@
-<div class="min-h-screen flex flex-col bg-[#FDFBF7] dark:bg-ink-darker transition-colors duration-500">
+<div class="w-full min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white bg-grain selection:bg-terracotta/30 selection:text-ink font-sans transition-colors duration-500" data-controller="pricing">
+
   <%= render 'shared/marketing_header' %>
 
-  <main class="flex-grow max-w-7xl mx-auto px-6 py-24 md:py-32 w-full flex flex-col items-center" data-controller="pricing">
-    <div class="text-center space-y-6 mb-16 max-w-3xl">
-      <h1 class="text-5xl md:text-7xl font-serif text-[#212122] dark:text-fable tracking-tight">Um preço simples.</h1>
-      <p class="text-xl md:text-2xl font-serif text-[#212122]/80 dark:text-fable/80">Acreditamos em transparência. Sem limites complexos, sem letras miúdas. Você foca no seu trabalho, nós cuidamos do resto.</p>
-    </div>
+  <!-- Pricing Hero Header with Ambient Glow -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    <!-- Ambient Glow Background -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-terracotta/10 dark:bg-terracotta/5 blur-[120px] rounded-full pointer-events-none animate-glow-pulse"></div>
 
-    <!-- Pricing Toggle -->
-    <div class="flex items-center justify-center gap-4 mb-16 font-sans font-medium text-[#212122]/80 dark:text-fable/80">
-      <span data-action="click->pricing#toggle" class="cursor-pointer select-none">Mensal</span>
-      <div data-action="click->pricing#toggle" class="w-12 h-6 bg-[#D97A5E]/20 rounded-full p-1 cursor-pointer flex items-center shadow-inner relative">
-        <div data-pricing-target="toggle" class="absolute w-4 h-4 bg-[#D97A5E] rounded-full shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-transform duration-300"></div>
-      </div>
-      <span data-action="click->pricing#toggle" class="text-[#212122] dark:text-fable cursor-pointer select-none">Anual <span class="text-xs text-[#D97A5E] font-bold ml-1 uppercase tracking-wider">Economize 20%</span></span>
-    </div>
-
-    <!-- Plans -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl mx-auto mb-24">
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">Investimento & Autonomia</p>
       
-      <!-- Starter Plan -->
-      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-white/5">
-        <div class="mb-8">
-          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Starter</h3>
-          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">Ideal para testar a ferramenta e organizar as primeiras ideias.</p>
-        </div>
-        <div class="mb-10 relative h-[60px]">
-          <div class="flex items-baseline gap-2">
-            <span class="text-4xl font-serif text-[#212122] dark:text-fable">Grátis</span>
-            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ R$ 0</span>
-          </div>
-        </div>
-        
-        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            1 usuário
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Até 3 workspaces e 10 projetos
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Issues ilimitadas
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            5GB de armazenamento
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Relatórios básicos
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Suporte na comunidade
-          </li>
-        </ul>
-        <a href="/register" class="block w-full py-3 px-4 bg-[#F3EFE6] dark:bg-white/5 text-[#212122] dark:text-fable font-sans font-medium text-center rounded-xl hover:bg-[#A5B5A1]/20 dark:hover:bg-white/10 transition-colors duration-500">Começar grátis</a>
-      </div>
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Poder absoluto.<br>
+        <i class="text-sage font-serif-italic">Transparência radical.</i>
+      </h1>
 
-      <!-- Pro Plan -->
-      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-xl shadow-[#D97A5E]/10 border-2 border-[#D97A5E] dark:border-terracotta relative scale-105 z-10">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#D97A5E] text-white font-sans text-xs font-bold uppercase tracking-widest py-1.5 px-4 rounded-full">
-          Mais Popular
-        </div>
-        <div class="mb-8">
-          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Pro</h3>
-          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">O pacote completo de foco e colaboração profunda para equipes.</p>
-        </div>
-        <div class="mb-10 relative h-[60px] overflow-hidden">
-          <!-- Monthly Price -->
-          <div data-pricing-target="monthlyPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-0 opacity-100 pointer-events-auto flex items-baseline gap-2">
-            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 49</span>
-            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês</span>
-          </div>
-          <!-- Annual Price -->
-          <div data-pricing-target="annualPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-4 opacity-0 pointer-events-none flex items-baseline gap-2">
-            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 39</span>
-            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês (anual)</span>
-          </div>
-        </div>
-        
-        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Até 25 usuários
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Workspaces, projetos e issues ilimitados
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            50GB de armazenamento
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Relatórios avançados e exportação em PDF
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Labels personalizadas e Milestones
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Acesso à API
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#D97A5E] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Suporte prioritário
-          </li>
-        </ul>
-        <a href="/register" class="block w-full py-3 px-4 bg-[#D97A5E] text-white font-sans font-medium text-center rounded-xl hover:bg-[#c4694f] transition-colors shadow-md duration-500">Assinar o Pro</a>
-      </div>
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Sem barreiras artificiais, sem limites frustrantes. Comece gratuitamente com sua equipe e escale na velocidade do seu produto.
+      </p>
 
-      <!-- Enterprise Plan -->
-      <div class="bg-white dark:bg-ink-paper rounded-3xl p-8 flex flex-col shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] border border-gray-100 dark:border-white/5">
-        <div class="mb-8">
-          <h3 class="text-2xl font-serif text-[#212122] dark:text-fable font-semibold mb-2">Enterprise</h3>
-          <p class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm h-10">Controle, segurança e escalabilidade para operações complexas.</p>
-        </div>
-        <div class="mb-10 relative h-[60px] overflow-hidden">
-          <!-- Monthly Price -->
-          <div data-pricing-target="monthlyPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-0 opacity-100 pointer-events-auto flex items-baseline gap-2">
-            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 149</span>
-            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês</span>
-          </div>
-          <!-- Annual Price -->
-          <div data-pricing-target="annualPrice" class="absolute top-0 left-0 w-full transition-all duration-300 translate-y-4 opacity-0 pointer-events-none flex items-baseline gap-2">
-            <span class="text-4xl font-serif text-[#212122] dark:text-fable">R$ 119</span>
-            <span class="text-[#212122]/70 dark:text-fable/70 font-sans text-sm font-medium">/ mês (anual)</span>
-          </div>
-        </div>
-        
-        <ul class="space-y-4 font-sans text-[#212122]/80 dark:text-fable/80 text-sm mb-10 flex-grow">
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Usuários ilimitados
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            500GB de armazenamento
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            SSO/SAML
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Logs de auditoria
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Opção On-Premise
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Integrações customizadas
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-5 h-5 text-[#A5B5A1] shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            SLA de 99.9% e Suporte dedicado
-          </li>
-        </ul>
-        <a href="/contact" class="block w-full py-3 px-4 bg-[#212122] dark:bg-fable text-white dark:text-ink font-sans font-medium text-center rounded-xl hover:bg-[#212122]/90 dark:hover:bg-fable/90 transition-colors duration-500">Falar com Vendas</a>
-      </div>
+      <!-- Brutalist Toggle (Mensal / Anual) - Fluid Sliding Indicator -->
+      <div class="pt-8 flex justify-center">
+        <div class="relative inline-flex items-center p-1 border border-ink/20 dark:border-white/20 bg-white dark:bg-ink-paper shadow-md hover:border-ink/40 dark:hover:border-white/40 transition-colors">
+          <!-- Fluid Sliding Indicator Pill -->
+          <div data-pricing-target="slider" class="absolute bg-ink dark:bg-white shadow-sm pointer-events-none z-0 rounded-none"></div>
 
+          <button type="button"
+                  data-action="click->pricing#setMonthly"
+                  data-pricing-target="monthlyBtn"
+                  class="relative z-10 px-6 py-2.5 font-mono text-xs uppercase tracking-widest text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors duration-300 active:scale-95">
+            Mensal
+          </button>
+          <button type="button"
+                  data-action="click->pricing#setAnnual"
+                  data-pricing-target="annualBtn"
+                  class="relative z-10 px-6 py-2.5 font-mono text-xs uppercase tracking-widest text-white dark:text-ink hover:text-white dark:hover:text-ink transition-colors duration-300 flex items-center gap-2 active:scale-95 cursor-pointer">
+            <span>Anual</span>
+            <span class="text-[9px] bg-terracotta text-white px-2 py-0.5 font-bold tracking-normal rounded-sm shadow-sm animate-glow-pulse">Economize 20%</span>
+          </button>
+        </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Self-Hosted Option -->
-    <div class="w-full max-w-5xl mx-auto mb-32 bg-[#212122] dark:bg-fable text-white dark:text-ink rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden transition-colors duration-500">
-      <div class="absolute -right-20 -top-20 w-64 h-64 bg-[#D97A5E]/20 rounded-full blur-3xl"></div>
-      <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-[#A5B5A1]/20 rounded-full blur-3xl"></div>
-      
-      <div class="relative z-10 flex flex-col md:flex-row gap-12 items-center">
-        <div class="flex-1">
-          <div class="flex items-center gap-3 mb-4 text-[#A5B5A1] dark:text-[#6a7c66]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-            <h3 class="text-xl font-sans font-semibold uppercase tracking-wider">Self-Hosted / On-Premise</h3>
-          </div>
-          <h4 class="text-3xl md:text-4xl font-serif mb-4">Seu servidor, seus dados.</h4>
-          <p class="text-white/70 dark:text-ink/70 font-sans text-lg mb-6">
-            O SpecLine pode rodar na sua própria infraestrutura. Implementação via Docker, soberania total de dados e segurança máxima.
+  <!-- PRICING TIERS (3 Column Editorial Grid - Clean Crisp Surface with Lift Animations) -->
+  <section class="grid grid-cols-1 lg:grid-cols-3 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+    
+    <!-- TIER 1: STARTER -->
+    <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-ink/15 dark:border-white/10 flex flex-col justify-between bg-white dark:bg-ink-paper hover-card-lift group">
+      <div class="space-y-8">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs tracking-widest text-sage font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-sage inline-block"></span>
+            [01] STARTER
+          </span>
+          <span class="font-mono text-[10px] tracking-widest uppercase px-2 py-1 border border-ink/15 dark:border-white/10 text-ink/60 dark:text-white/60">Até 5 Usuários</span>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-serif text-ink dark:text-fable font-light mb-2 group-hover:text-sage transition-colors duration-300">Comunidade & Times</h3>
+          <p class="text-sm text-ink-light dark:text-white/60 font-sans leading-relaxed">
+            O pacote completo e funcional. Tudo o que pequenas equipes, profissionais e projetos precisam para produzir em alto nível.
           </p>
-          <ul class="space-y-3 font-sans text-white/80 dark:text-ink/80 mb-8">
-            <li class="flex items-center gap-3">
-              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Soberania total de dados
-            </li>
-            <li class="flex items-center gap-3">
-              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              Deploy simples com Docker & Kamal
-            </li>
-            <li class="flex items-center gap-3">
-              <svg class="w-5 h-5 text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              100% Gratuito e Open-Source
-            </li>
-          </ul>
         </div>
-        <div class="md:w-72 bg-white/5 dark:bg-ink/5 rounded-2xl p-6 border border-white/10 dark:border-ink/10 text-center flex flex-col justify-center items-center backdrop-blur-sm">
-          <span class="text-lg font-sans text-white/70 dark:text-ink/70 mb-2">Self-Hosted</span>
-          <span class="text-5xl font-serif mb-4">Grátis</span>
-          <span class="text-xs text-white/50 dark:text-ink/50 mb-6">Você arca apenas com os custos da sua própria infraestrutura e hardware.</span>
-          <a href="/self-hosted" class="block w-full py-3 px-4 bg-white dark:bg-ink-paper text-[#212122] dark:text-fable font-sans font-medium rounded-xl hover:bg-white/90 dark:hover:bg-ink transition-colors border dark:border-white/10 duration-500">Ver Documentação</a>
+
+        <!-- Price -->
+        <div class="py-6 border-y border-ink/10 dark:border-white/10">
+          <div class="flex items-baseline gap-2">
+            <span class="text-5xl font-serif text-ink dark:text-white font-light">R$ 0</span>
+            <span class="font-mono text-xs uppercase text-ink-light dark:text-white/40 tracking-wider">/ Grátis para sempre</span>
+          </div>
+          <p class="font-mono text-[10px] text-ink-light/60 dark:text-white/40 mt-1">Sem necessidade de cartão de crédito</p>
         </div>
+
+        <!-- Features list (O gratuito tem TUDO) -->
+        <ul class="space-y-3.5 font-sans text-sm text-ink/80 dark:text-white/80">
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Até 5 Usuários inclusos</strong> para seu time</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Até <strong>5 Workspaces</strong> e <strong>20 Projetos</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Tarefas & Issues Ilimitadas</strong> no Kanban</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Editor de Documentação</strong> com Markdown completo</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Whiteboard Infinito</strong> & Diagramação nativa</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Chat Contextual</strong> e mensagens em tempo real</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>10 GB</strong> de Armazenamento Seguro</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Exportação aberta de dados (JSON & Markdown)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-10">
+        <%= link_to new_user_registration_path, class: "block w-full text-center border border-ink/20 dark:border-white/20 hover:border-ink dark:hover:border-white hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink py-4 font-mono text-xs uppercase tracking-widest hover:tracking-[0.2em] active:scale-[0.99] transition-all duration-300" do %>
+          Criar Conta Grátis [-/->]
+        <% end %>
       </div>
     </div>
 
-    <!-- Feature Comparison -->
-    <div class="w-full max-w-5xl mx-auto mb-32">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-serif text-[#212122] dark:text-fable">Compare os planos</h2>
-      </div>
+    <!-- TIER 2: PRO (Featured - Clean Background, Sharp Accent & Micro-Interactions) -->
+    <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-ink/15 dark:border-white/10 flex flex-col justify-between bg-white dark:bg-ink-paper hover-card-lift relative group">
+      <!-- Highlight Top Accent Bar -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-terracotta shadow-[0_0_12px_rgba(217,122,94,0.4)]"></div>
       
+      <div class="space-y-8">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs tracking-widest text-terracotta font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+            [02] WORKSPACE PRO
+          </span>
+          <span class="font-mono text-[9px] tracking-widest uppercase px-2.5 py-1 bg-terracotta text-white font-bold shadow-sm flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Mais Escolhido
+          </span>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-serif text-ink dark:text-fable font-light mb-2 group-hover:text-terracotta transition-colors duration-300">Equipes em Flow</h3>
+          <p class="text-sm text-ink-light dark:text-white/60 font-sans leading-relaxed">
+            Tudo do gratuito, mais escala ampliada, automações, métricas executivas e histórico infinito.
+          </p>
+        </div>
+
+        <!-- Price (Calculated: R$ 49/mês vs R$ 470/ano com 20% de desconto) -->
+        <div class="py-6 border-y border-ink/10 dark:border-white/10">
+          <div data-pricing-target="annualPrice" class="price-annual flex items-baseline gap-2">
+            <span class="text-5xl font-serif text-ink dark:text-white font-light text-terracotta">R$ 470</span>
+            <span class="font-mono text-xs uppercase text-ink-light dark:text-white/40 tracking-wider">/ ano</span>
+          </div>
+          <div data-pricing-target="monthlyPrice" class="price-monthly hidden flex items-baseline gap-2">
+            <span class="text-5xl font-serif text-ink dark:text-white font-light text-terracotta">R$ 49</span>
+            <span class="font-mono text-xs uppercase text-ink-light dark:text-white/40 tracking-wider">/ mês</span>
+          </div>
+          <p class="font-mono text-[10px] text-ink-light/60 dark:text-white/40 mt-1">Economize 20% no plano anual (equivale a ~R$ 39/mês)</p>
+        </div>
+
+        <!-- Features list (Tem TUDO e MAIS) -->
+        <ul class="space-y-3.5 font-sans text-sm text-ink/80 dark:text-white/80">
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="font-semibold text-ink dark:text-white">Tudo do Plano Starter, e mais:</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Até <strong>50 Usuários</strong> por Workspace</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Workspaces, Projetos & Documentos Ilimitados</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Histórico & Logs de Atividade Infinitos</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Chat Global da Empresa</strong> (Canais em Tempo Real)</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Milestones, Roadmaps & Velocidade de Sprint</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>100 GB</strong> de Armazenamento de Alta Velocidade</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Exportação Executiva em PDF consolidado</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>API Pública, Webhooks & Suporte Prioritário</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-10">
+        <%= link_to new_user_registration_path, class: "block w-full text-center bg-terracotta hover:bg-terracotta-dark text-white py-4 font-mono text-xs uppercase tracking-widest hover:tracking-[0.2em] shadow-lg hover:shadow-terracotta/30 active:scale-[0.99] transition-all duration-300" do %>
+          Assinar o Pro [-/->]
+        <% end %>
+      </div>
+    </div>
+
+    <!-- TIER 3: ENTERPRISE -->
+    <div class="p-8 md:p-12 flex flex-col justify-between bg-white dark:bg-ink-paper hover-card-lift group">
+      <div class="space-y-8">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-xs tracking-widest text-ink dark:text-white font-bold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-ink dark:bg-white inline-block"></span>
+            [03] ENTERPRISE
+          </span>
+          <span class="font-mono text-[10px] tracking-widest uppercase px-2 py-1 border border-ink/15 dark:border-white/10 text-ink/60 dark:text-white/60">Experiência Suprema</span>
+        </div>
+
+        <div>
+          <h3 class="text-3xl font-serif text-ink dark:text-fable font-light mb-2 group-hover:text-ocean transition-colors duration-300">Escala & Rigor Supremo</h3>
+          <p class="text-sm text-ink-light dark:text-white/60 font-sans leading-relaxed">
+            A potência total do SpecLine sem limites. Isolamento, governança, segurança bancária e consultoria dedicada.
+          </p>
+        </div>
+
+        <!-- Price (Calculated: R$ 149/mês vs R$ 1.430/ano com 20% de desconto) -->
+        <div class="py-6 border-y border-ink/10 dark:border-white/10">
+          <div data-pricing-target="annualPrice" class="price-annual flex items-baseline gap-2">
+            <span class="text-5xl font-serif text-ink dark:text-white font-light">R$ 1.430</span>
+            <span class="font-mono text-xs uppercase text-ink-light dark:text-white/40 tracking-wider">/ ano</span>
+          </div>
+          <div data-pricing-target="monthlyPrice" class="price-monthly hidden flex items-baseline gap-2">
+            <span class="text-5xl font-serif text-ink dark:text-white font-light">R$ 149</span>
+            <span class="font-mono text-xs uppercase text-ink-light dark:text-white/40 tracking-wider">/ mês</span>
+          </div>
+          <p class="font-mono text-[10px] text-ink-light/60 dark:text-white/40 mt-1">Economize 20% no plano anual (equivale a ~R$ 119/mês)</p>
+        </div>
+
+        <!-- Features list (A experiência máxima) -->
+        <ul class="space-y-3.5 font-sans text-sm text-ink/80 dark:text-white/80">
+          <li class="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span class="font-semibold text-ink dark:text-white">Tudo do Plano Pro, e mais:</span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Usuários & Equipes Ilimitados</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Armazenamento Customizado / Ilimitado (1 TB+)</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Single Sign-On (SSO SAML / Okta / Azure AD / Google)</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Logs de Auditoria Avançados & Conformidade LGPD</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Instância Dedicada (Nuvem Própria ou On-Premise)</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>Gerente de Conta & Onboarding VIP com Migração Assistida</strong></span>
+          </li>
+          <li class="flex items-center gap-3 hover:translate-x-1.5 transition-transform duration-200 cursor-default">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink dark:text-white shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+            <span><strong>SLA Contratual de 99.99% com Suporte 24/7</strong></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="pt-10">
+        <%= link_to "/contact", class: "block w-full text-center border border-ink/20 dark:border-white/20 hover:border-ink dark:hover:border-white hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink py-4 font-mono text-xs uppercase tracking-widest hover:tracking-[0.2em] active:scale-[0.99] transition-all duration-300" do %>
+          Falar com Especialistas [-/->]
+        <% end %>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- SELF-HOSTED / ON-PREMISE SECTION (With Clean Hover Micro-Interactions) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable dark:bg-ink-darker p-8 md:p-16 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+      
+      <div class="lg:col-span-8 space-y-6">
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs tracking-widest text-sage font-bold">[OPEN-SOURCE]</span>
+          <span class="font-mono text-[10px] tracking-widest uppercase px-2 py-0.5 bg-sage/20 text-sage-dark dark:text-sage font-bold">Autonomia Absoluta</span>
+        </div>
+
+        <h2 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable font-light tracking-tight leading-[0.95]">
+          Seu servidor, <br><i class="text-terracotta font-serif-italic">seus dados.</i>
+        </h2>
+
+        <p class="text-base md:text-lg text-ink-light dark:text-white/70 font-sans leading-relaxed max-w-2xl">
+          O SpecLine foi desenhado para rodar com eficiência máxima na sua própria infraestrutura. Implementação conteinerizada com <strong>zero dependências complexas</strong>, garantindo soberania total, privacidade de dados e custo zero de licenciamento.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="border border-ink/15 dark:border-white/10 p-4 bg-white/60 dark:bg-ink-paper/60 backdrop-blur-sm hover:-translate-y-1 hover:border-terracotta/40 hover:shadow-md transition-all duration-300">
+            <div class="font-mono text-xs font-bold text-terracotta mb-1 flex items-center gap-1.5">
+              <span>●</span> Deploy com 1 Comando
+            </div>
+            <div class="text-xs text-ink-light dark:text-white/60 font-sans">Conteinerização limpa e orquestração ágil em qualquer servidor.</div>
+          </div>
+          <div class="border border-ink/15 dark:border-white/10 p-4 bg-white/60 dark:bg-ink-paper/60 backdrop-blur-sm hover:-translate-y-1 hover:border-sage/40 hover:shadow-md transition-all duration-300">
+            <div class="font-mono text-xs font-bold text-sage mb-1 flex items-center gap-1.5">
+              <span>●</span> Soberania Total
+            </div>
+            <div class="text-xs text-ink-light dark:text-white/60 font-sans">Seus arquivos e dados permanecem 100% sob seu controle físico.</div>
+          </div>
+          <div class="border border-ink/15 dark:border-white/10 p-4 bg-white/60 dark:bg-ink-paper/60 backdrop-blur-sm hover:-translate-y-1 hover:border-ink/40 dark:hover:border-white/40 hover:shadow-md transition-all duration-300">
+            <div class="font-mono text-xs font-bold text-ink dark:text-white mb-1 flex items-center gap-1.5">
+              <span>●</span> R$ 0 em Licenças
+            </div>
+            <div class="text-xs text-ink-light dark:text-white/60 font-sans">100% gratuito. Você arca apenas com o seu próprio hardware.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-4 border border-ink/20 dark:border-white/20 bg-white dark:bg-ink-paper p-8 text-center space-y-6 shadow-xl hover-card-lift">
+        <span class="font-mono text-[10px] tracking-widest uppercase text-ink-light dark:text-white/50">Edição Self-Hosted</span>
+        <div class="text-5xl font-serif text-ink dark:text-white font-light">Grátis</div>
+        <p class="text-xs font-sans text-ink-light dark:text-white/60 leading-relaxed">
+          Código-fonte aberto para a comunidade, pesquisadores e equipes técnicas independentes.
+        </p>
+        <a href="https://github.com/PacEvill/SpecLine" target="_blank" class="block w-full border border-ink/20 dark:border-white/20 hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink py-3.5 font-mono text-xs uppercase tracking-widest hover:tracking-[0.2em] active:scale-[0.99] transition-all duration-300">
+          Acessar Documentação & Repo
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE SECTION (Interactive Hover Rows) -->
+  <section class="border-b border-ink/15 dark:border-white/10 p-8 md:p-16">
+    <div class="max-w-5xl mx-auto space-y-12">
+      <div class="text-center space-y-3">
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-fable font-light tracking-tight">Compare os Planos</h2>
+        <p class="font-mono text-xs uppercase tracking-widest text-ink-light dark:text-white/40">Todas as especificações técnicas lado a lado</p>
+      </div>
+
       <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse">
+        <table class="w-full border-collapse font-sans text-sm">
           <thead>
-            <tr>
-              <th class="py-4 border-b-2 border-gray-200 dark:border-white/10 font-sans font-semibold text-[#212122]/70 dark:text-fable/70 uppercase tracking-wider text-sm w-1/4">Recursos</th>
-              <th class="py-4 px-4 border-b-2 border-gray-200 dark:border-white/10 font-serif font-semibold text-xl text-[#212122] dark:text-fable text-center w-1/4">Starter</th>
-              <th class="py-4 px-4 border-b-2 border-[#D97A5E] dark:border-terracotta font-serif font-semibold text-xl text-[#D97A5E] text-center w-1/4 bg-[#D97A5E]/5 dark:bg-terracotta/10 rounded-t-xl">Pro</th>
-              <th class="py-4 px-4 border-b-2 border-gray-200 dark:border-white/10 font-serif font-semibold text-xl text-[#212122] dark:text-fable text-center w-1/4">Enterprise</th>
+            <tr class="border-b border-ink/20 dark:border-white/20 text-left font-mono text-xs uppercase tracking-widest">
+              <th class="py-4 px-4 text-ink-light dark:text-white/50 w-2/5">Capacidades & Recursos</th>
+              <th class="py-4 px-4 text-center text-sage w-1/5">Starter</th>
+              <th class="py-4 px-4 text-center text-terracotta w-1/5 bg-terracotta/5 dark:bg-terracotta/10">Pro</th>
+              <th class="py-4 px-4 text-center text-ink dark:text-white w-1/5">Enterprise</th>
             </tr>
           </thead>
-          <tbody class="font-sans text-[#212122]/80 dark:text-fable/80 text-sm">
-            <% 
-              features = [
-                ['Workspaces', 'Até 3', 'Ilimitado', 'Ilimitado'],
-                ['Projetos', 'Até 10', 'Ilimitado', 'Ilimitado'],
-                ['Issues', 'Ilimitado', 'Ilimitado', 'Ilimitado'],
-                ['Documents', true, true, true],
-                ['Kanban Board', true, true, true],
-                ['Time Tracking', false, true, true],
-                ['Reports', 'Básicos', 'Avançados', 'Avançados'],
-                ['PDF Export', false, true, true],
-                ['API', false, true, true],
-                ['Storage', '5GB', '50GB', '500GB'],
-                ['Users', '1 Usuário', 'Até 25', 'Ilimitados'],
-                ['Support', 'Comunidade', 'Prioritário', 'Dedicado'],
-                ['SSO', false, false, true],
-                ['Audit Logs', false, false, true],
-                ['Self-Hosted', false, false, true],
-                ['Custom Domain', false, false, true]
-              ]
-            %>
-            
-            <% features.each_with_index do |row, i| %>
-              <tr class="border-b border-gray-100 dark:border-white/5 hover:bg-[#F3EFE6]/50 dark:hover:bg-white/5 transition-colors duration-500">
-                <td class="py-4 font-medium text-[#212122] dark:text-fable"><%= row[0] %></td>
-                
-                <!-- Starter Col -->
-                <td class="py-4 px-4 text-center">
-                  <% if row[1] == true %>
-                    <svg class="w-5 h-5 mx-auto text-[#A5B5A1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  <% elsif row[1] == false %>
-                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  <% else %>
-                    <%= row[1] %>
-                  <% end %>
-                </td>
-                
-                <!-- Pro Col -->
-                <td class="py-4 px-4 text-center bg-[#D97A5E]/5 dark:bg-terracotta/10 font-medium text-[#212122] dark:text-fable <%= i == features.length - 1 ? 'rounded-b-xl' : '' %>">
-                  <% if row[2] == true %>
-                    <svg class="w-5 h-5 mx-auto text-[#D97A5E]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  <% elsif row[2] == false %>
-                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  <% else %>
-                    <%= row[2] %>
-                  <% end %>
-                </td>
-                
-                <!-- Enterprise Col -->
-                <td class="py-4 px-4 text-center">
-                  <% if row[3] == true %>
-                    <svg class="w-5 h-5 mx-auto text-[#A5B5A1]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  <% elsif row[3] == false %>
-                    <svg class="w-5 h-5 mx-auto text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                  <% else %>
-                    <%= row[3] %>
-                  <% end %>
-                </td>
-              </tr>
-            <% end %>
+          <tbody class="divide-y divide-ink/10 dark:divide-white/10 font-mono text-xs">
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Usuários Permitidos</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">Até 5 Usuários</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">Até 50 Usuários</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">Ilimitados</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Workspaces & Projetos</td>
+              <td class="py-4 px-4 text-center text-ink/70 dark:text-white/70">5 / 20</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">Ilimitados</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">Ilimitados</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Tarefas & Quadro Kanban</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">Ilimitado</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">Ilimitado</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">Ilimitado</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Editor de Documentos & Wiki</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">✓</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Whiteboard Interativo & Diagramas</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">✓</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Chat Contextual por Projeto</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">✓</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Chat Global de Equipe (Canais)</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20">—</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Métricas de Velocidade & Roadmap</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20">—</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Exportação Consolidada em PDF</td>
+              <td class="py-4 px-4 text-center text-ink/70 dark:text-white/70">Básica</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">Avançada</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">Executiva / Custom</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Armazenamento em Nuvem</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">10 GB</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">100 GB</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">1 TB+ / Custom</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">API Pública & Webhooks</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20">—</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Single Sign-On (SSO SAML / Okta)</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20">—</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20 bg-terracotta/5 dark:bg-terracotta/10">—</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Logs de Auditoria & Conformidade</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20">—</td>
+              <td class="py-4 px-4 text-center text-ink/30 dark:text-white/20 bg-terracotta/5 dark:bg-terracotta/10">—</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Opção Self-Hosted / On-Premise</td>
+              <td class="py-4 px-4 text-center text-sage font-bold">✓</td>
+              <td class="py-4 px-4 text-center text-terracotta bg-terracotta/5 dark:bg-terracotta/10 font-bold">✓</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">✓ (Dedicado)</td>
+            </tr>
+            <tr class="hover:bg-terracotta/[0.04] dark:hover:bg-terracotta/[0.06] transition-colors duration-150 cursor-default">
+              <td class="py-4 px-4 font-sans font-medium text-ink dark:text-white">Suporte Técnico</td>
+              <td class="py-4 px-4 text-center text-ink/70 dark:text-white/70">Comunidade</td>
+              <td class="py-4 px-4 text-center text-terracotta font-bold bg-terracotta/5 dark:bg-terracotta/10">Prioritário (< 4h)</td>
+              <td class="py-4 px-4 text-center text-ink dark:text-white font-bold">Dedicado 24/7 (SLA 99.99%)</td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
+  </section>
 
-    <!-- FAQ -->
-    <div class="w-full max-w-3xl mx-auto mb-24">
-      <div class="text-center mb-12">
-        <h2 class="text-4xl font-serif text-[#212122] dark:text-fable">Perguntas Frequentes</h2>
-      </div>
-      
-      <div class="space-y-6 font-sans">
-        <!-- Q1 -->
-        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Posso mudar de plano depois?</h4>
-          <p class="text-[#212122]/70 dark:text-fable/70">Sim! Você pode fazer upgrade ou downgrade a qualquer momento. Se fizer um upgrade, o valor será calculado pro-rata pelo restante do ciclo.</p>
-        </div>
-        
-        <!-- Q2 -->
-        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Como funciona a versão Self-Hosted? Tem custos?</h4>
-          <p class="text-[#212122]/70 dark:text-fable/70">O SpecLine é 100% gratuito e open-source para você rodar na sua própria infraestrutura. Nós não cobramos nenhuma taxa de setup ou mensalidade. Você arcará apenas com os custos dos seus próprios servidores (hardware/nuvem) para manter a aplicação online.</p>
-        </div>
-
-        <!-- Q3 -->
-        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Projetos de código aberto têm desconto?</h4>
-          <p class="text-[#212122]/70 dark:text-fable/70">Sim. Oferecemos o plano Pro gratuitamente para projetos open-source, e a licença Self-Hosted também é gratuita. Entre em contato com nossa equipe para aplicar.</p>
-        </div>
-
-        <!-- Q4 -->
-        <div class="bg-white dark:bg-ink-paper p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
-          <h4 class="text-lg font-semibold text-[#212122] dark:text-fable mb-2">Preciso de cartão de crédito para o plano Grátis?</h4>
-          <p class="text-[#212122]/70 dark:text-fable/70">Não. O plano Starter é totalmente gratuito e não exige informações de pagamento para criar sua conta e começar a usar.</p>
-        </div>
-      </div>
+  <!-- FAQ SECTION (Interactive Left Accent on Hover) -->
+  <section class="grid grid-cols-1 md:grid-cols-12 border-b border-ink/15 dark:border-white/10">
+    <div class="col-span-1 md:col-span-4 p-8 md:p-16 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <h2 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable tracking-tight leading-[0.95] mb-4">
+        Perguntas <br><i class="text-terracotta font-serif-italic">frequentes</i>.
+      </h2>
+      <p class="font-mono text-[11px] tracking-widest uppercase text-ink-light dark:text-white/40">Respostas diretas e transparentes.</p>
     </div>
 
-  </main>
+    <div class="col-span-1 md:col-span-8 p-8 md:p-16 divide-y divide-ink/10 dark:divide-white/10">
+      <div class="pb-8 space-y-2 hover:pl-4 hover:border-l-2 hover:border-l-terracotta transition-all duration-200 cursor-pointer group">
+        <h4 class="font-serif text-2xl text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors duration-200">Posso mudar de plano depois?</h4>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+          Sim! Você pode fazer upgrade ou downgrade a qualquer momento no painel do seu Workspace. Se fizer um upgrade, o valor será calculado pro-rata pelo restante do ciclo.
+        </p>
+      </div>
+
+      <div class="py-8 space-y-2 hover:pl-4 hover:border-l-2 hover:border-l-sage transition-all duration-200 cursor-pointer group">
+        <h4 class="font-serif text-2xl text-ink dark:text-white font-normal group-hover:text-sage transition-colors duration-200">Como funciona a versão Self-Hosted? Tem custos de licença?</h4>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+          O SpecLine é 100% gratuito e open-source para você rodar na sua própria infraestrutura. Não cobramos taxa de setup nem mensalidade pelo software. Graças à arquitetura conteinerizada limpa, você economiza rodando o sistema completo sem custos adicionais de serviços intermediários.
+        </p>
+      </div>
+
+      <div class="py-8 space-y-2 hover:pl-4 hover:border-l-2 hover:border-l-terracotta transition-all duration-200 cursor-pointer group">
+        <h4 class="font-serif text-2xl text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors duration-200">Projetos de código aberto e acadêmicos têm desconto?</h4>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+          Sim! Oferecemos o plano Pro gratuitamente para mantenedores de projetos open-source e iniciativas acadêmicas. Entre em contato conosco para ativar o benefício.
+        </p>
+      </div>
+
+      <div class="py-8 space-y-2 hover:pl-4 hover:border-l-2 hover:border-l-sage transition-all duration-200 cursor-pointer group">
+        <h4 class="font-serif text-2xl text-ink dark:text-white font-normal group-hover:text-sage transition-colors duration-200">Preciso de cartão de crédito para o plano Grátis?</h4>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+          Não. O plano Starter é totalmente gratuito para equipes de até 5 pessoas e não exige nenhuma informação de pagamento para criar sua conta e começar a produzir.
+        </p>
+      </div>
+
+      <div class="pt-8 space-y-2 hover:pl-4 hover:border-l-2 hover:border-l-terracotta transition-all duration-200 cursor-pointer group">
+        <h4 class="font-serif text-2xl text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors duration-200">Meus dados estão seguros e posso exportá-los?</h4>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+          Absolutamente. Seus documentos Markdown, diagramas do Whiteboard e tarefas pertencem a você. Fornecemos exportação completa com 1-clique em formatos abertos (JSON, Markdown e relatórios PDF compilados).
+        </p>
+      </div>
+    </div>
+  </section>
 
   <%= render 'shared/marketing_footer' %>
 </div>

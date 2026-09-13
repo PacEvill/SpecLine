@@ -1,0 +1,230 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white selection:bg-terracotta/30 selection:text-ink font-sans transition-colors duration-500">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION -->
+    <header class="p-8 md:p-16 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+          <span class="w-2 h-2 rounded-full bg-terracotta inline-block animate-ping"></span>
+          CENTRAL DE FILOSOFIA // ENSAIOS & MANIFESTO
+        </div>
+        
+        <h1 class="font-serif font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-fable">
+          Fundamentos do SpecLine<br>
+          <i class="text-terracotta font-serif-italic">e a ciência do trabalho focado.</i>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Não construímos mais uma ferramenta barulhenta de trabalho. Construímos um refúgio de concentração e alinhamento para equipes que valorizam a profundidade cognitiva. Selecione o ensaio desejado:
+        </p>
+
+        <!-- DEDICATED QUICK NAV SELECTOR -->
+        <div class="pt-4 flex flex-wrap justify-center items-center gap-3 font-mono text-xs">
+          <%= link_to philosophy_vision_path, class: "px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span>Ensaio I: Nossa Visão</span>
+          <% end %>
+
+          <%= link_to philosophy_focus_path, class: "px-4 py-2.5 bg-sage/15 text-sage border border-sage/30 rounded-xl hover:bg-sage hover:text-ink transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <span>Ensaio II: O Poder do Foco</span>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <!-- DEDICATED CONCEPTS SHOWCASE: 2 ESSAY CARDS -->
+    <div class="max-w-7xl mx-auto px-6 py-16 w-full space-y-12">
+      <div class="text-center space-y-2 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Diretório Conceitual</span>
+        <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
+          Conheça os dois ensaios em páginas dedicadas
+        </h2>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+          Cada ensaio traz simuladores empíricos, calculadoras de imposto cognitivo e visualizadores interativos de atenção.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+        <!-- CARD 1: NOSSA VISÃO -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
+                Ensaio #01
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors">
+                Nossa Visão: O Fim do Malabarismo
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                A Tríade Viva & O Imposto Cognitivo
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Por que a fragmentação em múltiplos aplicativos se tornou um imposto cognitivo silencioso e como a trindade unificada restaura a velocidade do seu time.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Simulador Interativo de Atrito de Abas</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Calculadora Empírica do Imposto Cognitivo</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Emissão de Selo Digital de Apoiador</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Atrito de Contexto:</span>
+              <span class="text-sage font-bold font-mono">-85% Trocas de Aba</span>
+            </div>
+
+            <%= link_to philosophy_vision_path, class: "w-full py-3.5 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Ler Manifesto Completo</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 2: O PODER DO FOCO -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-sage/15 text-sage font-bold border border-sage/20">
+                Ensaio #02
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-sage transition-colors">
+                O Poder do Foco & Design Calmo
+              </h3>
+              <p class="text-xs font-mono text-sage uppercase tracking-wide">
+                Atenção Fragmentada vs. Fluxo Contínuo
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                A neurociência por trás do Efeito Queijo Suíço e como uma interface editorial serena protege blocos ininterruptos de trabalho criativo.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Visualizador Interativo de Jornada e Efeito Queijo Suíço</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Laboratório de Atenção com Cronômetro de Foco 25min</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>3 Cenários Culturais de Trabalho Comparativos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Bloco Ininterrupto:</span>
+              <span class="text-sage font-bold font-mono">4h+ Estado de Fluxo</span>
+            </div>
+
+            <%= link_to philosophy_focus_path, class: "w-full py-3.5 px-4 bg-sage text-ink hover:bg-sage/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Explorar O Poder do Foco</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE COMPARISON TABLE -->
+    <section class="border-t border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper py-16 px-6">
+      <div class="max-w-5xl mx-auto space-y-8">
+        <div class="text-center space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">O Confronto de Paradigmas</span>
+          <h2 class="text-3xl font-serif text-ink dark:text-white font-light">
+            O modelo caótico fragmentado vs. o modelo SpecLine focado
+          </h2>
+        </div>
+
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-12 bg-fable dark:bg-ink-darker p-4 border-b border-ink/15 dark:border-white/10 font-mono text-xs font-bold">
+            <div class="col-span-5 text-ink dark:text-white uppercase">Dimensão Operacional</div>
+            <div class="col-span-3 text-terracotta uppercase">Ecossistema Fragmentado</div>
+            <div class="col-span-4 text-sage uppercase">SpecLine Focado</div>
+          </div>
+
+          <div class="divide-y divide-ink/10 dark:divide-white/10 text-xs font-mono">
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Troca de Contexto</div>
+              <div class="col-span-3 text-terracotta font-bold">~30 alternâncias/hora</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Zero abas externas em tela unificada</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Documentação Viva</div>
+              <div class="col-span-3 text-terracotta font-bold">Documentos mortos e defasados</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Especificações vivas com tarefas atreladas</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Comunicação e Decisões</div>
+              <div class="col-span-3 text-terracotta font-bold">Notificações caóticas e dispersas</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Debate contextual por parágrafo e projeto</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Design & Estética</div>
+              <div class="col-span-3 text-terracotta font-bold">Pop-ups, badges e ruído visual</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Design editorial brutalista calmo</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Sobrecarga Mental</div>
+              <div class="col-span-3 text-terracotta font-bold">Exaustão por fadiga de ferramentas</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Clareza operacional e estado de fluxo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

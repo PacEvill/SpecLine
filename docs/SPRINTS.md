@@ -1,43 +1,90 @@
-# SpecLine - Roadmap de Sprints & Desenvolvimento
+# SpecLine: Planejamento Ágil e Sprints (Roadmap)
 
-Acompanhamento contínuo dos módulos e sprints do projeto SpecLine de acordo com a Constituição de Desenvolvimento e TDD.
+Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de cada Sprint de acordo com as metas estabelecidas no planejamento acadêmico e técnico.
 
-## Sprints
+## 1. 🚀 Sprints Concluídas (Base Estrutural Entregue)
 
-- [x] **Sprint 1: Document Editor & Wiki System (Notion/Outline Tier)**
-  - [x] Sub-task 1.1: Migração para TipTap Core + TaskList + Bubble Menu
-  - [x] Sub-task 1.2: TOC interativo dinâmico e scroll spy
-  - [x] Sub-task 1.3: Sistema de Capas (Cover Art) com gradientes e emojis
-  - [x] Sub-task 1.4: Slash Commands Menu (`/` menu) e atalhos de teclado (`Ctrl+S`, `Ctrl+B`)
-  - [x] Sub-task 1.5: Exportação em Markdown (`.md`) e duplicação de documentos
-  - [x] Sub-task 1.6: Contrato TDD imutável (`DocumentFeatureContractTest` e `DocumentFeaturesSprintTest`)
-  - [x] Sub-task 1.7: Tree/Explorer Navigation (`vscode_explorer_tree_sprint_test` e `document_tree_sprint_test`)
-  - [x] Relatório da Sprint: `docs/sprint_1_documents_report.md`
-- [x] **Sprint Infra & Setup: Deploy e APIs**
-  - [x] Tradução e Adaptação da Constituição (`SPECLINE_CONSTITUTION.md`)
-  - [x] Preparação de infraestrutura (`.env`, Neon Postgres, Cloudflare R2, Resend SMTP)
-  - [x] TDD: Contratos de Arquitetura para OmniAuth (`UserOmniauthContractTest`)
-  - [x] Integração do Google OAuth2 (`OmniauthCallbacksController`)
-  - [x] Relatório da Sprint: `docs/sprint_infra_report.md`
-- [x] **Sprint 2: Kanban & Issue Tracker Linear-Tier**
-  - [x] Sub-task 2.1: Agrupamento dinâmico e múltiplos quadros por projeto (`boards_controller_test`)
-  - [x] Sub-task 2.2: Ciclos e Milestones com cálculo de progresso e datas (`milestones_controller_test`)
-  - [x] Sub-task 2.3: Filtros rápidos, tags coloridas e colunas customizáveis (`issue_statuses_controller_test`, `labels_controller_test`)
-  - [x] Sub-task 2.4: Drag & Drop reativo via SortableJS + Turbo Streams
-- [x] **Sprint 3: Global Command Palette (`⌘K`) & Visual Canvas (Whiteboards)**
-  - [x] Sub-task 3.1: Command Palette indexada para issues, documentos, quadros e navegação (`search_controller_test`)
-  - [x] Sub-task 3.2: Quadro Branco / Whiteboard vetorial interativo com RoughJS e persistência em tempo real (`whiteboards_controller_test`, `whiteboard_test`)
-- [x] **Sprint 4: Ecossistema Unificado & Visão Geral 360° do Projeto**
-  - [x] Sub-task 4.1: Painel 360° de métricas e saúde do projeto (`project_ecosystem_overview_test`)
-  - [x] Sub-task 4.2: Integração cruzada de ferramentas (Docs, Issues, Whiteboards, Milestones, Atividades)
-  - [x] Sub-task 4.3: Perfil da Conta & Preferências (Avatar com validação magic bytes, edição de perfil, tema claro/escuro)
-  - [x] Sub-task 4.4: Conformidade LGPD & Exclusão Segura de Conta (anonimização com `nullify` e exclusão limpa)
-- [x] **Sprint 5: Security Hardening & Pre-Deploy Certification**
-  - [x] Sub-task 5.1: Rack::Attack (proteção contra brute-force e DoS com limites em login, registro e WebSockets)
-  - [x] Sub-task 5.2: Content Security Policy (CSP) estrito e cabeçalhos de segurança HTTP em produção
-  - [x] Sub-task 5.3: Validação binária de uploads por Magic Bytes via `Marcel` (`SecureAttachable`)
-  - [x] Sub-task 5.4: Sanitização HTML de Rich Text para proteção contra Stored XSS (`HtmlSanitizer`)
-  - [x] Sub-task 5.5: Proteção IDOR e isolamento multi-inquilino com fallback 404 seguro
-  - [x] Sub-task 5.6: Docker Multi-Stage com `jemalloc` + `Thruster` + usuário não-root
-  - [x] Sub-task 5.7: Pipeline de CI/CD e SAST (`.github/workflows/ci.yml`, `.github/workflows/security.yml`, `render.yaml`)
-  - [x] Testes de Integração Exaustivos: `exhaustive_platform_test.rb` e `security_hardening_test.rb` (114 testes, 335 asserções, 0 falhas)
+- [x] **Sprint 1: Infraestrutura Core & Documentos** (Docker, Devise, TipTap, Árvore de Arquivos)
+- [x] **Sprint 2: Motor Kanban & Milestones** (SortableJS, Quadros)
+- [x] **Sprint 3: Interface de Ideação & Comandos** (Whiteboard Rough.js, Barra Global ⌘K)
+- [x] **Sprint 4: Visão 360° & Health Metrics** (Dashboards Iniciais)
+- [x] **Sprint 5: Segurança & Docker Thruster** (Hardening, CSP, Rate Limiting)
+
+## 2. 🏃 Sprints Atuais e Futuras (Foco: UI/UX, Multiplayer & I/O)
+
+- [ ] **Sprint 6: Productization & Onboarding (Atual)**
+  **Objetivo:** Transformar a aplicação de um "software cru" para um produto comercial com fluxos de onboarding, e-mails e dados de demonstração.
+
+  **Sub-tasks:**
+  - [x] Sub-task 6.1: Dashboard "Bento Box Híbrido" refinado com métricas claras.
+  - [ ] Sub-task 6.2: Fluxos de Onboarding Inteligente (Projeto Demo Auto-Gerado para novos usuários).
+  - [ ] Sub-task 6.3: Configuração e Templates de E-mails Transacionais (Resend) para boas-vindas e alertas.
+  - [ ] Sub-task 6.4: Landing Page de conversão de Marketing (se aplicável ao MVP).
+
+- [ ] **Sprint 7: Event Stacking & Calendar Connection**
+  **Objetivo:** Dar vida ao widget de calendário do Dashboard, conectando-o com os prazos de Milestones e Issues do projeto.
+
+  **Sub-tasks:**
+  - [ ] Sub-task 7.1: Modelagem de Datas de Entrega (Due Dates) para Issues.
+  - [ ] Sub-task 7.2: Conexão do calendário do Dashboard para listar eventos pendentes nos dias selecionados (Event Stacking).
+  - [ ] Sub-task 7.3: Visualização em Timeline/Gantt simplificada para o Roadmap do Projeto.
+  - [ ] Sub-task 7.4: Refinamento de UI (Alta Densidade) para Listas e Tabelas, inspirados em painéis utilitários modernos (Bagus Fikri / StartupVisuals).m nexo
+
+- [ ] **Sprint 8: Comunicação Síncrona & Colaboração Multiplayer**
+  - [ ] Sub-task 8.1: Chat em Tempo Real via Solid Cable (Sem Redis).
+  - [ ] Sub-task 8.2: Notificações In-App e Contadores via Turbo Streams.
+  - [ ] Sub-task 8.3: Colaboração Multiplayer & Awareness (Yjs) - Edição simultânea de Docs e cursores em tempo real.
+
+- [ ] **Sprint 9: ActiveStorage, Exportações & Rastreabilidade**
+  - [ ] Sub-task 9.1: Gestão de Arquivos via ActiveStorage (Drag & Drop em Issues/Docs).
+  - [ ] Sub-task 9.2: Importação e Exportação Estruturada (Conversão/Exportação para PDF, DOCX, Markdown, e Parsing de CSV).
+  - [ ] Sub-task 9.3: Rastreabilidade Extensionista & Relatório Semestral de PEI VI.
+
+- [ ] **Sprint 10: Polimento de Design System Avançado**
+  - [ ] Sub-task 10.1: Abas e Modais com CSS `clip-path: shape()` (Scoop Tabs).
+  - [ ] Sub-task 10.2: Animações de Snap elásticas no Kanban e feedbacks de sucesso.
+
+- [ ] **Sprint 11: Automações e Regras de Negócio Kanban**
+  - [ ] Sub-task 11.1: Fechamento automático de Milestones e transições de status.
+
+- [ ] **Sprint 12: Integração de Calendário Global**
+  - [ ] Sub-task 12.1: Filtros dinâmicos de prazos em calendário geral.
+
+- [ ] **Sprint 13: Central Help Desk Pública**
+  - [ ] Sub-task 13.1: Publicação de documentos internos como Knowledge Base externa.
+
+- [ ] **Sprint 14: Acessibilidade (WCAG) & Dark Mode Otimizado**
+  - [ ] Sub-task 14.1: Lapidação estética, contraste e paletas (Terracota, Olive, Sage).
+
+- [ ] **Sprint 15: Freeze Code, E2E & Bug Bash**
+  - [ ] Sub-task 15.1: Testes massivos e homologação final para entrega.
+
+---
+
+## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)
+- [ ] **Integração Avançada GitHub (Octokit):** Sincronização bidirecional de repositórios, linkagem de Pull Requests nas Issues (ex: `Fixes SPEC-12` fechando cartões automaticamente) e importação de commits para a timeline.
+- [ ] **Importadores Universais (APIs):** Migração em 1 clique a partir do Jira, Trello e Notion.
+- [ ] **Comunicação de Áudio/Vídeo (WebRTC):** Integração de huddles/canais de voz diretamente nos projetos usando LiveKit ou PeerJS, permitindo conversa síncrona durante a ideação no Whiteboard.
+- [ ] **Figma API:** Renderização de telas do Figma ao vivo dentro dos Documentos e Whiteboard.
+- [ ] **Integração Stripe (Billing SaaS)**
+- [ ] **Inteligência Artificial (SpecBots)**: Assistentes autônomos no chat para criar issues via linguagem natural.
+- [ ] **Geração de UI via IA (Artboard Workflow)**: Wireframes gerados por IA no Whiteboard.
+
+---
+
+## 4. 🎨 Catálogo de Referências & Inspirações de UI/UX
+
+A premissa do SpecLine é garantir consistência de "produto final". As referências listadas aqui guiam a fluidez, o minimalismo inteligente e o uso de cores (ex: Laranja Terracota, Verde Oliva Claro).
+
+### 4.1. Conceitos de Layout e Interações (Sprint 6+)
+- **Bento Box, Dark Dashboards e Interações Premium:** Foco em cartões suspensos, glows sutis, grids minimalistas, layouts expansivos, padrões de hierarquia visual avançada e transições suaves de dados.
+- **Micro-Widgets e Calendários (Inspiração: Nazmi Javier / InsporaDesign):** Integração de mini-calendários e mapas de calor diretamente nos painéis.
+- **Interfaces Densas e Utilitárias (Inspiração: StartupVisuals / Jubayer / Bagus Fikri):** Aprimoramento de tabelas, data-grids e componentes de lista para suportar alta densidade de informação sem perder o respiro visual (utilizando micro-bordas, tipografia monospace para dados e contrastes rígidos).
+- **Sidebar Aesthetic:** Glassmorphism, floating islands e hover states sutis focados em imersão.
+- **Date Range Picker & Event Stacking:** Seletores fluídos de datas e expansão dinâmica de cards em calendários diários.
+- **CSS `clip-path: shape()`:** Cantos entalhados (scooped corners) nativos para abas de navegação, sem poluir o DOM.
+
+### 4.2. Aplicação Prática no Projeto
+1. **Visão 360 / Bento Box (Sprint 6):** Refinar painéis com radiais, texturas suaves e o novo esquema de cores (Olive/Terracotta).
+2. **Multiplayer Cursores (Sprint 8):** Aplicar paleta semântica aos cursores colaborativos de cada usuário.
+3. **Modais e Uploads (Sprint 9):** Drag and Drop com feedbacks visuais expansivos.

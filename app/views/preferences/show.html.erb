@@ -2,7 +2,7 @@
 
 <%= turbo_frame_tag "modal" do %>
   <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-3 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
-    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
+    <div class="bg-fable-light dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
       
       <!-- Settings Sidebar inside Modal (Desktop) -->
       <div class="hidden sm:flex flex-col w-64 border-r border-ink/10 dark:border-white/10 bg-white/50 dark:bg-ink-paper/50 shrink-0">
@@ -21,7 +21,7 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker flex flex-col">
+      <div class="flex-1 overflow-y-auto w-full bg-fable-light dark:bg-ink-darker flex flex-col">
         <!-- Mobile Header Bar inside Modal -->
         <div class="sm:hidden flex items-center justify-between p-4 border-b border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink-paper/50 shrink-0">
           <div>
@@ -42,6 +42,18 @@
       <p class="text-xs sm:text-sm text-ink-light dark:text-white/60 font-sans">Personalize sua experiência no SpecLine.</p>
     </div>
 
+    <% if notice %>
+      <div class="bg-sage/10 text-sage-dark p-4 rounded-xl text-sm mb-6 text-center font-medium animate-fade-in-up">
+        <%= notice %>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="bg-rust/10 border border-rust/20 text-rust dark:text-rust p-4 rounded-xl text-sm mb-6 text-center font-medium animate-fade-in-up">
+        <%= alert %>
+      </div>
+    <% end %>
+
     <%= form_with url: preferences_path, method: :patch, class: "space-y-6 sm:space-y-8" do |f| %>
 
       <!-- Theme Section -->
@@ -52,7 +64,7 @@
           <!-- Light Theme -->
           <label class="col-span-1 cursor-pointer group" data-action="click->theme#setLight">
             <div class="border-2 border-transparent has-[:checked]:border-terracotta rounded-xl p-1 bg-white dark:bg-ink-paper mb-2 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] transition-all hover:border-ink/20 duration-500">
-              <div class="bg-[#FDFBF7] rounded-lg h-20 sm:h-24 border border-ink/5 p-2 flex flex-col gap-2">
+              <div class="bg-fable-light rounded-lg h-20 sm:h-24 border border-ink/5 p-2 flex flex-col gap-2">
                 <div class="h-2 w-12 bg-ink/10 rounded-full"></div>
                 <div class="h-2 w-full bg-ink/5 rounded-full"></div>
                 <div class="h-2 w-3/4 bg-ink/5 rounded-full"></div>

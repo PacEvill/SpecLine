@@ -1,4 +1,7 @@
 class FeaturesController < ApplicationController
+  def index
+  end
+
   def docs
   end
 

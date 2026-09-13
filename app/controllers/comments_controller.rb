@@ -18,19 +18,25 @@ class CommentsController < ApplicationController
         action: "commented",
         metadata: { body_preview: @comment.body.truncate(80) }
       )
-      redirect_to workspace_project_issue_path(@workspace, @project, @issue),
-                  notice: "Comentário adicionado."
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_comment_form", partial: "comments/form", locals: { workspace: @workspace, project: @project, issue: @issue, comment: Comment.new }) }
+        format.html { redirect_to workspace_project_issue_path(@workspace, @project, @issue), notice: "Comentário adicionado." }
+      end
     else
-      redirect_to workspace_project_issue_path(@workspace, @project, @issue),
-                  alert: "Comentário não pode ser vazio."
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_comment_form", partial: "comments/form", locals: { workspace: @workspace, project: @project, issue: @issue, comment: @comment }) }
+        format.html { redirect_to workspace_project_issue_path(@workspace, @project, @issue), alert: "Comentário não pode ser vazio." }
+      end
     end
   end
 
   def destroy
     @comment = @issue.comments.find(params[:id])
     @comment.destroy
-    redirect_to workspace_project_issue_path(@workspace, @project, @issue),
-                notice: "Comentário removido."
+    respond_to do |format|
+      format.turbo_stream { head :ok }
+      format.html { redirect_to workspace_project_issue_path(@workspace, @project, @issue), notice: "Comentário removido." }
+    end
   end
 
   private

@@ -7,6 +7,12 @@ import { application } from "./application"
 import AutosaveController from "./autosave_controller"
 application.register("autosave", AutosaveController)
 
+import ChangelogController from "./changelog_controller"
+application.register("changelog", ChangelogController)
+
+import ChatWorkbenchController from "./chat_workbench_controller"
+application.register("chat-workbench", ChatWorkbenchController)
+
 import CommandPaletteController from "./command_palette_controller"
 application.register("command-palette", CommandPaletteController)
 
@@ -16,14 +22,23 @@ application.register("document-actions", DocumentActionsController)
 import DocumentTreeController from "./document_tree_controller"
 application.register("document-tree", DocumentTreeController)
 
+import DocsWorkbenchController from "./docs_workbench_controller"
+application.register("docs-workbench", DocsWorkbenchController)
+
 import DropdownController from "./dropdown_controller"
 application.register("dropdown", DropdownController)
 
 import EmojiPickerController from "./emoji_picker_controller"
 application.register("emoji-picker", EmojiPickerController)
 
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import HeroRandomizerController from "./hero_randomizer_controller"
+application.register("hero-randomizer", HeroRandomizerController)
 
 import ImagePreviewController from "./image_preview_controller"
 application.register("image-preview", ImagePreviewController)
@@ -52,6 +67,9 @@ application.register("pricing", PricingController)
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 
+import TasksWorkbenchController from "./tasks_workbench_controller"
+application.register("tasks-workbench", TasksWorkbenchController)
+
 import ThemeController from "./theme_controller"
 application.register("theme", ThemeController)
 
@@ -66,3 +84,6 @@ application.register("view-toggle", ViewToggleController)
 
 import WhiteboardController from "./whiteboard_controller"
 application.register("whiteboard", WhiteboardController)
+
+import WhiteboardWorkbenchController from "./whiteboard_workbench_controller"
+application.register("whiteboard-workbench", WhiteboardWorkbenchController)

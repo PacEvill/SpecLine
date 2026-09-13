@@ -1,0 +1,346 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white selection:bg-terracotta/30 selection:text-ink font-sans transition-colors duration-500">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION -->
+    <header class="p-8 md:p-16 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+          <span class="w-2 h-2 rounded-full bg-terracotta inline-block animate-ping"></span>
+          CENTRAL DE FUNCIONALIDADES // 4 MÓDULOS ESSENCIAIS
+        </div>
+        
+        <h1 class="font-serif font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-fable">
+          Quatro ferramentas essenciais.<br>
+          <i class="text-terracotta font-serif-italic">Em um único lugar.</i>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Substitua o labirinto de abas e assinaturas separadas. No SpecLine, a documentação viva contém as tarefas, o debate acontece no parágrafo e os diagramas nascem da arquitetura. Selecione o módulo desejado:
+        </p>
+
+        <!-- DEDICATED QUICK NAV SELECTOR -->
+        <div class="pt-4 flex flex-wrap justify-center items-center gap-3 font-mono text-xs">
+          <%= link_to features_docs_path, class: "px-4 py-2.5 bg-sage/15 text-sage border border-sage/30 rounded-xl hover:bg-sage hover:text-ink transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>Docs & Wiki</span>
+          <% end %>
+
+          <%= link_to features_kanban_path, class: "px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+            <span>Tarefas & Kanban</span>
+          <% end %>
+
+          <%= link_to features_chat_path, class: "px-4 py-2.5 bg-ocean/10 text-ocean border border-ocean/30 rounded-xl hover:bg-ocean hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span>Chat Contextual</span>
+          <% end %>
+
+          <%= link_to features_whiteboard_path, class: "px-4 py-2.5 bg-ochre/15 text-ochre border border-ochre/30 rounded-xl hover:bg-ochre hover:text-ink transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+            <span>Quadros & Canvas</span>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <!-- DEDICATED CONCEPTS SHOWCASE: 4 MODULE CARDS -->
+    <div class="max-w-7xl mx-auto px-6 py-16 w-full space-y-12">
+      <div class="text-center space-y-2 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Diretório de Módulos Nativos</span>
+        <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
+          Conheça os quatro módulos em páginas dedicadas
+        </h2>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+          Cada módulo possui simuladores funcionais em tempo real, atalhos de produtividade e integração nativa.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <!-- CARD 1: DOCS & WIKI -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-sage/15 text-sage font-bold border border-sage/20">
+                Módulo #01
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-sage transition-colors">
+                Documentos & Wiki Vivos
+              </h3>
+              <p class="text-xs font-mono text-sage uppercase tracking-wide">
+                Fonte da Verdade Técnica
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Editor minimalista com modo Zen, typewriter scrolling e tickets incorporados que sincronizam em tempo real.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Editor Calmo & Zen Mode Focado</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Tickets de Tarefa Embutidos no Texto</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Versionamento & Histórico Limpo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Sincronia RFC:</span>
+              <span class="text-sage font-bold font-mono">Tempo Real</span>
+            </div>
+
+            <%= link_to features_docs_path, class: "w-full py-3.5 px-4 bg-sage text-ink hover:bg-sage/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Docs & Wiki</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 2: TAREFAS & KANBAN -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><path d="M14 8h.01"/><path d="M14 16h.01"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
+                Módulo #02
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors">
+                Tarefas & Gestão Kanban
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                Execução Ágil Sem Fricção
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Quadro visual com drag-and-drop fluído, filtros rápidos por prioridade e conexão bidirecional com PRDs.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Kanban com Drag & Drop Otimista</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Vinculação Nativa com RFCs e Docs</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Drawer de Inspeção Instantâneo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Atraso por Desvio:</span>
+              <span class="text-sage font-bold font-mono">-65% Falhas</span>
+            </div>
+
+            <%= link_to features_kanban_path, class: "w-full py-3.5 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Tarefas & Kanban</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 3: CHAT CONTEXTUAL -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-ocean/15 text-ocean font-bold border border-ocean/20">
+                Módulo #03
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-ocean transition-colors">
+                Comunicação Contextual
+              </h3>
+              <p class="text-xs font-mono text-ocean uppercase tracking-wide">
+                Debate Sem Ruído Efêmero
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Mensagens que vivem ao lado do trabalho real. Chega de conversas soltas onde decisões importantes se perdem.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Canais Focados por Projeto e Sprint</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Threads com Menções Acionáveis</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Transforme Mensagens em Tarefas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Decisões Perdidas:</span>
+              <span class="text-sage font-bold font-mono">Zero Ruído</span>
+            </div>
+
+            <%= link_to features_chat_path, class: "w-full py-3.5 px-4 bg-ocean text-white hover:bg-ocean/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Chat Contextual</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 4: QUADROS & DIAGRAMAS -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-ochre/20 text-ochre flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-ochre/15 text-ochre font-bold border border-ochre/20">
+                Módulo #04
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-ochre transition-colors">
+                Quadros & Diagramas
+              </h3>
+              <p class="text-xs font-mono text-ochre uppercase tracking-wide">
+                Pensamento Visual Integrado
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Canvas infinito com cabos dinâmicos Bézier e suporte a diagramação como código via Mermaid.js em tempo real.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ochre shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Canvas com Drag & Drop e Cabos Bézier</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ochre shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Diagramas como Código (Mermaid Live)</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ochre shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Exportação para SVG Vetorial e PNG</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Render Vetorial:</span>
+              <span class="text-sage font-bold font-mono">60 FPS Fluído</span>
+            </div>
+
+            <%= link_to features_whiteboard_path, class: "w-full py-3.5 px-4 bg-ochre text-ink hover:bg-ochre/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Quadros & Canvas</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE COMPARISON TABLE -->
+    <section class="border-t border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper py-16 px-6">
+      <div class="max-w-5xl mx-auto space-y-8">
+        <div class="text-center space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Sinergia Arquitetural</span>
+          <h2 class="text-3xl font-serif text-ink dark:text-white font-light">
+            A diferença entre 4 ferramentas separadas e o SpecLine unificado
+          </h2>
+        </div>
+
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-12 bg-fable dark:bg-ink-darker p-4 border-b border-ink/15 dark:border-white/10 font-mono text-xs font-bold">
+            <div class="col-span-5 text-ink dark:text-white uppercase">Capacidade Operacional</div>
+            <div class="col-span-3 text-terracotta uppercase">Múltiplos Aplicativos</div>
+            <div class="col-span-4 text-sage uppercase">SpecLine 4-em-1 Unificado</div>
+          </div>
+
+          <div class="divide-y divide-ink/10 dark:divide-white/10 text-xs font-mono">
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Gestão de Documentos e Tarefas</div>
+              <div class="col-span-3 text-terracotta font-bold">Sincronização manual e falha</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Requisitos de texto viram tarefas dinâmicas</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Registro de Decisões do Chat</div>
+              <div class="col-span-3 text-terracotta font-bold">Mensagens se perdem no histórico</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Conversas viram tarefas com 1 clique</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Diagramas de Arquitetura</div>
+              <div class="col-span-3 text-terracotta font-bold">Arquivos soltos e desatualizados</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Diagramas Mermaid integrados na RFC</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Custo por Usuário / Mês</div>
+              <div class="col-span-3 text-terracotta font-bold">~$40 a $70+ somados</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>1 plano único com os 4 módulos inclusos</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Foco e Saúde Operacional</div>
+              <div class="col-span-3 text-terracotta font-bold">Trocas de abas e interrupções</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Ambiente calmo sem sobrecarga mental</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

@@ -488,33 +488,50 @@ jobs:
             p/security-audit
 ```
 
-## 4. Unified Master Prompt for CLI AI Agents (Claude Code / Antigravity)
+## 4. Multi-Agent Security Orchestration (Antigravity Sub-Agents)
 
-This prompt is designed to be executed by an AI agent in the terminal. It commands the execution of scanning tools, reads structured JSON outputs, applies required refactorings to the codebase, and validates them via regression tests.
+To execute a complete security audit, the Principal AI Agent should orchestrate specialized sub-agents using the `invoke_subagent` tool. This approach isolates tool execution and parsing into dedicated contexts, preventing token overflow and ensuring focused remediation.
 
-> You are a Principal Software Security Engineer specialized in the Ruby on Rails 8 framework.  
-> Your objective is to run a complete security audit on the SpecLine project, identify vulnerabilities, and apply all fixes directly to the source code.
->
-> **STEP 1: SCANNER EXECUTION (SAST & SECRETS)**  
-> Run the following commands in the terminal and capture structured JSON outputs:  
->
-> 1. `gitleaks detect --report-format json --report-path leaks.json -v`  
-> 2. `bundle exec bundle-audit check --update`  
-> 3. `bundle exec brakeman -f json -o brakeman.json --ensure-latest -w1`  
-> 4. `semgrep scan --config=p/ruby --config=p/owasp-top-ten --json --output=semgrep.json`  
->
-> **STEP 2: AUTOMATED ANALYSIS & REMEDIATION**  
-> Read the generated JSON files (`brakeman.json`, `semgrep.json`, `leaks.json`) and the `bundle-audit` log, applying the following refactoring rules:  
->
-> - **For SQL Injection:** Convert raw SQL string concatenations into parameterized ActiveRecord queries or use `ActiveRecord::Base.sanitize_sql`.  
-> - **For IDOR (Insecure Direct Object References):** Ensure all Controller queries are strictly scoped through `current_workspace` or `current_user`.  
-> - **For XSS / Stored HTML:** Apply strict whitelist sanitization on the document model (TipTap fields) using `ActionController::Base.helpers.sanitize`.  
-> - **For Uploads:** Ensure Active Storage models include validation for maximum file size (5 MB) and content type verified via Magic Bytes (`Marcel`).  
-> - **For Secret Leaks:** Remove exposed keys from code, move them to environment variables (`ENV['...']`), and add placeholders to `.env.example`.  
-> - **For Vulnerable Gems:** Update dependencies using `bundle update <gem_name>`.  
->
-> **STEP 3: VALIDATION AND CLEANUP**  
->
-> 1. Run the project test suite: `bin/rails test`. Ensure all features continue to work as expected.  
-> 2. Re-run `bundle exec brakeman -q` to confirm 0 remaining warnings.  
-> 3. Delete all temporary JSON reports created (`leaks.json`, `brakeman.json`, `semgrep.json`).
+### 4.1 Invoking the Security Sub-Agents
+
+You can invoke the following sub-agents concurrently:
+
+```json
+{
+  "Subagents": [
+    {
+      "TypeName": "research",
+      "Role": "SAST Security Auditor",
+      "Prompt": "Run Brakeman (`bundle exec brakeman -f json -o brakeman.json --ensure-latest -w1`) and Semgrep (`semgrep scan --config=p/ruby --config=p/owasp-top-ten --json --output=semgrep.json`). Read the JSON reports, identify vulnerabilities (SQLi, IDOR, XSS), and report back the files and lines that require refactoring."
+    },
+    {
+      "TypeName": "research",
+      "Role": "Dependency & Secret Scanner",
+      "Prompt": "Run Gitleaks (`gitleaks detect --report-format json --report-path leaks.json -v`) and bundler-audit (`bundle exec bundle-audit check --update`). Report any exposed secrets and vulnerable gems."
+    },
+    {
+      "TypeName": "research",
+      "Role": "DAST & Stress Tester",
+      "Prompt": "Ensure the local dev server is running on port 3000. Run the rate limiting verification (`ab -n 100 -c 10 http://localhost:3000/users/sign_in`). Report if Rack::Attack successfully blocks the requests with HTTP 429."
+    }
+  ]
+}
+```
+
+### 4.2 Automated Analysis & Remediation Rules
+
+Once the sub-agents report back their findings via `send_message`, the Principal Agent must apply the following refactoring rules:
+
+- **For SQL Injection:** Convert raw SQL string concatenations into parameterized ActiveRecord queries or use `ActiveRecord::Base.sanitize_sql`.  
+- **For IDOR (Insecure Direct Object References):** Ensure all Controller queries are strictly scoped through `current_workspace` or `current_user`.  
+- **For XSS / Stored HTML:** Apply strict whitelist sanitization on the document model (TipTap fields) using `ActionController::Base.helpers.sanitize`.  
+- **For Uploads:** Ensure Active Storage models include validation for maximum file size (5 MB) and content type verified via Magic Bytes (`Marcel`).  
+- **For Secret Leaks:** Remove exposed keys from code, move them to environment variables (`ENV['...']`), and add placeholders to `.env.example`.  
+- **For Vulnerable Gems:** Update dependencies using `bundle update <gem_name>`.  
+
+### 4.3 Validation and Cleanup
+
+After applying the fixes:
+1. Run the project test suite: `bin/rails test`. Ensure all features continue to work as expected.  
+2. Re-run `bundle exec brakeman -q` to confirm 0 remaining warnings.  
+3. Delete all temporary JSON reports created by the sub-agents (`leaks.json`, `brakeman.json`, `semgrep.json`).

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filosofia — SpecLine (Central de Princípios & Manifesto)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(217, 122, 94, 0.2);
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="flex items-center justify-between border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase h-16 relative z-10 bg-fable-light dark:bg-[#18181A] px-6">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden lg:flex items-center justify-center gap-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Início</a>
+      <a href="/features_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Funcionalidades</a>
+      <a href="/solutions_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Soluções</a>
+      <a href="/philosophy_concept.html" class="text-ink dark:text-white font-bold border-b-2 border-terracotta py-1">Filosofia</a>
+      <a href="/pricing_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Preços</a>
+    </div>
+
+    <div class="flex items-center justify-end gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="p-8 md:p-16 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+        <span class="w-2 h-2 rounded-full bg-terracotta inline-block animate-ping"></span>
+        CENTRAL DE FILOSOFIA // ENSAIOS & MANIFESTO
+      </div>
+      
+      <h1 class="font-serif font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-fable">
+        Fundamentos do SpecLine<br>
+        <i class="text-terracotta font-serif-italic">e a ciência do trabalho focado.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Não construímos mais uma ferramenta barulhenta de trabalho. Construímos um refúgio de concentração e alinhamento para equipes que valorizam a profundidade cognitiva. Selecione o ensaio desejado:
+      </p>
+
+      <!-- DEDICATED QUICK NAV SELECTOR -->
+      <div class="pt-4 flex flex-wrap justify-center items-center gap-3 font-mono text-xs">
+        <a href="/philosophy_vision_concept.html" class="px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>Ensaio I: Nossa Visão</span>
+        </a>
+        <a href="/philosophy_focus_concept.html" class="px-4 py-2.5 bg-sage/15 text-sage border border-sage/30 rounded-xl hover:bg-sage hover:text-ink transition-all font-semibold flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>Ensaio II: O Poder do Foco</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- DEDICATED CONCEPTS SHOWCASE: 2 DISTINCT CARDS -->
+  <main class="max-w-7xl mx-auto px-6 py-16 w-full space-y-12">
+    
+    <div class="text-center space-y-2 max-w-2xl mx-auto">
+      <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Diretório Conceitual</span>
+      <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
+        Conheça os dois ensaios em páginas dedicadas
+      </h2>
+      <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+        Cada ensaio traz simuladores empíricos, calculadoras de imposto cognitivo e visualizadores interativos de atenção.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto items-stretch">
+      
+      <!-- CARD 1: NOSSA VISÃO -->
+      <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover-card-lift relative overflow-hidden group">
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
+              Ensaio #01
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors">
+              Nossa Visão: O Fim do Malabarismo
+            </h3>
+            <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+              A Tríade Viva & O Imposto Cognitivo
+            </p>
+            <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+              Por que a fragmentação em múltiplos aplicativos se tornou um imposto cognitivo silencioso e como a trindade unificada restaura a velocidade do seu time.
+            </p>
+          </div>
+
+          <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Simulador Interativo de Atrito de Abas</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Calculadora Empírica do Imposto Cognitivo</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Emissão de Selo Digital de Apoiador</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8 space-y-4">
+          <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-ink-light dark:text-white/60">Atrito de Contexto:</span>
+            <span class="text-sage font-bold font-mono">-85% Trocas de Aba</span>
+          </div>
+
+          <a href="/philosophy_vision_concept.html" class="w-full py-3.5 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <span>Ler Manifesto Completo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- CARD 2: O PODER DO FOCO -->
+      <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover-card-lift relative overflow-hidden group">
+        <div class="space-y-6">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            </div>
+            <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-sage/15 text-sage font-bold border border-sage/20">
+              Ensaio #02
+            </span>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-sage transition-colors">
+              O Poder do Foco & Design Calmo
+            </h3>
+            <p class="text-xs font-mono text-sage uppercase tracking-wide">
+              Atenção Fragmentada vs. Fluxo Contínuo
+            </p>
+            <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+              A neurociência por trás do Efeito Queijo Suíço e como uma interface editorial serena protege blocos ininterruptos de trabalho criativo.
+            </p>
+          </div>
+
+          <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Visualizador Interativo de Jornada e Efeito Queijo Suíço</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Laboratório de Atenção com Cronômetro de Foco 25min</span>
+            </div>
+            <div class="flex items-start gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>3 Cenários Culturais de Trabalho Comparativos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-8 space-y-4">
+          <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+            <span class="text-ink-light dark:text-white/60">Bloco Ininterrupto:</span>
+            <span class="text-sage font-bold font-mono">4h+ Estado de Fluxo</span>
+          </div>
+
+          <a href="/philosophy_focus_concept.html" class="w-full py-3.5 px-4 bg-sage text-ink hover:bg-sage/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]">
+            <span>Explorar O Poder do Foco</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ARCHITECTURE COMPARISON TABLE -->
+  <section class="border-t border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper py-16 px-6">
+    <div class="max-w-5xl mx-auto space-y-8">
+      <div class="text-center space-y-2">
+        <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">O Confronto de Paradigmas</span>
+        <h2 class="text-3xl font-serif text-ink dark:text-white font-light">
+          O modelo caótico fragmentado vs. o modelo SpecLine focado
+        </h2>
+      </div>
+
+      <div class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm">
+        <div class="grid grid-cols-12 bg-fable dark:bg-ink-darker p-4 border-b border-ink/15 dark:border-white/10 font-mono text-xs font-bold">
+          <div class="col-span-5 text-ink dark:text-white uppercase">Dimensão Operacional</div>
+          <div class="col-span-3 text-terracotta uppercase">Ecossistema Fragmentado</div>
+          <div class="col-span-4 text-sage uppercase">SpecLine Focado</div>
+        </div>
+
+        <div class="divide-y divide-ink/10 dark:divide-white/10 text-xs font-mono">
+          <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+            <div class="col-span-5 font-semibold text-ink dark:text-white">Troca de Contexto</div>
+            <div class="col-span-3 text-terracotta font-bold">~30 alternâncias/hora</div>
+            <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Zero abas externas em tela unificada</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+            <div class="col-span-5 font-semibold text-ink dark:text-white">Documentação Viva</div>
+            <div class="col-span-3 text-terracotta font-bold">Documentos mortos e defasados</div>
+            <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Especificações vivas com tarefas atreladas</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+            <div class="col-span-5 font-semibold text-ink dark:text-white">Comunicação e Decisões</div>
+            <div class="col-span-3 text-terracotta font-bold">Notificações caóticas e dispersas</div>
+            <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Debate contextual por parágrafo e projeto</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+            <div class="col-span-5 font-semibold text-ink dark:text-white">Design & Estética</div>
+            <div class="col-span-3 text-terracotta font-bold">Pop-ups, badges e ruído visual</div>
+            <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Design editorial brutalista calmo</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+            <div class="col-span-5 font-semibold text-ink dark:text-white">Sobrecarga Mental</div>
+            <div class="col-span-3 text-terracotta font-bold">Exaustão por fadiga de ferramentas</div>
+            <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Clareza operacional e estado de fluxo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono">
+      <div class="flex items-center gap-3">
+        <span class="font-sans font-bold text-base text-ink dark:text-white">SpecLine</span>
+        <span class="text-ink-light/60 dark:text-white/40">// Central de Filosofia & Manifesto</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6 text-ink/70 dark:text-white/70">
+        <a href="/philosophy_vision_concept.html" class="hover:text-terracotta transition-colors flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>Nossa Visão</span>
+        </a>
+        <a href="/philosophy_focus_concept.html" class="hover:text-sage transition-colors flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>O Poder do Foco</span>
+        </a>
+      </div>
+
+      <div class="text-ink-light/60 dark:text-white/40">
+        &copy; 2026 SpecLine. Protótipo interativo sem menção a marcas terceiras.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

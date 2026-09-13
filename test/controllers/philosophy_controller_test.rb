@@ -1,6 +1,11 @@
 require "test_helper"
 
 class PhilosophyControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    get philosophy_url
+    assert_response :success
+  end
+
   test "should get vision" do
     get philosophy_vision_url
     assert_response :success

@@ -9,6 +9,13 @@ class Comment < ApplicationRecord
 
   scope :ordered, -> { order(created_at: :asc) }
 
+  after_create_commit -> {
+    broadcast_append_to [commentable, :comments], target: "comments_list", partial: "comments/comment", locals: { comment: self }
+  }
+  after_destroy_commit -> {
+    broadcast_remove_to [commentable, :comments], target: self
+  }
+
   private
 
   def sanitize_body

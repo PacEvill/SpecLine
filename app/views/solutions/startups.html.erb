@@ -1,198 +1,526 @@
-<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink transition-colors duration-500 relative">
   <%= render 'shared/marketing_header' %>
 
+  <!-- DEDICATED SOLUTIONS SUB-NAV BAR (SWITCH PAGES DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-terracotta">Páginas de Soluções:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <%= link_to solutions_startups_path, class: "px-3.5 py-1.5 rounded-lg bg-terracotta text-white font-bold flex items-center gap-2 shadow-sm transition-all text-[11px] uppercase tracking-wider" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <span>Startups (Ativo)</span>
+        <% end %>
+
+        <%= link_to solutions_agencies_path, class: "px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ocean hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Agências</span>
+        <% end %>
+
+        <%= link_to solutions_product_path, class: "px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-sage hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Times de Produto</span>
+        <% end %>
+      </div>
+      <%= link_to "Ver Central de Soluções →", solutions_path, class: "text-ink-light/60 dark:text-white/50 hover:text-ink dark:hover:text-white transition-colors text-[11px] underline underline-offset-4" %>
+    </div>
+  </div>
+
   <main class="flex-grow w-full">
-    <!-- Hero Section -->
-    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto text-center border-b border-ink/10 dark:border-white/10">
-      <div class="max-w-4xl mx-auto space-y-8">
-        <div class="inline-block px-3 py-1 rounded-full bg-ink/5 dark:bg-white/5 text-ink dark:text-fable text-sm font-semibold tracking-wide uppercase mb-2">Para Startups</div>
-        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight">Velocidade como sua única vantagem.</h1>
-        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
-          Você não tem tempo para configurar fluxos complexos em gerenciadores pesados ou pagar $50/usuário em dezenas de ferramentas. O SpecLine junta tudo o que uma startup em estágio inicial precisa para focar no que importa: lançar o produto.
+    <!-- HERO SECTION: Dedicated Startups Pitch -->
+    <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono font-bold tracking-wide uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <span>Solução sob Medida: Para Startups & Early-Stage</span>
+        </div>
+        
+        <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+          Velocidade como sua<br>
+          <i class="text-terracotta font-serif-italic">única vantagem injusta.</i>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Startups em estágio inicial não têm tempo para configurar fluxos burocráticos nem orçamento para pagar mais de $50/usuário somando ferramentas separadas de tarefas, wikis, chats e diagramas. O SpecLine consolida o ciclo de entrega em um ambiente direto ao ponto.
         </p>
-        <div class="pt-4">
-          <a href="/register" class="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2">
-            Começar Gratuitamente
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+
+        <!-- Action Buttons -->
+        <div class="pt-6 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Iniciar Workspace Gratuito</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <a href="#simuladores-startup" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-terracotta hover:text-terracotta font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-2">
+            <span>Simulador de Burn Rate</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
           </a>
         </div>
       </div>
+    </header>
+
+    <!-- TELEMETRY BAROMETER (STARTUP METRICS) -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-terracotta/15 text-terracotta font-bold rounded">
+            <span class="w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse"></span>
+            EFICIÊNCIA DE RUNWAY
+          </span>
+          <span class="text-ink-light dark:text-white/70">4 Ferramentas Cruciais em 1 Login Único</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+          <div class="flex items-center gap-2">
+            <span>Setup Inicial:</span>
+            <span class="text-sage font-bold">&lt; 3 minutos</span>
+          </div>
+          <div class="hidden sm:flex items-center gap-2">
+            <span>Fadiga de Contexto:</span>
+            <span class="text-sage font-bold">Zero Tabs Perdidas</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Reuniões de Status:</span>
+            <span class="text-terracotta font-bold">Substituídas por Threads</span>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- The Problem Section -->
-    <section class="py-24 px-6 bg-white dark:bg-ink-paper">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-6">A "fadiga de ferramentas" mata o momentum.</h2>
-            <div class="space-y-6 text-lg text-ink-light dark:text-white/60 font-sans leading-relaxed">
-              <p>Em uma startup, o ciclo de feedback precisa ser medido em horas, não em semanas. Quando seu time precisa abrir uma wiki para ler o PRD, um quadro de tickets para mover o card, e um app de mensagens para perguntar uma dúvida, o momentum morre.</p>
-              <p>O SpecLine elimina o atrito de troca de contexto. Tudo o que envolve o desenvolvimento de uma feature acontece no mesmo ambiente.</p>
+    <!-- PROBLEM STATEMENT SECTION -->
+    <section class="py-20 px-6 border-b border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper">
+      <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <span class="font-mono text-xs text-terracotta uppercase font-bold tracking-wider flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            O Risco Real
+          </span>
+          <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light leading-tight">
+            A "fadiga de ferramentas" queima o caixa antes do Product-Market Fit.
+          </h2>
+          <div class="space-y-4 text-ink-light dark:text-white/70 font-sans text-base leading-relaxed">
+            <p>
+              Em uma startup, o ciclo entre ter uma hipótese e lançar o código precisa ser medido em horas, não em semanas. Quando seu time precisa abrir uma wiki para ler o requisito, um gerenciador de tickets para mover um card, um app de mensagens para tirar uma dúvida e uma lousa virtual para desenhar tabelas, o foco é drenado.
+            </p>
+            <p>
+              O SpecLine elimina o atrito de troca de contexto. Tudo o que envolve a construção de uma feature ocorre no mesmo lugar.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 bg-fable-light dark:bg-ink-darker p-7 rounded-2xl border border-ink/10 dark:border-white/10 space-y-5">
+          <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-3 font-mono text-xs">
+            <span class="font-bold text-ink dark:text-white uppercase">A Pilha Fragmentada</span>
+            <span class="text-terracotta line-through">4 Faturas em Dólar</span>
+          </div>
+
+          <div class="space-y-2.5 font-mono text-xs text-ink-light dark:text-white/70">
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5">
+              <span class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Gerenciador de Tarefas Legado</span>
+              </span>
+              <span class="text-terracotta font-bold">~$8.15 /user</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5">
+              <span class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Wiki / Docs Desconectados</span>
+              </span>
+              <span class="text-terracotta font-bold">~$10.00 /user</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5">
+              <span class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Mensageiro Corporativo Disperso</span>
+              </span>
+              <span class="text-terracotta font-bold">~$8.75 /user</span>
+            </div>
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5">
+              <span class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Lousa de Diagramas Externa</span>
+              </span>
+              <span class="text-terracotta font-bold">~$8.00 /user</span>
             </div>
           </div>
-          <div class="bg-fable dark:bg-ink-darker p-8 rounded-2xl border border-ink/10 dark:border-white/10 relative overflow-hidden">
-            <div class="absolute -right-4 -top-4 w-24 h-24 bg-terracotta/10 rounded-full blur-2xl"></div>
-            <h4 class="font-serif text-xl font-semibold text-ink dark:text-fable mb-4">A Pilha Tradicional (e cara)</h4>
-            <ul class="space-y-4 font-sans text-ink-light dark:text-white/60">
-              <li class="flex items-center gap-3"><span class="text-terracotta line-through">App de Notas</span> para Wiki</li>
-              <li class="flex items-center gap-3"><span class="text-terracotta line-through">Gerenciador Complexo</span> para Kanban</li>
-              <li class="flex items-center gap-3"><span class="text-terracotta line-through">Chat Corporativo</span> para Comunicação</li>
-              <li class="flex items-center gap-3"><span class="text-terracotta line-through">Lousa Virtual</span> para Diagramas</li>
-            </ul>
-            <div class="mt-8 pt-6 border-t border-ink/10 dark:border-white/10">
-              <h4 class="font-serif text-xl font-semibold text-sage mb-2">A Solução SpecLine</h4>
-              <p class="font-sans text-ink-light dark:text-white/60">Uma única assinatura. Um único login. Foco absoluto.</p>
-            </div>
+
+          <div class="border-t border-ink/10 dark:border-white/10 pt-4 flex items-center justify-between font-mono text-xs">
+            <span class="font-bold text-ink dark:text-white">SpecLine All-In-One:</span>
+            <span class="px-2.5 py-1 rounded bg-sage/20 text-sage font-bold">Economia de até ~68%</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Core Benefits -->
-    <section class="py-24 px-6 bg-fable dark:bg-ink-darker max-w-6xl mx-auto">
-      <div class="text-center mb-16 max-w-2xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-4">Projetado para quem constrói</h2>
-        <p class="text-lg text-ink-light dark:text-white/60 font-sans">Sem métricas de vaidade ou relatórios gerenciais complexos. Ferramentas cruas e poderosas para quem põe a mão na massa.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300">
-          <div class="w-12 h-12 rounded-xl bg-terracotta/10 flex items-center justify-center text-terracotta mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-          </div>
-          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Onboarding em Segundos</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Não há curvas de aprendizado. Crie o workspace, convide os co-founders e comecem a mover cards e escrever especificações imediatamente. O setup não pode durar mais que o seu café.</p>
-        </div>
-        
-        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300">
-          <div class="w-12 h-12 rounded-xl bg-sage/10 flex items-center justify-center text-sage mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Retenção de Conhecimento</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Em startups, a rotatividade inicial é normal, mas perder conhecimento é fatal. Com a Wiki integrada ao código e às tarefas, toda decisão arquitetural fica documentada organicamente.</p>
-        </div>
-
-        <div class="card p-8 bg-white dark:bg-ink-paper hover:-translate-y-1 transition-transform duration-300">
-          <div class="w-12 h-12 rounded-xl bg-ink/5 dark:bg-white/5 flex items-center justify-center text-ink dark:text-fable mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
-          </div>
-          <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-3">Burn Rate Controlado</h3>
-          <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Não deixe que o custo das ferramentas escale mais rápido que a sua receita. Ao consolidar as quatro principais ferramentas do seu time em uma só, você garante um custo fixo previsível e enxuto.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Deep Dive / Speed Focus -->
-    <section class="py-24 px-6 bg-ink text-fable">
-      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-serif font-semibold mb-6">A Regra de Ouro: <br/><span class="text-sage">Fique no Fluxo.</span></h2>
-          <p class="text-lg text-fable-light opacity-90 font-sans leading-relaxed mb-8">
-            Em uma startup, o código é a única verdade. Qualquer ferramenta que te tire do editor de código ou interrompa sua linha de raciocínio é um obstáculo.
+    <!-- INTERACTIVE SIMULATORS SECTION -->
+    <section id="simuladores-startup" class="py-20 px-6 border-b border-ink/15 dark:border-white/10 bg-fable-light/60 dark:bg-ink-darker/60 relative">
+      <div class="max-w-6xl mx-auto space-y-12">
+        <div class="text-center max-w-2xl mx-auto space-y-3">
+          <span class="font-mono text-xs text-terracotta font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            Laboratório Interativo
+          </span>
+          <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light">
+            Simule o ganho de runway da sua equipe.
+          </h2>
+          <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+            Ajuste os parâmetros reais do seu time e teste a progressão de um ciclo de sprint MVP.
           </p>
-          <ul class="space-y-6">
-            <li class="flex gap-4">
-              <div class="mt-1 text-terracotta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold font-serif text-xl mb-1">Chats atrelados às tarefas</h4>
-                <p class="text-fable-light opacity-80 font-sans">Sem canais "gerais" cheios de memes. As discussões técnicas acontecem dentro do Card do Kanban, preservando o contexto da decisão para o futuro.</p>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <div class="mt-1 text-terracotta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-              </div>
-              <div>
-                <h4 class="font-semibold font-serif text-xl mb-1">Diagramas Nativos</h4>
-                <p class="text-fable-light opacity-80 font-sans">Escreva código Mermaid.js diretamente nos seus documentos. Desenhe diagramas de banco de dados e arquitetura sem nunca tocar no mouse.</p>
-              </div>
-            </li>
-          </ul>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 relative">
-          <div class="absolute inset-0 bg-gradient-to-br from-terracotta/10 to-transparent rounded-2xl pointer-events-none"></div>
-          <div class="space-y-4">
-            <div class="flex items-center gap-3 text-sm opacity-60 font-mono mb-4">
-              <span>~/startup/api</span>
-              <span>—</span>
-              <span>deploying to production...</span>
+
+        <!-- SIMULATOR 1: CALCULADORA DE BURN RATE & FOCO -->
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl p-6 md:p-10 bg-white dark:bg-ink-paper shadow-xl space-y-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-ink/10 dark:border-white/10 pb-4 font-mono text-xs">
+            <div>
+              <span class="font-bold text-ink dark:text-white uppercase text-sm flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 7h8"/><path d="M8 12h8"/><path d="M8 17h8"/></svg>
+                Calculadora de Burn Rate & Retenção de Foco
+              </span>
+              <p class="text-ink-light/60 dark:text-white/50 text-[11px] mt-0.5">Arraste o slider para alterar a quantidade de desenvolvedores.</p>
             </div>
-            <div class="h-2 bg-white/20 rounded w-full"></div>
-            <div class="h-2 bg-white/20 rounded w-5/6"></div>
-            <div class="h-2 bg-white/20 rounded w-4/6"></div>
-            <div class="flex items-center gap-2 mt-6 pt-6 border-t border-white/10">
-              <div class="w-8 h-8 rounded-full bg-sage flex items-center justify-center text-ink dark:text-fable"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg></div>
-              <span class="text-sage font-mono text-sm">Deploy success. Time to market: 24h.</span>
+            <span class="px-2.5 py-1 rounded bg-sage/20 text-sage font-bold self-start sm:self-auto">Cálculo Dinâmico</span>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-7 space-y-6">
+              <!-- Team Size Slider -->
+              <div class="space-y-2">
+                <div class="flex justify-between font-mono text-xs">
+                  <span class="text-ink dark:text-white font-bold">Tamanho Atual da Equipe:</span>
+                  <span id="startup-slider-display" class="px-2.5 py-0.5 bg-terracotta text-white font-bold rounded">6 membros</span>
+                </div>
+                <input id="startup-team-slider" 
+                       type="range" 
+                       min="2" 
+                       max="30" 
+                       value="6" 
+                       oninput="recalcStartupNumbers()" 
+                       class="w-full h-2 bg-ink/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer accent-terracotta">
+                <div class="flex justify-between text-[10px] font-mono text-ink-light/50 dark:text-white/40">
+                  <span>2 founders</span>
+                  <span>10 devs</span>
+                  <span>20 devs</span>
+                  <span>30 pessoas</span>
+                </div>
+              </div>
+
+              <!-- Replaceable Tools Checklist -->
+              <div class="space-y-2">
+                <span class="font-mono text-xs text-ink dark:text-white font-bold block">Assinaturas que o SpecLine substitui:</span>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 font-mono text-xs">
+                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/10 dark:border-white/10 cursor-pointer hover:border-terracotta transition-colors">
+                    <input type="checkbox" id="chk-tasks" checked onchange="recalcStartupNumbers()" class="rounded accent-terracotta">
+                    <span class="font-medium">Gestor de Tarefas</span>
+                  </label>
+
+                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/10 dark:border-white/10 cursor-pointer hover:border-terracotta transition-colors">
+                    <input type="checkbox" id="chk-docs" checked onchange="recalcStartupNumbers()" class="rounded accent-terracotta">
+                    <span class="font-medium">Wiki / Docs</span>
+                  </label>
+
+                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/10 dark:border-white/10 cursor-pointer hover:border-terracotta transition-colors">
+                    <input type="checkbox" id="chk-chat" checked onchange="recalcStartupNumbers()" class="rounded accent-terracotta">
+                    <span class="font-medium">Chat Corporativo</span>
+                  </label>
+
+                  <label class="flex items-center gap-2 p-2.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/10 dark:border-white/10 cursor-pointer hover:border-terracotta transition-colors">
+                    <input type="checkbox" id="chk-board" checked onchange="recalcStartupNumbers()" class="rounded accent-terracotta">
+                    <span class="font-medium">Lousa de Diagramas</span>
+                  </label>
+                </div>
+              </div>
             </div>
+
+            <!-- Dynamic Results -->
+            <div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-6 rounded-2xl bg-fable-light/40 dark:bg-ink-darker/50 border border-ink/15 dark:border-white/10 shadow-sm space-y-2">
+                <div class="flex items-center justify-between text-sage">
+                  <span class="font-mono text-[10px] uppercase font-bold tracking-wider">Economia Anual em SaaS</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div id="startup-annual-val" class="font-serif font-bold text-3xl md:text-4xl text-sage">R$ 13.824</div>
+                <div class="text-[11px] font-mono text-ink-light/60 dark:text-white/50">
+                  Caixa preservado para contratações ou marketing.
+                </div>
+              </div>
+
+              <div class="p-6 rounded-2xl bg-fable-light/40 dark:bg-ink-darker/50 border border-ink/15 dark:border-white/10 shadow-sm space-y-2">
+                <div class="flex items-center justify-between text-terracotta">
+                  <span class="font-mono text-[10px] uppercase font-bold tracking-wider">Horas Resgatadas/Mês</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div id="startup-hours-val" class="font-serif font-bold text-3xl md:text-4xl text-terracotta">168 hrs</div>
+                <div class="text-[11px] font-mono text-ink-light/60 dark:text-white/50">
+                  Sem perda de foco trocando de aba.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIMULATOR 2: SPRINT MVP DE 7 DIAS -->
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl p-6 md:p-10 bg-white dark:bg-ink-paper shadow-xl space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-ink/10 dark:border-white/10 pb-4">
+            <div>
+              <span class="font-mono text-xs text-terracotta uppercase font-bold tracking-wider flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                Fluxo Contínuo
+              </span>
+              <h4 class="font-serif text-2xl text-ink dark:text-white font-light">
+                Simulador do Ciclo de Lançamento MVP (7 Dias)
+              </h4>
+            </div>
+            <span class="text-xs font-mono text-ink-light/60 dark:text-white/40">Clique nas fases para inspecionar</span>
+          </div>
+
+          <!-- 4 Step Pipeline Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div id="startup-step-1" onclick="chooseSprintStep(1)" class="sprint-step-item p-4 rounded-xl border-2 border-terracotta bg-terracotta/10 cursor-pointer shadow-sm transition-all space-y-2">
+              <div class="flex items-center justify-between font-mono text-xs">
+                <span class="font-bold text-terracotta">DIA 01</span>
+                <span class="w-2 h-2 rounded-full bg-terracotta"></span>
+              </div>
+              <div class="font-serif font-bold text-base text-ink dark:text-white flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/></svg>
+                <span>PRD na Wiki</span>
+              </div>
+              <p class="font-sans text-xs text-ink-light dark:text-white/70 leading-relaxed">
+                Alinhamento de escopo e critérios de aceite escrito em SpecLine Docs.
+              </p>
+            </div>
+
+            <div id="startup-step-2" onclick="chooseSprintStep(2)" class="sprint-step-item p-4 rounded-xl border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 cursor-pointer hover:shadow-md transition-all space-y-2 opacity-75">
+              <div class="flex items-center justify-between font-mono text-xs text-ink-light/60 dark:text-white/40">
+                <span>DIA 02</span>
+                <span class="w-2 h-2 rounded-full bg-ink/20 dark:bg-white/20"></span>
+              </div>
+              <div class="font-serif font-bold text-base text-ink dark:text-white flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+                <span>Arquitetura & Nós</span>
+              </div>
+              <p class="font-sans text-xs text-ink-light dark:text-white/70 leading-relaxed">
+                Diagramas de fluxo Mermaid compilados e vinculados à documentação.
+              </p>
+            </div>
+
+            <div id="startup-step-3" onclick="chooseSprintStep(3)" class="sprint-step-item p-4 rounded-xl border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 cursor-pointer hover:shadow-md transition-all space-y-2 opacity-75">
+              <div class="flex items-center justify-between font-mono text-xs text-ink-light/60 dark:text-white/40">
+                <span>DIA 03-05</span>
+                <span class="w-2 h-2 rounded-full bg-ink/20 dark:bg-white/20"></span>
+              </div>
+              <div class="font-serif font-bold text-base text-ink dark:text-white flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>Kanban & Threads</span>
+              </div>
+              <p class="font-sans text-xs text-ink-light dark:text-white/70 leading-relaxed">
+                Cada tarefa é discutida na sua própria thread, sem canais gerais poluídos.
+              </p>
+            </div>
+
+            <div id="startup-step-4" onclick="chooseSprintStep(4)" class="sprint-step-item p-4 rounded-xl border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 cursor-pointer hover:shadow-md transition-all space-y-2 opacity-75">
+              <div class="flex items-center justify-between font-mono text-xs text-ink-light/60 dark:text-white/40">
+                <span>DIA 06-07</span>
+                <span class="w-2 h-2 rounded-full bg-ink/20 dark:bg-white/20"></span>
+              </div>
+              <div class="font-serif font-bold text-base text-ink dark:text-white flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5L20 7"/></svg>
+                <span>Deploy & Release</span>
+              </div>
+              <p class="font-sans text-xs text-ink-light dark:text-white/70 leading-relaxed">
+                Histórico de decisões preservado e changelog gerado automaticamente.
+              </p>
+            </div>
+          </div>
+
+          <!-- Dynamic Step Inspector Box -->
+          <div id="startup-step-box" class="p-5 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 font-mono text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <div class="text-terracotta font-bold uppercase flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Resultado do Dia 01:</span>
+              </div>
+              <div class="text-ink dark:text-white font-sans text-sm font-medium">
+                Especificação técnica aprovada por todos os fundadores em 40 minutos com tags de issue conectadas.
+              </div>
+            </div>
+            <button onclick="triggerStartupToast('Dia 01 Validado: Especificação aprovada sem reuniões de status!')" class="px-4 py-2 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-bold rounded-lg transition-colors cursor-pointer shrink-0 flex items-center gap-1.5">
+              <span>Validar Etapa</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Startup Workflow -->
-    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/5 dark:border-white/5">
-      <div class="max-w-6xl mx-auto">
-        <div class="text-center mb-16 max-w-2xl mx-auto">
-          <h2 class="text-3xl md:text-4xl font-serif text-ink dark:text-fable font-semibold mb-4">Feito para times enxutos.</h2>
-          <p class="text-lg text-ink-light dark:text-white/60 font-sans">Cada minuto economizado com burocracia é um minuto ganho no código.</p>
+    <!-- 3 PILLARS FOR STARTUPS -->
+    <section class="py-20 px-6 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+      <div class="max-w-6xl mx-auto space-y-12">
+        <div class="text-center max-w-3xl mx-auto space-y-3">
+          <span class="font-mono text-xs text-terracotta font-bold uppercase tracking-widest">Projetado para Quem Constrói</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+            Foco na entrega, zero burocracia de processo.
+          </h2>
+          <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+            Ferramentas diretas e sem relatórios inchados para equipes que precisam lançar rápido.
+          </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <!-- Item 1 -->
-          <div class="flex gap-6">
-            <div class="w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center text-sage shrink-0">
-              <span class="font-serif text-xl font-bold">1</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="p-8 border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 hover:-translate-y-1 transition-transform rounded-2xl space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center font-bold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-            <div>
-              <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-2">Onboarding em 5 Minutos</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Não há necessidade de contratar um consultor ágil. Crie seu Workspace, convide o time e comece a escrever seu primeiro PRD imediatamente. O design limpo é autoexplicativo.</p>
-            </div>
+            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Onboarding em Segundos</h3>
+            <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+              Crie o workspace, convide os sócios e comece a mover cards e redigir especificações imediatamente. O setup não leva mais que o tempo de um café.
+            </p>
           </div>
-          <!-- Item 2 -->
-          <div class="flex gap-6">
-            <div class="w-12 h-12 rounded-full bg-terracotta/20 flex items-center justify-center text-terracotta shrink-0">
-              <span class="font-serif text-xl font-bold">2</span>
+
+          <div class="p-8 border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 hover:-translate-y-1 transition-transform rounded-2xl space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-sage/20 text-sage flex items-center justify-center font-bold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
-            <div>
-              <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-2">Redução Imediata de Custos</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Pague por uma única licença em vez de sustentar assinaturas separadas para Wiki, Kanban e Whiteboard. Mais runway para sua startup focar no crescimento.</p>
-            </div>
+            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Retenção de Conhecimento</h3>
+            <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+              A rotatividade inicial em startups acontece, mas perder contexto arquitetural é fatal. Com a Wiki integrada às tarefas, toda decisão fica documentada naturalmente.
+            </p>
           </div>
-          <!-- Item 3 -->
-          <div class="flex gap-6">
-            <div class="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center text-ink dark:text-fable shrink-0">
-              <span class="font-serif text-xl font-bold">3</span>
+
+          <div class="p-8 border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 hover:-translate-y-1 transition-transform rounded-2xl space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center font-bold">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
-            <div>
-              <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-2">Decisões Documentadas</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Discussões técnicas acontecem dentro da tarefa ou documento correspondente. Quando um novo dev entrar no time, o contexto não estará perdido em um mar de mensagens instantâneas.</p>
-            </div>
-          </div>
-          <!-- Item 4 -->
-          <div class="flex gap-6">
-            <div class="w-12 h-12 rounded-full bg-sage/20 flex items-center justify-center text-sage shrink-0">
-              <span class="font-serif text-xl font-bold">4</span>
-            </div>
-            <div>
-              <h3 class="text-xl font-serif text-ink dark:text-fable font-semibold mb-2">Sem Overengineering</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed">Nós cortamos as gorduras dos sistemas corporativos. O Kanban do SpecLine tem os campos essenciais, os relatórios diretos ao ponto. Simples, rápido e responsivo.</p>
-            </div>
+            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Burn Rate Previsível</h3>
+            <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+              Não deixe que o custo das ferramentas escale mais rápido que a receita. Ao consolidar as ferramentas do seu time em uma só, você garante um custo fixo previsível e enxuto.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Final CTA -->
-    <section class="py-32 px-6 max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-serif text-ink dark:text-fable font-semibold mb-6">Pronto para acelerar?</h2>
-      <p class="text-xl text-ink-light dark:text-white/60 mb-10 font-sans">Pare de gerenciar ferramentas e comece a gerenciar seu produto.</p>
-      <a href="/register" class="btn-primary text-lg px-8 py-4 inline-flex items-center gap-2">
-        Criar Workspace da Startup
-      </a>
+    <!-- CALL TO ACTION -->
+    <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+      <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+        <p class="font-mono text-xs tracking-widest text-terracotta uppercase font-bold">Comece Grátis // Sem Cartão de Crédito</p>
+        <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+          Menos ferramentas. Mais produto no ar.
+        </h2>
+        <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+          Junte-se a fundadores e equipes de tecnologia que operam com foco absoluto.
+        </p>
+        <div class="pt-4 flex justify-center">
+          <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Criar Conta de Startup</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+        </div>
+      </div>
     </section>
   </main>
 
+  <!-- ACTION TOAST NOTIFICATION -->
+  <div id="startup-toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-ink dark:bg-white text-white dark:text-ink px-5 py-3 rounded-xl shadow-2xl font-mono text-xs font-bold flex items-center gap-2 border border-white/20">
+    <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+    <span id="startup-toast-text">Ação executada com sucesso!</span>
+  </div>
+
   <%= render 'shared/marketing_footer' %>
 </div>
+
+<script>
+  // 1. Calculator Logic
+  function recalcStartupNumbers() {
+    const slider = document.getElementById('startup-team-slider');
+    if (!slider) return;
+    const count = parseInt(slider.value, 10);
+    document.getElementById('startup-slider-display').innerText = `${count} ${count === 1 ? 'membro' : 'membros'}`;
+
+    let costPerUser = 0;
+    if (document.getElementById('chk-tasks').checked) costPerUser += 8.15;
+    if (document.getElementById('chk-docs').checked) costPerUser += 10.00;
+    if (document.getElementById('chk-chat').checked) costPerUser += 8.75;
+    if (document.getElementById('chk-board').checked) costPerUser += 8.00;
+
+    const monthlySavingsBRL = Math.round(count * costPerUser * 5.5);
+    const annualSavingsBRL = monthlySavingsBRL * 12;
+    const hoursSavedPerMonth = Math.round(count * 28);
+
+    document.getElementById('startup-annual-val').innerText = `R$ ${annualSavingsBRL.toLocaleString('pt-BR')}`;
+    document.getElementById('startup-hours-val').innerText = `${hoursSavedPerMonth} hrs`;
+  }
+
+  // 2. Sprint Simulator Logic
+  const startupStepData = {
+    1: {
+      title: "Resultado do Dia 01:",
+      desc: "Especificação técnica aprovada por todos os fundadores em 40 minutos com tags de issue conectadas.",
+      toast: "Dia 01 Validado: Especificação aprovada sem reuniões de status!"
+    },
+    2: {
+      title: "Resultado do Dia 02:",
+      desc: "Arquitetura e banco modelados no Whiteboard com diagrama Mermaid compilado e versionado diretamente na documentação.",
+      toast: "Dia 02 Validado: Topologia de dados compilada sem abrir ferramentas de terceiros!"
+    },
+    3: {
+      title: "Resultado do Dia 03-05:",
+      desc: "Cards do Kanban concluídos com discussões restritas às threads de cada issue. Zero ruído corporativo.",
+      toast: "Dia 03-05 Validado: 14 cards concluídos com histórico técnico auditável!"
+    },
+    4: {
+      title: "Resultado do Dia 06-07:",
+      desc: "Deploy em produção com changelog gerado automaticamente a partir das tarefas concluídas. MVP no ar!",
+      toast: "Dia 06-07 Validado: MVP publicado com foco absoluto!"
+    }
+  };
+
+  function chooseSprintStep(stepNum) {
+    for (let i = 1; i <= 4; i++) {
+      const item = document.getElementById(`startup-step-${i}`);
+      if (!item) continue;
+      if (i === stepNum) {
+        item.className = "sprint-step-item p-4 rounded-xl border-2 border-terracotta bg-terracotta/10 cursor-pointer shadow-sm transition-all space-y-2";
+        const dot = item.querySelector('.w-2');
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-terracotta";
+      } else {
+        item.className = "sprint-step-item p-4 rounded-xl border border-ink/15 dark:border-white/10 bg-fable-light/40 dark:bg-ink-darker/40 cursor-pointer hover:shadow-md transition-all space-y-2 opacity-75";
+        const dot = item.querySelector('.w-2');
+        if (dot) dot.className = "w-2 h-2 rounded-full bg-ink/20 dark:bg-white/20";
+      }
+    }
+
+    const data = startupStepData[stepNum];
+    const box = document.getElementById('startup-step-box');
+    if (!box || !data) return;
+    box.innerHTML = `
+      <div class="space-y-1">
+        <div class="text-terracotta font-bold uppercase flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>${data.title}</span>
+        </div>
+        <div class="text-ink dark:text-white font-sans text-sm font-medium">
+          ${data.desc}
+        </div>
+      </div>
+      <button onclick="triggerStartupToast('${data.toast}')" class="px-4 py-2 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-bold rounded-lg transition-colors cursor-pointer shrink-0 flex items-center gap-1.5">
+        <span>Validar Etapa</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    `;
+  }
+
+  function triggerStartupToast(msg) {
+    const toast = document.getElementById('startup-toast');
+    const msgEl = document.getElementById('startup-toast-text');
+    if (!toast || !msgEl) return;
+    msgEl.innerText = msg;
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3200);
+  }
+</script>

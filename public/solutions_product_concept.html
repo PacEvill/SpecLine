@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solução Para Times de Produto — SpecLine (Concept Interativo)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+            },
+            'sync-flash': {
+              '0%': { backgroundColor: 'rgba(165, 181, 161, 0.4)', transform: 'scale(1.02)' },
+              '100%': { backgroundColor: 'transparent', transform: 'scale(1)' },
+            },
+            'pop-in': {
+              '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+            'sync-flash': 'sync-flash 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            'pop-in': 'pop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(165, 181, 161, 0.3);
+    }
+    .scrollbar-subtle::-webkit-scrollbar {
+      height: 5px;
+      width: 5px;
+    }
+    .scrollbar-subtle::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.35);
+      border-radius: 4px;
+    }
+    .custom-range {
+      accent-color: #A5B5A1;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-sage/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="flex items-center justify-between border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase h-16 relative z-10 bg-fable-light dark:bg-[#18181A] px-6">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden lg:flex items-center justify-center gap-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Início</a>
+      <a href="/features/docs" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Documentos</a>
+      <a href="/features/kanban" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Tarefas</a>
+      <a href="/features/chat" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Comunicação</a>
+      <a href="/features/whiteboard" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Quadros</a>
+      
+      <!-- Solutions Dropdown Menu -->
+      <div class="relative group py-4">
+        <button class="text-ink dark:text-white font-bold border-b-2 border-sage flex items-center gap-1.5 focus:outline-none">
+          <span>Soluções</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-56">
+          <div class="bg-white dark:bg-ink-paper rounded-xl shadow-2xl border border-ink/10 dark:border-white/10 p-1.5 flex flex-col gap-1 text-left">
+            <a href="/solutions_startups_concept.html" class="p-2.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink/80 dark:text-white/80 transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              <span>Para Startups</span>
+            </a>
+            <a href="/solutions_agencies_concept.html" class="p-2.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink/80 dark:text-white/80 transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              <span>Para Agências</span>
+            </a>
+            <a href="/solutions_product_concept.html" class="p-2.5 rounded-lg bg-sage/15 text-sage font-bold flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              <span>Times de Produto</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-sage transition-colors">Preços</a>
+    </div>
+
+    <div class="flex items-center justify-end gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-sage dark:hover:bg-sage dark:hover:text-ink px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED SOLUTIONS SUB-NAV BAR (SWITCH PAGES DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-sage">Páginas de Soluções:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/solutions_startups_concept.html" class="px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-terracotta hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+          <span>Startups</span>
+        </a>
+        <a href="/solutions_agencies_concept.html" class="px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ocean hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Agências</span>
+        </a>
+        <a href="/solutions_product_concept.html" class="px-3.5 py-1.5 rounded-lg bg-sage text-ink font-bold flex items-center gap-2 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Times de Produto (Ativo)</span>
+        </a>
+      </div>
+      <a href="/solutions_concept.html" class="text-ink-light/60 dark:text-white/50 hover:text-ink dark:hover:text-white transition-colors text-[11px] underline underline-offset-4">
+        Ver Central de Soluções →
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION: Dedicated Product Squads Pitch -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-sage/15 dark:bg-sage/10 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage/20 text-sage text-xs font-mono font-bold tracking-wide uppercase">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>Solução sob Medida: Para PMs, Tech Leads & Squads de Engenharia</span>
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Menos ruído, mais código.<br>
+        <i class="text-sage font-serif-italic">O fim do telefone sem fio.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Product Managers não deveriam ser despachantes de tickets e Engenheiros não deveriam garimpar critérios de aceite perdidos em chats corporativos. No SpecLine, a especificação, o Kanban e as decisões técnicas vivem juntos.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="pt-6 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-sage dark:hover:bg-sage dark:hover:text-ink font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Otimizar Meu Processo de Produto</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#simulador-sincronia" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-sage hover:text-sage font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-2">
+          <span>Testar Tríade ao Vivo</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- TELEMETRY BAROMETER (PRODUCT IMPACT METRICS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+      
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-sage/20 text-sage font-bold rounded">
+          <span class="w-1.5 h-1.5 rounded-full bg-sage animate-pulse"></span>
+          SINCRONIA BI-DIRECIONAL NATIVA
+        </span>
+        <span class="text-ink-light dark:text-white/70">PRD ↔ Kanban ↔ Chat em Uma Única Base</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+        <div class="flex items-center gap-2">
+          <span>Alinhamentos Repetitivos:</span>
+          <span class="text-sage font-bold">-80% Reuniões</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2">
+          <span>Retrabalho por Desvio:</span>
+          <span class="text-sage font-bold">Zero Ambiguidade</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Lead Time de Entrega:</span>
+          <span class="text-ocean font-bold">3.2x Mais Ágil</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROBLEM STATEMENT SECTION -->
+  <section class="py-20 px-6 border-b border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <div class="lg:col-span-7 space-y-6">
+        <span class="font-mono text-xs text-sage uppercase font-bold tracking-wider flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+          A Fricção Silenciosa das Squads
+        </span>
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light leading-tight">
+          A especificação nasce na Wiki e morre no primeiro pull request.
+        </h2>
+        <div class="space-y-4 text-ink-light dark:text-white/70 font-sans text-base leading-relaxed">
+          <p>
+            O ciclo tradicional de produto é fragmentado: o PM redige o documento de requisitos (PRD) em uma ferramenta; o time de engenharia desmembra em dezenas de cartões num gerenciador de tickets separado; o designer anexa protótipos em abas externas; e as dúvidas críticas de regras de negócio são sanadas informalmente em canais efêmeros de mensageiros corporativos.
+          </p>
+          <p>
+            Quando o primeiro PR chega ao staging, ninguém lembra qual versão dos critérios de aceite estava valendo. <strong>O SpecLine resolve isso eliminando a fronteira entre documentação e tarefa.</strong>
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-ink/10 dark:border-white/10 font-mono text-xs">
+          <div class="p-3 bg-fable-light dark:bg-ink/50 border border-ink/10 dark:border-white/10 rounded">
+            <span class="text-terracotta font-bold block mb-1">Stack Fragmentada</span>
+            <span class="text-ink/60 dark:text-white/60">Critérios desatualizados, links quebrados e decisões perdidas no histórico do chat.</span>
+          </div>
+          <div class="p-3 bg-fable-light dark:bg-ink/50 border border-sage/40 rounded">
+            <span class="text-sage font-bold block mb-1">SpecLine Unificado</span>
+            <span class="text-ink/60 dark:text-white/60">Se o critério muda no documento, a tarefa avisa a engenharia automaticamente.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comparative Flow Visual -->
+      <div class="lg:col-span-5 bg-fable dark:bg-ink-darker p-8 border border-ink/15 dark:border-white/10 rounded-2xl relative overflow-hidden shadow-lg">
+        <div class="text-xs font-mono uppercase tracking-widest text-ink/50 dark:text-white/40 mb-6 flex items-center justify-between">
+          <span>Fluxo de Informação</span>
+          <span class="text-sage font-bold">100% Rastreável</span>
+        </div>
+
+        <div class="space-y-4 relative">
+          <!-- Step 1 -->
+          <div class="p-4 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-sage/20 text-sage flex items-center justify-center font-bold text-sm shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="text-xs">
+              <span class="font-bold text-ink dark:text-white block font-sans">1. PRD & Regras de Negócio</span>
+              <span class="text-ink/60 dark:text-white/60 font-mono">Docs com diagramas de arquitetura Mermaid</span>
+            </div>
+          </div>
+
+          <!-- Connector -->
+          <div class="flex justify-center -my-2">
+            <div class="w-px h-6 bg-sage/60"></div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="p-4 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl flex items-center gap-4">
+            <div class="w-10 h-10 rounded-lg bg-terracotta/20 text-terracotta flex items-center justify-center font-bold text-sm shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/></svg>
+            </div>
+            <div class="text-xs">
+              <span class="font-bold text-ink dark:text-white block font-sans">2. Tarefas no Kanban Vinculadas</span>
+              <span class="text-ink/60 dark:text-white/60 font-mono">Critérios de aceite sincronizados sem cópia manual</span>
+            </div>
+          </div>
+
+          <!-- Connector -->
+          <div class="flex justify-center -my-2">
+            <div class="w-px h-6 bg-sage/60"></div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="p-4 bg-white dark:bg-ink-paper border border-sage/60 rounded-xl flex items-center gap-4 shadow-md bg-sage/5">
+            <div class="w-10 h-10 rounded-lg bg-ocean/20 text-ocean flex items-center justify-center font-bold text-sm shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="text-xs">
+              <span class="font-bold text-sage block font-sans">3. Chat Contextual por Tarefa</span>
+              <span class="text-ink/60 dark:text-white/60 font-mono">Dúvidas técnicas registradas no log histórico</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SIMULATOR 1: LIVE TRINITY SYNC (A TRÍADE EM AÇÃO) -->
+  <section id="simulador-sincronia" class="py-24 px-6 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative">
+    <div class="max-w-7xl mx-auto space-y-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sage/20 text-sage text-xs font-mono font-bold tracking-widest uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span>Laboratório Interativo SpecLine</span>
+        </div>
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light">
+          A Tríade da Entrega em Sincronia Real
+        </h2>
+        <p class="text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic">
+          Experimente abaixo: altere um critério no PRD ou complete uma tarefa no Kanban e observe como a documentação, o cartão da sprint e o log de auditoria se atualizam simultaneamente em milissegundos.
+        </p>
+      </div>
+
+      <!-- Workbench Container -->
+      <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+        
+        <!-- Workbench Toolbar -->
+        <div class="p-4 bg-fable-dark/40 dark:bg-ink-darker border-b border-ink/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+          
+          <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-2 px-2.5 py-1 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+              SQUAD: AUTH & IDENTITY
+            </span>
+            <span class="text-ink/60 dark:text-white/60">Sprint 42 (Q3 Core Delivery)</span>
+          </div>
+
+          <!-- Role Perspective Selector -->
+          <div class="flex items-center gap-1.5 bg-white dark:bg-ink/60 p-1 rounded-lg border border-ink/10 dark:border-white/10">
+            <span class="text-[10px] uppercase text-ink/40 dark:text-white/40 px-2">Visão:</span>
+            <button onclick="setRole('pm')" id="role-pm-btn" class="px-2.5 py-1 rounded text-xs font-bold bg-sage text-ink transition-all">Product Manager</button>
+            <button onclick="setRole('eng')" id="role-eng-btn" class="px-2.5 py-1 rounded text-xs font-medium text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 transition-all">Tech Lead</button>
+            <button onclick="setRole('qa')" id="role-qa-btn" class="px-2.5 py-1 rounded text-xs font-medium text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 transition-all">QA Engineer</button>
+          </div>
+
+        </div>
+
+        <!-- 3-Column Interactive Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-ink/10 dark:divide-white/10">
+          
+          <!-- COLUMN 1: PRD DOCUMENT (WIKI) -->
+          <div class="lg:col-span-4 p-6 flex flex-col justify-between space-y-6 bg-white dark:bg-ink-paper">
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-sage font-bold flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Coluna 1: Documento PRD
+                </span>
+                <span id="prd-version-badge" class="font-mono text-[10px] px-2 py-0.5 rounded bg-sage/20 text-sage font-bold">
+                  v2.4 Aprovado
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-serif text-xl font-bold text-ink dark:text-white">
+                  RFC-104: Autenticação Segura & MFA
+                </h3>
+                <p class="text-xs text-ink/50 dark:text-white/50 font-mono pt-1">
+                  Autor: Sofia Mendes (Staff PM) • Revisão: Engenharia
+                </p>
+              </div>
+
+              <div class="p-3.5 bg-fable-light dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 space-y-2">
+                <span class="font-mono text-[10px] uppercase font-bold text-ink/40 dark:text-white/40 block">
+                  Regra de Negócio Selecionada
+                </span>
+                <div id="prd-auth-mode-desc" class="text-xs text-ink dark:text-fable font-sans leading-relaxed">
+                  <strong>Padrão Atual:</strong> Implementar suporte FIDO2 / WebAuthn biométrico nativo com fallback transparente via Magic Link assinado em 15 minutos.
+                </div>
+              </div>
+
+              <!-- Live Acceptance Criteria Checklist in PRD -->
+              <div class="space-y-2 pt-2">
+                <span class="font-mono text-[10px] uppercase font-bold tracking-wider text-ink/50 dark:text-white/50 block">
+                  Critérios de Aceite Vivos (Gherkin/Checklist):
+                </span>
+                <div class="space-y-1.5 text-xs font-mono">
+                  
+                  <label class="flex items-start gap-2.5 p-2 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 cursor-pointer transition-colors">
+                    <input type="checkbox" id="crit-1" checked onchange="toggleCriterion(1)" class="mt-0.5 custom-range rounded text-sage focus:ring-sage cursor-pointer">
+                    <span id="crit-text-1" class="text-ink dark:text-white line-through opacity-60">1. Desafio biométrico WebAuthn compatível com iOS/Android</span>
+                  </label>
+
+                  <label class="flex items-start gap-2.5 p-2 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 cursor-pointer transition-colors">
+                    <input type="checkbox" id="crit-2" checked onchange="toggleCriterion(2)" class="mt-0.5 custom-range rounded text-sage focus:ring-sage cursor-pointer">
+                    <span id="crit-text-2" class="text-ink dark:text-white line-through opacity-60">2. Fallback por Magic Link assinado (JWT expira em 15m)</span>
+                  </label>
+
+                  <label class="flex items-start gap-2.5 p-2 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 cursor-pointer transition-colors">
+                    <input type="checkbox" id="crit-3" onchange="toggleCriterion(3)" class="mt-0.5 custom-range rounded text-sage focus:ring-sage cursor-pointer">
+                    <span id="crit-text-3" class="text-ink dark:text-white">3. Rate limit de 5 tentativas por IP/dispositivo por minuto</span>
+                  </label>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Action: Update Acceptance Criteria from PRD -->
+            <div class="pt-4 border-t border-ink/10 dark:border-white/10">
+              <button onclick="triggerPrdSpecChange()" id="btn-prd-update" class="w-full py-2.5 px-3 bg-sage/20 hover:bg-sage text-ink dark:text-white font-mono text-xs font-bold rounded-lg border border-sage/40 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                <span>PM: Alterar Requisito no PRD</span>
+              </button>
+              <span class="text-[10px] text-ink/40 dark:text-white/40 text-center block mt-1.5 font-mono">
+                Simula o Product Manager atualizando os requisitos na wiki
+              </span>
+            </div>
+
+          </div>
+
+          <!-- COLUMN 2: KANBAN EXECUTION (SPRINT CARD) -->
+          <div class="lg:col-span-4 p-6 flex flex-col justify-between space-y-6 bg-fable-light/40 dark:bg-ink-darker/60" id="kanban-col-container">
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-terracotta font-bold flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/></svg>
+                  Coluna 2: Tarefa no Kanban
+                </span>
+                <span id="kanban-status-tag" class="font-mono text-[10px] px-2 py-0.5 rounded bg-terracotta/20 text-terracotta font-bold">
+                  Em Progresso
+                </span>
+              </div>
+
+              <!-- Task Card Component -->
+              <div id="interactive-task-card" class="p-5 bg-white dark:bg-ink-paper rounded-xl border-2 border-sage/40 shadow-lg space-y-4 transition-all">
+                
+                <div class="flex items-start justify-between gap-2">
+                  <div class="space-y-1">
+                    <span class="font-mono text-[10px] px-1.5 py-0.5 bg-ink/10 dark:bg-white/10 text-ink dark:text-white rounded font-semibold">
+                      ENG-409
+                    </span>
+                    <h4 class="font-sans font-bold text-sm text-ink dark:text-white">
+                      Implementar Backend FIDO2 & Magic Link
+                    </h4>
+                  </div>
+                  <div class="w-7 h-7 rounded-full bg-ocean/20 text-ocean flex items-center justify-center font-bold text-xs shrink-0" title="Tech Lead Responsável">
+                    LM
+                  </div>
+                </div>
+
+                <!-- Linked PRD Pill -->
+                <div class="p-2 bg-sage/10 rounded border border-sage/20 flex items-center justify-between text-[11px] font-mono">
+                  <span class="text-sage font-bold flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    <span>Vínculo: RFC-104 § 4.2</span>
+                  </span>
+                  <span id="sync-indicator" class="text-[10px] text-sage animate-pulse">Sincronizado</span>
+                </div>
+
+                <!-- Live Progress Bar -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-[11px] font-mono">
+                    <span class="text-ink/60 dark:text-white/60">Progresso dos Critérios:</span>
+                    <span id="kanban-progress-pct" class="font-bold text-sage">66% (2/3)</span>
+                  </div>
+                  <div class="w-full bg-ink/10 dark:bg-white/10 h-2 rounded-full overflow-hidden">
+                    <div id="kanban-progress-bar" class="bg-sage h-full transition-all duration-500" style="width: 66%;"></div>
+                  </div>
+                </div>
+
+                <!-- Acceptance Criteria Checklist Replica in Card -->
+                <div class="pt-2 border-t border-ink/10 dark:border-white/10 space-y-1.5 text-xs">
+                  <div class="text-[10px] font-mono uppercase text-ink/40 dark:text-white/40">Checklist da Tarefa:</div>
+                  <div id="card-crit-list" class="space-y-1 text-[11px] font-mono text-ink/70 dark:text-white/70">
+                    <div id="card-crit-1" class="flex items-center gap-1.5 text-sage">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span>WebAuthn FIDO2</span>
+                    </div>
+                    <div id="card-crit-2" class="flex items-center gap-1.5 text-sage">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span>Fallback Magic Link</span>
+                    </div>
+                    <div id="card-crit-3" class="flex items-center gap-1.5 text-ink/40 dark:text-white/40">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg>
+                      <span>Rate limit estrito</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Action: Complete Task Step -->
+            <div class="pt-4 border-t border-ink/10 dark:border-white/10">
+              <button onclick="toggleCriterion(3)" id="btn-toggle-last" class="w-full py-2.5 px-3 bg-terracotta/20 hover:bg-terracotta text-ink dark:text-white font-mono text-xs font-bold rounded-lg border border-terracotta/40 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span id="btn-toggle-last-text">Engenharia: Concluir Rate Limit</span>
+              </button>
+              <span class="text-[10px] text-ink/40 dark:text-white/40 text-center block mt-1.5 font-mono">
+                Marca o critério final como concluído na sprint
+              </span>
+            </div>
+
+          </div>
+
+          <!-- COLUMN 3: CONTEXTUAL CHAT & AUDIT LOG -->
+          <div class="lg:col-span-4 p-6 flex flex-col justify-between space-y-6 bg-white dark:bg-ink-paper">
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="font-mono text-[11px] uppercase tracking-wider text-ocean font-bold flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Coluna 3: Chat & Auditoria
+                </span>
+                <span class="font-mono text-[10px] px-2 py-0.5 rounded bg-ocean/20 text-ocean font-bold">
+                  Thread de ENG-409
+                </span>
+              </div>
+
+              <div class="text-xs text-ink/50 dark:text-white/50 font-mono">
+                Decisões técnicas gravadas para sempre junto à tarefa.
+              </div>
+
+              <!-- Chat & Audit Messages Stream -->
+              <div id="chat-stream" class="space-y-3 max-h-[300px] overflow-y-auto scrollbar-subtle pr-1 text-xs">
+                
+                <!-- System Audit Message 1 -->
+                <div class="p-2.5 bg-ink/5 dark:bg-white/5 border-l-2 border-sage rounded-r text-[11px] space-y-1 font-mono">
+                  <div class="flex items-center justify-between text-ink/50 dark:text-white/50">
+                    <span class="font-bold text-sage">[SpecLine Bot]</span>
+                    <span>10:42</span>
+                  </div>
+                  <div class="text-ink dark:text-white">
+                    Tarefa ENG-409 criada e vinculada ao PRD RFC-104 §4.2.
+                  </div>
+                </div>
+
+                <!-- User Message 1: Tech Lead -->
+                <div class="p-3 bg-fable-light dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 space-y-1">
+                  <div class="flex items-center justify-between font-mono text-[10px]">
+                    <span class="font-bold text-ocean">Lucas Maia (Tech Lead)</span>
+                    <span class="text-ink/40 dark:text-white/40">11:15</span>
+                  </div>
+                  <p class="font-sans text-xs text-ink dark:text-white/90">
+                    Subimos o mock do endpoint WebAuthn para validação com os clientes iOS 17+.
+                  </p>
+                </div>
+
+                <!-- System Audit Message 2 -->
+                <div class="p-2.5 bg-ink/5 dark:bg-white/5 border-l-2 border-sage rounded-r text-[11px] space-y-1 font-mono">
+                  <div class="flex items-center justify-between text-ink/50 dark:text-white/50">
+                    <span class="font-bold text-sage">[SpecLine Bot]</span>
+                    <span>11:20</span>
+                  </div>
+                  <div class="text-ink dark:text-white">
+                    Critério 1 e 2 validados em staging pelo QA.
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Quick Comment Box -->
+            <div class="pt-4 border-t border-ink/10 dark:border-white/10 space-y-2">
+              <div class="flex gap-2">
+                <input type="text" id="quick-chat-input" placeholder="Enviar observação técnica..." class="flex-1 px-3 py-2 text-xs bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/15 rounded-lg focus:outline-none focus:border-sage text-ink dark:text-white font-sans">
+                <button onclick="sendChatMessage()" class="px-4 py-2 bg-ink text-white dark:bg-white dark:text-ink hover:bg-sage dark:hover:bg-sage dark:hover:text-ink rounded-lg font-mono text-xs font-bold transition-all cursor-pointer">
+                  Enviar
+                </button>
+              </div>
+              <div class="flex gap-1.5 overflow-x-auto scrollbar-subtle pt-1">
+                <button onclick="insertQuickComment('Aprovado nos testes de carga!')" class="text-[10px] font-mono px-2 py-1 bg-ink/5 dark:bg-white/5 hover:bg-sage/20 rounded text-ink/70 dark:text-white/70 whitespace-nowrap transition-colors">
+                  + Aprovado nos testes
+                </button>
+                <button onclick="insertQuickComment('PR mergeado na branch main.')" class="text-[10px] font-mono px-2 py-1 bg-ink/5 dark:bg-white/5 hover:bg-sage/20 rounded text-ink/70 dark:text-white/70 whitespace-nowrap transition-colors">
+                  + PR mergeado
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Feedback Notification Banner -->
+        <div id="sync-notification-bar" class="px-6 py-3 bg-sage/20 border-t border-sage/30 flex items-center justify-between text-xs font-mono text-sage font-bold">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span id="sync-notification-text">Sincronia ativa: Qualquer alteração no PRD propaga para a sprint sem necessidade de sync manual.</span>
+          </div>
+          <span class="text-[10px] uppercase tracking-wider text-ink/40 dark:text-white/40">Latência: &lt; 12ms</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SIMULATOR 2: SPRINT WASTE & VELOCITY DIAGNOSTIC -->
+  <section class="py-24 px-6 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <span class="font-mono text-xs text-sage uppercase font-bold tracking-widest flex items-center justify-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          Diagnóstico de Eficiência de Squad
+        </span>
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light">
+          Calcule as horas desperdiçadas na sua sprint
+        </h2>
+        <p class="text-base text-ink-light dark:text-white/70 font-serif italic">
+          Descubra quanto tempo sua equipe de engenharia e produto recupera ao aposentar o vai-e-vem entre ferramentas desconectadas de tarefas, wikis e chats.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        
+        <!-- Controls Column -->
+        <div class="lg:col-span-6 bg-fable-light dark:bg-ink-darker p-8 rounded-2xl border border-ink/15 dark:border-white/10 space-y-8">
+          
+          <!-- Slider 1: Team Members -->
+          <div class="space-y-3">
+            <div class="flex justify-between items-center text-sm font-mono">
+              <span class="text-ink/80 dark:text-white/80 font-bold">Membros na Squad (Devs, PMs, Designers):</span>
+              <span id="slider-team-val" class="text-base font-bold text-sage px-2 py-0.5 bg-sage/10 rounded">8 pessoas</span>
+            </div>
+            <input type="range" min="3" max="50" value="8" id="slider-team" oninput="calculateSprintWaste()" class="w-full h-2 bg-ink/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer custom-range">
+            <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+              <span>3 pessoas</span>
+              <span>25 pessoas</span>
+              <span>50+ pessoas</span>
+            </div>
+          </div>
+
+          <!-- Slider 2: Weekly Alignment Hours Lost -->
+          <div class="space-y-3">
+            <div class="flex justify-between items-center text-sm font-mono">
+              <span class="text-ink/80 dark:text-white/80 font-bold">Horas de Reuniões de Alinhamento / Semana:</span>
+              <span id="slider-hours-val" class="text-base font-bold text-terracotta px-2 py-0.5 bg-terracotta/10 rounded">6h / pessoa</span>
+            </div>
+            <input type="range" min="2" max="15" value="6" id="slider-hours" oninput="calculateSprintWaste()" class="w-full h-2 bg-ink/10 dark:bg-white/10 rounded-lg appearance-none cursor-pointer custom-range">
+            <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+              <span>2h (Ágil)</span>
+              <span>8h (Média de Mercado)</span>
+              <span>15h (Caótico)</span>
+            </div>
+          </div>
+
+          <!-- Feature: Native Mermaid Toggle -->
+          <div class="pt-4 border-t border-ink/10 dark:border-white/10 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-ink dark:text-white block font-sans">Diagramas Mermaid.js Nativos</span>
+              <span class="text-[11px] text-ink/50 dark:text-white/50 font-mono">Substitui ferramentas visuais externas e links desatualizados</span>
+            </div>
+            <input type="checkbox" id="toggle-mermaid" checked onchange="calculateSprintWaste()" class="w-4 h-4 rounded text-sage focus:ring-sage custom-range cursor-pointer">
+          </div>
+
+        </div>
+
+        <!-- Live Calculation Metrics Dashboard -->
+        <div class="lg:col-span-6 space-y-4">
+          
+          <div class="grid grid-cols-2 gap-4">
+            
+            <div class="p-6 bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl space-y-1">
+              <span class="font-mono text-[10px] uppercase text-ink/50 dark:text-white/50 font-bold">Horas de Foco Devolvidas / Mês</span>
+              <div id="stat-hours-saved" class="text-3xl md:text-4xl font-mono font-bold text-sage">154h</div>
+              <span class="text-xs text-ink/60 dark:text-white/60 font-sans">Equivalente a 1 dev sênior a mais no time</span>
+            </div>
+
+            <div class="p-6 bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl space-y-1">
+              <span class="font-mono text-[10px] uppercase text-ink/50 dark:text-white/50 font-bold">Economia em Retrabalho de Código</span>
+              <div id="stat-rework-saved" class="text-3xl md:text-4xl font-mono font-bold text-ocean">R$ 21.500</div>
+              <span class="text-xs text-ink/60 dark:text-white/60 font-sans">Menos PRs descartados por desvio</span>
+            </div>
+
+          </div>
+
+          <div class="p-6 bg-fable-light dark:bg-ink-darker border-2 border-sage/40 rounded-xl space-y-3">
+            <div class="flex items-center justify-between font-mono text-xs">
+              <span class="font-bold text-ink dark:text-white">Aceleração do Ciclo de Entrega (Lead Time):</span>
+              <span id="stat-speed-boost" class="text-sage font-bold text-base">+38% Mais Veloz</span>
+            </div>
+            <div class="w-full bg-ink/10 dark:bg-white/10 h-2.5 rounded-full overflow-hidden">
+              <div id="speed-meter" class="bg-sage h-full transition-all duration-500" style="width: 78%;"></div>
+            </div>
+            <p class="text-xs text-ink/60 dark:text-white/60 font-sans leading-relaxed">
+              Com as regras de negócio declaradas no próprio PRD e espelhadas na tarefa, o tempo entre a aprovação do design e o primeiro deploy de homologação cai drasticamente.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3 PILLARS DEEP DIVE -->
+  <section class="py-24 px-6 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+    <div class="max-w-6xl mx-auto space-y-16">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-4">
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light">
+          A Tríade que Elimina o Ruído
+        </h2>
+        <p class="text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic">
+          O SpecLine foi desenhado especificamente para acabar com o atrito diário entre quem pensa o produto e quem escreve o software.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <!-- Pillar 1 -->
+        <div class="bg-white dark:bg-ink-paper p-8 rounded-2xl border border-ink/10 dark:border-white/10 space-y-5 hover-card-lift">
+          <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center font-bold text-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h3 class="text-2xl font-serif text-ink dark:text-white font-semibold">
+            1. Especificações Vivas
+          </h3>
+          <p class="text-ink-light dark:text-white/70 font-sans text-sm leading-relaxed">
+            Escreva Product Requirements Documents (PRDs) com tabelas de critérios de aceite e diagramas Mermaid.js embutidos. O diagrama de arquitetura é renderizado diretamente do código, sem desincronizar quando a modelagem de banco evolui.
+          </p>
+          <div class="pt-2 font-mono text-xs text-sage font-semibold flex items-center gap-1">
+            <span>Docs + Mermaid.js</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="bg-white dark:bg-ink-paper p-8 rounded-2xl border border-ink/10 dark:border-white/10 space-y-5 hover-card-lift">
+          <div class="w-12 h-12 rounded-xl bg-terracotta/20 text-terracotta flex items-center justify-center font-bold text-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/></svg>
+          </div>
+          <h3 class="text-2xl font-serif text-ink dark:text-white font-semibold">
+            2. Execução Vinculada
+          </h3>
+          <p class="text-ink-light dark:text-white/70 font-sans text-sm leading-relaxed">
+            Transforme seções de requisitos em tarefas do Kanban em um único clique. Cada tarefa mantém uma âncora viva com a especificação original: se o PM altera o escopo, a tarefa sinaliza a mudança visualmente para o desenvolvedor.
+          </p>
+          <div class="pt-2 font-mono text-xs text-terracotta font-semibold flex items-center gap-1">
+            <span>Rastreabilidade Total</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="bg-white dark:bg-ink-paper p-8 rounded-2xl border border-ink/10 dark:border-white/10 space-y-5 hover-card-lift">
+          <div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center font-bold text-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3 class="text-2xl font-serif text-ink dark:text-white font-semibold">
+            3. Decisões Auditáveis
+          </h3>
+          <p class="text-ink-light dark:text-white/70 font-sans text-sm leading-relaxed">
+            Elimine conversas soltas em mensageiros genéricos que ninguém encontra meses depois. O chat do SpecLine é acoplado ao contexto de cada projeto ou tarefa, gerando um histórico auditável do motivo pelo qual cada decisão de arquitetura foi tomada.
+          </p>
+          <div class="pt-2 font-mono text-xs text-ocean font-semibold flex items-center gap-1">
+            <span>Zero Ruído Corporativo</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMPARISON MATRIX: SPECLINE VS TRADITIONAL TOOL SPRAWL -->
+  <section class="py-24 px-6 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+    <div class="max-w-5xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <h2 class="text-3xl md:text-5xl font-serif text-ink dark:text-white font-light">
+          A Diferença na Rotina da Squad
+        </h2>
+        <p class="text-base text-ink-light dark:text-white/70 font-serif italic">
+          Como o dia a dia do seu time muda após migrar da stack fragmentada para o SpecLine.
+        </p>
+      </div>
+
+      <div class="overflow-x-auto scrollbar-subtle">
+        <table class="w-full text-left font-mono text-xs border-collapse">
+          <thead>
+            <tr class="border-b-2 border-ink/20 dark:border-white/20 text-[11px] uppercase tracking-wider">
+              <th class="py-4 px-4 text-ink/50 dark:text-white/50">Cenário de Desenvolvimento</th>
+              <th class="py-4 px-4 text-terracotta">Stack Fragmentada (Docs + Tarefas + Chats Separados)</th>
+              <th class="py-4 px-4 text-sage bg-sage/5">SpecLine Unificado</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-ink/10 dark:divide-white/10">
+            <tr>
+              <td class="py-4 px-4 font-bold text-ink dark:text-white font-sans">
+                Mudança de Requisito no Meio da Sprint
+              </td>
+              <td class="py-4 px-4 text-ink/70 dark:text-white/70">
+                PM edita na wiki, esquece de atualizar a ferramenta de tarefas. O Dev entrega o critério antigo e gera retrabalho.
+              </td>
+              <td class="py-4 px-4 text-sage font-bold bg-sage/5">
+                Alterações no PRD propagam um aviso imediato com diff destacado no cartão do Kanban da Engenharia.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-ink dark:text-white font-sans">
+                Dúvidas de Regra de Negócio
+              </td>
+              <td class="py-4 px-4 text-ink/70 dark:text-white/70">
+                Discussão de 40 mensagens num canal público ou chat disperso. Em poucos meses, o histórico é perdido.
+              </td>
+              <td class="py-4 px-4 text-sage font-bold bg-sage/5">
+                Discussão acontece diretamente na thread contextual da tarefa, mantendo a ata de decisão indexada.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-ink dark:text-white font-sans">
+                Diagramas de Arquitetura & Fluxo
+              </td>
+              <td class="py-4 px-4 text-ink/70 dark:text-white/70">
+                Criados em aplicativos visuais externos. O link quebra ou ninguém tem acesso de edição atualizado.
+              </td>
+              <td class="py-4 px-4 text-sage font-bold bg-sage/5">
+                Código Mermaid.js nativo dentro do documento. Renderizado em tempo real e versionável como código.
+              </td>
+            </tr>
+            <tr>
+              <td class="py-4 px-4 font-bold text-ink dark:text-white font-sans">
+                Tempo Gasto em Alinhamentos
+              </td>
+              <td class="py-4 px-4 text-ink/70 dark:text-white/70">
+                Daily meetings de 45 minutos porque ninguém sabe o status real das dependências entre épicos.
+              </td>
+              <td class="py-4 px-4 text-sage font-bold bg-sage/5">
+                Dailies assíncronas e focadas de 10 minutos. O status das tarefas é sempre transparente e preciso.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA SECTION -->
+  <section class="py-28 px-6 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] bg-sage/15 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto space-y-8 relative z-10">
+      
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-sage/20 text-sage flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+
+      <h2 class="text-4xl md:text-6xl font-serif text-ink dark:text-white font-light leading-tight">
+        Sua squad merece focar em resolver problemas, não em copiar dados.
+      </h2>
+
+      <p class="text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic max-w-2xl mx-auto">
+        Junte-se aos times de produto que eliminaram reuniões desnecessárias e entregam funcionalidades no prazo com a especificação viva do SpecLine.
+      </p>
+
+      <div class="pt-4 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-sage dark:hover:bg-sage dark:hover:text-ink font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Criar Espaço para Minha Squad</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="/pricing" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-sage hover:text-sage font-mono text-xs uppercase tracking-widest font-semibold transition-all">
+          <span>Ver Planos & Preços</span>
+        </a>
+      </div>
+
+      <div class="pt-4 flex items-center justify-center gap-6 font-mono text-xs text-ink/50 dark:text-white/50">
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Setup em 2 minutos
+        </span>
+        <span class="flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Sem cartão de crédito
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-ink/15 dark:border-white/10 bg-fable dark:bg-ink-darker py-12 px-6 font-mono text-xs">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-ink/60 dark:text-white/60">
+      
+      <div class="flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-sage"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/></svg>
+        <span class="font-bold text-ink dark:text-white font-sans">SpecLine</span>
+        <span>&mdash; Sistema de Gestão Unificado para Times Modernos</span>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="/solutions_startups_concept.html" class="hover:text-sage transition-colors">Startups</a>
+        <a href="/solutions_agencies_concept.html" class="hover:text-sage transition-colors">Agências</a>
+        <a href="/solutions_product_concept.html" class="text-sage font-bold">Times de Produto</a>
+        <a href="/" class="hover:text-sage transition-colors">Voltar ao Início</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- SCRIPT: INTERACTIVE SIMULATORS LOGIC (ZERO KEYBOARD LISTENERS) -->
+  <script>
+    // State for Simulator 1: Live Trinity Sync
+    let criteriaState = {
+      1: true,
+      2: true,
+      3: false
+    };
+
+    let prdVersionIndex = 0;
+    const prdVersions = [
+      {
+        badge: "v2.4 Aprovado",
+        title: "RFC-104: Autenticação Segura & MFA",
+        text: "<strong>Padrão Atual:</strong> Implementar suporte FIDO2 / WebAuthn biométrico nativo com fallback transparente via Magic Link assinado em 15 minutos.",
+        crit3Title: "3. Rate limit de 5 tentativas por IP/dispositivo por minuto"
+      },
+      {
+        badge: "v2.5 Atualizado",
+        title: "RFC-104: Autenticação Segura (Passkeys + SMS Fallback)",
+        text: "<strong>Requisito Revisado:</strong> Adicionar contingência de token OTP via SMS caso usuário acesse de navegador legado sem WebAuthn.",
+        crit3Title: "3. Gateway de SMS com token OTP de 6 dígitos numéricos"
+      }
+    ];
+
+    function toggleCriterion(id) {
+      criteriaState[id] = !criteriaState[id];
+      const chk = document.getElementById(`crit-${id}`);
+      if (chk) chk.checked = criteriaState[id];
+      
+      const txt = document.getElementById(`crit-text-${id}`);
+      if (txt) {
+        if (criteriaState[id]) {
+          txt.classList.add('line-through', 'opacity-60');
+        } else {
+          txt.classList.remove('line-through', 'opacity-60');
+        }
+      }
+
+      updateKanbanCardAndProgress();
+      
+      // Post system audit notification
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const critName = id === 1 ? "WebAuthn" : (id === 2 ? "Magic Link" : "Rate limit");
+      const action = criteriaState[id] ? "concluído" : "reaberto";
+      addAuditLog(`Critério [${critName}] marcado como ${action}. Sincronia propagada.`, timeStr);
+    }
+
+    function updateKanbanCardAndProgress() {
+      const card = document.getElementById('interactive-task-card');
+      if (card) {
+        card.classList.remove('animate-sync-flash');
+        void card.offsetWidth; // trigger reflow
+        card.classList.add('animate-sync-flash');
+      }
+
+      const total = 3;
+      const completed = Object.values(criteriaState).filter(Boolean).length;
+      const pct = Math.round((completed / total) * 100);
+
+      const pctLabel = document.getElementById('kanban-progress-pct');
+      const pBar = document.getElementById('kanban-progress-bar');
+      const statusTag = document.getElementById('kanban-status-tag');
+      const btnToggle = document.getElementById('btn-toggle-last-text');
+
+      if (pctLabel) pctLabel.textContent = `${pct}% (${completed}/${total})`;
+      if (pBar) pBar.style.width = `${pct}%`;
+
+      if (completed === 3) {
+        if (statusTag) {
+          statusTag.textContent = "Pronto para Deploy";
+          statusTag.className = "font-mono text-[10px] px-2 py-0.5 rounded bg-sage/20 text-sage font-bold";
+        }
+        if (btnToggle) btnToggle.textContent = "Engenharia: Reabrir Último Critério";
+      } else {
+        if (statusTag) {
+          statusTag.textContent = "Em Progresso";
+          statusTag.className = "font-mono text-[10px] px-2 py-0.5 rounded bg-terracotta/20 text-terracotta font-bold";
+        }
+        if (btnToggle) btnToggle.textContent = "Engenharia: Concluir Rate Limit";
+      }
+
+      // Update card criteria representation
+      for (let i = 1; i <= 3; i++) {
+        const item = document.getElementById(`card-crit-${i}`);
+        if (item) {
+          if (criteriaState[i]) {
+            item.className = "flex items-center gap-1.5 text-sage";
+            item.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>${i === 1 ? 'WebAuthn FIDO2' : (i === 2 ? 'Fallback Magic Link' : 'Rate limit estrito')}</span>`;
+          } else {
+            item.className = "flex items-center gap-1.5 text-ink/40 dark:text-white/40";
+            item.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/></svg><span>${i === 1 ? 'WebAuthn FIDO2' : (i === 2 ? 'Fallback Magic Link' : 'Rate limit estrito')}</span>`;
+          }
+        }
+      }
+    }
+
+    function triggerPrdSpecChange() {
+      prdVersionIndex = (prdVersionIndex + 1) % prdVersions.length;
+      const v = prdVersions[prdVersionIndex];
+
+      const vBadge = document.getElementById('prd-version-badge');
+      const desc = document.getElementById('prd-auth-mode-desc');
+      const crit3Text = document.getElementById('crit-text-3');
+
+      if (vBadge) vBadge.textContent = v.badge;
+      if (desc) desc.innerHTML = v.text;
+      if (crit3Text) crit3Text.textContent = v.crit3Title;
+
+      // Animate Kanban Column to simulate real-time socket sync
+      const card = document.getElementById('interactive-task-card');
+      if (card) {
+        card.classList.remove('animate-sync-flash');
+        void card.offsetWidth;
+        card.classList.add('animate-sync-flash');
+      }
+
+      const syncNotif = document.getElementById('sync-notification-text');
+      if (syncNotif) {
+        syncNotif.textContent = `[Sincronia Detectada] PRD atualizado para ${v.badge}. Tarefa ENG-409 notificada via WebSocket.`;
+      }
+
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      addAuditLog(`[Spec Sync Bot]: Sofia Mendes atualizou o PRD para ${v.badge}. Especificação sincronizada.`, timeStr);
+    }
+
+    function addAuditLog(text, time) {
+      const stream = document.getElementById('chat-stream');
+      if (!stream) return;
+
+      const log = document.createElement('div');
+      log.className = "p-2.5 bg-ink/5 dark:bg-white/5 border-l-2 border-sage rounded-r text-[11px] space-y-1 font-mono animate-pop-in";
+      log.innerHTML = `
+        <div class="flex items-center justify-between text-ink/50 dark:text-white/50">
+          <span class="font-bold text-sage">[SpecLine Bot]</span>
+          <span>${time}</span>
+        </div>
+        <div class="text-ink dark:text-white">${text}</div>
+      `;
+      stream.appendChild(log);
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function sendChatMessage() {
+      const inp = document.getElementById('quick-chat-input');
+      if (!inp || !inp.value.trim()) return;
+
+      const text = inp.value.trim();
+      inp.value = '';
+
+      const stream = document.getElementById('chat-stream');
+      if (!stream) return;
+
+      const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const msg = document.createElement('div');
+      msg.className = "p-3 bg-fable-light dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 space-y-1 animate-pop-in";
+      msg.innerHTML = `
+        <div class="flex items-center justify-between font-mono text-[10px]">
+          <span class="font-bold text-ocean">Você (Equipe)</span>
+          <span class="text-ink/40 dark:text-white/40">${timeStr}</span>
+        </div>
+        <p class="font-sans text-xs text-ink dark:text-white/90">${text}</p>
+      `;
+      stream.appendChild(msg);
+      stream.scrollTop = stream.scrollHeight;
+    }
+
+    function insertQuickComment(str) {
+      const inp = document.getElementById('quick-chat-input');
+      if (inp) {
+        inp.value = str;
+        sendChatMessage();
+      }
+    }
+
+    function setRole(role) {
+      const pmBtn = document.getElementById('role-pm-btn');
+      const engBtn = document.getElementById('role-eng-btn');
+      const qaBtn = document.getElementById('role-qa-btn');
+
+      [pmBtn, engBtn, qaBtn].forEach(b => {
+        if (b) {
+          b.className = "px-2.5 py-1 rounded text-xs font-medium text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 transition-all";
+        }
+      });
+
+      const activeBtn = role === 'pm' ? pmBtn : (role === 'eng' ? engBtn : qaBtn);
+      if (activeBtn) {
+        activeBtn.className = "px-2.5 py-1 rounded text-xs font-bold bg-sage text-ink transition-all";
+      }
+
+      const notif = document.getElementById('sync-notification-text');
+      if (notif) {
+        if (role === 'pm') {
+          notif.textContent = "Visão PM Ativa: Edite critérios de aceite diretamente e veja os cartões da sprint se alinharem.";
+        } else if (role === 'eng') {
+          notif.textContent = "Visão Tech Lead Ativa: Acompanhe pull requests e checklist de código sem precisar pedir reuniões de alinhamento.";
+        } else {
+          notif.textContent = "Visão QA Ativa: Valide critérios de teste com base na fonte original de verdade aprovada.";
+        }
+      }
+    }
+
+    // State & Calculation for Simulator 2: Sprint Waste Diagnostic
+    function calculateSprintWaste() {
+      const teamInput = document.getElementById('slider-team');
+      const hoursInput = document.getElementById('slider-hours');
+      const mermaidToggle = document.getElementById('toggle-mermaid');
+
+      const team = teamInput ? parseInt(teamInput.value) : 8;
+      const hours = hoursInput ? parseInt(hoursInput.value) : 6;
+      const hasMermaid = mermaidToggle ? mermaidToggle.checked : true;
+
+      // Update Labels
+      const teamLabel = document.getElementById('slider-team-val');
+      if (teamLabel) teamLabel.textContent = `${team} pessoas`;
+
+      const hoursLabel = document.getElementById('slider-hours-val');
+      if (hoursLabel) hoursLabel.textContent = `${hours}h / pessoa`;
+
+      // Calculations:
+      // SpecLine eliminates ~75% of alignment meetings and ~85% if mermaid is native
+      const savingsPct = hasMermaid ? 0.80 : 0.70;
+      const monthlyHoursPerPerson = hours * 4;
+      const totalHoursLost = team * monthlyHoursPerPerson;
+      const hoursSaved = Math.round(totalHoursLost * savingsPct);
+
+      // Hourly cost assumed BRL 140 / hr blended rate
+      const costSaved = Math.round(hoursSaved * 140);
+      const formattedCost = "R$ " + costSaved.toLocaleString('pt-BR');
+
+      // Lead time speed boost calculation (between 25% and 65%)
+      const speedBoost = Math.min(65, Math.round(25 + (team * 0.7) + (hours * 1.5)));
+
+      const statHours = document.getElementById('stat-hours-saved');
+      if (statHours) statHours.textContent = `${hoursSaved}h`;
+
+      const statCost = document.getElementById('stat-rework-saved');
+      if (statCost) statCost.textContent = formattedCost;
+
+      const statSpeed = document.getElementById('stat-speed-boost');
+      if (statSpeed) statSpeed.textContent = `+${speedBoost}% Mais Veloz`;
+
+      const speedMeter = document.getElementById('speed-meter');
+      if (speedMeter) speedMeter.style.width = `${Math.min(100, speedBoost + 25)}%`;
+    }
+
+    // Initialize on DOM load
+    document.addEventListener('DOMContentLoaded', () => {
+      calculateSprintWaste();
+    });
+  </script>
+
+</body>
+</html>

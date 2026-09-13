@@ -1,4 +1,7 @@
 class SolutionsController < ApplicationController
+  def index
+  end
+
   def startups
   end
 

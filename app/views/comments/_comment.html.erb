@@ -1,0 +1,14 @@
+<div id="<%= dom_id(comment) %>" class="flex gap-3">
+  <div class="w-7 h-7 rounded-full bg-ink text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+    <%= comment.user&.email ? comment.user.email[0].upcase : "?" %>
+  </div>
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center gap-2 mb-1">
+      <span class="text-xs font-semibold text-ink dark:text-fable"><%= comment.user&.email&.split("@")&.first || "Usuário" %></span>
+      <span class="text-[10px] text-ink-light dark:text-white/60"><%= time_ago_in_words(comment.created_at) %> atrás</span>
+    </div>
+    <div class="text-sm text-ink-light dark:text-white/60 leading-relaxed bg-fable-light dark:bg-ink-darker rounded-xl px-3 py-2 border border-ink/[0.03] dark:border-white/[0.05]">
+      <%= simple_format(comment.body) %>
+    </div>
+  </div>
+</div>

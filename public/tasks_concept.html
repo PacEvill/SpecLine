@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarefas & Gestão — SpecLine (Concept Expandido)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+            },
+            'pop-in': {
+              '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+            'slide-in-right': {
+              '0%': { transform: 'translateX(100%)', opacity: '0' },
+              '100%': { transform: 'translateX(0)', opacity: '1' }
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+            'pop-in': 'pop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'slide-in-right': 'slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    // View Switching Logic (Kanban vs List vs Timeline)
+    let currentView = 'kanban';
+    function switchView(viewName) {
+      currentView = viewName;
+      const buttons = document.querySelectorAll('.view-toggle-btn');
+      buttons.forEach(b => {
+        if (b.dataset.view === viewName) {
+          b.className = "view-toggle-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        } else {
+          b.className = "view-toggle-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        }
+      });
+
+      const kanbanView = document.getElementById('view-kanban');
+      const listView = document.getElementById('view-list');
+      const timelineView = document.getElementById('view-timeline');
+
+      if (viewName === 'kanban') {
+        kanbanView.classList.remove('hidden');
+        kanbanView.classList.add('animate-pop-in');
+        listView.classList.add('hidden');
+        timelineView.classList.add('hidden');
+      } else if (viewName === 'list') {
+        listView.classList.remove('hidden');
+        listView.classList.add('animate-pop-in');
+        kanbanView.classList.add('hidden');
+        timelineView.classList.add('hidden');
+      } else if (viewName === 'timeline') {
+        timelineView.classList.remove('hidden');
+        timelineView.classList.add('animate-pop-in');
+        kanbanView.classList.add('hidden');
+        listView.classList.add('hidden');
+      }
+    }
+
+    // Filter Logic: Works universally across Kanban, Lista and Timeline
+    let activeFilter = 'all';
+    function filterTasks(filterType) {
+      activeFilter = filterType;
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(b => {
+        if (b.dataset.filter === filterType) {
+          b.className = "filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-bold rounded border border-ink/20 dark:border-white/20 transition-all cursor-pointer";
+        } else {
+          b.className = "filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-white/40 hover:text-ink dark:hover:text-white transition-all cursor-pointer";
+        }
+      });
+
+      // 1. Filter Kanban Cards
+      const cards = document.querySelectorAll('.kanban-task-card');
+      cards.forEach(card => {
+        const matches = (filterType === 'all') ||
+                        (filterType === 'urgent' && card.dataset.priority === 'urgent') ||
+                        (filterType === 'docs' && card.dataset.hasDoc === 'true');
+        if (matches) {
+          card.classList.remove('hidden');
+          card.classList.add('animate-pop-in');
+        } else {
+          card.classList.add('hidden');
+          card.classList.remove('animate-pop-in');
+        }
+      });
+
+      // 2. Filter List Rows
+      const rows = document.querySelectorAll('.list-task-row');
+      rows.forEach(row => {
+        const matches = (filterType === 'all') ||
+                        (filterType === 'urgent' && row.dataset.priority === 'urgent') ||
+                        (filterType === 'docs' && row.dataset.hasDoc === 'true');
+        if (matches) {
+          row.classList.remove('hidden');
+          row.classList.add('animate-pop-in');
+        } else {
+          row.classList.add('hidden');
+          row.classList.remove('animate-pop-in');
+        }
+      });
+
+      // 3. Filter/Highlight Timeline Tracks
+      const tracks = document.querySelectorAll('.timeline-sprint-row');
+      tracks.forEach(track => {
+        const matches = (filterType === 'all') ||
+                        (filterType === 'urgent' && track.dataset.priority === 'urgent') ||
+                        (filterType === 'docs' && track.dataset.hasDoc === 'true');
+        if (matches) {
+          track.classList.remove('opacity-25');
+          track.classList.add('opacity-100');
+        } else {
+          track.classList.add('opacity-25');
+          track.classList.remove('opacity-100');
+        }
+      });
+    }
+
+    // Task Drawer Inspection Simulation
+    function openTaskDrawer(taskId, title, priority, docLink) {
+      const drawer = document.getElementById('task-detail-drawer');
+      const drawerTitle = document.getElementById('drawer-task-title');
+      const drawerId = document.getElementById('drawer-task-id');
+      const drawerDoc = document.getElementById('drawer-task-doc');
+      
+      if (drawerTitle) drawerTitle.innerText = title;
+      if (drawerId) drawerId.innerText = taskId;
+      if (drawerDoc) drawerDoc.innerText = docLink || 'Nenhum documento vinculado';
+
+      drawer.classList.remove('hidden');
+    }
+
+    function closeTaskDrawer() {
+      const drawer = document.getElementById('task-detail-drawer');
+      drawer.classList.add('hidden');
+    }
+
+    // Interactive Checklist toggle inside drawer
+    function toggleDrawerCheck(el) {
+      const isChecked = el.checked;
+      const progressLabel = document.getElementById('drawer-progress-label');
+      const progressBar = document.getElementById('drawer-progress-bar');
+      
+      // Calculate active checks
+      const checks = document.querySelectorAll('.drawer-checklist-item');
+      let completed = 0;
+      checks.forEach(c => { if (c.checked) completed++; });
+      
+      const pct = Math.round((completed / checks.length) * 100);
+      if (progressLabel) progressLabel.innerText = `${completed}/${checks.length} (${pct}%)`;
+      if (progressBar) progressBar.style.width = `${pct}%`;
+    }
+
+    // Interactive Move Card simulation
+    function moveSampleCard(event) {
+      if (event) event.stopPropagation();
+      const card = document.getElementById('demo-interactive-card');
+      const targetCol = document.getElementById('col-done-cards');
+      if (card && targetCol) {
+        targetCol.prepend(card);
+        card.classList.add('animate-pop-in', 'border-sage');
+        const badge = card.querySelector('.status-badge');
+        if (badge) {
+          badge.className = "status-badge inline-flex items-center gap-1 text-[9px] font-mono tracking-wider bg-sage/20 text-sage px-2 py-0.5 rounded font-bold uppercase";
+          badge.innerHTML = "✓ CONCLUÍDO";
+        }
+      }
+    }
+
+    // Workflow team tab switching
+    function switchWorkflowTeam(team) {
+      const buttons = document.querySelectorAll('.team-tab-btn');
+      buttons.forEach(b => {
+        if (b.dataset.team === team) {
+          b.className = "team-tab-btn px-4 py-2 font-mono text-xs uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-bold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        } else {
+          b.className = "team-tab-btn px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        }
+      });
+
+      const contents = document.querySelectorAll('.workflow-team-content');
+      contents.forEach(c => {
+        if (c.id === `workflow-${team}`) {
+          c.classList.remove('hidden');
+          c.classList.add('animate-pop-in');
+        } else {
+          c.classList.add('hidden');
+          c.classList.remove('animate-pop-in');
+        }
+      });
+    }
+  </script>
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(217, 122, 94, 0.15);
+      z-index: 20;
+    }
+    .scrollbar-subtle::-webkit-scrollbar {
+      height: 4px;
+      width: 4px;
+    }
+    .scrollbar-subtle::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.3);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle for Prototype Review -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="grid grid-cols-12 border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase items-stretch h-16 relative z-10 bg-fable-light dark:bg-[#18181A]">
+    <div class="col-span-6 md:col-span-3 border-r border-ink/15 dark:border-white/10 flex items-center px-6 gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden md:flex col-span-6 items-center justify-center gap-8 px-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Início</a>
+      <a href="/features/docs" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Documentos & Wiki</a>
+      <a href="/features/kanban" class="text-ink dark:text-white font-bold border-b-2 border-terracotta py-1">Tarefas & Gestão</a>
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Preços</a>
+    </div>
+
+    <div class="col-span-6 md:col-span-3 border-l border-ink/15 dark:border-white/10 flex items-center justify-end px-6 gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED FEATURES SUB-NAV BAR (SWITCH CONCEPTS DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-terracotta">Aba Funcionalidades:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/docs_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-sage hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>1. Docs & Wiki</span>
+        </a>
+        <a href="/tasks_concept.html" class="px-3 py-1.5 rounded-lg bg-terracotta text-white font-bold flex items-center gap-1.5 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          <span>2. Tarefas (Ativo)</span>
+        </a>
+        <a href="/chat_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ocean hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>3. Chat</span>
+        </a>
+        <a href="/whiteboard_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ochre hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+          <span>4. Quadros</span>
+        </a>
+      </div>
+      <a href="/features_concept.html" class="inline-flex items-center gap-1.5 text-terracotta hover:underline font-bold text-[11px] transition-colors">
+        <span>Ver Central de Funcionalidades</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION: Editorial Brutalist Task Presentation -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-terracotta/10 dark:bg-terracotta/5 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+        <span class="w-2 h-2 rounded-full bg-terracotta inline-block"></span>
+        Fluxo Ágil Contínuo // Gestão Sem Burocracia
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Do conceito à entrega.<br>
+        <i class="text-terracotta font-serif-italic">Sem ruído intermediário.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Diga adeus a ferramentas inchadas que transformam o gerenciamento de tarefas em um trabalho por si só. O SpecLine combina velocidade extrema, visualização adaptativa (Kanban, Lista ou Timeline) e conexão nativa com seus documentos.
+      </p>
+
+      <!-- Action Button -->
+      <div class="pt-6 flex justify-center items-center">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Começar Gratuitamente</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPRINT TELEMETRY BAROMETER (LIVE METRICS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+      
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-terracotta/15 text-terracotta font-bold rounded">
+          <span class="w-1.5 h-1.5 rounded-full bg-terracotta animate-pulse"></span>
+          SPRINT 24 ATIVA
+        </span>
+        <span class="text-ink-light dark:text-white/70">Meta: Lançamento do Sync Engine v2</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+        <div class="flex items-center gap-2">
+          <span>Progresso:</span>
+          <span class="text-sage font-bold">84% (38/45 pts)</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2">
+          <span>Dias Restantes:</span>
+          <span class="text-ochre font-bold">4 dias</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Bloqueios:</span>
+          <span class="text-sage font-bold">0 Críticos</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE WORKBENCH SHOWCASE (TRIPLE VIEW: KANBAN / LISTA / TIMELINE) -->
+  <section id="tasks-showcase" class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-6 md:p-14 relative">
+    <div class="max-w-7xl mx-auto space-y-6">
+      
+      <!-- Controls Toolbar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-ink/15 dark:border-white/10 pb-6">
+        <div>
+          <span class="font-mono text-xs text-sage font-bold tracking-widest uppercase">Simulador de Produtividade</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white mt-1">
+            Escolha a sua perspectiva de trabalho.
+          </h2>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          
+          <!-- View Switcher Tabs -->
+          <div class="inline-flex border border-ink/20 dark:border-white/20 p-1 bg-fable-light dark:bg-[#18181A] rounded">
+            <button onclick="switchView('kanban')" data-view="kanban" class="view-toggle-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+              <span>Kanban</span>
+            </button>
+            <button onclick="switchView('list')" data-view="list" class="view-toggle-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+              <span>Lista Compacta</span>
+            </button>
+            <button onclick="switchView('timeline')" data-view="timeline" class="view-toggle-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Timeline & Milestones</span>
+            </button>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="flex items-center gap-1">
+            <button onclick="filterTasks('all')" data-filter="all" class="filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-bold rounded border border-ink/20 dark:border-white/20 transition-all cursor-pointer">
+              Todas
+            </button>
+            <button onclick="filterTasks('urgent')" data-filter="urgent" class="filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-white/40 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Urgentes
+            </button>
+            <button onclick="filterTasks('docs')" data-filter="docs" class="filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-white/40 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Com Docs
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 1: KANBAN BOARD (DEFAULT) -->
+      <div id="view-kanban" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- COLUMN 1: BACKLOG -->
+        <div class="bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl p-4 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10 mb-3">
+              <span class="font-mono text-xs font-bold text-ink-light dark:text-white/80 uppercase tracking-wider flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-ink-light/40 dark:bg-white/40"></span>
+                Backlog
+              </span>
+              <span class="font-mono text-[10px] bg-ink/10 dark:bg-white/10 px-2 py-0.5 rounded font-bold">2</span>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Card 1 -->
+              <div onclick="openTaskDrawer('#T-108', 'Tokens de Espaçamento 8pt', 'normal', 'Design Tokens & Brutalism')" class="kanban-task-card bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 p-4 rounded-lg shadow-sm hover-card-lift space-y-2.5 cursor-pointer" data-priority="normal" data-has-doc="true">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-sage/15 text-sage px-2 py-0.5 rounded font-bold uppercase">Design</span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-108</span>
+                </div>
+                <div class="font-sans font-semibold text-sm text-ink dark:text-white">Tokens de Espaçamento 8pt</div>
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/60 dark:text-white/50">
+                  <span class="text-terracotta flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Design Tokens
+                  </span>
+                  <div class="w-5 h-5 rounded-full bg-terracotta text-white flex items-center justify-center text-[9px] font-bold">DS</div>
+                </div>
+              </div>
+
+              <!-- Card 2 -->
+              <div onclick="openTaskDrawer('#T-109', 'Auditoria de Headers HTTP', 'urgent', null)" class="kanban-task-card bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 p-4 rounded-lg shadow-sm hover-card-lift space-y-2.5 cursor-pointer" data-priority="urgent" data-has-doc="false">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-terracotta/20 text-terracotta px-2 py-0.5 rounded font-bold uppercase">Urgente</span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-109</span>
+                </div>
+                <div class="font-sans font-semibold text-sm text-ink dark:text-white">Auditoria de Headers HTTP</div>
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/60 dark:text-white/50">
+                  <span>Sem doc vinculado</span>
+                  <div class="w-5 h-5 rounded-full bg-sage text-ink flex items-center justify-center text-[9px] font-bold">TC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openTaskDrawer('#T-NOVA', 'Nova Tarefa no Backlog', 'normal', null)" class="w-full py-2 border border-dashed border-ink/20 dark:border-white/20 rounded font-mono text-xs text-ink/60 dark:text-white/50 hover:border-terracotta hover:text-terracotta transition-colors cursor-pointer">
+            + Nova Tarefa (C)
+          </button>
+        </div>
+
+        <!-- COLUMN 2: EM PROGRESSO -->
+        <div class="bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl p-4 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10 mb-3">
+              <span class="font-mono text-xs font-bold text-terracotta uppercase tracking-wider flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+                Em Progresso
+              </span>
+              <span class="font-mono text-[10px] bg-terracotta/15 text-terracotta px-2 py-0.5 rounded font-bold">2</span>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Interactive Demo Card -->
+              <div id="demo-interactive-card" onclick="openTaskDrawer('#T-104', 'Unificar arquitetura de sync', 'urgent', 'RFC-089: Sync Engine')" class="kanban-task-card bg-white dark:bg-ink-paper border-2 border-terracotta p-4 rounded-lg shadow-md hover-card-lift space-y-2.5 cursor-pointer" data-priority="urgent" data-has-doc="true">
+                <div class="flex items-center justify-between">
+                  <span class="status-badge inline-flex items-center gap-1 text-[9px] font-mono tracking-wider bg-terracotta/15 text-terracotta px-2 py-0.5 rounded font-bold uppercase">
+                    <span class="w-1.5 h-1.5 rounded-full bg-terracotta animate-ping"></span> Ativo
+                  </span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-104</span>
+                </div>
+                <div class="font-sans font-bold text-sm text-ink dark:text-white">Unificar arquitetura de sync</div>
+                
+                <!-- Progress bar -->
+                <div class="space-y-1">
+                  <div class="flex justify-between text-[10px] font-mono text-ink-light/60 dark:text-white/50">
+                    <span>Sub-tarefas</span>
+                    <span class="text-sage font-bold">3/4 (75%)</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-ink/10 dark:bg-white/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-terracotta to-sage rounded-full w-[75%]"></div>
+                  </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono">
+                  <span class="text-terracotta flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    RFC-089
+                  </span>
+                  <button onclick="moveSampleCard(event)" class="text-[10px] text-sage font-bold hover:underline">
+                    Mover p/ Concluído →
+                  </button>
+                </div>
+              </div>
+
+              <!-- Card 4 -->
+              <div onclick="openTaskDrawer('#T-106', 'Particionamento de Workspaces', 'normal', 'ADR-012: Data Isolation')" class="kanban-task-card bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 p-4 rounded-lg shadow-sm hover-card-lift space-y-2.5 cursor-pointer" data-priority="normal" data-has-doc="true">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-ochre/15 text-ochre px-2 py-0.5 rounded font-bold uppercase">Core</span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-106</span>
+                </div>
+                <div class="font-sans font-semibold text-sm text-ink dark:text-white">Particionamento de Workspaces</div>
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/60 dark:text-white/50">
+                  <span class="text-terracotta flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    ADR-012
+                  </span>
+                  <div class="w-5 h-5 rounded-full bg-ocean text-white flex items-center justify-center text-[9px] font-bold">AR</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openTaskDrawer('#T-NOVA', 'Nova Tarefa em Progresso', 'normal', null)" class="w-full py-2 border border-dashed border-ink/20 dark:border-white/20 rounded font-mono text-xs text-ink/60 dark:text-white/50 hover:border-terracotta hover:text-terracotta transition-colors cursor-pointer">
+            + Nova Tarefa (C)
+          </button>
+        </div>
+
+        <!-- COLUMN 3: REVISÃO / QA -->
+        <div class="bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl p-4 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10 mb-3">
+              <span class="font-mono text-xs font-bold text-ochre uppercase tracking-wider flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-ochre"></span>
+                Revisão & Testes
+              </span>
+              <span class="font-mono text-[10px] bg-ochre/15 text-ochre px-2 py-0.5 rounded font-bold">1</span>
+            </div>
+
+            <div class="space-y-3">
+              <div onclick="openTaskDrawer('#T-098', 'Teste de Carga SolidQueue', 'normal', 'Benchmark v2')" class="kanban-task-card bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 p-4 rounded-lg shadow-sm hover-card-lift space-y-2.5 cursor-pointer" data-priority="normal" data-has-doc="true">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-sage/15 text-sage px-2 py-0.5 rounded font-bold uppercase">QA</span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-098</span>
+                </div>
+                <div class="font-sans font-semibold text-sm text-ink dark:text-white">Teste de Carga SolidQueue</div>
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/60 dark:text-white/50">
+                  <span class="text-terracotta flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Benchmark v2
+                  </span>
+                  <div class="w-5 h-5 rounded-full bg-sage text-ink flex items-center justify-center text-[9px] font-bold">TC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="openTaskDrawer('#T-NOVA', 'Nova Tarefa em QA', 'normal', null)" class="w-full py-2 border border-dashed border-ink/20 dark:border-white/20 rounded font-mono text-xs text-ink/60 dark:text-white/50 hover:border-terracotta hover:text-terracotta transition-colors cursor-pointer">
+            + Nova Tarefa (C)
+          </button>
+        </div>
+
+        <!-- COLUMN 4: CONCLUÍDO -->
+        <div class="bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl p-4 flex flex-col justify-between space-y-4">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10 mb-3">
+              <span class="font-mono text-xs font-bold text-sage uppercase tracking-wider flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+                Concluído
+              </span>
+              <span class="font-mono text-[10px] bg-sage/15 text-sage px-2 py-0.5 rounded font-bold">1</span>
+            </div>
+
+            <div id="col-done-cards" class="space-y-3">
+              <div onclick="openTaskDrawer('#T-091', 'Setup de Autenticação Segura', 'normal', null)" class="kanban-task-card bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 p-4 rounded-lg shadow-sm hover-card-lift space-y-2.5 opacity-80 cursor-pointer" data-priority="normal" data-has-doc="false">
+                <div class="flex items-center justify-between">
+                  <span class="text-[9px] font-mono bg-sage/20 text-sage px-2 py-0.5 rounded font-bold uppercase">Entregue</span>
+                  <span class="text-[10px] font-mono text-ink-light/40 dark:text-white/40">#T-091</span>
+                </div>
+                <div class="font-sans font-semibold text-sm line-through text-ink-light dark:text-white/60">Setup de Autenticação Segura</div>
+                <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/40 dark:text-white/40">
+                  <span>Finalizado ontem</span>
+                  <span>✓ 4/4</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center py-2 font-mono text-[10px] text-sage font-semibold uppercase">
+            Sprint 24 · 85% de Eficiência
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 2: LISTA COMPACTA ESTRUTURADA (HIDDEN INITIALLY) -->
+      <div id="view-list" class="hidden border border-ink/15 dark:border-white/10 rounded-xl overflow-hidden bg-fable-light dark:bg-ink-darker font-mono text-xs">
+        <div class="grid grid-cols-12 bg-fable-dark dark:bg-ink px-5 py-3 border-b border-ink/15 dark:border-white/10 font-bold uppercase tracking-wider text-[10px] text-ink/70 dark:text-white/60">
+          <div class="col-span-1">ID</div>
+          <div class="col-span-5">Título da Tarefa</div>
+          <div class="col-span-2">Documento Vinculado</div>
+          <div class="col-span-2">Prioridade</div>
+          <div class="col-span-2 text-right">Status</div>
+        </div>
+
+        <div class="divide-y divide-ink/10 dark:divide-white/10 bg-white dark:bg-ink-paper">
+          
+          <div onclick="openTaskDrawer('#T-104', 'Unificar arquitetura de sync', 'urgent', 'RFC-089')" class="list-task-row grid grid-cols-12 px-5 py-3.5 items-center hover:bg-terracotta/5 transition-colors cursor-pointer" data-priority="urgent" data-has-doc="true">
+            <div class="col-span-1 text-ink/40 dark:text-white/40">#T-104</div>
+            <div class="col-span-5 font-sans font-semibold text-sm text-ink dark:text-white">Unificar arquitetura de sync</div>
+            <div class="col-span-2 text-terracotta flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              RFC-089
+            </div>
+            <div class="col-span-2"><span class="px-2 py-0.5 bg-terracotta/15 text-terracotta font-bold text-[10px] rounded">URGENTE</span></div>
+            <div class="col-span-2 text-right text-terracotta font-bold">● EM PROGRESSO</div>
+          </div>
+
+          <div onclick="openTaskDrawer('#T-106', 'Particionamento de Workspaces', 'normal', 'ADR-012')" class="list-task-row grid grid-cols-12 px-5 py-3.5 items-center hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer" data-priority="normal" data-has-doc="true">
+            <div class="col-span-1 text-ink/40 dark:text-white/40">#T-106</div>
+            <div class="col-span-5 font-sans font-semibold text-sm text-ink dark:text-white">Particionamento de Workspaces</div>
+            <div class="col-span-2 text-terracotta flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              ADR-012
+            </div>
+            <div class="col-span-2"><span class="px-2 py-0.5 bg-ochre/15 text-ochre font-bold text-[10px] rounded">CORE</span></div>
+            <div class="col-span-2 text-right text-terracotta font-bold">● EM PROGRESSO</div>
+          </div>
+
+          <div onclick="openTaskDrawer('#T-108', 'Tokens de Espaçamento 8pt', 'normal', 'Design Tokens')" class="list-task-row grid grid-cols-12 px-5 py-3.5 items-center hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer" data-priority="normal" data-has-doc="true">
+            <div class="col-span-1 text-ink/40 dark:text-white/40">#T-108</div>
+            <div class="col-span-5 font-sans font-semibold text-sm text-ink dark:text-white">Tokens de Espaçamento 8pt</div>
+            <div class="col-span-2 text-terracotta flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Design Tokens
+            </div>
+            <div class="col-span-2"><span class="px-2 py-0.5 bg-sage/15 text-sage font-bold text-[10px] rounded">DESIGN</span></div>
+            <div class="col-span-2 text-right text-ink/50 dark:text-white/50">○ BACKLOG</div>
+          </div>
+
+          <div onclick="openTaskDrawer('#T-098', 'Teste de Carga SolidQueue', 'normal', 'Benchmark v2')" class="list-task-row grid grid-cols-12 px-5 py-3.5 items-center hover:bg-ink/5 dark:hover:bg-white/5 transition-colors cursor-pointer" data-priority="normal" data-has-doc="true">
+            <div class="col-span-1 text-ink/40 dark:text-white/40">#T-098</div>
+            <div class="col-span-5 font-sans font-semibold text-sm text-ink dark:text-white">Teste de Carga SolidQueue</div>
+            <div class="col-span-2 text-terracotta flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Benchmark v2
+            </div>
+            <div class="col-span-2"><span class="px-2 py-0.5 bg-sage/15 text-sage font-bold text-[10px] rounded">QA</span></div>
+            <div class="col-span-2 text-right text-ochre font-bold">● REVISÃO</div>
+          </div>
+
+          <div onclick="openTaskDrawer('#T-091', 'Setup de Autenticação Segura', 'normal', null)" class="list-task-row grid grid-cols-12 px-5 py-3.5 items-center hover:bg-ink/5 dark:hover:bg-white/5 transition-colors opacity-60 cursor-pointer" data-priority="normal" data-has-doc="false">
+            <div class="col-span-1 text-ink/40 dark:text-white/40">#T-091</div>
+            <div class="col-span-5 font-sans font-semibold text-sm line-through text-ink dark:text-white">Setup de Autenticação Segura</div>
+            <div class="col-span-2 text-ink/40 dark:text-white/40">—</div>
+            <div class="col-span-2"><span class="px-2 py-0.5 bg-ink/10 dark:bg-white/10 text-[10px] rounded">NORMAL</span></div>
+            <div class="col-span-2 text-right text-sage font-bold">✓ CONCLUÍDO</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 3: TIMELINE & MILESTONES (HIDDEN INITIALLY) -->
+      <div id="view-timeline" class="hidden border border-ink/15 dark:border-white/10 rounded-xl p-6 bg-fable-light dark:bg-ink-darker font-mono text-xs space-y-6">
+        <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-terracotta font-bold text-sm flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+              Milestone: Release v2.0
+            </span>
+            <span class="px-2 py-0.5 bg-sage/15 text-sage font-bold text-[10px] rounded">82% Progresso</span>
+          </div>
+          <span class="text-ink/50 dark:text-white/50 text-[11px]">Agosto — Setembro 2026</span>
+        </div>
+
+        <div class="space-y-4 font-mono text-xs">
+          <!-- Row 1 -->
+          <div class="timeline-sprint-row space-y-1.5 transition-all duration-300" data-priority="normal" data-has-doc="false">
+            <div class="flex justify-between text-[11px] text-ink-light dark:text-white/70">
+              <span>Sprint 23: Persistência & Schema</span>
+              <span class="text-sage font-bold">100% (Entregue)</span>
+            </div>
+            <div class="w-full h-7 bg-ink/5 dark:bg-white/5 rounded relative overflow-hidden flex items-center px-3">
+              <div class="absolute left-0 top-0 h-full w-full bg-sage/20 border-r-2 border-sage"></div>
+              <span class="relative z-10 text-[10px] font-bold text-sage">✓ 18/18 tarefas concluídas</span>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="timeline-sprint-row space-y-1.5 transition-all duration-300" data-priority="urgent" data-has-doc="true">
+            <div class="flex justify-between text-[11px] text-ink dark:text-white font-semibold">
+              <span class="text-terracotta">Sprint 24: Realtime Sync Daemon (Atual)</span>
+              <span class="text-terracotta font-bold">84% Concluído</span>
+            </div>
+            <div class="w-full h-7 bg-ink/5 dark:bg-white/5 rounded relative overflow-hidden flex items-center px-3">
+              <div class="absolute left-0 top-0 h-full w-[84%] bg-gradient-to-r from-terracotta/30 to-terracotta border-r-2 border-terracotta"></div>
+              <span class="relative z-10 text-[10px] font-bold text-white pl-2">● #T-104 (RFC-089), #T-106 (ADR-012)</span>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="timeline-sprint-row space-y-1.5 transition-all duration-300" data-priority="normal" data-has-doc="true">
+            <div class="flex justify-between text-[11px] text-ink-light dark:text-white/50">
+              <span>Sprint 25: Auditoria & Handoff</span>
+              <span class="text-ink/40 dark:text-white/40">Inicia em 4 dias</span>
+            </div>
+            <div class="w-full h-7 bg-ink/5 dark:bg-white/5 rounded relative overflow-hidden flex items-center px-3 border border-dashed border-ink/20 dark:border-white/20">
+              <span class="relative z-10 text-[10px] text-ink/40 dark:text-white/40 flex items-center gap-1">
+                ○ Backlog planejado (12 tarefas) · 
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Design Tokens
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE TASK DETAIL DRAWER (SLIDE-OVER SIMULATION) -->
+  <div id="task-detail-drawer" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex justify-end transition-all">
+    <div class="w-full max-w-xl bg-white dark:bg-ink-paper border-l border-ink/20 dark:border-white/15 h-full p-8 overflow-y-auto space-y-6 shadow-2xl animate-slide-in-right flex flex-col justify-between">
+      
+      <div class="space-y-6">
+        <!-- Top Drawer Bar -->
+        <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4">
+          <div class="flex items-center gap-2">
+            <span id="drawer-task-id" class="font-mono text-xs bg-terracotta/15 text-terracotta px-2.5 py-1 rounded font-bold">#T-104</span>
+            <span class="font-mono text-xs text-sage font-semibold">● Em Progresso</span>
+          </div>
+          <button onclick="closeTaskDrawer()" class="p-1.5 text-ink/50 dark:text-white/50 hover:text-ink dark:hover:text-white rounded hover:bg-ink/5 dark:hover:bg-white/5 font-mono text-xs cursor-pointer">
+            Fechar ✕ (ESC)
+          </button>
+        </div>
+
+        <!-- Title & Description -->
+        <div class="space-y-2">
+          <h2 id="drawer-task-title" class="font-serif text-2xl md:text-3xl font-bold text-ink dark:text-white">
+            Unificar arquitetura de sync
+          </h2>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Garantir persistência local offline-first com reconciliação assíncrona para eliminar qualquer conflito de versão.
+          </p>
+        </div>
+
+        <!-- Linked Document Backlink Card -->
+        <div class="p-4 border border-terracotta/30 bg-terracotta/5 rounded-lg space-y-1.5">
+          <div class="font-mono text-[10px] text-terracotta font-bold uppercase tracking-wider">
+            Documento de Origem (Backlink Vivo)
+          </div>
+          <div id="drawer-task-doc" class="font-mono text-xs font-semibold text-ink dark:text-white flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>RFC-089: Sync Engine & Persistência Local</span>
+          </div>
+          <p class="font-sans text-xs text-ink-light/80 dark:text-white/60 pt-1">
+            "Todas as operações de edição devem suportar latência zero com fallback para fila de reconciliação em background."
+          </p>
+        </div>
+
+        <!-- Interactive Sub-tasks Checklist -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-center font-mono text-xs border-b border-ink/10 dark:border-white/10 pb-2">
+            <span class="font-bold text-ink dark:text-white">Checklist de Execução</span>
+            <span id="drawer-progress-label" class="text-sage font-bold">3/4 (75%)</span>
+          </div>
+          
+          <div class="w-full h-1.5 bg-ink/10 dark:bg-white/10 rounded-full overflow-hidden mb-3">
+            <div id="drawer-progress-bar" class="h-full bg-gradient-to-r from-terracotta to-sage w-[75%] transition-all duration-300"></div>
+          </div>
+
+          <div class="space-y-2 font-sans text-sm text-ink/90 dark:text-white/90">
+            <label class="flex items-center gap-2.5 p-2 bg-ink/5 dark:bg-white/5 rounded cursor-pointer">
+              <input type="checkbox" checked onchange="toggleDrawerCheck(this)" class="drawer-checklist-item rounded border-ink/30 text-terracotta focus:ring-terracotta">
+              <span class="line-through text-ink/50 dark:text-white/50 text-xs">Definir schemas no SolidQueue</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 bg-ink/5 dark:bg-white/5 rounded cursor-pointer">
+              <input type="checkbox" checked onchange="toggleDrawerCheck(this)" class="drawer-checklist-item rounded border-ink/30 text-terracotta focus:ring-terracotta">
+              <span class="line-through text-ink/50 dark:text-white/50 text-xs">Integrar listeners de WebSocket</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 bg-ink/5 dark:bg-white/5 rounded cursor-pointer">
+              <input type="checkbox" checked onchange="toggleDrawerCheck(this)" class="drawer-checklist-item rounded border-ink/30 text-terracotta focus:ring-terracotta">
+              <span class="line-through text-ink/50 dark:text-white/50 text-xs">Escrever testes de reconciliação</span>
+            </label>
+            <label class="flex items-center gap-2.5 p-2 bg-ink/5 dark:bg-white/5 rounded cursor-pointer">
+              <input type="checkbox" onchange="toggleDrawerCheck(this)" class="drawer-checklist-item rounded border-ink/30 text-terracotta focus:ring-terracotta">
+              <span class="text-xs">Validar deploy em staging</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="space-y-2 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs">
+          <div class="font-bold text-ink/60 dark:text-white/60 uppercase tracking-widest text-[10px]">Histórico & Discussão</div>
+          <div class="p-3 bg-fable-light dark:bg-ink-darker rounded space-y-1">
+            <div class="flex justify-between text-[10px] text-ink/50 dark:text-white/40">
+              <span class="text-terracotta font-bold">Time Core</span>
+              <span>Há 15 min</span>
+            </div>
+            <p class="font-sans text-xs text-ink/80 dark:text-white/80">
+              PR #142 aberto e linkado à issue com testes unitários passando.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-ink/10 dark:border-white/10 flex justify-between items-center font-mono text-xs">
+        <span class="text-ink/50 dark:text-white/40">Atribuído ao Time Core</span>
+        <button onclick="closeTaskDrawer()" class="px-4 py-2 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded">
+          Salvar & Fechar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WORKFLOWS EXPANDIDOS POR ÁREA (SEM SILOS: PRODUTO PARA TODOS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#151517] p-8 md:p-20 relative">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="font-mono text-xs text-terracotta font-bold uppercase tracking-widest">Flexibilidade Total</span>
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          Fluxos desenhados para cada especialidade.
+        </h2>
+        <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+          O SpecLine não força a sua equipe em moldes rígidos de desenvolvimento de software. A ferramenta se adapta ao que você precisa entregar.
+        </p>
+      </div>
+
+      <!-- Specialty Tabs -->
+      <div class="flex justify-center">
+        <div class="inline-flex border border-ink/20 dark:border-white/20 p-1.5 bg-white dark:bg-ink rounded-lg shadow-sm gap-2">
+          <button onclick="switchWorkflowTeam('eng')" data-team="eng" class="team-tab-btn px-4 py-2 font-mono text-xs uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-bold rounded shadow-sm transition-all cursor-pointer flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            <span>Engenharia & Tech</span>
+          </button>
+          <button onclick="switchWorkflowTeam('design')" data-team="design" class="team-tab-btn px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+            <span>Design & Produto</span>
+          </button>
+          <button onclick="switchWorkflowTeam('ops')" data-team="ops" class="team-tab-btn px-4 py-2 font-mono text-xs uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+            <span>Gestão, OKRs & Ops</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Content 1: Engenharia -->
+      <div id="workflow-eng" class="workflow-team-content grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-terracotta font-bold uppercase">[01] RFCs e Débito Técnico</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Decisões Rastreáveis</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Vincule Architecture Decision Records (ADRs) diretamente a tarefas de refatoração sem dispersão.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Sprints em Tempo Real</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Velocidade Honesta</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Burndown automático com cálculo real de story points sem precisar de plugins caros adicionais.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[03] PRs & GitHub Integrados</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Automação de Fechamento</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Quando o merge ocorre, a tarefa conclui e atualiza o checklist na wiki central da sprint.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Design (Hidden initially) -->
+      <div id="workflow-design" class="workflow-team-content hidden grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-terracotta font-bold uppercase">[01] Design System Tokens</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Padronização Visual</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Tarefas conectadas à biblioteca de componentes com preview de protótipos e diretrizes visuais.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Discovery & Pesquisa</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Insights de Usuário</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Notas de entrevistas que se convertem em hipóteses e cartões de teste de usabilidade em segundos.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[03] Handoff Sem Fricção</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Alinhamento de Entrega</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Especificações de layout claras que eliminam reuniões redundantes de passagem de bastão.
+          </p>
+        </div>
+      </div>
+
+      <!-- Tab Content 3: Ops / Negócios (Hidden initially) -->
+      <div id="workflow-ops" class="workflow-team-content hidden grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-terracotta font-bold uppercase">[01] OKRs & Metas Trimestrais</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Alinhamento Estratégico</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Conecte cada tarefa a um Key Result mensurável e acompanhe a evolução percentual da empresa.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Lançamentos de Produto</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Go-to-Market Sincronizado</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Marketing, vendas e suporte trabalhando no mesmo quadro de entregas com datas invioláveis.
+          </p>
+        </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[03] Relatórios Executivos em PDF</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Exportação com 1 Clique</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Gere resumos consolidados para stakeholders e diretorias sem precisar montar slides manuais.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MATRIZ DE PRIORIZAÇÃO HONESTA (SEM RUÍDO) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-8 md:p-20">
+    <div class="max-w-6xl mx-auto space-y-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <div class="lg:col-span-5 space-y-4">
+          <span class="font-mono text-xs text-terracotta font-bold uppercase tracking-widest">Foco Brutalista</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white leading-[1.05]">
+            Priorização honesta.<br>
+            <i class="text-sage font-serif-italic">Diga adeus a falsas urgências.</i>
+          </h2>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            A maioria dos gerenciadores permite marcar tudo como "Urgente", gerando estresse e cegueira operacional. O SpecLine estrutura a energia da equipe com limites visuais e foco no que verdadeiramente destrava o próximo marco.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-2 gap-4 font-mono text-xs">
+          
+          <div class="p-6 border-2 border-terracotta bg-terracotta/5 rounded-xl space-y-2">
+            <div class="text-terracotta font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              Crítico & Imediato
+            </div>
+            <div class="font-sans font-bold text-base text-ink dark:text-white">Destraves da Sprint</div>
+            <p class="font-sans text-xs text-ink-light/80 dark:text-white/70">Máximo de 3 tarefas simultâneas para manter o foco total.</p>
+          </div>
+
+          <div class="p-6 border border-ink/20 dark:border-white/15 bg-fable-light dark:bg-ink-darker rounded-xl space-y-2">
+            <div class="text-sage font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              Alto Impacto
+            </div>
+            <div class="font-sans font-bold text-base text-ink dark:text-white">Decisões de Longo Prazo</div>
+            <p class="font-sans text-xs text-ink-light/80 dark:text-white/70">Arquiteturas e padrões que aceleram as próximas entregas.</p>
+          </div>
+
+          <div class="p-6 border border-ink/20 dark:border-white/15 bg-fable-light dark:bg-ink-darker rounded-xl space-y-2">
+            <div class="text-ochre font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Vitórias Rápidas
+            </div>
+            <div class="font-sans font-bold text-base text-ink dark:text-white">Tarefas de Baixo Esforço</div>
+            <p class="font-sans text-xs text-ink-light/80 dark:text-white/70">Pequenos ajustes concluídos em menos de 30 minutos.</p>
+          </div>
+
+          <div class="p-6 border border-ink/20 dark:border-white/15 bg-fable-light dark:bg-ink-darker rounded-xl space-y-2 opacity-70">
+            <div class="text-ink/40 dark:text-white/40 font-bold uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+              Backlog Estável
+            </div>
+            <div class="font-sans font-bold text-base text-ink dark:text-white">Para Próximos Ciclos</div>
+            <p class="font-sans text-xs text-ink-light/80 dark:text-white/70">Ideias catalogadas sem poluir o quadro do presente.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CALL TO ACTION SECTION -->
+  <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-xs tracking-widest text-terracotta uppercase font-bold">Sua Próxima Entrega sem Estresse</p>
+      <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+        Organize sprints com a fluidez que a sua equipe sempre quis.
+      </h2>
+      <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+        Pronto para usar, com quadros ilimitados e integração em tempo real.
+      </p>
+      <div class="pt-4 flex justify-center">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Criar Conta Gratuita</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUMEN STUDIO FOOTER -->
+  <footer class="relative bg-fable-light dark:bg-ink text-ink dark:text-fable-light pt-24 pb-8 overflow-hidden border-t-0">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[50vh] bg-ink/5 dark:bg-fable-light/10 blur-[100px] rounded-[100%] pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
+      <div class="col-span-1 md:col-span-4 space-y-6">
+        <div class="flex items-center gap-3 group cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+          <span class="font-sans font-semibold text-2xl tracking-tight text-ink dark:text-white">SpecLine</span>
+        </div>
+        <p class="font-sans text-ink-light dark:text-white/60 text-base leading-relaxed max-w-xs">
+          Ambiente de foco e produtividade para equipes, projetos e profissionais operarem com clareza todos os dias.
+        </p>
+      </div>
+
+      <div class="col-span-1 md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Produto</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Documentos & Wiki</a></li>
+            <li><a href="/features/kanban" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all font-semibold text-terracotta">Tarefas & Gestão</a></li>
+            <li><a href="/pricing" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Preços</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Empresa</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/philosophy/vision" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Sobre Nós</a></li>
+            <li><a href="/contact" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Contato</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Recursos</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Documentação</a></li>
+            <li><a href="/changelog" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Changelog</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Legal</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/privacy" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Privacidade</a></li>
+            <li><a href="/terms" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Termos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-full overflow-hidden flex justify-center pb-12 z-10 pointer-events-none">
+      <div class="text-[18vw] leading-[0.75] font-sans font-bold tracking-tighter text-ink/10 dark:text-white/10" style="margin-bottom: -6vw;">
+        SpecLine
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-20 flex flex-col md:flex-row justify-between items-center text-xs font-sans text-ink-light/60 dark:text-white/40 pb-4">
+      <div>© 2026 SpecLine. All rights reserved.</div>
+      <div class="mt-4 md:mt-0">Feito com <span class="text-terracotta">♥</span> no Brasil</div>
+    </div>
+  </footer>
+
+</body>
+</html>

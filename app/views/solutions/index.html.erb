@@ -1,0 +1,279 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white selection:bg-terracotta/30 selection:text-ink font-sans transition-colors duration-500">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION -->
+    <header class="p-8 md:p-16 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+          <span class="w-2 h-2 rounded-full bg-terracotta inline-block animate-ping"></span>
+          CENTRAL DE SOLUÇÕES // CONCEPTS DEDICADOS
+        </div>
+        
+        <h1 class="font-serif font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-fable">
+          Páginas dedicadas para<br>
+          <i class="text-terracotta font-serif-italic">a realidade de cada equipe.</i>
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Cada modelo operacional possui desafios estruturais diferentes. Criamos uma página dedicada para cada perfil com simuladores interativos e fluxos reais. Selecione a solução desejada:
+        </p>
+
+        <!-- DEDICATED QUICK NAV SELECTOR -->
+        <div class="pt-4 flex flex-wrap justify-center items-center gap-3 font-mono text-xs">
+          <%= link_to solutions_startups_path, class: "px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+            <span>Para Startups</span>
+          <% end %>
+
+          <%= link_to solutions_agencies_path, class: "px-4 py-2.5 bg-ocean/10 text-ocean border border-ocean/30 rounded-xl hover:bg-ocean hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Para Agências</span>
+          <% end %>
+
+          <%= link_to solutions_product_path, class: "px-4 py-2.5 bg-sage/15 text-sage border border-sage/30 rounded-xl hover:bg-sage hover:text-ink transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>Times de Produto</span>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <!-- DEDICATED CONCEPTS SHOWCASE: 3 DISTINCT CARDS -->
+    <div class="max-w-7xl mx-auto px-6 py-16 w-full space-y-12">
+      <div class="text-center space-y-2 max-w-2xl mx-auto">
+        <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Diretório de Experiências</span>
+        <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
+          Conheça as três soluções em páginas dedicadas
+        </h2>
+        <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+          Cada página possui ferramentas interativas: calculadora de runway, portal de aprovação com assinatura e a Tríade Viva SpecLine.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        <!-- CARD 1: STARTUPS -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
+                Solução #01
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors">
+                Startups & Equipes Enxutas
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                Velocidade de Runway & Foco em MVP
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Para fundadores que não podem queimar caixa pagando múltiplas assinaturas nem perder dias em burocracia antes de validar o produto.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Calculadora de runway e economia de licenças</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Simulador de Sprint MVP em 7 dias com checklist</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Zero fadiga de abas: PRD, Kanban e Chat unificados</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Economia estimada:</span>
+              <span class="text-sage font-bold font-mono">~68% em faturas</span>
+            </div>
+
+            <%= link_to solutions_startups_path, class: "w-full py-3.5 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Startups</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 2: AGENCIES -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-ocean/15 text-ocean font-bold border border-ocean/20">
+                Solução #02
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-ocean transition-colors">
+                Agências & Consultorias
+              </h3>
+              <p class="text-xs font-mono text-ocean uppercase tracking-wide">
+                Isolamento de Clientes & Aprovação Formal
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Feito para equipes que gerenciam múltiplos clientes e precisam blindar sua lucratividade contra refações não orçadas e escopos soltos.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Seletor de workspaces multi-tenant isolados</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Portal de aprovação com assinatura e auditoria</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-ocean shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Blindagem rigorosa contra vazamento entre contas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Queda em retrabalho:</span>
+              <span class="text-sage font-bold font-mono">-74% Refações</span>
+            </div>
+
+            <%= link_to solutions_agencies_path, class: "w-full py-3.5 px-4 bg-ocean text-white hover:bg-ocean/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Agências</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 3: PRODUCT SQUADS -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-sage/15 text-sage font-bold border border-sage/20">
+                Solução #03
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-sage transition-colors">
+                Times de Produto & Squads
+              </h3>
+              <p class="text-xs font-mono text-sage uppercase tracking-wide">
+                Tríade Viva (PRD ↔ Kanban ↔ Chat)
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Projetado para PMs, Tech Leads e Engenheiros que sofrem com especificações defasadas e desalinhamento técnico.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Simulador ao vivo da Tríade sincronizada</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Calculadora de horas perdidas em reuniões</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Critérios de aceite diretamente atrelados às tarefas</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Alinhamentos repetitivos:</span>
+              <span class="text-sage font-bold font-mono">-80% Reuniões</span>
+            </div>
+
+            <%= link_to solutions_product_path, class: "w-full py-3.5 px-4 bg-sage text-ink hover:bg-sage/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Produto</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE COMPARISON TABLE -->
+    <section class="border-t border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper py-16 px-6">
+      <div class="max-w-5xl mx-auto space-y-8">
+        <div class="text-center space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Arquitetura Operacional</span>
+          <h2 class="text-3xl font-serif text-ink dark:text-white font-light">
+            A diferença entre ferramentas dispersas e um ecossistema unificado
+          </h2>
+        </div>
+
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-12 bg-fable dark:bg-ink-darker p-4 border-b border-ink/15 dark:border-white/10 font-mono text-xs font-bold">
+            <div class="col-span-5 text-ink dark:text-white uppercase">Critério Operacional</div>
+            <div class="col-span-3 text-terracotta uppercase">Múltiplas Ferramentas</div>
+            <div class="col-span-4 text-sage uppercase">SpecLine Unificado</div>
+          </div>
+
+          <div class="divide-y divide-ink/10 dark:divide-white/10 text-xs font-mono">
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Custo por Usuário / Mês</div>
+              <div class="col-span-3 text-terracotta font-bold">~$35 a $60+ somados</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>1 assinatura consolidada e acessível</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Troca de Abas e Contexto</div>
+              <div class="col-span-3 text-terracotta font-bold">Constante e exaustiva</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Zero trocas de contexto</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Sincronia Especificação ↔ Tarefa</div>
+              <div class="col-span-3 text-terracotta font-bold">Manual, gera desvios</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Tríade nativa em tempo real</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Organização de Múltiplos Clientes</div>
+              <div class="col-span-3 text-terracotta font-bold">Canais avulsos e risco de dados</div>
+              <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Workspaces isolados com aprovação</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

@@ -1,21 +1,11 @@
 <% current_ws = local_assigns[:workspace] || (@workspace&.persisted? ? @workspace : nil) || current_user&.workspaces&.first %>
 <% if current_ws&.persisted? %>
 <!-- 2. Context Panel (Workspace Specific) -->
-<aside class="w-72 bg-white dark:bg-ink-paper border-r border-ink/5 dark:border-white/5 flex flex-col shrink-0 z-10 shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)] overflow-y-auto hidden md:flex transition-all duration-300">
+<div id="workspace-sidebar-wrapper" class="hidden md:flex flex-col w-[280px] shrink-0 h-full py-4 pr-4 pl-1">
+  <aside class="w-full h-full bg-white/70 dark:bg-ink-paper/70 backdrop-blur-xl border border-ink/5 dark:border-white/10 rounded-3xl flex flex-col shrink-0 z-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-black/20 overflow-hidden transition-all duration-300">
   
-  <!-- Quick Search Trigger (Above Workspace) -->
-  <div class="px-5 pt-4 pb-2">
-    <%= link_to search_path, data: { turbo_frame: "modal" }, class: "w-full flex items-center justify-between px-3 py-2 rounded-xl bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5 text-xs text-ink-light dark:text-white/50 hover:border-terracotta/40 hover:text-ink dark:hover:text-fable transition-all group cursor-pointer" do %>
-      <div class="flex items-center gap-2">
-        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:text-terracotta transition-colors"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <span>Buscar tudo...</span>
-      </div>
-      <kbd class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink-light/70 dark:text-white/40">⌘K</kbd>
-    <% end %>
-  </div>
-
   <!-- Workspace Header & Selector -->
-  <div class="px-5 pt-2 pb-3 border-b border-ink/5 dark:border-white/5">
+  <div class="px-5 pt-4 pb-3 border-b border-ink/5 dark:border-white/5">
     <div class="flex items-center justify-between mb-2">
       <span class="text-[10px] font-bold uppercase tracking-wider text-ink-light/60 dark:text-white/40">Workspace</span>
       <%= link_to workspaces_path, class: "text-[11px] text-ink-light dark:text-white/50 hover:text-terracotta transition-colors", title: "Ver todos os workspaces" do %>
@@ -50,40 +40,72 @@
     <div class="space-y-0.5">
       <% current_ws.projects.select(&:persisted?).each do |proj| %>
         <% is_active = (defined?(@project) && @project&.persisted? && @project == proj) %>
-        <%= link_to workspace_project_path(current_ws, proj), class: "group flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-medium transition-all #{is_active ? 'bg-ink/5 dark:bg-white/10 text-ink dark:text-fable font-semibold shadow-xs' : 'text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable'}" do %>
-          <div class="flex items-center gap-2.5 min-w-0">
+        <%= link_to workspace_project_path(current_ws, proj), class: "group relative flex items-center justify-between p-2 rounded-2xl text-[13px] font-medium transition-all duration-300 #{is_active ? 'bg-ink/[0.03] dark:bg-white/5 text-ink dark:text-fable font-semibold' : 'text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable'}" do %>
+          
+          <% if is_active %>
+            <!-- Therapy Active Indicator Pill -->
+            <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-5 bg-terracotta rounded-r-full shadow-[0_0_8px_rgba(217,122,94,0.4)]"></div>
+          <% end %>
+
+          <div class="flex items-center gap-2.5 min-w-0 ml-0.5">
             <% if proj.logo.attached? %>
               <%= image_tag proj.logo, class: "w-5 h-5 rounded-lg object-cover shrink-0" %>
             <% elsif proj.icon.present? %>
               <span class="text-sm shrink-0 leading-none"><%= proj.icon %></span>
             <% else %>
-              <div class="w-5 h-5 rounded-lg flex items-center justify-center font-serif text-[10px] font-bold shrink-0 <%= is_active ? 'bg-terracotta/20 text-terracotta' : 'bg-ink/5 dark:bg-white/5 text-ink-light dark:text-white/60' %>">
+              <div class="w-5 h-5 rounded-lg flex items-center justify-center font-serif text-[10px] font-bold shrink-0 <%= is_active ? 'bg-terracotta/20 text-terracotta' : 'bg-ink/5 dark:bg-white/5 text-ink-light dark:bg-white/60' %>">
                 <%= proj.identifier_prefix.presence || proj.name[0..1].upcase %>
               </div>
             <% end %>
             <span class="truncate"><%= proj.name %></span>
           </div>
 
-          <% if is_active %>
-            <span class="w-1.5 h-1.5 rounded-full bg-terracotta shrink-0"></span>
-          <% else %>
-            <span class="text-[10px] text-ink-light/40 dark:text-white/30 font-mono opacity-0 group-hover:opacity-100 transition-opacity"><%= proj.identifier_prefix %></span>
-          <% end %>
+          <span class="text-[10px] text-ink-light/40 dark:text-white/30 font-mono opacity-0 group-hover:opacity-100 transition-opacity"><%= proj.identifier_prefix %></span>
         <% end %>
       <% end %>
     </div>
 
-    <!-- Quick Actions for Active Project -->
+    <!-- Ações e Filtros do Projeto Ativo -->
     <% if defined?(@project) && @project&.persisted? %>
       <div class="mt-6 pt-4 border-t border-ink/5 dark:border-white/5 px-2">
         <div class="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 mb-2">
-          <span>Configuração</span>
+          <span>Filtros do Projeto</span>
         </div>
 
-        <%= link_to edit_workspace_project_path(current_ws, @project), data: { turbo_frame: "modal" }, class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable font-medium transition-colors" do %>
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>Configurar Projeto</span>
-        <% end %>
+        <div class="space-y-1">
+          <%= link_to "#", class: "flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-olive/10 hover:text-olive-dark dark:hover:text-olive transition-colors" do %>
+            <div class="flex items-center gap-2.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-olive"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              <span>Minhas Issues</span>
+            </div>
+            <% my_project_issues_count = current_user.assigned_issues.where(project_id: @project.id).joins(:issue_status).where.not(issue_statuses: { category: 'done' }).count %>
+            <% if my_project_issues_count > 0 %>
+              <span class="text-[10px] font-bold bg-olive/10 text-olive-dark dark:text-olive px-1.5 py-0.5 rounded-full"><%= my_project_issues_count %></span>
+            <% end %>
+          <% end %>
+
+          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-rust/10 hover:text-rust-dark dark:hover:text-rust transition-colors" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-rust"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>Urgentes / Bloqueados</span>
+          <% end %>
+
+          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-sage/10 hover:text-sage-dark dark:hover:text-sage transition-colors" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-sage"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <span>Atualizações Recentes</span>
+          <% end %>
+          
+          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-terracotta/10 hover:text-terracotta-dark dark:hover:text-terracotta transition-colors" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-terracotta"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span>Membros da Equipe</span>
+          <% end %>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-ink/5 dark:border-white/5">
+          <%= link_to edit_workspace_project_path(current_ws, @project), data: { turbo_frame: "modal" }, class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable font-medium transition-colors" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span>Configurar Projeto</span>
+          <% end %>
+        </div>
       </div>
     <% end %>
 
@@ -111,24 +133,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Outros Workspaces Footer -->
-  <div class="px-5 py-4 border-t border-ink/5 dark:border-white/5 mt-auto bg-ink/[0.01] dark:bg-white/[0.01]">
-    <h4 class="text-[10px] font-bold uppercase tracking-wider text-ink-light/60 dark:text-white/40 mb-2">Outros Workspaces</h4>
-    <div class="space-y-1">
-      <% current_user.workspaces.where.not(id: current_ws.id).each do |ws| %>
-        <%= link_to workspace_path(ws), class: "flex items-center justify-between p-1.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable transition-colors text-xs" do %>
-          <div class="flex items-center gap-2 overflow-hidden">
-            <% if ws.logo.attached? %>
-              <%= image_tag ws.logo, class: "w-4 h-4 rounded object-cover border border-ink/10 dark:border-white/10 shrink-0" %>
-            <% else %>
-              <div class="w-4 h-4 rounded flex items-center justify-center font-serif text-[9px] text-ink dark:text-fable font-bold shrink-0" style="background-color: <%= ws.color.presence || '#D97A5E' %>15; color: <%= ws.color.presence || '#D97A5E' %>;"><%= ws.name.presence&.[](0)&.upcase || 'W' %></div>
-            <% end %>
-            <span class="truncate"><%= ws.name %></span>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
 </aside>
+</div>
 <% end %>

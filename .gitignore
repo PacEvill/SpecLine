@@ -171,10 +171,14 @@ desktop.ini
 # ------------------------------------------------------------------------------
 # 8. Scripts Temporarios de Refatoracao e Agentes
 # ------------------------------------------------------------------------------
-# Scripts temporarios de refatoracao local
+# Scripts temporarios de refatoracao local e backups
 /fix_*.rb
 /rewrite_*.rb
 /script_*.rb
+/scratch_*
+/temp_*
+*.bak
+*.dump
 
 # Ignora links simbolicos locais de habilidades e ferramentas de agentes
 /.agents

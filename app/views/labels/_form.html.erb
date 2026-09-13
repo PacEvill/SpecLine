@@ -8,7 +8,7 @@
 
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
       <div class="flex min-h-full items-end justify-end text-center sm:items-center sm:p-0">
-        <div class="relative transform overflow-hidden bg-[#FDFBF7] dark:bg-ink-darker text-left shadow-2xl transition-all sm:my-0 sm:w-full sm:max-w-md h-screen border-l border-ink/10 dark:border-white/10 flex flex-col duration-500" data-modal-target="panel">
+        <div class="relative transform overflow-hidden bg-fable-light dark:bg-ink-darker text-left shadow-2xl transition-all sm:my-0 sm:w-full sm:max-w-md h-screen border-l border-ink/10 dark:border-white/10 flex flex-col duration-500" data-modal-target="panel">
           
           <div class="flex items-center justify-between px-6 py-4 border-b border-ink/5 dark:border-white/5 bg-white dark:bg-ink-paper">
             <h3 class="text-base font-serif font-medium text-ink dark:text-fable" id="modal-title">
@@ -23,7 +23,7 @@
           <div class="flex-1 overflow-y-auto px-6 py-6">
             <%= form_with(model: [@workspace, @label], html: { target: "_top", class: "space-y-6" }) do |f| %>
               <% if @label.errors.any? %>
-                <div class="bg-red-50 text-red-600 p-4 rounded-xl text-sm mb-6 border border-red-100">
+                <div class="bg-rust/10 text-rust p-4 rounded-xl text-sm mb-6 border border-rust/20">
                   <p class="font-semibold mb-2">Não foi possível salvar:</p>
                   <ul class="list-disc pl-5 space-y-1">
                     <% @label.errors.full_messages.each do |message| %>
@@ -46,7 +46,7 @@
 
               <div class="pt-6 mt-6 border-t border-ink/5 dark:border-white/5 flex items-center justify-between">
                 <% unless @label.new_record? %>
-                  <%= link_to "Excluir Tag", workspace_label_path(@workspace, @label), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta tag?" }, class: "text-xs font-medium text-red-600 hover:underline" %>
+                  <%= link_to "Excluir Tag", workspace_label_path(@workspace, @label), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta tag?" }, class: "text-xs font-medium text-rust hover:underline" %>
                 <% else %>
                   <div></div>
                 <% end %>

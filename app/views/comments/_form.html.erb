@@ -1,0 +1,11 @@
+<%= form_with(model: comment, url: workspace_project_issue_comments_path(workspace, project, issue), id: "new_comment_form", class: "flex gap-3") do |form| %>
+  <div class="w-7 h-7 rounded-full bg-terracotta text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">
+    <%= current_user.email[0].upcase %>
+  </div>
+  <div class="flex-1">
+    <%= form.text_area :body, rows: 2, class: "w-full px-3 py-2 rounded-xl border border-ink/10 dark:border-white/10 bg-white dark:bg-ink-paper text-sm text-ink dark:text-fable placeholder-ink-light/40 focus:ring-2 focus:ring-terracotta/20 focus:border-terracotta dark:focus:border-terracotta outline-none transition-all resize-none duration-500", placeholder: "Escreva um comentário..." %>
+    <div class="flex justify-end mt-2">
+      <%= form.submit "Comentar", class: "px-4 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-terracotta-dark transition-colors cursor-pointer duration-500" %>
+    </div>
+  </div>
+<% end %>

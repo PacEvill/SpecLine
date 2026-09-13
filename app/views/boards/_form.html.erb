@@ -2,11 +2,13 @@
   <%= render "shared/workspace_sidebar", workspace: @workspace %>
 <% end %>
 
-<% if defined?(@project) && @project&.persisted? %>
-  <div class="opacity-40 pointer-events-none filter blur-[1px] select-none h-full overflow-hidden">
-    <%= render "projects/header" %>
-    <%= render "projects/overview_view" %>
-  </div>
+<% unless turbo_frame_request? %>
+  <% if defined?(@project) && @project&.persisted? %>
+    <div class="opacity-40 pointer-events-none filter blur-[1px] select-none h-full overflow-hidden">
+      <%= render "projects/header" %>
+      <%= render "projects/overview_view" %>
+    </div>
+  <% end %>
 <% end %>
 
 <%= turbo_frame_tag "modal" do %>
@@ -35,7 +37,7 @@
             <button type="button" data-action="modal#close" class="w-full sm:w-auto px-4 py-2 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500 text-center">
               Cancelar
             </button>
-            <%= f.submit (@board.new_record? ? "Criar Quadro" : "Salvar Alterações"), class: "w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors cursor-pointer duration-500 text-center" %>
+            <%= f.submit (@board.new_record? ? "Criar Quadro" : "Salvar Alterações"), class: "w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-terracotta-dark transition-colors cursor-pointer duration-500 text-center" %>
           </div>
         <% end %>
       </div>

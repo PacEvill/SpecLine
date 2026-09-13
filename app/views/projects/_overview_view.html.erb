@@ -1,290 +1,318 @@
-<div class="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl mx-auto font-sans space-y-6 sm:space-y-8 pb-20 md:pb-8">
-  
-  <!-- 1. Project Health & Ecosystem Metrics Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-[1400px] mx-auto font-sans space-y-6 pb-20 md:pb-8">
+
+  <!-- Bento Row 1: Header (Progresso e Calendário) -->
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
     
-    <!-- Progresso Geral -->
-    <div class="p-5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs font-semibold uppercase tracking-wider text-ink-light dark:text-white/50">Progresso Geral</span>
-        <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <!-- Progresso Geral & Milestone & Minhas Tarefas (Col Span 3) -->
+    <div class="col-span-1 lg:col-span-3 p-6 bg-gradient-to-br from-white to-ink/5 dark:from-ink-paper dark:to-ink border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm relative overflow-hidden group flex flex-col justify-between h-full min-h-[220px]">
+        <div class="absolute inset-0 bg-olive/5 dark:bg-olive/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-2xl pointer-events-none"></div>
+        
+        <div class="relative z-10 flex flex-col gap-5 flex-1 justify-center">
+          <!-- Bar 1: Progresso Global -->
+          <div class="flex flex-col w-full">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-olive/10 text-olive flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Global</h3>
+                  <p class="text-[11px] font-medium text-ink dark:text-white mt-0.5"><%= @issues.joins(:issue_status).where(issue_statuses: { category: "done" }).count %> concluídas</p>
+                </div>
+              </div>
+              <span class="text-2xl font-serif font-bold text-ink dark:text-white"><%= @completion_rate %>%</span>
+            </div>
+            <div class="w-full h-2 bg-ink/5 dark:bg-white/5 rounded-full overflow-hidden">
+              <div class="h-full bg-olive rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(107,112,92,0.5)]" style="width: <%= @completion_rate %>%"></div>
+            </div>
+          </div>
+
+          <!-- Bar 2: Milestone Atual -->
+          <div class="flex flex-col w-full">
+            <% current_milestone = @milestones.first %>
+            <% if current_milestone %>
+              <% m_issues = @issues.where(milestone_id: current_milestone.id) %>
+              <% m_done = m_issues.select { |i| i.issue_status&.category == 'done' }.count %>
+              <% m_pct = m_issues.count > 0 ? ((m_done.to_f / m_issues.count) * 100).round : 0 %>
+              
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Milestone</h3>
+                    <p class="text-[11px] font-medium text-ink dark:text-white mt-0.5 truncate max-w-[200px]"><%= current_milestone.title %></p>
+                  </div>
+                </div>
+                <span class="text-2xl font-serif font-bold text-ink dark:text-white"><%= m_pct %>%</span>
+              </div>
+              <div class="w-full h-2 bg-ink/5 dark:bg-white/5 rounded-full overflow-hidden">
+                <div class="h-full bg-terracotta rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(217,122,94,0.5)]" style="width: <%= m_pct %>%"></div>
+              </div>
+            <% else %>
+              <div class="flex h-12 items-center justify-center border border-dashed border-ink/10 dark:border-white/10 rounded-2xl">
+                 <p class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/40">S/ Milestone</p>
+              </div>
+            <% end %>
+          </div>
+
+          <!-- Bar 3: Minhas Tarefas -->
+          <div class="flex flex-col w-full">
+            <% my_issues = @issues.where(assignee_id: current_user.id) %>
+            <% my_done = my_issues.select { |i| i.issue_status&.category == 'done' }.count %>
+            <% my_pct = my_issues.count > 0 ? ((my_done.to_f / my_issues.count) * 100).round : 0 %>
+            
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate/10 text-slate flex items-center justify-center shrink-0 shadow-sm group-hover:scale-110 transition-transform">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Meu Progresso</h3>
+                  <p class="text-[11px] font-medium text-ink dark:text-white mt-0.5"><%= my_done %> de <%= my_issues.count %></p>
+                </div>
+              </div>
+              <span class="text-2xl font-serif font-bold text-ink dark:text-white"><%= my_pct %>%</span>
+            </div>
+            <div class="w-full h-2 bg-ink/5 dark:bg-white/5 rounded-full overflow-hidden">
+              <div class="h-full bg-slate rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(71,85,105,0.5)]" style="width: <%= my_pct %>%"></div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2 mb-2">
-          <span class="text-3xl font-serif font-bold text-ink dark:text-fable"><%= @completion_rate %>%</span>
-          <span class="text-xs text-ink-light dark:text-white/50">concluído</span>
-        </div>
-        <div class="w-full h-2 bg-ink/5 dark:bg-white/10 rounded-full overflow-hidden">
-          <div class="h-full bg-emerald-500 rounded-full transition-all duration-500" style="width: <%= @completion_rate %>%"></div>
-        </div>
-      </div>
     </div>
 
-    <!-- Backlog & Tarefas Ativas -->
-    <div class="p-5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs font-semibold uppercase tracking-wider text-ink-light dark:text-white/50">Issues & Backlog</span>
-        <div class="w-8 h-8 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
-        </div>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2">
-          <span class="text-3xl font-serif font-bold text-ink dark:text-fable"><%= @issues.count %></span>
-          <span class="text-xs text-ink-light dark:text-white/50">tarefas totais</span>
-        </div>
-        <p class="text-[11px] text-ink-light dark:text-white/50 mt-1.5 truncate">
-          <%= @issues.select { |i| i.issue_status&.category != "done" }.count %> ativas no Kanban
-        </p>
-      </div>
+    <!-- Mini Calendário Real (Col Span 1) -->
+    <div class="col-span-1 p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between h-full min-h-[220px]">
+       <div class="flex items-center justify-between mb-4">
+         <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70"><%= Date.today.strftime("%B %Y").capitalize %></h3>
+         <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+       </div>
+       
+       <% 
+         today = Date.today
+         first_day = today.beginning_of_month
+         last_day = today.end_of_month
+         start_wday = first_day.wday
+       %>
+       <div class="grid grid-cols-7 gap-y-2 gap-x-1 text-center text-[10px] flex-1 items-center">
+         <div class="font-bold text-ink-light dark:text-white/40">D</div>
+         <div class="font-bold text-ink-light dark:text-white/40">S</div>
+         <div class="font-bold text-ink-light dark:text-white/40">T</div>
+         <div class="font-bold text-ink-light dark:text-white/40">Q</div>
+         <div class="font-bold text-ink-light dark:text-white/40">Q</div>
+         <div class="font-bold text-ink-light dark:text-white/40">S</div>
+         <div class="font-bold text-ink-light dark:text-white/40">S</div>
+         
+         <% start_wday.times do %><div></div><% end %>
+         <% (1..last_day.day).each do |day| %>
+           <% is_today = (day == today.day) %>
+           <div class="flex items-center justify-center">
+             <span class="w-6 h-6 flex items-center justify-center rounded-full <%= is_today ? 'bg-terracotta text-white font-bold shadow-sm' : 'text-ink dark:text-white/80 hover:bg-ink/5 dark:hover:bg-white/10 transition-colors cursor-pointer' %>">
+               <%= day %>
+             </span>
+           </div>
+         <% end %>
+       </div>
     </div>
-
-    <!-- Base de Especificações (Docs) -->
-    <div class="p-5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs font-semibold uppercase tracking-wider text-ink-light dark:text-white/50">Especificações (PRDs)</span>
-        <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        </div>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2">
-          <span class="text-3xl font-serif font-bold text-ink dark:text-fable"><%= @project.documents.count %></span>
-          <span class="text-xs text-ink-light dark:text-white/50">documentos</span>
-        </div>
-        <p class="text-[11px] text-ink-light dark:text-white/50 mt-1.5 truncate">
-          Base técnica e requisitos
-        </p>
-      </div>
-    </div>
-
-    <!-- Arquiteturas & Diagramas -->
-    <div class="p-5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs font-semibold uppercase tracking-wider text-ink-light dark:text-white/50">Quadros & Arquitetura</span>
-        <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-        </div>
-      </div>
-      <div>
-        <div class="flex items-baseline gap-2">
-          <span class="text-3xl font-serif font-bold text-ink dark:text-fable"><%= @whiteboards.count %></span>
-          <span class="text-xs text-ink-light dark:text-white/50">quadros</span>
-        </div>
-        <p class="text-[11px] text-ink-light dark:text-white/50 mt-1.5 truncate">
-          Canvas & Mermaid integrados
-        </p>
-      </div>
-    </div>
-
   </div>
 
-  <!-- 2. Main 2-Column Ecosystem Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+  <!-- Bento Row 2: Métricas Rápidas (4 colunas) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
     
-    <!-- Left 2 Columns: Architecture Blueprints & Recent Technical Specs -->
-    <div class="lg:col-span-2 space-y-8">
-      
-      <!-- A. Quadros de Arquitetura em Destaque -->
-      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-xs">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold font-serif text-ink dark:text-fable">Arquitetura de Sistemas & Quadros</h3>
-              <p class="text-xs text-ink-light dark:text-white/50">Modelagem visual, fluxos de autenticação e diagramas técnicos.</p>
-            </div>
-          </div>
-          <%= link_to workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "text-xs font-semibold text-terracotta hover:underline cursor-pointer" do %>
-            Ver todos (<%= @whiteboards.count %>) →
-          <% end %>
-        </div>
-
-        <% if @recent_whiteboards.any? %>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-            <% @recent_whiteboards.each do |wb| %>
-              <%= link_to workspace_project_whiteboard_path(@workspace, @project, wb), class: "group p-4 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-2xl hover:border-terracotta/50 dark:hover:border-terracotta/50 transition-all cursor-pointer flex flex-col justify-between" do %>
-                <div>
-                  <div class="flex items-center justify-between mb-2">
-                    <div class="w-7 h-7 rounded-lg bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
-                      <%= whiteboard_icon_tag(wb, size_class: "w-4 h-4") %>
-                    </div>
-                    <span class="text-[10px] text-ink-light dark:text-white/40"><%= time_ago_in_words(wb.updated_at) %> atrás</span>
-                  </div>
-                  <h4 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors line-clamp-1"><%= wb.title %></h4>
-                  <p class="text-[11px] text-ink-light dark:text-white/50 mt-1 line-clamp-2 leading-relaxed">
-                    <%= wb.description.presence || "Diagrama de arquitetura e especificação visual do projeto." %>
-                  </p>
-                </div>
-                <div class="mt-3 pt-2 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-[10px] font-semibold text-terracotta">
-                  <span>Abrir Canvas</span>
-                  <span class="group-hover:translate-x-0.5 transition-transform">→</span>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="text-center py-8 bg-[#FDFBF7] dark:bg-ink-darker border border-dashed border-ink/15 dark:border-white/10 rounded-2xl">
-            <p class="text-xs text-ink-light dark:text-white/50 mb-3">Nenhum diagrama de arquitetura criado ainda.</p>
-            <%= link_to new_workspace_project_whiteboard_path(@workspace, @project), class: "inline-flex items-center gap-1.5 px-3 py-1.5 bg-terracotta text-white rounded-xl text-xs font-semibold hover:bg-terracotta-hover transition-colors shadow-xs" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Criar Primeiro Quadro</span>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
-      <!-- B. Especificações Técnicas & Documentos Recentes -->
-      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-xs">
-        <div class="flex items-center justify-between mb-4">
-          <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div>
-              <h3 class="text-sm font-bold font-serif text-ink dark:text-fable">Documentação Técnica Recente</h3>
-              <p class="text-xs text-ink-light dark:text-white/50">PRDs, especificações de requisitos e guias de implementação.</p>
-            </div>
-          </div>
-          <%= link_to workspace_project_path(@workspace, @project, view: 'documents'), class: "text-xs font-semibold text-terracotta hover:underline cursor-pointer" do %>
-            Ver todos (<%= @project.documents.count %>) →
-          <% end %>
-        </div>
-
-        <% if @recent_documents.any? %>
-          <div class="divide-y divide-ink/5 dark:divide-white/5">
-            <% @recent_documents.each do |doc| %>
-              <%= link_to workspace_project_document_path(@workspace, @project, doc), class: "py-3 flex items-center justify-between hover:bg-ink/5 dark:hover:bg-white/5 px-3 rounded-xl transition-colors group cursor-pointer" do %>
-                <div class="flex items-center gap-3 min-w-0">
-                  <span class="w-7 h-7 rounded-lg <%= doc.is_folder? ? 'bg-amber-500/10 text-amber-600' : 'bg-blue-500/10 text-blue-500' %> flex items-center justify-center shrink-0">
-                    <%= document_icon_tag(doc, size_class: "w-4 h-4") %>
-                  </span>
-                  <div class="truncate">
-                    <h4 class="text-xs font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors truncate"><%= doc.title %></h4>
-                    <p class="text-[11px] text-ink-light dark:text-white/40 truncate">
-                      Autor: <%= doc.author&.email || "Equipe" %> • Atualizado <%= time_ago_in_words(doc.updated_at) %> atrás
-                    </p>
-                  </div>
-                </div>
-                <span class="text-xs text-ink-light/40 dark:text-white/30 group-hover:text-terracotta group-hover:translate-x-0.5 transition-all shrink-0 ml-2">→</span>
-              <% end %>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="text-center py-8 bg-[#FDFBF7] dark:bg-ink-darker border border-dashed border-ink/15 dark:border-white/10 rounded-2xl">
-            <p class="text-xs text-ink-light dark:text-white/50 mb-3">Nenhum documento criado neste projeto.</p>
-            <%= link_to new_workspace_project_document_path(@workspace, @project), class: "inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-500 transition-colors shadow-xs" do %>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Criar Nova Especificação</span>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
-
+    <!-- Issues -->
+    <div class="p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between hover:border-terracotta/30 transition-colors cursor-pointer group min-h-[140px]" onclick="Turbo.visit('<%= workspace_project_path(@workspace, @project, view: 'board') %>')">
+       <div class="flex items-start justify-between mb-4">
+         <div class="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+         </div>
+         <span class="text-3xl font-serif font-bold text-ink dark:text-white"><%= @issues.count %></span>
+       </div>
+       <div>
+         <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Issues & Backlog</h3>
+         <p class="text-[11px] font-medium text-ink-light dark:text-white/50 mt-1"><%= @issues.where.not(issue_statuses: { category: 'done' }).count %> ativas no kanban</p>
+       </div>
     </div>
 
-    <!-- Right 1 Column: Milestones Roadmap, Activity Feed & Quick Actions -->
-    <div class="space-y-8">
+    <!-- Documentos -->
+    <div class="p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between hover:border-olive/30 transition-colors cursor-pointer group min-h-[140px]" onclick="Turbo.visit('<%= workspace_project_path(@workspace, @project, view: 'docs') %>')">
+       <div class="flex items-start justify-between mb-4">
+         <div class="w-10 h-10 rounded-xl bg-sage/20 text-olive flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+         </div>
+         <span class="text-3xl font-serif font-bold text-ink dark:text-white"><%= @project.documents.count %></span>
+       </div>
+       <div>
+         <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Especificações</h3>
+         <p class="text-[11px] font-medium text-ink-light dark:text-white/50 mt-1">PRDs e requisitos técnicos</p>
+       </div>
+    </div>
+
+    <!-- Quadros -->
+    <div class="p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between hover:border-slate/30 transition-colors cursor-pointer group min-h-[140px]" onclick="Turbo.visit('<%= workspace_project_path(@workspace, @project, view: 'whiteboards') %>')">
+       <div class="flex items-start justify-between mb-4">
+         <div class="w-10 h-10 rounded-xl bg-slate/10 text-slate flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+         </div>
+         <span class="text-3xl font-serif font-bold text-ink dark:text-white"><%= @project.whiteboards.count %></span>
+       </div>
+       <div>
+         <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Arquitetura de Sistemas</h3>
+         <p class="text-[11px] font-medium text-ink-light dark:text-white/50 mt-1">Diagramas e canvas visuais</p>
+       </div>
+    </div>
+
+    <!-- Ações Rápidas -->
+    <div class="p-3 grid grid-rows-2 gap-3 min-h-[140px]">
+       <h3 class="sr-only">Ações Rápidas</h3>
+       <%= link_to new_workspace_project_issue_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "bg-terracotta/10 hover:bg-terracotta/20 border border-terracotta/20 rounded-2xl p-4 flex items-center justify-center gap-3 text-terracotta transition-colors group shadow-sm h-full" do %>
+         <svg class="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+         <span class="text-xs font-bold uppercase tracking-wider">Nova Issue</span>
+       <% end %>
+       <%= link_to new_workspace_project_document_path(@workspace, @project), class: "bg-sage/20 hover:bg-sage/30 border border-sage/30 rounded-2xl p-4 flex items-center justify-center gap-3 text-olive transition-colors group shadow-sm h-full" do %>
+         <svg class="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+         <span class="text-xs font-bold uppercase tracking-wider">Novo Doc</span>
+       <% end %>
+    </div>
+  </div>
+
+  <!-- Bento Row 3: Listas Principais -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- Coluna Esquerda: Listas de Conteúdo (Span 2) -->
+    <div class="col-span-1 lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
       
-      <!-- A. Ações Rápidas de Criação -->
-      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-5 shadow-xs">
-        <h3 class="text-xs font-bold font-serif uppercase tracking-wider text-ink-light dark:text-white/40 mb-3">Ações Rápidas</h3>
-        <div class="space-y-2">
-          <%= link_to new_workspace_project_issue_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "w-full flex items-center justify-between p-2.5 rounded-xl bg-terracotta/10 hover:bg-terracotta/20 text-terracotta text-xs font-semibold transition-colors cursor-pointer" do %>
-            <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Nova Issue no Backlog</span>
-            </div>
-            <span>+</span>
-          <% end %>
-
-          <%= link_to new_workspace_project_document_path(@workspace, @project), class: "w-full flex items-center justify-between p-2.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 text-xs font-semibold transition-colors cursor-pointer" do %>
-            <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Nova Especificação Técnica</span>
-            </div>
-            <span>+</span>
-          <% end %>
-
-          <%= link_to new_workspace_project_whiteboard_path(@workspace, @project), class: "w-full flex items-center justify-between p-2.5 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-600 dark:text-purple-400 text-xs font-semibold transition-colors cursor-pointer" do %>
-            <div class="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              <span>Novo Quadro / Diagrama</span>
-            </div>
-            <span>+</span>
-          <% end %>
+      <!-- Listagem de Arquitetura -->
+      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-sm flex flex-col h-full min-h-[250px]">
+        <div class="flex items-center justify-between mb-5">
+           <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70 flex items-center gap-2">
+             <svg class="w-4 h-4 text-slate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+             Últimos Quadros
+           </h3>
+           <%= link_to "Ver todos →", workspace_project_path(@workspace, @project, view: 'whiteboards'), class: "text-[10px] font-bold text-slate hover:underline uppercase tracking-wider" %>
         </div>
-      </div>
-
-      <!-- B. Milestones / Roadmap -->
-      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-5 shadow-xs">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-xs font-bold font-serif uppercase tracking-wider text-ink-light dark:text-white/40">Roadmap & Milestones</h3>
-          <%= link_to workspace_project_path(@workspace, @project, view: 'milestones'), class: "text-[11px] font-semibold text-terracotta hover:underline cursor-pointer" do %>
-            Ver todas →
-          <% end %>
-        </div>
-
-        <% if @milestones.any? %>
-          <div class="space-y-3">
-            <% @milestones.limit(3).each do |milestone| %>
-              <div class="p-3 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/5 dark:border-white/5 rounded-2xl">
-                <div class="flex items-center justify-between mb-1.5">
-                  <span class="text-xs font-bold text-ink dark:text-fable truncate"><%= milestone.title %></span>
-                  <span class="text-[10px] font-mono text-ink-light dark:text-white/40">
-                    <%= milestone.target_date ? milestone.target_date.strftime("%d/%m") : "Sem data" %>
-                  </span>
-                </div>
-                <div class="w-full h-1.5 bg-ink/10 dark:bg-white/10 rounded-full overflow-hidden">
-                  <% m_issues = @issues.where(milestone_id: milestone.id) %>
-                  <% m_done = m_issues.select { |i| i.issue_status&.category == 'done' }.count %>
-                  <% m_pct = m_issues.count > 0 ? ((m_done.to_f / m_issues.count) * 100).round : 0 %>
-                  <div class="h-full bg-terracotta rounded-full" style="width: <%= m_pct %>%"></div>
-                </div>
-                <div class="flex items-center justify-between text-[10px] text-ink-light dark:text-white/50 mt-1">
-                  <span><%= m_done %>/<%= m_issues.count %> concluídas</span>
-                  <span class="font-bold"><%= m_pct %>%</span>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-xs text-ink-light dark:text-white/40 italic py-2">Nenhuma milestone cadastrada.</p>
-        <% end %>
-      </div>
-
-      <!-- C. Feed de Atividades do Projeto -->
-      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-5 shadow-xs">
-        <h3 class="text-xs font-bold font-serif uppercase tracking-wider text-ink-light dark:text-white/40 mb-3">Atividades Recentes</h3>
         
-        <% if @recent_activities.any? %>
-          <div class="space-y-3">
-            <% @recent_activities.each do |act| %>
-              <div class="flex items-start gap-2.5 text-xs">
-                <div class="w-6 h-6 rounded-full bg-ink/5 dark:bg-white/10 text-ink dark:text-fable flex items-center justify-center shrink-0 text-[10px] font-bold">
-                  <%= act.user&.email ? act.user.email[0].upcase : "?" %>
-                </div>
-                <div class="min-w-0 flex-1">
-                  <p class="text-ink dark:text-fable line-clamp-1 leading-snug">
-                    <span class="font-semibold"><%= act.user&.email&.split('@')&.first || 'Usuário' %></span> 
-                    <%= act.action.humanize.downcase %>
-                  </p>
-                  <span class="text-[10px] text-ink-light/60 dark:text-white/40"><%= time_ago_in_words(act.created_at) %> atrás</span>
-                </div>
-              </div>
+        <div class="flex-1 flex flex-col gap-3">
+          <% if @recent_whiteboards.any? %>
+            <% @recent_whiteboards.limit(3).each do |wb| %>
+              <%= link_to workspace_project_whiteboard_path(@workspace, @project, wb), class: "group p-3 bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5 rounded-2xl hover:border-slate/40 transition-all flex flex-col" do %>
+                 <h4 class="text-sm font-bold text-ink dark:text-white truncate mb-1"><%= wb.title %></h4>
+                 <p class="text-[11px] font-medium text-ink-light dark:text-white/50 truncate"><%= time_ago_in_words(wb.updated_at) %> atrás</p>
+              <% end %>
             <% end %>
-          </div>
-        <% else %>
-          <p class="text-xs text-ink-light dark:text-white/40 italic py-2">Nenhuma atividade registrada ainda.</p>
-        <% end %>
+          <% else %>
+            <div class="flex-1 border border-dashed border-ink/10 dark:border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-ink/5 dark:bg-white/5">
+               <p class="text-xs font-medium text-ink-light dark:text-white/50 mb-4">Nenhum quadro criado.</p>
+               <%= link_to "Criar Quadro", new_workspace_project_whiteboard_path(@workspace, @project), class: "px-4 py-2 bg-white dark:bg-ink border border-ink/10 dark:border-white/10 text-ink dark:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-ink/5 dark:hover:bg-white/5 transition-colors shadow-sm" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Listagem de Docs -->
+      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-sm flex flex-col h-full min-h-[250px]">
+        <div class="flex items-center justify-between mb-5">
+           <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70 flex items-center gap-2">
+             <svg class="w-4 h-4 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+             Documentação Técnica Recente
+           </h3>
+           <%= link_to "Ver todos →", workspace_project_path(@workspace, @project, view: 'docs'), class: "text-[10px] font-bold text-olive hover:underline uppercase tracking-wider" %>
+        </div>
+        
+        <div class="flex-1 flex flex-col gap-3">
+          <% if @recent_documents.any? %>
+            <% @recent_documents.limit(3).each do |doc| %>
+              <%= link_to workspace_project_document_path(@workspace, @project, doc), class: "group p-3 bg-ink/5 dark:bg-white/5 border border-ink/5 dark:border-white/5 rounded-2xl hover:border-olive/40 transition-all flex flex-col" do %>
+                 <h4 class="text-sm font-bold text-ink dark:text-white truncate mb-1"><%= doc.title %></h4>
+                 <p class="text-[11px] font-medium text-ink-light dark:text-white/50 truncate"><%= time_ago_in_words(doc.updated_at) %> atrás</p>
+              <% end %>
+            <% end %>
+          <% else %>
+            <div class="flex-1 border border-dashed border-ink/10 dark:border-white/10 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-ink/5 dark:bg-white/5">
+               <p class="text-xs font-medium text-ink-light dark:text-white/50 mb-4">Nenhuma documentação criada.</p>
+               <%= link_to "Criar Doc", new_workspace_project_document_path(@workspace, @project), class: "px-4 py-2 bg-white dark:bg-ink border border-ink/10 dark:border-white/10 text-ink dark:text-white rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-ink/5 dark:hover:bg-white/5 transition-colors shadow-sm" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Coluna Direita: Tracker (Span 1) -->
+    <div class="col-span-1 space-y-6 flex flex-col">
+      
+      <!-- Roadmap & Milestones -->
+      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-sm flex-1 min-h-[125px]">
+         <div class="flex items-center justify-between mb-5">
+           <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Roadmap & Milestones</h3>
+           <%= link_to "Ver →", workspace_project_path(@workspace, @project, view: 'milestones'), class: "text-[10px] font-bold text-terracotta hover:underline uppercase tracking-wider" %>
+         </div>
+         <div class="flex flex-col h-full justify-center">
+           <% if @milestones.any? %>
+             <div class="flex flex-col gap-4">
+               <% @milestones.limit(3).each do |milestone| %>
+                 <div class="w-full">
+                    <div class="flex items-center justify-between mb-1">
+                      <h4 class="text-xs font-bold text-ink dark:text-white truncate pr-2"><%= milestone.title %></h4>
+                      <span class="text-[10px] font-mono text-terracotta"><%= milestone.target_date ? milestone.target_date.strftime("%d/%m") : "S/ Data" %></span>
+                    </div>
+                    <% m_issues = @issues.where(milestone_id: milestone.id) %>
+                    <% m_done = m_issues.select { |i| i.issue_status&.category == 'done' }.count %>
+                    <% m_pct = m_issues.count > 0 ? ((m_done.to_f / m_issues.count) * 100).round : 0 %>
+                    <div class="w-full h-1 bg-ink/5 dark:bg-white/10 rounded-full overflow-hidden mt-1.5">
+                      <div class="h-full bg-terracotta rounded-full transition-all duration-1000" style="width: <%= m_pct %>%"></div>
+                    </div>
+                 </div>
+               <% end %>
+             </div>
+           <% else %>
+             <div class="border border-dashed border-ink/10 dark:border-white/10 rounded-2xl p-4 flex items-center justify-center bg-ink/5 dark:bg-white/5 h-full">
+               <p class="text-xs font-medium text-ink-light dark:text-white/50 italic">Sem milestones ativas.</p>
+             </div>
+           <% end %>
+         </div>
+      </div>
+
+      <!-- Histórico Reduzido -->
+      <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-6 shadow-sm flex flex-col flex-1 min-h-[250px]">
+         <div class="flex items-center justify-between mb-5">
+           <h3 class="text-[10px] font-bold uppercase tracking-widest text-ink-light dark:text-white/70">Histórico</h3>
+           <div class="flex gap-2">
+             <%= link_to "Recentes", workspace_project_path(@workspace, @project), class: "text-[9px] font-bold px-2 py-1 rounded-md transition-colors #{params[:activity_filter] == 'mine' ? 'text-ink-light dark:text-white/40 hover:text-ink' : 'bg-ink/5 dark:bg-white/10 text-ink dark:text-white hover:bg-ink/10'}" %>
+             <%= link_to "Minhas", workspace_project_path(@workspace, @project, activity_filter: 'mine'), class: "text-[9px] font-bold px-2 py-1 rounded-md transition-colors #{params[:activity_filter] == 'mine' ? 'bg-ink/5 dark:bg-white/10 text-ink dark:text-white hover:bg-ink/10' : 'text-ink-light dark:text-white/40 hover:text-ink'}" %>
+           </div>
+         </div>
+         
+         <% if @recent_activities.any? %>
+           <div class="flex flex-col gap-2 flex-1 justify-start">
+             <% @recent_activities.limit(3).each do |act| %>
+               <%= link_to act.target_path, class: "group flex items-start gap-3 p-2.5 -mx-2.5 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 transition-all border border-transparent hover:border-ink/5 dark:hover:border-white/5" do %>
+                 <div class="w-7 h-7 rounded-full bg-ink/10 dark:bg-white/10 text-ink dark:text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5 group-hover:scale-110 transition-transform shadow-sm">
+                   <%= act.user&.email&.first&.upcase || '?' %>
+                 </div>
+                 <div class="min-w-0 flex-1">
+                   <p class="text-[11px] text-ink dark:text-white/80 leading-tight">
+                     <span class="font-bold text-ink dark:text-white"><%= act.user&.email&.split('@')&.first || 'Alguém' %></span> <%= act.formatted_message.html_safe %>
+                   </p>
+                   <p class="text-[9px] font-medium text-ink-light dark:text-white/40 mt-1 group-hover:text-ink-light dark:group-hover:text-white/60 transition-colors flex items-center gap-1">
+                     <%= time_ago_in_words(act.created_at) %> atrás
+                     <% if act.location_name.present? %>
+                       <span class="opacity-50">•</span>
+                       <span class="truncate max-w-[120px]"><%= act.location_name %></span>
+                     <% end %>
+                   </p>
+                 </div>
+               <% end %>
+             <% end %>
+           </div>
+           <%= link_to "Log Completo →", activities_path, data: { turbo_frame: "modal" }, class: "mt-4 text-[9px] font-bold text-ink-light dark:text-white/50 hover:text-ink dark:hover:text-white uppercase tracking-wider text-center block py-2 border-t border-ink/5 dark:border-white/5" %>
+         <% else %>
+           <div class="flex-1 border border-dashed border-ink/10 dark:border-white/10 rounded-2xl p-4 flex items-center justify-center bg-ink/5 dark:bg-white/5">
+             <p class="text-xs font-medium text-ink-light dark:text-white/50 italic text-center">Nenhum registro.</p>
+           </div>
+         <% end %>
       </div>
 
     </div>
-
   </div>
 
 </div>

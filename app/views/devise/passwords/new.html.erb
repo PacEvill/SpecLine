@@ -1,16 +1,83 @@
-<h2>Forgot your password?</h2>
+<div class="h-screen w-full flex bg-fable-light dark:bg-ink">
+  
+  <!-- Left Side: Brutalist Art -->
+  <div class="hidden lg:flex w-1/2 bg-fable-dark dark:bg-ink-darker text-ink dark:text-white flex-col justify-between p-12 border-r border-ink/15 dark:border-white/10 relative overflow-hidden group">
+    <div class="absolute inset-0 bg-grid"></div>
+    <div class="absolute inset-0 bg-noise pointer-events-none"></div>
+    
+    <div class="relative z-20">
+      <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+        <span class="font-sans font-semibold text-2xl tracking-tight text-ink dark:text-white">SpecLine</span>
+      </a>
+    </div>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <!-- Art Concept -->
+    <div class="relative z-20 flex flex-col justify-center h-full">
+      <!-- Animated Lines (Terracotta & Sage) -->
+      <div class="flex gap-2 mb-8">
+        <div class="w-12 h-1 bg-terracotta transition-all duration-700 group-hover:w-24"></div>
+        <div class="w-4 h-1 bg-sage transition-all duration-700 delay-100 group-hover:w-16"></div>
+      </div>
+      
+      <div class="font-serif text-6xl xl:text-[5.5rem] 2xl:text-[6.5rem] leading-[0.9] tracking-tighter text-ink/50 dark:text-white/50 select-none transition-colors duration-700 group-hover:text-ink/75 dark:group-hover:text-white/75">
+        SISTEMAS<br>
+        FALHAM<br>
+        <span class="font-serif-italic italic text-terracotta/60 dark:text-terracotta/30 group-hover:text-terracotta dark:group-hover:text-terracotta/90 transition-colors duration-700">A MEMÓRIA</span><br>
+        <span class="text-sage/70 dark:text-sage/30 group-hover:text-sage dark:group-hover:text-sage/90 transition-colors duration-700 delay-100">TAMBÉM</span>
+      </div>
+    </div>
+    
+    <div class="relative z-20 flex justify-between items-end">
+      <p class="text-ink/40 dark:text-white/40 text-[10px] uppercase tracking-widest font-mono mb-4">Construa o futuro. Evite a entropia.</p>
+    </div>
 
-  <div class="field">
-    <p><%= f.label :email %></p>
-    <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+    <!-- Miniature Marquee -->
+    <div class="w-full overflow-hidden whitespace-nowrap border-t border-ink/10 dark:border-white/10 pt-4 pb-4 absolute bottom-0 left-0 z-20 group/marquee">
+      <div class="font-mono text-[9px] tracking-[0.3em] uppercase text-terracotta animate-marquee group-hover/marquee:[animation-play-state:paused] opacity-80">
+    ++ A CLAREZA ANTECEDE A EXECUÇÃO ++ O TRABALHO INVISÍVEL É O MAIS IMPORTANTE ++ SISTEMAS RÍGIDOS, MENTES CRIATIVAS ++ ORGANIZE O CAOS, DOMINE O TEMPO ++ A DISCIPLINA É A VERDADEIRA LIBERDADE ++ ++ A CLAREZA ANTECEDE A EXECUÇÃO ++ O TRABALHO INVISÍVEL É O MAIS IMPORTANTE ++ SISTEMAS RÍGIDOS, MENTES CRIATIVAS ++ ORGANIZE O CAOS, DOMINE O TEMPO ++ A DISCIPLINA É A VERDADEIRA LIBERDADE ++ ++ A CLAREZA ANTECEDE A EXECUÇÃO ++ O TRABALHO INVISÍVEL É O MAIS IMPORTANTE ++ SISTEMAS RÍGIDOS, MENTES CRIATIVAS ++ ORGANIZE O CAOS, DOMINE O TEMPO ++ A DISCIPLINA É A VERDADEIRA LIBERDADE ++ ++ A CLAREZA ANTECEDE A EXECUÇÃO ++ O TRABALHO INVISÍVEL É O MAIS IMPORTANTE ++ SISTEMAS RÍGIDOS, MENTES CRIATIVAS ++ ORGANIZE O CAOS, DOMINE O TEMPO ++ A DISCIPLINA É A VERDADEIRA LIBERDADE ++ 
+      </div>
+    </div>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Send me password reset instructions" %>
-  </div>
-<% end %>
+  <!-- Right Side: Form (Forgot Password) -->
+  <div class="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 xl:px-24">
+    
+    <div class="w-full max-w-sm mx-auto">
+      
+      <!-- Mobile Logo -->
+      <a href="/" class="flex lg:hidden items-center gap-3 mb-12 hover:opacity-80 transition-opacity">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+        <span class="font-sans font-semibold text-2xl tracking-tight text-ink dark:text-fable-light">SpecLine</span>
+      </a>
 
-<%= render "devise/shared/links" %>
+      <div>
+        <h2 class="text-4xl font-serif font-light text-ink dark:text-fable-light mb-3">Recuperar Acesso</h2>
+        <p class="text-ink-light/80 dark:text-white/60 font-sans text-sm">
+          Lembrou da senha? <%= link_to "Voltar para o login", new_session_path(resource_name), class: "text-terracotta hover:text-sage dark:hover:text-sage underline decoration-sage/50 underline-offset-4 transition-colors font-medium" %>.
+        </p>
+      </div>
+
+      <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "space-y-6 mt-12" }) do |f| %>
+        
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="group relative">
+          <%= f.label :email, "Seu E-mail", class: "block font-mono text-[10px] tracking-[0.1em] uppercase text-ink-light/80 dark:text-white/60 mb-2" %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "nome@empresa.com", class: "w-full bg-transparent border-0 border-b border-ink/20 dark:border-white/20 focus:border-terracotta focus:ring-0 outline-none transition-all duration-300 py-2 font-sans text-lg text-ink dark:text-white placeholder:text-ink/20 dark:placeholder:text-white/20" %>
+        </div>
+
+        <% if ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'].present? %>
+          <div data-controller="turnstile" data-turnstile-sitekey-value="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>" class="my-4 flex justify-center"></div>
+        <% end %>
+
+        <%= f.button type: "submit", class: "group w-full bg-ink text-white dark:bg-fable-light dark:text-ink hover:bg-terracotta hover:text-white dark:hover:bg-terracotta dark:hover:text-white transition-all duration-500 py-4 font-sans font-medium tracking-wide flex items-center justify-center gap-2 mt-8 cursor-pointer" do %>
+          Enviar Link de Recuperação
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+      <% end %>
+
+    </div>
+  </div>
+
+</div>

@@ -1,95 +1,831 @@
-<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+<div class="w-full min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white bg-grain selection:bg-ochre/30 selection:text-ink font-sans transition-colors duration-500 relative" data-controller="whiteboard-workbench">
+
   <%= render 'shared/marketing_header' %>
 
-  <main class="flex-grow w-full">
-    <!-- Hero Section -->
-    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto">
-      <div class="max-w-4xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sand-dark/30 text-ink dark:text-fable text-sm font-semibold tracking-wide uppercase mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-          Módulo Visual
+  <!-- HERO SECTION: Editorial Brutalist Whiteboard Presentation -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-ochre/15 dark:bg-ochre/10 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-ochre dark:text-ochre font-bold">
+        <span class="w-2 h-2 rounded-full bg-ochre inline-block"></span>
+        Canvas Infinito // Diagramas Como Código
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Pensamento visual.<br>
+        <i class="text-ochre font-serif-italic">Sem fronteiras nem apps isolados.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Pare de alternar entre ferramentas externas e editores de texto. No SpecLine, você desenha arquiteturas à mão livre, conecta nós com cabos dinâmicos ou compila diagramas Mermaid.js diretamente do código — tudo integrado às tarefas e aos documentos da sua equipe.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="pt-6 flex flex-wrap justify-center items-center gap-4">
+        <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+          <span>Abrir Canvas Gratuito</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+        <a href="#workbench-showcase" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-ochre hover:text-ochre font-mono text-xs uppercase tracking-widest font-semibold transition-all">
+          Testar Simulador Interativo ↓
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- TELEMETRY BAROMETER (LIVE ENGINE METRICS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+      
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ochre/15 text-ochre font-bold rounded">
+          <span class="w-1.5 h-1.5 rounded-full bg-ochre animate-pulse"></span>
+          ENGINE VETORIAL EM TEMPO REAL
+        </span>
+        <span class="text-ink-light dark:text-white/70">Cabos Dinâmicos Bezier + Mermaid v11</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+        <div class="flex items-center gap-2">
+          <span>Taxa de Quadros:</span>
+          <span class="text-sage font-bold">60 FPS Fluido</span>
         </div>
-        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight mb-6">Quadros & Diagramas.</h1>
-        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
-          Pensamento visual sem precisar abrir outras ferramentas de lousa virtual. Desenhe arquiteturas, rabisque wireframes ou escreva diagramas complexos via código. O seu quadro branco, integrado ao ecossistema.
+        <div class="hidden sm:flex items-center gap-2">
+          <span>Parsing Mermaid:</span>
+          <span class="text-sage font-bold">&lt;4ms</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Multiplayer:</span>
+          <span class="text-ochre font-bold">2 Cursors Simulados</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE WORKBENCH SHOWCASE (TRIPLE PERSPECTIVE: CANVAS LIVRE / MERMAID AS CODE / SPEC INTEGRADA) -->
+  <section id="workbench-showcase" class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-6 md:p-14 relative">
+    <div class="max-w-7xl mx-auto space-y-6">
+      
+      <!-- Controls Toolbar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-ink/15 dark:border-white/10 pb-6">
+        <div>
+          <span class="font-mono text-xs text-ochre font-bold tracking-widest uppercase">Estúdio Visual Híbrido — Sandbox Operacional</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white mt-1">
+            Arraste os nós, conecte serviços e compile diagramas.
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- View Switcher Tabs -->
+          <div class="inline-flex border border-ink/20 dark:border-white/20 p-1 bg-fable-light dark:bg-[#18181A] rounded">
+            <button type="button" 
+                    data-whiteboard-workbench-target="perspectiveBtn" 
+                    data-action="click->whiteboard-workbench#switchPerspective" 
+                    data-view="canvas" 
+                    class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Canvas Livre & Nós</span>
+            </button>
+            <button type="button" 
+                    data-whiteboard-workbench-target="perspectiveBtn" 
+                    data-action="click->whiteboard-workbench#switchPerspective" 
+                    data-view="mermaid" 
+                    class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>Diagramas Mermaid (Live)</span>
+            </button>
+            <button type="button" 
+                    data-whiteboard-workbench-target="perspectiveBtn" 
+                    data-action="click->whiteboard-workbench#switchPerspective" 
+                    data-view="embed" 
+                    class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>Incorporado no Documento</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSPECTIVE 1: CANVAS LIVRE COM DRAG & DROP E CABOS DINÂMICOS (DEFAULT) -->
+      <div id="view-canvas" data-whiteboard-workbench-target="viewCanvas" class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl relative min-h-[660px] select-none flex flex-col justify-between">
+        
+        <!-- Whiteboard Studio Top Header Bar -->
+        <div class="h-12 w-full bg-white/95 dark:bg-[#18181B]/95 backdrop-blur border-b border-ink/10 dark:border-white/10 px-4 flex items-center justify-between z-30 shrink-0 text-xs font-mono select-none">
+          
+          <!-- Left: Whiteboard Title & Status -->
+          <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-lg bg-ochre/15 text-ochre flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-sans font-bold text-xs text-ink dark:text-white">Arquitetura Sync v2</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-sage/20 text-sage font-bold uppercase">● Salvo</span>
+            </div>
+          </div>
+
+          <!-- Center: History Actions & Reset -->
+          <div class="hidden sm:flex items-center gap-1.5 text-ink-light/60 dark:text-white/60">
+            <button type="button" data-action="click->whiteboard-workbench#showToast" data-msg="Ação desfeita" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Desfazer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+            </button>
+            <button type="button" data-action="click->whiteboard-workbench#showToast" data-msg="Ação refeita" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Refazer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+            </button>
+            <div class="w-px h-3.5 bg-ink/15 dark:bg-white/10 mx-1"></div>
+            <button type="button" data-action="click->whiteboard-workbench#resetCanvas" class="px-2 py-1 text-[10px] hover:bg-ink/10 dark:hover:bg-white/10 rounded hover:text-ink dark:hover:text-white transition-colors cursor-pointer flex items-center gap-1" title="Restaurar posições originais">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Resetar Nós</span>
+            </button>
+          </div>
+
+          <!-- Right: Grid Toggle, Zoom & Export -->
+          <div class="flex items-center gap-2">
+            <button type="button" data-action="click->whiteboard-workbench#toggleGrid" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Alternar Grade">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </button>
+
+            <div class="flex items-center gap-1 bg-ink/5 dark:bg-white/5 px-2 py-1 rounded-lg">
+              <button type="button" data-action="click->whiteboard-workbench#zoomOut" class="w-5 h-5 flex items-center justify-center hover:bg-ink/10 dark:hover:bg-white/10 rounded font-bold cursor-pointer">−</button>
+              <span data-whiteboard-workbench-target="zoomIndicator" class="w-10 text-center font-bold text-[10px]">100%</span>
+              <button type="button" data-action="click->whiteboard-workbench#zoomIn" class="w-5 h-5 flex items-center justify-center hover:bg-ink/10 dark:hover:bg-white/10 rounded font-bold cursor-pointer">+</button>
+            </div>
+
+            <button type="button" data-action="click->whiteboard-workbench#downloadCanvasSvg" class="px-2.5 py-1 bg-ochre/15 hover:bg-ochre/25 text-ochre font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1 text-[11px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Exportar</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Canvas Dot Grid Background Layer -->
+        <div data-whiteboard-workbench-target="canvasGridLayer" class="absolute inset-0 canvas-dot-grid pointer-events-none"></div>
+
+        <!-- Canvas Viewport / World Container with Transform Scaler -->
+        <div data-whiteboard-workbench-target="canvasViewport" class="relative w-full h-[550px] overflow-hidden cursor-crosshair">
+          
+          <!-- Floating Tools Dock (In-canvas) -->
+          <aside class="absolute left-4 top-4 z-30 bg-white/95 dark:bg-[#1A1A1E]/95 backdrop-blur-md border border-ink/10 dark:border-white/10 rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 text-ink dark:text-white select-none">
+            
+            <!-- Select / Move -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#showToast" 
+                    data-msg="Ferramenta Mover ativa" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-ochre text-ink font-bold shadow-sm transition-all cursor-pointer" 
+                    title="Mover / Selecionar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m3 3 7 18 3-7 7-3L3 3z"/></svg>
+            </button>
+
+            <!-- Rectangle / Service Box -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#addNode" 
+                    data-node-type="service"
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Adicionar Bloco de Serviço">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            </button>
+
+            <!-- Post-it / Sticky Note -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#addSticky" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ochre hover:bg-ochre/15 transition-colors cursor-pointer" 
+                    title="Adicionar Post-it / Nota Adesiva">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/><path d="M15 3v6h6"/></svg>
+            </button>
+
+            <!-- Arrow / Connector -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#showToast" 
+                    data-msg="Conexão Inteligente: os cabos reativos se ajustam automaticamente ao arrastar!" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Seta Conectora">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="10 5 19 5 19 14"/></svg>
+            </button>
+
+            <!-- Diamond / Decision -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#addNode" 
+                    data-node-type="decision"
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Adicionar Decisão / Losango">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 12l10 10 10-10L12 2z"/></svg>
+            </button>
+
+            <div class="w-full h-px bg-ink/10 dark:bg-white/10 my-0.5"></div>
+
+            <!-- Reset Canvas Positions -->
+            <button type="button" 
+                    data-action="click->whiteboard-workbench#resetCanvas" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/40 dark:text-white/40 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Resetar Posições dos Nós">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+
+          </aside>
+
+          <div data-whiteboard-workbench-target="canvasWorld" class="absolute inset-0 w-full h-full origin-top-left transition-transform duration-75">
+
+            <!-- SVG DYNAMIC CABLES LAYER -->
+            <svg id="canvas-svg-layer" class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow-ochre" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#CFA055" />
+                </marker>
+                <marker id="arrow-ocean" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#4B6B78" />
+                </marker>
+                <marker id="arrow-terracotta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97A5E" />
+                </marker>
+              </defs>
+
+              <!-- Cable 1: Client -> Edge Proxy -->
+              <path id="cable-client-proxy" d="" fill="none" stroke="#CFA055" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-ochre)"/>
+              
+              <!-- Cable 2: Edge Proxy -> Rails Core -->
+              <path id="cable-proxy-rails" d="" fill="none" stroke="#4B6B78" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-ocean)"/>
+              
+              <!-- Cable 3: Rails Core -> Postgres Storage -->
+              <path id="cable-rails-postgres" d="" fill="none" stroke="#A5B5A1" stroke-width="2.5" stroke-dasharray="6,4"/>
+
+              <!-- Cable 4: Rails Core -> Solid Queue Worker -->
+              <path id="cable-rails-worker" d="" fill="none" stroke="#D97A5E" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-terracotta)"/>
+            </svg>
+
+            <!-- NODE 1: Browser Client (Draggable) -->
+            <div id="node-client" 
+                 style="left: 60px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-44 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-ochre shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Web / Mobile Client" 
+                 data-desc="React SPA com sincronização em segundo plano e cache local SQLite WASM." 
+                 data-meta="RFC-089">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ochre font-bold pointer-events-none">
+                <span>CLIENTE</span>
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+              </div>
+              <div class="node-title-label font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Web / Mobile App</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Cache Local LWW</div>
+            </div>
+
+            <!-- NODE 2: Edge Load Balancer (Draggable) -->
+            <div id="node-proxy" 
+                 style="left: 360px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-ocean shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Traefik Edge Proxy" 
+                 data-desc="Roteamento TLS, balanceamento e terminação de WebSockets com zero overhead." 
+                 data-meta="INFRA-GATEWAY">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ocean font-bold pointer-events-none">
+                <span>GATEWAY</span>
+                <span class="w-2 h-2 rounded-full bg-ocean animate-ping"></span>
+              </div>
+              <div class="node-title-label font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Traefik Edge Proxy</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">HTTP/3 + WebSockets</div>
+            </div>
+
+            <!-- NODE 3: Rails 8 Core Backend (Draggable) -->
+            <div id="node-rails" 
+                 style="left: 690px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-terracotta shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Rails 8 Core Daemon" 
+                 data-desc="Monolito Ruby 3.3 com Solid Cable pub/sub em memória e persistência de eventos." 
+                 data-meta="CORE-API">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-terracotta font-bold pointer-events-none">
+                <span>BACKEND CORE</span>
+                <span class="text-[9px] bg-terracotta/20 text-terracotta px-1 rounded">v8.0</span>
+              </div>
+              <div class="node-title-label font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Rails 8 Monolith</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Solid Cable Engine</div>
+            </div>
+
+            <!-- NODE 4: PostgreSQL Database (Draggable) -->
+            <div id="node-postgres" 
+                 style="left: 360px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-sage shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="PostgreSQL 16 Storage" 
+                 data-desc="Cluster de banco relacional com colunas JSONB indexadas para grafos e nós vetoriais." 
+                 data-meta="DB-CLUSTER">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-sage font-bold pointer-events-none">
+                <span>BANCO ACID</span>
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+              </div>
+              <div class="node-title-label font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">PostgreSQL 16</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Armazenamento Vetorial</div>
+            </div>
+
+            <!-- NODE 5: Solid Queue Worker (Draggable) -->
+            <div id="node-worker" 
+                 style="left: 690px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border border-ink/20 dark:border-white/20 shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Solid Queue Daemon" 
+                 data-desc="Filas de processamento assíncrono para exportar PDF, renderizar SVG e indexar busca." 
+                 data-meta="ASYNC-JOBS">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ink/60 dark:text-white/60 font-bold pointer-events-none">
+                <span>WORKER ASYNC</span>
+                <span class="text-ochre">SolidQueue</span>
+              </div>
+              <div class="node-title-label font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Export Daemon</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Gera PNG & PDF</div>
+            </div>
+
+            <!-- STICKY NOTE: Architecture Annotation (Editable & Draggable) -->
+            <div id="node-sticky-1" 
+                 style="left: 70px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-52 p-4 rounded bg-[#FFF7D1] text-[#634A00] dark:bg-[#E6C84F] dark:text-[#2A2300] shadow-xl rotate-[-2deg] font-sans text-xs border border-yellow-300 cursor-grab hover:rotate-0 transition-transform"
+                 data-title="Nota de Arquitetura" 
+                 data-desc="Post-it com anotação editável em tempo real." 
+                 data-meta="POST-IT">
+              <div class="flex justify-between items-center font-mono text-[9px] font-bold uppercase tracking-wider mb-1 opacity-70 pointer-events-none">
+                <span>📌 Nota Editável (Clique p/ digitar)</span>
+              </div>
+              <p contenteditable="true" class="leading-snug font-medium outline-none focus:ring-1 focus:ring-yellow-500 rounded p-1 bg-yellow-200/40">
+                Arraste os nós pelo canvas e veja os cabos SVG se recalcularem sozinhos! 🎯
+              </p>
+              <div class="mt-2 text-[9px] font-mono opacity-60 text-right pointer-events-none">— Você</div>
+            </div>
+
+            <!-- MULTIPLAYER CURSOR 1: Ana R. (Floating Animation) -->
+            <div class="absolute top-28 left-[45%] z-30 pointer-events-none animate-cursor-drift">
+              <svg class="w-5 h-5 text-terracotta drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+              </svg>
+              <div class="bg-terracotta text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md ml-3 -mt-1 inline-flex items-center gap-1">
+                <span>Ana R. (Tech Lead)</span>
+              </div>
+            </div>
+
+            <!-- MULTIPLAYER CURSOR 2: Carlos M. -->
+            <div class="absolute bottom-24 right-[25%] z-30 pointer-events-none" style="animation: cursor-drift 9s ease-in-out infinite reverse;">
+              <svg class="w-5 h-5 text-ocean drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+              </svg>
+              <div class="bg-ocean text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md ml-3 -mt-1 inline-flex items-center gap-1">
+                <span>Carlos M. (DevOps)</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Bottom Inspector Bar (Interactive Control of Selected Node) -->
+        <div class="border-t border-ink/10 dark:border-white/10 bg-white/90 dark:bg-[#18181B]/95 backdrop-blur px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 z-30 text-xs font-mono">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="text-ochre font-bold shrink-0">Elemento Ativo:</span>
+            <input type="text" 
+                   id="inspector-node-title-input"
+                   name="inspector_node_title"
+                   aria-label="Título do elemento selecionado"
+                   data-whiteboard-workbench-target="inspectorTitleInput"
+                   data-action="input->whiteboard-workbench#onSelectedTitleChange"
+                   value="Web / Mobile App" 
+                   class="font-sans font-bold text-ink dark:text-white bg-ink/5 dark:bg-white/5 border border-ink/15 dark:border-white/15 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-ochre max-w-[180px]">
+            
+            <div class="hidden md:flex items-center gap-1.5 ml-2">
+              <span class="text-[10px] text-ink-light/50 dark:text-white/40">Destaque:</span>
+              <button type="button" data-action="click->whiteboard-workbench#updateSelectedColor" data-color="#CFA055" class="w-4 h-4 rounded-full bg-[#CFA055] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Ochre"></button>
+              <button type="button" data-action="click->whiteboard-workbench#updateSelectedColor" data-color="#4B6B78" class="w-4 h-4 rounded-full bg-[#4B6B78] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Ocean"></button>
+              <button type="button" data-action="click->whiteboard-workbench#updateSelectedColor" data-color="#D97A5E" class="w-4 h-4 rounded-full bg-[#D97A5E] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Terracotta"></button>
+              <button type="button" data-action="click->whiteboard-workbench#updateSelectedColor" data-color="#A5B5A1" class="w-4 h-4 rounded-full bg-[#A5B5A1] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Sage"></button>
+              <button type="button" data-action="click->whiteboard-workbench#updateSelectedColor" data-color="#A855F7" class="w-4 h-4 rounded-full bg-[#A855F7] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Roxo"></button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0 text-[11px]">
+            <span data-whiteboard-workbench-target="inspectorMeta" class="px-2 py-0.5 bg-ochre/15 text-ochre font-bold rounded">RFC-089</span>
+            <button type="button" data-action="click->whiteboard-workbench#deleteSelectedNode" class="px-2.5 py-1 text-terracotta hover:bg-terracotta/10 border border-terracotta/20 rounded-lg transition-all cursor-pointer font-medium" title="Exclui nó selecionado">
+              🗑 Excluir
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PERSPECTIVE 2: DIAGRAMAS COMO CÓDIGO (MERMAID.JS LIVE COMPILER & EXPORT) -->
+      <div id="view-mermaid" data-whiteboard-workbench-target="viewMermaid" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl p-6 space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ink/10 dark:border-white/10 pb-4 font-mono text-xs">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-0.5 bg-sage/20 text-sage font-bold rounded">MERMAID ENGINE COMPILADOR ATIVO</span>
+            <span class="text-ink-light dark:text-white/70">Digite na esquerda e veja a compilação vetorial imediata à direita.</span>
+          </div>
+
+          <!-- Template Preset Switcher -->
+          <div class="flex items-center gap-2">
+            <span class="text-ink-light/60 dark:text-white/40">Exemplos:</span>
+            <button type="button" data-whiteboard-workbench-target="mermaidPresetBtn" data-action="click->whiteboard-workbench#loadPreset" data-preset="arch" class="mermaid-preset-btn px-2.5 py-1 text-[10px] bg-ochre text-ink font-bold rounded shadow-sm transition-all cursor-pointer">
+              Arquitetura Sync
+            </button>
+            <button type="button" data-whiteboard-workbench-target="mermaidPresetBtn" data-action="click->whiteboard-workbench#loadPreset" data-preset="state" class="mermaid-preset-btn px-2.5 py-1 text-[10px] border border-ink/20 dark:border-white/20 rounded hover:bg-ink/10 dark:hover:bg-white/10 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Ciclo de Tarefa
+            </button>
+            <button type="button" data-whiteboard-workbench-target="mermaidPresetBtn" data-action="click->whiteboard-workbench#loadPreset" data-preset="sequence" class="mermaid-preset-btn px-2.5 py-1 text-[10px] border border-ink/20 dark:border-white/20 rounded hover:bg-ink/10 dark:hover:bg-white/10 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Sequência OAuth
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- Code Editor Pane -->
+          <div class="md:col-span-5 h-[520px] flex flex-col justify-between bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl p-5 shadow-inner">
+            <div class="flex items-center justify-between text-[11px] font-mono text-ink-light/60 dark:text-white/50 border-b border-ink/10 dark:border-white/10 pb-2.5 shrink-0">
+              <span class="flex items-center gap-1.5 font-bold text-ink dark:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Editor Markdown / MMD
+              </span>
+              <button type="button" data-action="click->whiteboard-workbench#renderMermaid" class="text-ochre hover:underline font-bold cursor-pointer text-[10px] flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Recompilar
+              </button>
+            </div>
+
+            <textarea id="mermaid-code-input"
+                      name="mermaid_code"
+                      aria-label="Código fonte do diagrama Mermaid"
+                      data-whiteboard-workbench-target="mermaidInput"
+                      data-action="input->whiteboard-workbench#onMermaidInput"
+                      class="flex-1 w-full my-3 bg-ink text-fable dark:bg-ink-darker p-3.5 rounded-lg border border-ink/20 dark:border-white/10 font-mono text-xs leading-relaxed outline-none focus:border-ochre shadow-inner scrollbar-subtle resize-none overflow-y-auto">graph TD
+  A[Cliente Web / WASM] -->|WebSocket| B(Edge Proxy Traefik)
+  B -->|HTTP/2 Proxy| C{Rails 8 Core}
+  C -->|PubSub| D[(Solid Cable)]
+  C -->|Async Task| E[[Solid Queue Worker]]
+  C -->|ACID Storage| F[(PostgreSQL 16)]
+  E -.->|Gera Preview| F</textarea>
+            
+            <div class="flex items-center justify-between text-[10px] font-mono text-ink-light/50 dark:text-white/40 pt-2 border-t border-ink/10 dark:border-white/10 shrink-0">
+              <span>Edite o texto e veja o SVG atualizar</span>
+              <button type="button" data-action="click->whiteboard-workbench#copyMermaid" class="text-ochre hover:underline font-bold cursor-pointer flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                Copiar Markdown
+              </button>
+            </div>
+          </div>
+
+          <!-- Live SVG Preview Pane (Equal Height) -->
+          <div class="md:col-span-7 h-[520px] bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl p-5 flex flex-col justify-between shadow-inner">
+            <div class="flex items-center justify-between text-[11px] font-mono text-ink-light/60 dark:text-white/50 border-b border-ink/10 dark:border-white/10 pb-2.5 shrink-0">
+              <span class="flex items-center gap-1.5 font-bold text-ink dark:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                Área de Visualização Vetorial (Mesmo Tamanho)
+              </span>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+                <span class="text-sage font-bold text-[10px]">100% Válido</span>
+              </div>
+            </div>
+
+            <!-- Fixed height visualization container: never shrinks or expands across presets -->
+            <div data-whiteboard-workbench-target="mermaidOutput" class="mermaid flex-1 w-full h-full flex items-center justify-center overflow-auto p-3 my-2">
+              <!-- SVG is injected here by mermaid.js -->
+            </div>
+
+            <div class="border-t border-ink/10 dark:border-white/10 pt-2 flex items-center justify-between text-[10px] font-mono text-ink-light/50 dark:text-white/40 shrink-0">
+              <span>Sintaxe nativa sem plugins externos</span>
+              <button type="button" data-action="click->whiteboard-workbench#downloadMermaidSvg" class="px-2.5 py-1 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+                <span>Baixar SVG</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PERSPECTIVE 3: SPEC INTEGRADA (EMBED REAL NO DOCUMENTO / WIKI) -->
+      <div id="view-embed" data-whiteboard-workbench-target="viewEmbed" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl p-4 md:p-8 space-y-6">
+        
+        <!-- Context Explainer Banner -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/70 dark:bg-ink-paper/70 backdrop-blur border border-ink/10 dark:border-white/10 p-4 rounded-xl font-mono text-xs">
+          <div class="flex items-center gap-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-sage animate-ping"></span>
+            <div>
+              <span class="font-bold text-ink dark:text-white">Documentos Vivos SpecLine:</span>
+              <span class="text-ink-light dark:text-white/70"> O diagrama abaixo não é uma imagem estática — é um bloco interativo conectado diretamente ao Whiteboard #04.</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" data-action="click->whiteboard-workbench#simulateDocSync" class="px-3 py-1.5 bg-ochre/20 hover:bg-ochre/30 text-ochre font-bold rounded-lg border border-ochre/30 transition-all cursor-pointer flex items-center gap-1.5 text-[11px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+              <span>Simular Sync ao Vivo</span>
+            </button>
+            <button type="button" data-action="click->whiteboard-workbench#openCanvasTab" class="px-3 py-1.5 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded-lg hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5 text-[11px]">
+              <span>Editar no Canvas Livre ↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Realistic SpecLine Document Workspace Window -->
+        <div class="max-w-4xl mx-auto bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden font-sans">
+          
+          <!-- Doc Window Header / Breadcrumb Bar -->
+          <div class="bg-fable-light/80 dark:bg-[#1A1A1E] border-b border-ink/10 dark:border-white/10 px-6 py-3 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2 text-ink-light/70 dark:text-white/60">
+              <span>SpecLine</span>
+              <span>/</span>
+              <span>Documentos</span>
+              <span>/</span>
+              <span>Arquitetura</span>
+              <span>/</span>
+              <span class="text-ink dark:text-white font-bold">RFC-042</span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <span data-whiteboard-workbench-target="docSyncStatusBadge" class="px-2 py-0.5 rounded-full bg-sage/15 text-sage font-bold text-[10px] flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                <span>Sincronizado v2.4</span>
+              </span>
+              <span class="text-[11px] text-ink-light/50 dark:text-white/40">Leitura: 3 min</span>
+            </div>
+          </div>
+
+          <!-- Doc Main Content Article -->
+          <article class="p-6 md:p-12 space-y-8 text-ink dark:text-white">
+            
+            <!-- Article Header -->
+            <div class="space-y-4 border-b border-ink/10 dark:border-white/10 pb-6">
+              <div class="flex items-center gap-2 font-mono text-[11px] text-ochre uppercase font-bold tracking-wider">
+                <span>RFC Técnica de Engenharia</span>
+                <span>•</span>
+                <span class="text-sage">Status: Aprovado</span>
+              </div>
+
+              <h1 class="text-2xl md:text-4xl font-serif font-light text-ink dark:text-white leading-tight">
+                RFC-042: Especificação da Topologia de Sincronização Local-First
+              </h1>
+
+              <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-ink-light/60 dark:text-white/50 pt-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-ochre/20 text-ochre flex items-center justify-center font-bold text-[10px]">LC</div>
+                  <span>Lucas Carvalho (Principal Architect)</span>
+                </div>
+                <span>•</span>
+                <span>Revisado em 12 de Setembro, 2026</span>
+              </div>
+
+              <p class="font-serif italic text-base text-ink-light dark:text-white/70 leading-relaxed pt-2">
+                Esta especificação define como os nós do sistema orquestram mensagens em tempo real entre navegadores e o cluster Rails 8. Abaixo, o diagrama de arquitetura oficial está vinculado diretamente ao quadro visual do projeto.
+              </p>
+            </div>
+
+            <!-- Section 1: Contexto e Objetivos -->
+            <div class="space-y-3">
+              <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                <span class="font-mono text-xs text-ochre font-normal">01.</span>
+                Objetivos de Engenharia
+              </h2>
+              <p class="text-sm leading-relaxed text-ink-light dark:text-white/80 font-sans">
+                O objetivo principal é eliminar qualquer estado intermediário inconsistente durante desconexões parciais de rede. Para garantir velocidade máxima de renderização para o usuário, adotamos um buffer local baseado em SQLite WASM no navegador, com resolução de conflito tipo Last-Write-Wins (LWW).
+              </p>
+            </div>
+
+            <!-- Section 2: O BLOCO VIVO DO WHITEBOARD INCORPORADO -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                  <span class="font-mono text-xs text-ochre font-normal">02.</span>
+                  Topologia Geral do Sistema (Whiteboard Dinâmico)
+                </h2>
+                <span class="text-[10px] font-mono text-ochre font-bold uppercase tracking-wider">Bloco /whiteboard</span>
+              </div>
+
+              <!-- Real Embedded Whiteboard Block Card -->
+              <div data-whiteboard-workbench-target="embedCard" class="border-2 border-ochre/40 dark:border-ochre/30 rounded-2xl bg-fable-light dark:bg-[#141416] p-2 shadow-xl transition-all duration-300 relative group">
+                
+                <!-- Whiteboard Embed Mini Header Bar -->
+                <div class="bg-white/90 dark:bg-[#1C1C1F]/90 backdrop-blur rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border border-ink/10 dark:border-white/10 text-xs font-mono">
+                  
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-6 h-6 rounded bg-ochre/15 text-ochre flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <div>
+                      <span class="font-bold text-ink dark:text-white font-sans text-xs">Quadro #04 — Arquitetura Sync v2</span>
+                      <span class="text-[9px] text-ink-light/50 dark:text-white/40 ml-1.5">● Modo Leitura Live</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div data-whiteboard-workbench-target="embedSyncIndicator" class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-sage/20 text-sage text-[10px] font-bold">
+                      <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      <span>Sincronizado</span>
+                    </div>
+                    
+                    <button type="button" data-action="click->whiteboard-workbench#openCanvasTab" class="px-2.5 py-1 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white rounded text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1">
+                      <span>Editar no Canvas</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </button>
+                  </div>
+
+                </div>
+
+                <!-- Interactive Mini Canvas Viewport with Real Visual Representation -->
+                <div class="relative w-full overflow-x-auto scrollbar-subtle my-1">
+                  <div class="relative min-w-[720px] h-[320px] rounded-xl overflow-hidden bg-white dark:bg-[#18181B] border border-ink/10 dark:border-white/10 select-none">
+                    <!-- Canvas Dot Grid Background -->
+                    <div class="absolute inset-0 canvas-dot-grid"></div>
+
+                    <!-- SVG Dynamic Wiring between embedded nodes -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <marker id="embed-arrow-ochre" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#CFA055" />
+                        </marker>
+                        <marker id="embed-arrow-ocean" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#4B6B78" />
+                        </marker>
+                        <marker id="embed-arrow-sage" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#A5B5A1" />
+                        </marker>
+                        <marker id="embed-arrow-terracotta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97A5E" />
+                        </marker>
+                      </defs>
+                      <!-- Client -> Gateway -->
+                      <path d="M 184 69 L 244 69" fill="none" stroke="#CFA055" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-ochre)"/>
+                      <!-- Gateway -> Rails -->
+                      <path d="M 430 69 L 484 69" fill="none" stroke="#4B6B78" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-ocean)"/>
+                      <!-- Rails -> Postgres -->
+                      <path d="M 520 103 C 520 150, 340 150, 340 179" fill="none" stroke="#A5B5A1" stroke-width="2.5" stroke-dasharray="5,4" marker-end="url(#embed-arrow-sage)"/>
+                      <!-- Rails -> Worker -->
+                      <path d="M 580 103 L 580 179" fill="none" stroke="#D97A5E" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-terracotta)"/>
+                    </svg>
+
+                    <!-- Mini Architecture Nodes (Scaled & High-Fidelity) -->
+                    <!-- Node 1: Web Client -->
+                    <div style="left: 24px; top: 35px; width: 160px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-ochre shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ochre font-bold">
+                        <span>CLIENTE</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Web / Mobile App</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Cache Local SQLite</div>
+                    </div>
+
+                    <!-- Node 2: Traefik Proxy -->
+                    <div style="left: 250px; top: 35px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-ocean shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ocean font-bold">
+                        <span>GATEWAY</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-ocean animate-ping"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Traefik Edge Proxy</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">HTTP/3 + WebSockets</div>
+                    </div>
+
+                    <!-- Node 3: Rails Core -->
+                    <div style="left: 490px; top: 35px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-terracotta shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-terracotta font-bold">
+                        <span>BACKEND CORE</span>
+                        <span class="text-[8px] bg-terracotta/20 text-terracotta px-1 rounded font-bold">v8.0</span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Rails 8 Monolith</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Solid Cable Engine</div>
+                    </div>
+
+                    <!-- Node 4: PostgreSQL -->
+                    <div style="left: 250px; top: 185px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-sage shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-sage font-bold">
+                        <span>BANCO ACID</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">PostgreSQL 16</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Colunas JSONB</div>
+                    </div>
+
+                    <!-- Node 5: Solid Queue Worker -->
+                    <div style="left: 490px; top: 185px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border border-ink/20 dark:border-white/20 shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ink/60 dark:text-white/60 font-bold">
+                        <span>WORKER ASYNC</span>
+                        <span class="text-ochre text-[8px] font-bold">SolidQueue</span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Export Daemon</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Gera SVG & PDF</div>
+                    </div>
+
+                    <!-- Sticky note on diagram -->
+                    <div style="left: 24px; top: 185px; width: 160px;" class="absolute z-20 p-2.5 rounded-lg bg-[#FFF7D1] text-[#634A00] dark:bg-[#E6C84F] dark:text-[#2A2300] shadow-md rotate-[-2deg] text-[10px] font-sans border border-yellow-300">
+                      <div class="font-mono text-[8px] font-bold uppercase mb-0.5">📌 Nota da RFC</div>
+                      <div class="leading-tight">Atualizado via Whiteboard em tempo real.</div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Whiteboard Embed Caption & Sync Helper -->
+                <div class="px-4 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] font-mono text-ink-light/60 dark:text-white/50 border-t border-ink/10 dark:border-white/10 mt-1">
+                  <span>Figura 1.1 — Topologia de dados. Conectado dinamicamente ao Quadro #04.</span>
+                  <span class="text-ochre font-semibold">Sem screenshots desatualizados: o diagrama vive no documento.</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Section 3: Conclusão e Critérios de Aceite -->
+            <div class="space-y-3 pt-2">
+              <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                <span class="font-mono text-xs text-ochre font-normal">03.</span>
+                Critérios de Aceite da Arquitetura
+              </h2>
+              
+              <ul class="space-y-2 text-xs font-mono text-ink-light dark:text-white/80">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Conexões WebSockets estabelecidas em menos de 100ms pelo Traefik.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Solid Cable operando diretamente com persistência de buffer no PostgreSQL.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Sincronização bidirecional entre documentos técnicos e quadros visuais.</span>
+                </li>
+              </ul>
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTION TOAST NOTIFICATION -->
+  <div data-whiteboard-workbench-target="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-ink dark:bg-white text-white dark:text-ink px-5 py-3 rounded-xl shadow-2xl font-mono text-xs font-bold flex items-center gap-2 border border-white/20 animate-pop-in">
+    <span class="w-2 h-2 rounded-full bg-ochre animate-ping"></span>
+    <span data-whiteboard-workbench-target="toastMsg">Ação executada com sucesso!</span>
+  </div>
+
+  <!-- OS 3 PILARES DO PENSAMENTO VISUAL -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#151517] p-8 md:p-20 relative">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="font-mono text-xs text-ochre font-bold uppercase tracking-widest">Sem Fronteiras Entre Ideia e Código</span>
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          Arquitetura visual conectada ao que é construído.
+        </h2>
+        <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+          Chega de quadros brancos que viram screenshots obsoletos esquecidos em pastas remotas.
         </p>
       </div>
-    </section>
 
-    <!-- Visual / Mockup Abstract -->
-    <section class="px-6 mb-24 max-w-6xl mx-auto">
-      <div class="card bg-[#EAE8E2] p-8 md:p-12 border border-ink/5 dark:border-white/5 shadow-xl rounded-3xl relative overflow-hidden" style="background-image: radial-gradient(#d1cfc9 1px, transparent 1px); background-size: 20px 20px;">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ink/30 to-transparent"></div>
-        <div class="h-[300px] relative w-full flex items-center justify-center">
-          
-          <!-- Nodes and arrows abstract -->
-          <div class="absolute top-10 left-10 md:left-32 w-32 h-16 bg-white dark:bg-ink-paper border-2 border-ink dark:border-ink-darker rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center justify-center">
-            <div class="h-2 w-16 bg-ink/20 rounded"></div>
-          </div>
-          
-          <div class="absolute top-10 right-10 md:right-32 w-32 h-16 bg-white dark:bg-ink-paper border-2 border-terracotta rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex items-center justify-center">
-            <div class="h-2 w-16 bg-terracotta/40 rounded"></div>
-          </div>
-
-          <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-40 h-24 bg-white dark:bg-ink-paper border-2 border-sage rounded-lg shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center gap-2">
-            <div class="h-2 w-20 bg-sage/40 rounded"></div>
-            <div class="h-2 w-12 bg-sage/40 rounded"></div>
-          </div>
-
-          <!-- Abstract connecting lines (SVG) -->
-          <svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 200 80 Q 300 80 400 80" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" stroke-dasharray="4" opacity="0.3"/>
-            <path d="M 200 80 Q 200 200 450 200" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" opacity="0.3"/>
-            <path d="M 600 80 Q 600 200 450 200" fill="none" stroke="currentColor" class="text-ink dark:text-fable" stroke-width="2" opacity="0.3"/>
-          </svg>
-
-          <!-- Cursor -->
-          <div class="absolute top-20 left-1/2 transform translate-x-10 translate-y-10">
-            <svg class="w-5 h-5 text-terracotta drop-shadow-md" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/></svg>
-            <span class="bg-terracotta text-white text-[10px] font-bold px-2 py-0.5 rounded shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] absolute left-3 top-3">Felipe</span>
-          </div>
-
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[01] Código é Diagrama</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Mermaid.js Nativo</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Escreva fluxos, diagramas de sequência ou gráficos de arquitetura em texto puro. Mantenha diagramas versionados em commits sem precisar de designers para atualizar caixinhas.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Feature Details -->
-    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/10 dark:border-white/10">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Diagramas como Código (Mermaid)</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Para engenheiros e arquitetos, gerencie diagramas da mesma forma que você gerencia código. Use a sintaxe Mermaid para criar fluxogramas, diagramas de sequência e gráficos de Gantt instantaneamente.
-              </p>
-            </div>
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Canvas Infinito de Forma Livre</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Precisa apenas rabiscar? Nosso quadro branco infinito suporta desenho à mão livre, formas perfeitas, setas auto-conectáveis e post-its. Perfeito para sessões rápidas de brainstorming.
-              </p>
-            </div>
-          </div>
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Multiplayer em Tempo Real</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Trabalhe com dezenas de pessoas no mesmo quadro sem lag. Veja cursores se movendo, ideias surgindo em tempo real e colabore de forma fluida durante as reuniões de planejamento.
-              </p>
-            </div>
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Link Direto para Documentos</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                O quadro branco não é uma ilha isolada. Você pode incorporar um quadro inteiro dentro de uma especificação (Documento), e qualquer alteração no quadro reflete magicamente na documentação.
-              </p>
-            </div>
-          </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Liberdade Espacial</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Canvas Infinito Suave</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Para brainstorming, wireframes e post-its rápidos, use o canvas infinito com navegação fluida a 60 FPS, conexões inteligentes entre formas e suporte a múltiplos quadros por projeto.
+          </p>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ocean font-bold uppercase">[03] Nativamente Integrado</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Incorporação em Specs</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Incorpore qualquer quadro ou recorte dentro de especificações e PRDs no SpecLine Docs. Quando alguém altera a arquitetura, a especificação se mantém sempre atualizada.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION SECTION -->
+  <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-xs tracking-widest text-ochre uppercase font-bold">Visual Primeiro, Código Sempre</p>
+      <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+        Dê espaço para as ideias ganharem forma.
+      </h2>
+      <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+        Quadros brancos infinitos e diagramas Mermaid integrados em um só lugar.
+      </p>
+      <div class="pt-4 flex justify-center">
+        <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+          <span>Criar Conta Gratuita</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+      </div>
+    </div>
+  </section>
 
   <%= render 'shared/marketing_footer' %>
 </div>

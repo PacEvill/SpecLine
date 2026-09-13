@@ -9,6 +9,6 @@ class PreferencesController < ApplicationController
   def update
     # Here we would update preferences.
     # Since we don't have a preferences column yet, we just mock the success.
-    redirect_to preferences_path, notice: "Preferências atualizadas com sucesso."
+    redirect_to preferences_path, notice: "Preferências atualizadas com sucesso.", status: :see_other
   end
 end

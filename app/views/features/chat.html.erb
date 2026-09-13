@@ -1,93 +1,526 @@
-<div class="min-h-screen flex flex-col bg-fable-dark dark:bg-ink-darker">
+<div class="w-full min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white bg-grain selection:bg-ocean/30 selection:text-ink font-sans transition-colors duration-500 relative" data-controller="chat-workbench">
+
   <%= render 'shared/marketing_header' %>
 
-  <main class="flex-grow w-full">
-    <!-- Hero Section -->
-    <section class="py-24 md:py-32 px-6 max-w-6xl mx-auto">
-      <div class="max-w-4xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ink/5 dark:bg-white/5 text-ink dark:text-fable text-sm font-semibold tracking-wide uppercase mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          Módulo de Comunicação
+  <!-- HERO SECTION: Editorial Brutalist Chat Presentation -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-ocean/15 dark:bg-ocean/10 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-ocean dark:text-ocean font-bold">
+        <span class="w-2 h-2 rounded-full bg-ocean inline-block"></span>
+        Comunicação Contextual // Zero Ruído Corporativo
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Conversas com propósito.<br>
+        <i class="text-ocean font-serif-italic">Onde o trabalho realmente acontece.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Esqueça os centenas de canais caóticos e notificações que destroem seu estado de fluxo. No SpecLine, a discussão vive colada na tarefa e no documento. Quando o trabalho é entregue, a conversa vira histórico auditável.
+      </p>
+
+      <!-- Action Button -->
+      <div class="pt-6 flex justify-center items-center">
+        <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ocean dark:hover:bg-ocean dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+          <span>Experimentar Sem Fricção</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  <!-- SPRINT TELEMETRY BAROMETER (LIVE METRICS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+      
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ocean/15 text-ocean font-bold rounded">
+          <span class="w-1.5 h-1.5 rounded-full bg-ocean animate-pulse"></span>
+          SOLID CABLE ONLINE (SEM REDIS)
+        </span>
+        <span class="text-ink-light dark:text-white/70">Protocolo WebSocket Nativo com Conexão Estável</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+        <div class="flex items-center gap-2">
+          <span>Latência Média:</span>
+          <span class="text-sage font-bold">&lt;12ms</span>
         </div>
-        <h1 class="text-5xl md:text-7xl font-serif text-ink dark:text-fable tracking-tight mb-6">Comunicação Focada.</h1>
-        <p class="text-xl md:text-2xl font-serif text-ink-light dark:text-white/60 leading-relaxed">
-          Chega de mensagens perdidas em canais barulhentos. No SpecLine, a comunicação é assíncrona, estruturada e vive exatamente ao lado da tarefa ou documento em questão.
+        <div class="hidden sm:flex items-center gap-2">
+          <span>Notificações Tóxicas:</span>
+          <span class="text-sage font-bold">0 (Zero Popups)</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Status da Caixa:</span>
+          <span class="text-ocean font-bold">Inbox Zero</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE WORKBENCH SHOWCASE (TRIPLE PERSPECTIVE: THREAD DA ISSUE / CANAL DE DECISÃO / INBOX ZERO) -->
+  <section id="chat-showcase" class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-6 md:p-14 relative">
+    <div class="max-w-7xl mx-auto space-y-6">
+      
+      <!-- Controls Toolbar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-ink/15 dark:border-white/10 pb-6">
+        <div>
+          <span class="font-mono text-xs text-ocean font-bold tracking-widest uppercase">Simulador de Foco Operacional</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white mt-1">
+            Escolha o modelo de conversa da sua equipe.
+          </h2>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          
+          <!-- View Switcher Tabs -->
+          <div class="inline-flex border border-ink/20 dark:border-white/20 p-1 bg-fable-light dark:bg-[#18181A] rounded">
+            <button type="button"
+                    data-chat-workbench-target="perspectiveBtn"
+                    data-action="click->chat-workbench#switchPerspective"
+                    data-view="thread" 
+                    class="chat-view-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Thread da Tarefa</span>
+            </button>
+            <button type="button"
+                    data-chat-workbench-target="perspectiveBtn"
+                    data-action="click->chat-workbench#switchPerspective"
+                    data-view="channel" 
+                    class="chat-view-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+              <span>Canal de Decisão</span>
+            </button>
+            <button type="button"
+                    data-chat-workbench-target="perspectiveBtn"
+                    data-action="click->chat-workbench#switchPerspective"
+                    data-view="inbox" 
+                    class="chat-view-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+              <span>Inbox de Triagem</span>
+            </button>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="flex items-center gap-1">
+            <button type="button"
+                    data-chat-workbench-target="filterBtn"
+                    data-action="click->chat-workbench#filterChat"
+                    data-filter="all" 
+                    class="chat-filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-bold rounded border border-ink/20 dark:border-white/20 transition-all cursor-pointer">
+              Todas
+            </button>
+            <button type="button"
+                    data-chat-workbench-target="filterBtn"
+                    data-action="click->chat-workbench#filterChat"
+                    data-filter="decisions" 
+                    class="chat-filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-white/40 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Decisões (ADRs)
+            </button>
+            <button type="button"
+                    data-chat-workbench-target="filterBtn"
+                    data-action="click->chat-workbench#filterChat"
+                    data-filter="code" 
+                    class="chat-filter-btn px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink/50 dark:text-white/40 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Código & PRs
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PERSPECTIVE 1: THREAD DA TAREFA / ISSUE (DEFAULT) -->
+      <div id="perspective-thread" data-chat-workbench-target="threadView" class="grid grid-cols-1 lg:grid-cols-12 border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl min-h-[580px]">
+        
+        <!-- Left Side: Channels & Threads Tree -->
+        <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-ink/15 dark:border-white/10 p-5 bg-fable-dark/40 dark:bg-ink flex flex-col justify-between">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono text-ink/60 dark:text-white/60 uppercase tracking-wider pb-2 border-b border-ink/10 dark:border-white/10">
+              <span>Espaços do Projeto</span>
+              <span class="text-ocean font-bold text-[10px]">+ Novo Tópico</span>
+            </div>
+
+            <!-- Channels Group -->
+            <div class="space-y-1 text-sm font-sans">
+              <div class="text-[11px] font-mono text-ink-light/50 dark:text-white/40 uppercase tracking-wider py-1 font-bold">
+                Canais de Alinhamento
+              </div>
+              <div class="p-2 rounded-lg text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 flex items-center justify-between cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <span class="text-ink/40 dark:text-white/40 font-mono">#</span>
+                  <span>anúncios-release</span>
+                </span>
+                <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+              </div>
+              <div class="p-2 rounded-lg text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 flex items-center justify-between cursor-pointer">
+                <span class="flex items-center gap-2">
+                  <span class="text-ink/40 dark:text-white/40 font-mono">#</span>
+                  <span>arquitetura-core</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Task Threads Group -->
+            <div class="space-y-1 text-sm font-sans pt-2 border-t border-ink/10 dark:border-white/10">
+              <div class="text-[11px] font-mono text-ink-light/50 dark:text-white/40 uppercase tracking-wider py-1 font-bold">
+                Threads Vinculadas a Issues
+              </div>
+              <div class="p-2 bg-ocean/10 dark:bg-ocean/20 text-ocean font-semibold rounded-lg flex items-center justify-between cursor-pointer border border-ocean/30">
+                <span class="truncate flex items-center gap-1.5 text-xs font-mono">
+                  <span class="text-[10px] bg-ocean/20 px-1 py-0.5 rounded">#T-104</span>
+                  <span class="truncate">Unificar arquitetura sync</span>
+                </span>
+                <span class="w-2 h-2 rounded-full bg-ocean animate-ping"></span>
+              </div>
+              <div class="p-2 rounded-lg text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 flex items-center justify-between cursor-pointer">
+                <span class="truncate flex items-center gap-1.5 text-xs font-mono">
+                  <span class="text-[10px] bg-ink/10 dark:bg-white/10 px-1 py-0.5 rounded">#T-106</span>
+                  <span class="truncate">Isolamento multi-tenant</span>
+                </span>
+              </div>
+              <div class="p-2 rounded-lg text-ink/70 dark:text-white/70 hover:bg-ink/5 dark:hover:bg-white/5 flex items-center justify-between cursor-pointer">
+                <span class="truncate flex items-center gap-1.5 text-xs font-mono">
+                  <span class="text-[10px] bg-ink/10 dark:bg-white/10 px-1 py-0.5 rounded">#T-108</span>
+                  <span class="truncate">Tokens Design System</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Workspace Pill -->
+          <div class="pt-4 border-t border-ink/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-ink-light dark:text-white/50">
+            <span>SpecLine Core Team</span>
+            <span class="text-sage font-bold">● Solid Cable Ativo</span>
+          </div>
+        </div>
+
+        <!-- Center: Message Stream & Interactive Composer -->
+        <div class="lg:col-span-8 flex flex-col justify-between bg-white dark:bg-ink-paper p-6">
+          
+          <!-- Thread Header Bar -->
+          <div class="flex items-center justify-between pb-4 border-b border-ink/10 dark:border-white/10 mb-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-xs bg-terracotta/15 text-terracotta px-2 py-0.5 rounded font-bold">#SPEC-104</span>
+                <h3 class="font-serif font-bold text-base md:text-lg text-ink dark:text-white leading-tight">
+                  Thread: Unificar arquitetura de sync
+                </h3>
+              </div>
+              <p class="font-mono text-[11px] text-ink-light/60 dark:text-white/50 mt-1 flex items-center gap-2">
+                <span>Vinculado à RFC-089</span>
+                <span>•</span>
+                <span class="text-sage font-semibold">Status: Em Progresso</span>
+              </p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="hidden sm:inline-block px-2.5 py-1 bg-fable-light dark:bg-ink-darker text-[10px] font-mono border border-ink/10 dark:border-white/10 rounded text-ink-light dark:text-white/60">
+                Auditoria Ativa
+              </span>
+            </div>
+          </div>
+
+          <!-- Message Feed Container -->
+          <div id="chat-messages-stream" data-chat-workbench-target="chatStream" class="flex-1 overflow-y-auto max-h-[380px] space-y-4 pr-2 scrollbar-subtle mb-4">
+            
+            <!-- Message 1: Product Owner / Tech Lead -->
+            <div class="chat-bubble-item flex gap-3 p-3.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/5 dark:border-white/5" data-chat-workbench-target="chatBubble" data-is-decision="false" data-has-code="false">
+              <div class="w-8 h-8 rounded-lg bg-sage text-ink flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+                AR
+              </div>
+              <div class="min-w-0 flex-1 space-y-1">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-xs text-ink dark:text-white">Ana R.</span>
+                    <span class="text-[9px] font-mono bg-sage/20 text-sage px-1.5 py-0.2 rounded font-semibold uppercase">Tech Lead</span>
+                  </div>
+                  <span class="text-[10px] font-mono text-ink-light/50 dark:text-white/40">Hoje às 10:14</span>
+                </div>
+                <p class="font-sans text-xs text-ink/90 dark:text-white/90 leading-relaxed">
+                  Pessoal, analisei a especificação na <span class="text-ocean underline font-mono">RFC-089</span>. A reconciliação precisa funcionar sem bloqueio de UI em conexões intermitentes. Qual abordagem de CRDT/LWW vamos validar?
+                </p>
+              </div>
+            </div>
+
+            <!-- Message 2: System Audit Log Event -->
+            <div class="flex items-center justify-center my-2 chat-bubble-item" data-chat-workbench-target="chatBubble" data-is-decision="false" data-has-code="false">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ink/5 dark:bg-white/5 border border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light dark:text-white/60">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/></svg>
+                <span>Diego moveu a tarefa para <strong>Em Progresso</strong> e linkou o branch <code class="text-terracotta">feat/sync-daemon</code></span>
+              </div>
+            </div>
+
+            <!-- Message 3: Developer with Code Block -->
+            <div class="chat-bubble-item flex gap-3 p-3.5 rounded-xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/5 dark:border-white/5" data-chat-workbench-target="chatBubble" data-is-decision="false" data-has-code="true">
+              <div class="w-8 h-8 rounded-lg bg-terracotta text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+                DS
+              </div>
+              <div class="min-w-0 flex-1 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-xs text-ink dark:text-white">Diego Silva</span>
+                    <span class="text-[9px] font-mono bg-terracotta/20 text-terracotta px-1.5 py-0.2 rounded font-semibold uppercase">Engenheiro</span>
+                  </div>
+                  <span class="text-[10px] font-mono text-ink-light/50 dark:text-white/40">Hoje às 10:22</span>
+                </div>
+                <p class="font-sans text-xs text-ink/90 dark:text-white/90 leading-relaxed">
+                  Implementei o handler de fallback no worker do SolidQueue. O payload é serializado com timestamp vetorial:
+                </p>
+                <!-- Code Snippet -->
+                <div class="p-3 bg-ink text-fable dark:bg-ink-darker font-mono text-[11px] rounded-lg border border-ink/20 dark:border-white/10 overflow-x-auto">
+                  <pre class="leading-tight"><span class="text-terracotta">def</span> <span class="text-sage">reconcile_state</span>(local_doc, remote_doc)
+  <span class="text-ochre">if</span> local_doc.version_vector &gt; remote_doc.version_vector
+    broadcast_sync_patch(local_doc)
+  <span class="text-ochre">end</span>
+<span class="text-terracotta">end</span></pre>
+                </div>
+                <!-- Action to turn message into task -->
+                <div class="pt-1 flex items-center gap-2">
+                  <button type="button" 
+                          data-action="click->chat-workbench#convertToTask" 
+                          data-task-id="#SPEC-115"
+                          class="px-2 py-1 text-[10px] font-mono border border-ink/15 dark:border-white/10 hover:border-ocean hover:text-ocean rounded transition-all flex items-center gap-1 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    <span>Transformar em Sub-tarefa</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Message 4: Decision Official Badge -->
+            <div class="chat-bubble-item flex gap-3 p-4 rounded-xl bg-ochre/10 border-2 border-ochre/40" data-chat-workbench-target="chatBubble" data-is-decision="true" data-has-code="false">
+              <div class="w-8 h-8 rounded-lg bg-ochre text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
+                ★
+              </div>
+              <div class="min-w-0 flex-1 space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-xs text-ink dark:text-white">Decisão Oficial Registrada</span>
+                    <span class="text-[9px] font-mono bg-ochre/30 text-ochre-dark dark:text-ochre px-1.5 py-0.2 rounded font-bold uppercase">ADR APROVADA</span>
+                  </div>
+                  <span class="text-[10px] font-mono text-ink-light/50 dark:text-white/40">Hoje às 10:35</span>
+                </div>
+                <p class="font-sans text-xs text-ink dark:text-white font-semibold leading-relaxed">
+                  Decisão tomada: Algoritmo LWW com vetor de relógio adotado para a Sprint 24. Publicado automaticamente no changelog do projeto.
+                </p>
+                <div class="text-[10px] font-mono text-ink-light/70 dark:text-white/50">
+                  Registrado por Ana R. · Validado por 3 revisores
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Chat Composer -->
+          <form data-action="submit->chat-workbench#sendMessage" class="relative border-t border-ink/10 dark:border-white/10 pt-3">
+            <div class="relative flex items-center">
+              <input data-chat-workbench-target="chatInput"
+                     type="text" 
+                     placeholder="Escreva uma resposta contextual ou use /task para criar tarefa..." 
+                     class="w-full bg-fable-light dark:bg-ink-darker border border-ink/15 dark:border-white/10 rounded-xl px-4 py-3 text-xs text-ink dark:text-white placeholder-ink/40 dark:placeholder-white/40 outline-none focus:border-ocean transition-all pr-24 font-sans shadow-inner">
+              <div class="absolute right-2 flex items-center gap-1.5">
+                <button type="submit" class="px-3 py-1.5 bg-ink text-white dark:bg-white dark:text-ink font-mono text-[10px] font-bold uppercase tracking-wider rounded-lg hover:bg-ocean dark:hover:bg-ocean dark:hover:text-white transition-all cursor-pointer">
+                  Enviar ↵
+                </button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2 px-1 text-[10px] font-mono text-ink-light/50 dark:text-white/40">
+              <div class="flex items-center gap-3">
+                <span>Comandos rápidos: <code class="text-ocean">/task</code>, <code class="text-ocean">/decision</code>, <code class="text-ocean">/code</code></span>
+              </div>
+              <span>Enter para enviar</span>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- PERSPECTIVE 2: CANAL GERAL DE DECISÃO (HIDDEN INITIALLY) -->
+      <div id="perspective-channel" data-chat-workbench-target="channelView" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl p-8 bg-fable-light dark:bg-ink-darker font-mono text-xs space-y-6">
+        <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-ocean font-bold text-base flex items-center gap-1.5">
+              <span>#</span>
+              <span>arquitetura-core</span>
+            </span>
+            <span class="px-2 py-0.5 bg-ocean/15 text-ocean font-bold text-[10px] rounded">Decisões de Engenharia</span>
+          </div>
+          <span class="text-ink/50 dark:text-white/50 text-[11px]">Canal assíncrono para RFCs e ADRs</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+          
+          <div class="p-5 bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-light/60 dark:text-white/50">
+              <span class="font-bold text-ocean">RFC-089</span>
+              <span>3 respostas</span>
+            </div>
+            <h4 class="font-serif text-lg font-bold text-ink dark:text-white">Substituição de Redis por Solid Cable + Solid Queue</h4>
+            <p class="text-xs text-ink-light/80 dark:text-white/70 leading-relaxed">
+              Consenso alcançado: simplicidade operacional superando micro-otimizações. Economia de $120/mês em infraestrutura.
+            </p>
+            <div class="pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-sage font-bold">
+              ✓ Concluído e migrado no commit c85c695
+            </div>
+          </div>
+
+          <div class="p-5 bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl space-y-3">
+            <div class="flex items-center justify-between text-xs font-mono text-ink-light/60 dark:text-white/50">
+              <span class="font-bold text-terracotta">RFC-092</span>
+              <span>8 respostas</span>
+            </div>
+            <h4 class="font-serif text-lg font-bold text-ink dark:text-white">Estratégia de Cache de Assets em Cloudflare R2</h4>
+            <p class="text-xs text-ink-light/80 dark:text-white/70 leading-relaxed">
+              Definindo política de expiração imutável para avatares e documentos exportados em PDF.
+            </p>
+            <div class="pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-terracotta font-bold">
+              ● Votação técnica aberta até amanhã
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PERSPECTIVE 3: INBOX DE TRIAGEM (HIDDEN INITIALLY) -->
+      <div id="perspective-inbox" data-chat-workbench-target="inboxView" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl p-6 bg-fable-light dark:bg-ink-darker font-mono text-xs space-y-4">
+        
+        <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4">
+          <div class="flex items-center gap-3">
+            <span class="text-ink dark:text-white font-serif font-bold text-xl">Inbox de Foco</span>
+            <span class="px-2 py-0.5 bg-sage/20 text-sage font-bold text-[10px] rounded">
+              <span data-chat-workbench-target="inboxCount">2</span> Pendências
+            </span>
+          </div>
+          <span class="text-ink/50 dark:text-white/50 text-[11px]">Triagem rápida: resolva ou converta em ação</span>
+        </div>
+
+        <!-- Empty State Congratulations (Hidden initially) -->
+        <div data-chat-workbench-target="inboxEmpty" class="hidden p-8 text-center bg-sage/10 border border-sage/30 rounded-xl space-y-2 animate-pop-in">
+          <div class="text-2xl">🎉</div>
+          <div class="font-serif font-bold text-base text-ink dark:text-white">Inbox Zero Alcançado!</div>
+          <p class="font-sans text-xs text-ink-light dark:text-white/70">Nenhuma menção pendente. Seu estado de fluxo está protegido.</p>
+        </div>
+
+        <div class="space-y-3 font-sans text-xs">
+          
+          <div class="inbox-item-row p-4 bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1 min-w-0">
+              <div class="flex items-center gap-2 font-mono text-[10px]">
+                <span class="px-1.5 py-0.2 bg-terracotta/20 text-terracotta font-bold rounded">MENÇÃO</span>
+                <span class="text-ink-light/50 dark:text-white/40">na tarefa #T-104</span>
+              </div>
+              <p class="font-semibold text-ink dark:text-white">
+                Ana R. marcou você: "Diego, pode validar a latência do websocket com 50 conexões simuladas?"
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer">
+                ✓ Resolvido
+              </button>
+            </div>
+          </div>
+
+          <div class="inbox-item-row p-4 bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1 min-w-0">
+              <div class="flex items-center gap-2 font-mono text-[10px]">
+                <span class="px-1.5 py-0.2 bg-ocean/20 text-ocean font-bold rounded">REVISÃO</span>
+                <span class="text-ink-light/50 dark:text-white/40">no doc RFC-089</span>
+              </div>
+              <p class="font-semibold text-ink dark:text-white">
+                Felipe comentou na seção 3.2: "Sugiro especificar o timeout máximo para 5 segundos."
+              </p>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer">
+                ✓ Resolvido
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- POPUP TOAST ACTION NOTIFICATION -->
+  <div data-chat-workbench-target="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-ink dark:bg-white text-white dark:text-ink px-5 py-3 rounded-xl shadow-2xl font-mono text-xs font-bold flex items-center gap-2 border border-white/20 animate-pop-in">
+    <span class="w-2 h-2 rounded-full bg-sage animate-ping"></span>
+    <span>Ação Executada: Sub-tarefa criada e vinculada com sucesso!</span>
+  </div>
+
+  <!-- OS 3 PILARES DA COMUNICAÇÃO SILENCIOSA -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#151517] p-8 md:p-20 relative">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="font-mono text-xs text-ocean font-bold uppercase tracking-widest">Filosofia Anti-Ruído</span>
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          A conversa deve servir à entrega, não o contrário.
+        </h2>
+        <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+          Ferramentas tradicionais de chat foram desenhadas para manter você preso nelas o dia todo. O SpecLine foi desenhado para você fechar a aba e focar na construção do produto.
         </p>
       </div>
-    </section>
 
-    <!-- Visual / Mockup Abstract -->
-    <section class="px-6 mb-24 max-w-6xl mx-auto">
-      <div class="card bg-white dark:bg-ink-paper p-8 md:p-12 border border-ink/5 dark:border-white/5 shadow-xl rounded-3xl relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-ink/80 to-transparent"></div>
-        <div class="max-w-2xl mx-auto space-y-6">
-          <!-- Chat bubble 1 -->
-          <div class="flex gap-4">
-            <div class="w-10 h-10 rounded-full bg-sage/20 flex-shrink-0 flex items-center justify-center text-sage font-bold">A</div>
-            <div class="bg-fable-dark dark:bg-ink-darker p-4 rounded-2xl rounded-tl-sm w-full space-y-2">
-              <div class="flex justify-between items-center">
-                <span class="font-semibold text-ink dark:text-fable text-sm">Ana R.</span>
-                <span class="text-ink-light dark:text-white/60 text-xs">Hoje às 14:32</span>
-              </div>
-              <div class="h-3 w-5/6 bg-ink/10 rounded"></div>
-              <div class="h-3 w-3/4 bg-ink/10 rounded"></div>
-            </div>
-          </div>
-          <!-- Action Indicator -->
-          <div class="flex items-center gap-4 py-2 px-14">
-            <div class="h-px w-full bg-ink/5 dark:bg-white/5"></div>
-            <div class="text-xs text-ink-light dark:text-white/60 whitespace-nowrap bg-white dark:bg-ink-paper px-2">Atualizou o status para In Progress</div>
-            <div class="h-px w-full bg-ink/5 dark:bg-white/5"></div>
-          </div>
-          <!-- Chat bubble 2 (Self) -->
-          <div class="flex gap-4 flex-row-reverse">
-            <div class="w-10 h-10 rounded-full bg-ink/10 flex-shrink-0 border border-ink/20 dark:border-white/20"></div>
-            <div class="bg-ink text-white p-4 rounded-2xl rounded-tr-sm w-[80%] space-y-2">
-              <div class="h-3 w-4/6 bg-white/20 rounded"></div>
-              <div class="h-3 w-full bg-white/20 rounded"></div>
-            </div>
-          </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ocean font-bold uppercase">[01] Sem Ilhas de Conversa</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Contexto Indissociável</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            A discussão sobre um bug vive no card do bug. Quando o bug é resolvido, o chat é arquivado junto. Ninguém precisa vasculhar meses de histórico perdido no canal geral.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- Feature Details -->
-    <section class="py-24 px-6 bg-white dark:bg-ink-paper border-t border-ink/10 dark:border-white/10">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24">
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Threads Contextuais</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Esqueça o canal #geral. A conversa acontece no card da tarefa ou nos comentários do documento. Quando a tarefa é concluída, a discussão é arquivada como histórico, nunca perdida.
-              </p>
-            </div>
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Design Assíncrono</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Sem pontos verdes de "online". Sem expectativa de resposta em 3 segundos. O SpecLine respeita seu fluxo de trabalho, agrupando notificações para quando você decidir checar seu Inbox.
-              </p>
-            </div>
-          </div>
-          <div class="space-y-12">
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Inbox Zero</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                Uma central única onde você revisa todas as menções e atualizações de forma triada. Leia, responda, resolva e esvazie sua caixa de entrada para voltar ao trabalho focado.
-              </p>
-            </div>
-            <div>
-              <h3 class="text-2xl font-serif text-ink dark:text-fable font-semibold mb-4">Histórico Interligado</h3>
-              <p class="text-ink-light dark:text-white/60 font-sans leading-relaxed text-lg">
-                A linha do tempo do chat não é apenas texto. Alterações de status, edições no documento e mudança de responsáveis aparecem na mesma thread, oferecendo a auditoria perfeita do projeto.
-              </p>
-            </div>
-          </div>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Assíncrono por Padrão</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Sem Cobrança Imediata</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Eliminamos o indicador "digitando..." e a bolinha verde de presença online. Você responde quando terminar o seu bloco de concentração profunda, sem ansiedade corporativa.
+          </p>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[03] Decisões Auditáveis</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">De Chat para ADR</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Quantas decisões de arquitetura se perdem em mensagens que somem? No SpecLine, qualquer mensagem pode ser promovida a Decisão Oficial e linkada ao documento técnico.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CALL TO ACTION SECTION -->
+  <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-xs tracking-widest text-ocean uppercase font-bold">Colaboração de Alta Frequência</p>
+      <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+        Diga adeus ao caos de mensagens e volte a construir.
+      </h2>
+      <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+        O chat que respeita o seu tempo e eleva o nível técnico da sua equipe.
+      </p>
+      <div class="pt-4 flex justify-center">
+        <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ocean dark:hover:bg-ocean dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+          <span>Criar Conta Gratuita</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        <% end %>
+      </div>
+    </div>
+  </section>
 
   <%= render 'shared/marketing_footer' %>
+
 </div>

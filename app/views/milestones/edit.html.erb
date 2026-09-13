@@ -2,11 +2,13 @@
   <%= render "shared/workspace_sidebar", workspace: @workspace %>
 <% end %>
 
-<% if defined?(@project) && @project&.persisted? %>
-  <div class="opacity-40 pointer-events-none filter blur-[1px] select-none h-full overflow-hidden">
-    <%= render "projects/header" %>
-    <%= render "projects/overview_view" %>
-  </div>
+<% unless turbo_frame_request? %>
+  <% if defined?(@project) && @project&.persisted? %>
+    <div class="opacity-40 pointer-events-none filter blur-[1px] select-none h-full overflow-hidden">
+      <%= render "projects/header" %>
+      <%= render "projects/overview_view" %>
+    </div>
+  <% end %>
 <% end %>
 
 <%= turbo_frame_tag "modal" do %>
@@ -27,9 +29,9 @@
       <div class="p-4 sm:p-6">
         <%= form_with(model: [@workspace, @project, @milestone], class: "space-y-5 sm:space-y-6", data: { turbo_frame: "_top" }) do |form| %>
           <% if @milestone.errors.any? %>
-            <div class="bg-red-50 border border-red-200 rounded-xl p-4">
-              <p class="text-sm font-medium text-red-800"><%= pluralize(@milestone.errors.count, "erro") %> encontrado(s):</p>
-              <ul class="mt-2 text-sm text-red-700 list-disc pl-5 space-y-1">
+            <div class="bg-rust/10 border border-rust/20 rounded-xl p-4">
+              <p class="text-sm font-medium text-rust"><%= pluralize(@milestone.errors.count, "erro") %> encontrado(s):</p>
+              <ul class="mt-2 text-sm text-rust list-disc pl-5 space-y-1">
                 <% @milestone.errors.full_messages.each do |msg| %>
                   <li><%= msg %></li>
                 <% end %>
@@ -71,10 +73,10 @@
           <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-6 border-t border-ink/5 dark:border-white/5 mt-8">
             <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <%= link_to "Cancelar", workspace_project_path(@workspace, @project, view: 'milestones'), class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500 text-center", data: { action: "click->modal#close" } %>
-              <%= form.submit "Salvar Alterações", class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-[#c26244] transition-colors cursor-pointer duration-500 text-center" %>
+              <%= form.submit "Salvar Alterações", class: "w-full sm:w-auto px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:bg-terracotta-dark transition-colors cursor-pointer duration-500 text-center" %>
             </div>
             
-            <%= link_to workspace_project_milestone_path(@workspace, @project, @milestone), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta milestone?", turbo_frame: "_top" }, class: "px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors duration-500 text-center sm:text-left" do %>
+            <%= link_to workspace_project_milestone_path(@workspace, @project, @milestone), data: { turbo_method: :delete, turbo_confirm: "Tem certeza que deseja excluir esta milestone?", turbo_frame: "_top" }, class: "px-3 py-2 text-sm font-medium text-rust hover:bg-rust/10 dark:hover:bg-rust/20 rounded-lg transition-colors duration-500 text-center sm:text-left" do %>
               Excluir
             <% end %>
           </div>

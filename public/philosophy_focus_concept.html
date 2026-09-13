@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filosofia — O Poder do Foco | SpecLine (Concept Interativo)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(165, 181, 161, 0.2);
+    }
+    .scrollbar-subtle::-webkit-scrollbar {
+      height: 5px;
+      width: 5px;
+    }
+    .scrollbar-subtle::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.35);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-sage/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="flex items-center justify-between border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase h-16 relative z-10 bg-fable-light dark:bg-[#18181A] px-6">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden lg:flex items-center justify-center gap-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Início</a>
+      <a href="/features/docs" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Documentos</a>
+      <a href="/features/kanban" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Tarefas</a>
+      <a href="/features/chat" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Comunicação</a>
+      <a href="/features/whiteboard" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Quadros</a>
+      <a href="/solutions" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Soluções</a>
+      
+      <!-- Philosophy Dropdown Menu -->
+      <div class="relative group py-4">
+        <button class="text-ink dark:text-white font-bold border-b-2 border-sage flex items-center gap-1.5 focus:outline-none">
+          <span>Filosofia</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-60">
+          <div class="bg-white dark:bg-ink-paper rounded-xl shadow-2xl border border-ink/10 dark:border-white/10 p-1.5 flex flex-col gap-1 text-left">
+            <a href="/philosophy_vision_concept.html" class="p-2.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink/80 dark:text-white/80 transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span>Nossa Visão</span>
+            </a>
+            <a href="/philosophy_focus_concept.html" class="p-2.5 rounded-lg bg-sage/15 text-sage-dark dark:text-sage font-bold flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              <span>O Poder do Foco (Ativo)</span>
+            </a>
+            <div class="border-t border-ink/10 dark:border-white/10 my-1"></div>
+            <a href="/philosophy_concept.html" class="p-2 rounded-lg text-terracotta hover:bg-terracotta/10 text-xs font-semibold flex items-center justify-between">
+              <span>Ver Central de Filosofia</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Preços</a>
+    </div>
+
+    <div class="flex items-center justify-end gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-sage dark:hover:bg-sage dark:hover:text-ink px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED PHILOSOPHY SUB-NAV BAR (SWITCH CONCEPTS DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-sage">Aba Filosofia:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/philosophy_vision_concept.html" class="px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-terracotta hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>1. Nossa Visão</span>
+        </a>
+        <a href="/philosophy_focus_concept.html" class="px-3.5 py-1.5 rounded-lg bg-sage text-ink font-bold flex items-center gap-2 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>2. O Poder do Foco (Ativo)</span>
+        </a>
+      </div>
+      <a href="/philosophy_concept.html" class="inline-flex items-center gap-1.5 text-terracotta hover:underline font-bold text-[11px] transition-colors">
+        <span>Ver Central de Filosofia</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="py-20 md:py-28 px-6 text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-sage/10 via-transparent to-transparent -z-10"></div>
+    <div class="max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sage/20 border border-sage/30 text-sage-dark dark:text-sage text-xs font-mono uppercase tracking-widest mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+        <span>Ecologia Cognitiva & Design Calmo</span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight text-ink dark:text-white leading-[1.08] mb-8">
+        O Poder do <br class="hidden sm:inline"><span class="italic font-serif-italic text-sage-dark dark:text-sage">Foco Profundo</span>.
+      </h1>
+      <p class="text-lg sm:text-xl font-serif text-ink/70 dark:text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
+        Por que eliminamos o ruído e abraçamos o silêncio. Como o SpecLine protege sua atenção para que sua equipe execute o melhor trabalho de suas vidas.
+      </p>
+
+      <!-- Key Focus Attributes -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-sage"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          Sem Badges Vermelhos
+        </span>
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Comunicação Assíncrona
+        </span>
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ochre"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          A Regra dos 30 Minutos
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN EDITORIAL CONTENT & INTERACTIVE LABS -->
+  <main class="max-w-6xl mx-auto px-6 pb-28 space-y-24">
+
+    <!-- INTERACTIVE LAB 1: O "SANCTUARY" DE FOCO (CALM MODE VS. HYPERACTIVE NOISE) -->
+    <section class="bg-white dark:bg-ink-paper rounded-3xl border border-ink/10 dark:border-white/10 p-6 sm:p-10 shadow-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-ink/10 dark:border-white/10">
+        <div>
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-sage font-bold mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/></svg>
+            <span>Simulador de Ambiente Cognitivo</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-serif text-ink dark:text-white font-medium">
+            O "Sanctuary" de Trabalho Profundo
+          </h2>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 mt-1 max-w-xl">
+            Sinta o impacto direto de notificações invasivas versus a calma reflexiva de um ambiente arquitetado para a concentração.
+          </p>
+        </div>
+
+        <!-- Mode Selector -->
+        <div class="inline-flex p-1 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-xs font-mono self-start md:self-auto">
+          <button id="btn-focus-hyper" onclick="setFocusSimulatorMode('hyper')" class="px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span>Ruído Típico</span>
+          </button>
+          <button id="btn-focus-calm" onclick="setFocusSimulatorMode('calm')" class="px-4 py-2 rounded-lg bg-sage text-ink font-bold shadow-sm transition-all flex items-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <span>Modo Silêncio SpecLine</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SIMULATOR WORKSPACE CONTAINER -->
+      <div class="mt-8 space-y-6">
+        
+        <!-- Top Status Bar of the Sandbox -->
+        <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-xs font-mono">
+          <div class="flex items-center gap-3">
+            <span class="text-ink/60 dark:text-white/60">Medidor de Foco Contínuo:</span>
+            <div class="w-36 h-3 bg-ink/10 dark:bg-white/10 rounded-full overflow-hidden">
+              <div id="focus-meter-bar" class="h-full bg-sage transition-all duration-700 w-full"></div>
+            </div>
+            <span id="focus-meter-label" class="font-bold text-sage">100% (Flow Pleno)</span>
+          </div>
+
+          <div id="focus-interrupt-counter" class="text-ink/50 dark:text-white/40 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span>Interrupções nos últimos 30 min: <strong id="interrupt-count" class="text-ink dark:text-white">0</strong></span>
+          </div>
+        </div>
+
+        <!-- Interactive Editorial Editor Simulator -->
+        <div id="sandbox-container" class="p-8 sm:p-12 rounded-2xl bg-fable/50 dark:bg-[#151516] border border-ink/10 dark:border-white/10 transition-all duration-500 relative min-h-[320px] flex flex-col justify-between">
+          
+          <!-- Artificial Toasts Container (for Hyperactive Mode) -->
+          <div id="hyper-toasts-area" class="hidden absolute top-4 right-4 space-y-2 z-20 max-w-xs w-full">
+            <div class="p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-700 dark:text-red-400 text-xs font-mono shadow-xl flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 mt-1 shrink-0"></span>
+              <div>
+                <strong class="font-bold">Notificação #84:</strong> @pedro mencionou você no canal geral de discussões.
+              </div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs font-mono shadow-xl flex items-start gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500 mt-1 shrink-0"></span>
+              <div>
+                <strong class="font-bold">Ticket Urgente:</strong> Prazo recalculado para daqui a 2 horas.
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Content with Typewriter Focus Simulation -->
+          <div class="space-y-6 max-w-2xl mx-auto font-serif">
+            <div class="text-[11px] font-mono uppercase tracking-widest text-sage font-bold">
+              Especificação Arquitetural de API
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-medium text-ink dark:text-white">
+              Garantias de Idempotência e Consistência Transacional
+            </h3>
+            <p id="doc-paragraph-1" class="text-base sm:text-lg text-ink/90 dark:text-white/90 leading-relaxed transition-opacity duration-300">
+              Cada transação de pagamento deve enviar um cabeçalho único de idempotência. Se a conexão falhar antes do recebimento da resposta HTTP 200, a tentativa subsequente deve reutilizar o mesmo hash criptográfico para prevenir cobranças duplicadas.
+            </p>
+            <p id="doc-paragraph-2" class="text-base sm:text-lg text-ink/70 dark:text-white/70 leading-relaxed transition-opacity duration-300">
+              O banco de dados armazena o resultado em cache imutável com expiração de 24 horas. Nenhum lock distribuído é mantido por mais de 50 milissegundos, garantindo que o throughput da aplicação permaneça estável sob estresse volumétrico.
+            </p>
+          </div>
+
+          <!-- Sandbox Controls at Bottom -->
+          <div class="pt-8 mt-8 border-t border-ink/10 dark:border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+            <div class="text-ink/60 dark:text-white/60">
+              Status do Ambiente: <span id="env-status-text" class="font-bold text-sage">Silêncio Absoluto (Zero Ruído)</span>
+            </div>
+            <button onclick="triggerSampleInterruption()" id="btn-trigger-interrupt" class="px-4 py-2 rounded-xl bg-ink/5 dark:bg-white/5 hover:bg-ink/10 dark:hover:bg-white/10 text-ink dark:text-white transition-all cursor-pointer">
+              Simular Interrupção Aleatória
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDITORIAL ESSAY: A FALÁCIA DA SINCRONIA -->
+    <section class="max-w-3xl mx-auto space-y-12">
+      <div class="border-l-4 border-sage pl-6 py-2 my-8">
+        <blockquote class="text-2xl sm:text-3xl font-serif italic text-ink dark:text-white leading-snug">
+          "A resposta imediata é inimiga do pensamento profundo. Arquitetura de software, design e redação técnica exigem imersão. Exigem o direito de desaparecer por algumas horas."
+        </blockquote>
+      </div>
+
+      <div class="space-y-6 text-base sm:text-lg font-serif text-ink/80 dark:text-white/80 leading-relaxed">
+        <p>
+          O modelo de trabalho contemporâneo glorifica a presença contínua. O pontinho verde de status. A notificação piscando na bandeja do sistema operacional. Fomos condicionados a acreditar que estar conectado a todos os canais de mensagens a todo instante é sinônimo de produtividade.
+        </p>
+        <p>
+          Mas quando tudo é tratado como urgente, absolutamente nada é prioritário. Conversas baseadas puramente em chats rápidos criam uma ansiedade crônica: o histórico importante desce no feed, discussões técnicas profundas são resumidas em frases soltas e decisões cruciais são esquecidas no dia seguinte.
+        </p>
+        <p>
+          No <strong>SpecLine</strong>, construímos a experiência para ser <strong>primariamente assíncrona</strong>. As discussões técnicas não vivem em canais abertos com dezenas de espectadores desatentos: elas são ancoradas diretamente no parágrafo do requisito ou no card de execução.
+        </p>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE LAB 2: SÍNCRONO EFÊMERO VS. ASSÍNCRONO CONSCIENTE -->
+    <section class="bg-fable dark:bg-ink-paper/60 rounded-3xl border border-ink/10 dark:border-white/10 p-6 sm:p-10">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="text-center space-y-3">
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-sage font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+            <span>Comparativo de Dinâmica</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-serif text-ink dark:text-white font-medium">
+            Chat Efêmero vs. Decisão Estruturada
+          </h2>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 max-w-xl mx-auto">
+            Veja a diferença entre tentar resolver um problema técnico via chat contínuo versus documentação com debate contextual.
+          </p>
+        </div>
+
+        <!-- Comparative Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Column 1: Ephemeral Chat -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-ink-darker border border-red-500/20 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10">
+              <div class="font-serif font-semibold text-ink dark:text-white text-base">Chat em Tempo Real</div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-bold">Fragmentado</span>
+            </div>
+            <div class="space-y-2.5 font-sans text-xs">
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Dev 1:</strong> Oi, alguém sabe como fica a migração da tabela de cobrança?
+              </div>
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Dev 2:</strong> Acho que o Roberto tinha falado em uma call semana passada.
+              </div>
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Dev 3:</strong> Tem link do documento?
+              </div>
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Dev 1:</strong> Não achei na busca... vamos abrir uma call rápida de 15 min?
+              </div>
+            </div>
+            <div class="pt-3 border-t border-ink/10 dark:border-white/10 text-[11px] font-mono text-red-600 dark:text-red-400">
+              Resultado: 4 pessoas interrompidas, 1 hora de reunião adicional, 0 documentação duradoura.
+            </div>
+          </div>
+
+          <!-- Column 2: SpecLine Async Trinity -->
+          <div class="p-6 rounded-2xl bg-white dark:bg-ink-darker border border-sage/30 space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-ink/10 dark:border-white/10">
+              <div class="font-serif font-semibold text-ink dark:text-white text-base">Comunicação SpecLine</div>
+              <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sage/20 text-sage-dark dark:text-sage font-bold">Estruturado</span>
+            </div>
+            <div class="space-y-2.5 font-sans text-xs">
+              <div class="p-2.5 rounded bg-sage/10 text-ink/80 dark:text-white/80">
+                <strong class="text-sage-dark dark:text-sage font-semibold">Proposta RFC #12:</strong> Migração de Cobrança com Zero Downtime.
+                <div class="text-[11px] text-ink/60 dark:text-white/60 mt-1">Schema SQL versionado + fallback anexado ao documento.</div>
+              </div>
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Parecer Assíncrono:</strong> Revisado e validado pelo DBA em 12 minutos.
+              </div>
+              <div class="p-2 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                <strong class="text-ink dark:text-white">Status:</strong> Ticket gerado automaticamente no Kanban com aprovação vinculada.
+              </div>
+            </div>
+            <div class="pt-3 border-t border-ink/10 dark:border-white/10 text-[11px] font-mono text-sage font-bold">
+              Resultado: Zero reuniões necessárias. Decisão preservada para sempre na Wiki do projeto.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CALCULADORA & SIMULADOR AVANÇADO: O EFEITO QUEIJO SUÍÇO NA ATENÇÃO -->
+    <section class="bg-white dark:bg-ink-paper rounded-3xl border border-ink/10 dark:border-white/10 p-6 sm:p-10 shadow-xl relative overflow-hidden">
+      <div class="max-w-5xl mx-auto space-y-10">
+        
+        <!-- Header with Cognitive Ecology Concept -->
+        <div class="text-center space-y-3 max-w-3xl mx-auto">
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-sage font-bold px-3 py-1 rounded-full bg-sage/10 border border-sage/20">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <span>Ecologia Cognitiva & Cronograma Real</span>
+          </div>
+          <h2 class="text-3xl sm:text-5xl font-serif text-ink dark:text-white font-medium">
+            O Efeito Queijo Suíço na Atenção
+          </h2>
+          <p class="text-sm sm:text-base font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            Quando o dia de trabalho é perfurado por interrupções e alertas, o tempo restante não é foco: é <em>tempo esfarelado</em>. A ciência cognitiva documenta que levamos cerca de <strong>23 minutos para retornar ao estado de imersão</strong> após um ping. Janelas de 30 minutos entre pings se tornam <em>buracos no queijo</em> — pequenos intervalos onde é impossível criar código elegante ou arquitetura sólida.
+          </p>
+        </div>
+
+        <!-- INFOGRÁFICO: ANATOMIA DA INTERRUPÇÃO -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-xs font-mono">
+          <div class="p-4 rounded-xl bg-white dark:bg-ink-paper border border-red-500/20 space-y-1.5">
+            <div class="flex items-center gap-2 text-red-600 dark:text-red-400 font-bold uppercase text-[10px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>1. O Ping / Alerta (2 a 5 min)</span>
+            </div>
+            <p class="text-ink/70 dark:text-white/70 font-sans text-[11px] leading-relaxed">
+              Uma pergunta rápida no chat: "Tem 5 minutinhos?", ou um alerta de ticket desnecessário.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white dark:bg-ink-paper border border-amber-500/20 space-y-1.5">
+            <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold uppercase text-[10px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>2. Rampa de Retomada (23 min)</span>
+            </div>
+            <p class="text-ink/70 dark:text-white/70 font-sans text-[11px] leading-relaxed">
+              O cérebro precisa recarregar todas as variáveis e linhas de raciocínio na memória de trabalho.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white dark:bg-ink-paper border border-terracotta/20 space-y-1.5">
+            <div class="flex items-center gap-2 text-terracotta font-bold uppercase text-[10px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+              <span>3. O Buraco Criado (~28 min)</span>
+            </div>
+            <p class="text-ink/70 dark:text-white/70 font-sans text-[11px] leading-relaxed">
+              O bloco de foco foi destruído. O intervalo até a próxima notificação é insuficiente para flow.
+            </p>
+          </div>
+        </div>
+
+        <!-- CULTURAL PRESETS & LIVE CONTROLS -->
+        <div class="space-y-6">
+          <div class="space-y-3 pb-2">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-xs font-mono uppercase text-ink/60 dark:text-white/60 font-bold">
+              <span>Cenários Culturais Típicos:</span>
+              <span class="text-[11px] font-normal text-ink/40 dark:text-white/40">Clique em um preset ou ajuste os sliders</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono w-full">
+              <button onclick="applyCulturePreset('hyper')" id="preset-btn-hyper" class="px-4 py-2.5 rounded-xl border border-red-500/30 bg-red-500/10 text-red-600 dark:text-red-400 font-bold hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer text-center">
+                <span class="w-2 h-2 rounded-full bg-red-500 shrink-0"></span>
+                <span>Empresa Hiperativa (9 pings)</span>
+              </button>
+              <button onclick="applyCulturePreset('meeting')" id="preset-btn-meeting" class="px-4 py-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer text-center">
+                <span class="w-2 h-2 rounded-full bg-amber-500 shrink-0"></span>
+                <span>Reuniões & Syncs (6 pings)</span>
+              </button>
+              <button onclick="applyCulturePreset('calm')" id="preset-btn-calm" class="px-4 py-2.5 rounded-xl border border-sage/30 bg-sage/20 text-sage-dark dark:text-sage font-bold hover:scale-[1.02] transition-all flex items-center justify-center gap-2 cursor-pointer text-center">
+                <span class="w-2 h-2 rounded-full bg-sage shrink-0"></span>
+                <span>Cultura Calma (2 pings)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sliders and manual triggers -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-ink/70 dark:text-white/70">Interrupções no Dia (Pings + Reuniões):</span>
+                <span id="slider-interruptions-label" class="font-bold text-sage text-sm">7 interrupções</span>
+              </div>
+              <input type="range" id="slider-interruptions" min="1" max="14" value="7" oninput="updateSwissCheeseTimeline()" class="w-full accent-sage cursor-pointer">
+              <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+                <span>1 (Calmo)</span>
+                <span>4</span>
+                <span>7 (Média)</span>
+                <span>14 (Caos absoluto)</span>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between text-xs font-mono">
+                <span class="text-ink/70 dark:text-white/70">Duração Média de Cada Interrupção:</span>
+                <span id="slider-duration-label" class="font-bold text-sage text-sm">15 minutos</span>
+              </div>
+              <input type="range" id="slider-duration" min="5" max="35" step="5" value="15" oninput="updateSwissCheeseTimeline()" class="w-full accent-sage cursor-pointer">
+              <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+                <span>5 min (Ping)</span>
+                <span>15 min</span>
+                <span>25 min</span>
+                <span>35 min (Reunião)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Direct Interactive Piercing Action Button -->
+          <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl bg-ink/5 dark:bg-white/5 border border-ink/10 dark:border-white/10 text-xs font-mono">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+              <span class="text-ink/80 dark:text-white/80">Simulador de Impacto ao Vivo:</span>
+            </div>
+            <button onclick="pierceTimelineWithNewInterrupt()" class="px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/20 font-bold transition-all flex items-center gap-2 active:scale-95 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <span>Disparar Ping Surpresa na Timeline</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- DUAL COMPARATIVE TIMELINES (09:00 ÀS 18:00) -->
+        <div class="space-y-6 pt-4">
+          
+          <!-- Shared Time Ruler -->
+          <div class="flex justify-between text-[11px] font-mono text-ink/50 dark:text-white/40 border-b border-ink/10 dark:border-white/10 pb-2 px-1">
+            <span>09:00</span>
+            <span>10:00</span>
+            <span>11:00</span>
+            <span>12:00</span>
+            <span class="text-ink/70 dark:text-white/70 font-semibold">13:00 (Almoço)</span>
+            <span>14:00</span>
+            <span>15:00</span>
+            <span>16:00</span>
+            <span>17:00</span>
+            <span>18:00</span>
+          </div>
+
+          <!-- TIMELINE 1: O DIA QUEIJO SUÍÇO (CONVENCIONAL) -->
+          <div class="p-6 rounded-2xl bg-fable-light dark:bg-ink-darker border border-red-500/20 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2 font-bold text-red-600 dark:text-red-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+                <span>Timeline Tradicional: O Queijo Suíço (Atenção Picotada)</span>
+              </div>
+              <div class="flex items-center gap-3 text-[11px]">
+                <span class="text-ink/60 dark:text-white/60">Buracos de Foco: <strong id="swiss-holes-badge" class="text-red-500 font-bold">7 furos</strong></span>
+                <span class="px-2 py-0.5 rounded bg-red-500/10 text-red-600 dark:text-red-400 font-bold">Maior Bloco: 35 min</span>
+              </div>
+            </div>
+
+            <!-- Visual Bar for Chaotic Timeline -->
+            <div id="timeline-blocks-chaotic" class="h-14 w-full rounded-xl overflow-hidden flex border border-ink/10 dark:border-white/10 bg-white/50 dark:bg-ink-paper/50 shadow-inner">
+              <!-- Dynamically generated via JS -->
+            </div>
+
+            <!-- Legend for Chaotic Timeline -->
+            <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono text-ink/60 dark:text-white/60 pt-1">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-red-500/90"></span>
+                <span>Interrupção Direta</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-amber-500/80"></span>
+                <span>Rampa de Retomada (23 min)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-ink/20 dark:bg-white/15 border border-dashed border-ink/30 dark:border-white/30"></span>
+                <span>Buraco no Queijo (Tempo Morto)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- TIMELINE 2: O DIA PROTEGIDO SPECLINE (CALMO & ASSÍNCRONO) -->
+          <div class="p-6 rounded-2xl bg-fable-light dark:bg-ink-darker border border-sage/30 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+              <div class="flex items-center gap-2 font-bold text-sage-dark dark:text-sage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                <span>Timeline SpecLine: Blocos Sagrados de Foco (Assíncrono & Calmo)</span>
+              </div>
+              <div class="flex items-center gap-3 text-[11px]">
+                <span class="text-ink/60 dark:text-white/60">Buracos no Queijo: <strong class="text-sage font-bold">0 furos</strong></span>
+                <span class="px-2 py-0.5 rounded bg-sage/20 text-sage-dark dark:text-sage font-bold">Maior Bloco: 3h35 min</span>
+              </div>
+            </div>
+
+            <!-- Visual Bar for SpecLine Timeline -->
+            <div class="h-14 w-full rounded-xl overflow-hidden flex border border-sage/20 bg-white/50 dark:bg-ink-paper/50 shadow-inner text-[10px] font-mono text-white text-center">
+              <div style="width: 6%;" class="h-full bg-ochre/80 flex items-center justify-center p-1" title="09:00 - 09:25: Check-in SpecLine (Revisão de Docs)">
+                Sync
+              </div>
+              <div style="width: 38%;" class="h-full bg-sage/90 text-ink font-bold flex items-center justify-center p-1" title="09:25 - 12:30: Bloco Sagrado de Deep Work 1 (3h05 contínuas)">
+                Bloco Deep Work 1 (3h05 contínuas de código/design)
+              </div>
+              <div style="width: 12%;" class="h-full bg-ink/15 dark:bg-white/10 text-ink/70 dark:text-white/70 flex items-center justify-center p-1" title="12:30 - 13:30: Almoço real">
+                Almoço
+              </div>
+              <div style="width: 6%;" class="h-full bg-ochre/80 flex items-center justify-center p-1" title="13:30 - 14:00: Checkpoint Assíncrono da Tarde">
+                Sync
+              </div>
+              <div style="width: 34%;" class="h-full bg-sage/90 text-ink font-bold flex items-center justify-center p-1" title="14:00 - 17:35: Bloco Sagrado de Deep Work 2 (3h35 contínuas)">
+                Bloco Deep Work 2 (3h35 contínuas de flow)
+              </div>
+              <div style="width: 4%;" class="h-full bg-ochre/80 flex items-center justify-center p-1" title="17:35 - 18:00: Fechamento Assíncrono">
+                Fim
+              </div>
+            </div>
+
+            <!-- Legend for SpecLine Timeline -->
+            <div class="flex flex-wrap items-center gap-4 text-[11px] font-mono text-ink/60 dark:text-white/60 pt-1">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-sage/90"></span>
+                <span>Blocos Contínuos de Deep Work (&gt; 3 horas de Flow)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-ochre/80"></span>
+                <span>Checkpoints Assíncronos Concentrados (25 min)</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded bg-ink/15 dark:bg-white/10"></span>
+                <span>Pausa Saudável</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 DIAGNOSTIC METRIC CARDS (REAL TIME) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[10px] font-mono uppercase text-ink/50 dark:text-white/50">Maior Bloco de Foco</div>
+            <div id="stat-longest-block" class="text-2xl font-serif text-red-500 font-bold">35 minutos</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">vs. 3h35m no SpecLine</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[10px] font-mono uppercase text-ink/50 dark:text-white/50">Tempo Real em Flow</div>
+            <div id="stat-flow-time" class="text-2xl font-serif text-terracotta font-bold">1.8h de 8h</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">vs. 6.7h de 8h no SpecLine</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[10px] font-mono uppercase text-ink/50 dark:text-white/50">Perdido em Buracos</div>
+            <div id="stat-holes-time" class="text-2xl font-serif text-amber-600 dark:text-amber-400 font-bold">4.6 horas</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">em re-chaveamento mental</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[10px] font-mono uppercase text-ink/50 dark:text-white/50">Cansaço Cognitivo</div>
+            <div id="stat-fatigue" class="text-2xl font-serif text-red-600 dark:text-red-400 font-bold">Crítico (84%)</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">fadiga por troca de contexto</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- OS 4 PILARES DA ERGONOMIA VISUAL -->
+    <section class="space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <div class="text-xs font-mono uppercase tracking-widest text-sage font-bold">Ergonomia & Bem-Estar</div>
+        <h2 class="text-3xl sm:text-4xl font-serif text-ink dark:text-white font-medium">As Quatro Escolhas de Design Opinativas</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-fable text-ink dark:bg-white/10 dark:text-white flex items-center justify-center font-serif text-lg font-bold">
+            Aa
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">1. Paleta Editorial Suave</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            O fundo tom de papel e o escuro aveludado reduzem drasticamente o cansaço ocular provocado por telas brancas ofuscantes após jornadas de 8 horas.
+          </p>
+        </div>
+
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-red-500/10 text-red-500 flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">2. Zero Badges Vermelhos de Alerta</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            A cor vermelha deve ser reservada para falhas em servidores de produção, não para avisar que alguém respondeu um comentário com um 'ok'.
+          </p>
+        </div>
+
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-sage/20 text-sage-dark dark:text-sage flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">3. Notificações de Alta Intenção</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            Você só é alertado quando a sua aprovação ou intervenção técnica é estritamente necessária para destravar o trabalho de outro colega.
+          </p>
+        </div>
+
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-ochre/15 text-ochre flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">4. A Regra dos 30 Minutos</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            Desenhamos o SpecLine para que você o use por 30 minutos diários: veja o que mudou, aprove as entregas e volte para o seu editor de código.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION FOOTER CARDS -->
+    <div class="pt-12 border-t border-ink/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+      <a href="/philosophy_vision_concept.html" class="text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Voltar: Nossa Visão (Manifesto)</span>
+      </a>
+      <a href="/solutions" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-white text-white dark:text-ink font-bold hover:bg-sage dark:hover:bg-sage dark:hover:text-ink transition-all flex items-center gap-2 shadow-sm">
+        <span>Conheça as Soluções Práticas</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT FOR INTERACTIVE SIMULATORS -->
+  <script>
+    let currentInterruptionCount = 0;
+
+    // 1. Focus Mode Switcher
+    function setFocusSimulatorMode(mode) {
+      const btnHyper = document.getElementById('btn-focus-hyper');
+      const btnCalm = document.getElementById('btn-focus-calm');
+      const toasts = document.getElementById('hyper-toasts-area');
+      const meterBar = document.getElementById('focus-meter-bar');
+      const meterLabel = document.getElementById('focus-meter-label');
+      const envStatus = document.getElementById('env-status-text');
+      const sandbox = document.getElementById('sandbox-container');
+
+      if (mode === 'hyper') {
+        btnHyper.className = "px-4 py-2 rounded-lg bg-red-500/15 text-red-600 dark:text-red-400 font-bold border border-red-500/20 transition-all flex items-center gap-2 cursor-pointer";
+        btnCalm.className = "px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer";
+        toasts.classList.remove('hidden');
+        meterBar.className = "h-full bg-red-500 transition-all duration-700 w-1/4";
+        meterLabel.innerText = "24% (Atenção Fragmentada)";
+        meterLabel.className = "font-bold text-red-500";
+        envStatus.innerText = "Ruído Alto (Pings e Alertas Constantes)";
+        envStatus.className = "font-bold text-red-500";
+        sandbox.classList.add('border-red-500/30');
+      } else {
+        btnCalm.className = "px-4 py-2 rounded-lg bg-sage text-ink font-bold shadow-sm transition-all flex items-center gap-2 cursor-pointer";
+        btnHyper.className = "px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer";
+        toasts.classList.add('hidden');
+        meterBar.className = "h-full bg-sage transition-all duration-700 w-full";
+        meterLabel.innerText = "100% (Flow Pleno)";
+        meterLabel.className = "font-bold text-sage";
+        envStatus.innerText = "Silêncio Absoluto (Zero Ruído)";
+        envStatus.className = "font-bold text-sage";
+        sandbox.classList.remove('border-red-500/30');
+      }
+    }
+
+    // 2. Trigger Sample Interruption
+    function triggerSampleInterruption() {
+      currentInterruptionCount++;
+      document.getElementById('interrupt-count').innerText = currentInterruptionCount;
+
+      const p1 = document.getElementById('doc-paragraph-1');
+      p1.classList.add('opacity-30');
+      setTimeout(() => {
+        p1.classList.remove('opacity-30');
+      }, 1200);
+
+      // Flash temporary toast
+      const toasts = document.getElementById('hyper-toasts-area');
+      toasts.classList.remove('hidden');
+      setTimeout(() => {
+        const btnCalm = document.getElementById('btn-focus-calm');
+        if (btnCalm.classList.contains('bg-sage')) {
+          toasts.classList.add('hidden');
+        }
+      }, 3500);
+    }
+
+    // 3. Swiss Cheese Timeline Calculator & Presets
+    function applyCulturePreset(preset) {
+      const sliderInt = document.getElementById('slider-interruptions');
+      const sliderDur = document.getElementById('slider-duration');
+      
+      const btnHyper = document.getElementById('preset-btn-hyper');
+      const btnMeeting = document.getElementById('preset-btn-meeting');
+      const btnCalm = document.getElementById('preset-btn-calm');
+
+      // Reset styles
+      const baseClass = "px-4 py-2.5 rounded-xl border transition-all flex items-center justify-center gap-2 cursor-pointer text-center text-xs font-mono";
+      btnHyper.className = `${baseClass} border-red-500/20 bg-red-500/5 text-ink/70 dark:text-white/70 hover:scale-[1.02]`;
+      btnMeeting.className = `${baseClass} border-amber-500/20 bg-amber-500/5 text-ink/70 dark:text-white/70 hover:scale-[1.02]`;
+      btnCalm.className = `${baseClass} border-sage/20 bg-sage/5 text-ink/70 dark:text-white/70 hover:scale-[1.02]`;
+
+      if (preset === 'hyper') {
+        sliderInt.value = 9;
+        sliderDur.value = 10;
+        btnHyper.className = `${baseClass} border-red-500/40 bg-red-500/15 text-red-600 dark:text-red-400 font-bold`;
+      } else if (preset === 'meeting') {
+        sliderInt.value = 6;
+        sliderDur.value = 30;
+        btnMeeting.className = `${baseClass} border-amber-500/40 bg-amber-500/15 text-amber-600 dark:text-amber-400 font-bold`;
+      } else if (preset === 'calm') {
+        sliderInt.value = 2;
+        sliderDur.value = 15;
+        btnCalm.className = `${baseClass} border-sage/40 bg-sage/25 text-sage-dark dark:text-sage font-bold`;
+      }
+
+      updateSwissCheeseTimeline();
+    }
+
+    function pierceTimelineWithNewInterrupt() {
+      const sliderInt = document.getElementById('slider-interruptions');
+      if (parseInt(sliderInt.value) < 14) {
+        sliderInt.value = parseInt(sliderInt.value) + 1;
+        updateSwissCheeseTimeline();
+
+        // Brief flash on the timeline
+        const container = document.getElementById('timeline-blocks-chaotic');
+        container.classList.add('ring-2', 'ring-red-500');
+        setTimeout(() => {
+          container.classList.remove('ring-2', 'ring-red-500');
+        }, 800);
+      }
+    }
+
+    function updateSwissCheeseTimeline() {
+      const interruptions = parseInt(document.getElementById('slider-interruptions').value);
+      const duration = parseInt(document.getElementById('slider-duration').value);
+
+      document.getElementById('slider-interruptions-label').innerText = `${interruptions} interrupções`;
+      document.getElementById('slider-duration-label').innerText = `${duration} minutos`;
+      document.getElementById('swiss-holes-badge').innerText = `${interruptions} furos`;
+
+      const container = document.getElementById('timeline-blocks-chaotic');
+      container.innerHTML = '';
+
+      // Total workday: 8 hours = 480 minutes
+      const recoveryPenalty = 23; // Gloria Mark: 23 min to resume flow
+      const totalLostPerEvent = duration + recoveryPenalty;
+      const totalLostMinutes = Math.min(430, interruptions * totalLostPerEvent);
+      const remainingMinutes = Math.max(50, 480 - totalLostMinutes);
+
+      const flowHours = (remainingMinutes / 60).toFixed(1);
+      const lostHours = (totalLostMinutes / 60).toFixed(1);
+
+      // Longest continuous block calculation
+      let longestMin = 35;
+      if (interruptions <= 2) longestMin = 180;
+      else if (interruptions <= 4) longestMin = 85;
+      else if (interruptions <= 6) longestMin = 50;
+      else if (interruptions <= 8) longestMin = 35;
+      else longestMin = 20;
+
+      const fatigue = Math.min(96, Math.max(18, 15 + interruptions * 6.5)).toFixed(0);
+
+      // Update stat cards
+      document.getElementById('stat-longest-block').innerText = longestMin >= 60 ? `${(longestMin/60).toFixed(1)}h` : `${longestMin} minutos`;
+      document.getElementById('stat-flow-time').innerText = `${flowHours}h de 8h`;
+      document.getElementById('stat-holes-time').innerText = `${lostHours} horas`;
+      
+      const fatigueElem = document.getElementById('stat-fatigue');
+      if (fatigue > 70) {
+        fatigueElem.innerText = `Crítico (${fatigue}%)`;
+        fatigueElem.className = 'text-2xl font-serif text-red-600 dark:text-red-400 font-bold';
+      } else if (fatigue > 45) {
+        fatigueElem.innerText = `Moderado (${fatigue}%)`;
+        fatigueElem.className = 'text-2xl font-serif text-amber-600 dark:text-amber-400 font-bold';
+      } else {
+        fatigueElem.innerText = `Baixo (${fatigue}%)`;
+        fatigueElem.className = 'text-2xl font-serif text-sage font-bold';
+      }
+
+      // Render realistic fragmented timeline segments
+      // Normalizes segment widths to sum to 100%
+      const slots = interruptions;
+      const workPieceWidth = Math.max(2, (100 - (slots * 7)) / (slots + 1));
+      
+      for (let i = 0; i < slots; i++) {
+        // Fragment of fragile work
+        const workPart = document.createElement('div');
+        workPart.style.width = `${workPieceWidth}%`;
+        workPart.className = (i % 2 === 0) ? "h-full bg-ink/15 dark:bg-white/10 flex items-center justify-center text-[9px] font-mono text-ink/40 dark:text-white/40" : "h-full bg-amber-500/20 flex items-center justify-center text-[9px] font-mono text-amber-700 dark:text-amber-300";
+        workPart.title = "Intervalo fragmentado (impossível entrar em flow)";
+        container.appendChild(workPart);
+
+        // Direct Interruption block
+        const interruptPart = document.createElement('div');
+        interruptPart.style.width = `3%`;
+        interruptPart.className = "h-full bg-red-500/90 flex items-center justify-center text-white text-[9px] font-bold shrink-0";
+        interruptPart.title = `Interrupção / Ping (${duration} min)`;
+        container.appendChild(interruptPart);
+
+        // Recovery Ramp (Cognitive Penalty)
+        const recoveryPart = document.createElement('div');
+        recoveryPart.style.width = `4%`;
+        recoveryPart.className = "h-full bg-amber-500/80 flex items-center justify-center text-ink text-[9px] font-mono shrink-0";
+        recoveryPart.title = "Rampa de Retomada (23 min perdidos reconstruindo modelo mental)";
+        container.appendChild(recoveryPart);
+      }
+
+      // Final trailing fragment
+      const endPart = document.createElement('div');
+      endPart.className = "h-full bg-ink/15 dark:bg-white/10 flex-1 flex items-center justify-center text-[9px] font-mono text-ink/40 dark:text-white/40";
+      endPart.title = "Final de expediente esfarelado";
+      container.appendChild(endPart);
+    }
+
+    // Initialize timeline on load
+    updateSwissCheeseTimeline();
+  </script>
+</body>
+</html>

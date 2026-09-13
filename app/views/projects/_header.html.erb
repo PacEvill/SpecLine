@@ -26,7 +26,7 @@
           <span class="hidden md:inline">Novo Board</span>
         <% end %>
 
-        <%= link_to new_workspace_project_issue_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors duration-500" do %>
+        <%= link_to new_workspace_project_issue_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 text-xs font-medium text-white bg-terracotta rounded-lg hover:bg-terracotta-dark transition-colors duration-500" do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           <span class="hidden sm:inline">Nova Issue</span>
           <span class="sm:hidden">Issue</span>
@@ -98,7 +98,7 @@
           <span class="text-[11px] text-ink-light dark:text-white/60 font-medium">Agrupar:</span>
           <%= form_with url: workspace_project_path(@workspace, @project), method: :get, data: { turbo_frame: "_top" }, class: "inline-block" do |f| %>
             <%= f.hidden_field :view, value: "board" %>
-            <%= f.select :group_by, [["Sem agrupamento", ""], ["Por Boards", "board"], ["Por Responsável", "assignee"]], { selected: params[:group_by] }, class: "text-xs border-ink/10 dark:border-white/10 rounded-md bg-[#FDFBF7] dark:bg-ink-darker font-medium text-ink dark:text-fable focus:ring-terracotta/20 py-1 pl-2 pr-6 cursor-pointer shadow-xs", onchange: "this.form.submit()" %>
+            <%= f.select :group_by, [["Sem agrupamento", ""], ["Por Boards", "board"], ["Por Responsável", "assignee"]], { selected: params[:group_by] }, class: "text-xs border-ink/10 dark:border-white/10 rounded-md bg-fable-light dark:bg-ink-darker font-medium text-ink dark:text-fable focus:ring-terracotta/20 py-1 pl-2 pr-6 cursor-pointer shadow-xs", onchange: "this.form.submit()" %>
           <% end %>
         </div>
       </div>

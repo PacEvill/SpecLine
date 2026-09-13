@@ -2,7 +2,7 @@
 
 <%= turbo_frame_tag "modal" do %>
   <div data-controller="modal" data-action="click->modal#closeBackground" class="fixed inset-0 z-[100] flex items-center justify-center bg-ink/20 dark:bg-black/40 backdrop-blur-sm p-3 sm:p-6 opacity-0 animate-[fade-in_0.2s_ease-out_forwards]">
-    <div class="bg-[#FDFBF7] dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
+    <div class="bg-fable-light dark:bg-ink-darker w-full max-w-5xl h-[92dvh] sm:h-[85vh] min-h-0 sm:min-h-[600px] rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row scale-95 animate-[scale-in_0.2s_ease-out_forwards] border border-ink/10 dark:border-white/10">
       
       <!-- Settings Sidebar inside Modal (Desktop) -->
       <div class="hidden sm:flex flex-col w-64 border-r border-ink/10 dark:border-white/10 bg-white/50 dark:bg-ink-paper/50 shrink-0">
@@ -21,7 +21,7 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 overflow-y-auto w-full bg-[#FDFBF7] dark:bg-ink-darker flex flex-col">
+      <div class="flex-1 overflow-y-auto w-full bg-fable-light dark:bg-ink-darker flex flex-col">
         <!-- Mobile Header Bar inside Modal -->
         <div class="sm:hidden flex items-center justify-between p-4 border-b border-ink/5 dark:border-white/5 bg-white/50 dark:bg-ink-paper/50 shrink-0">
           <div>
@@ -42,6 +42,18 @@
               <p class="text-xs sm:text-sm text-ink-light dark:text-white/60 font-sans">Gerencie suas informações pessoais e credenciais.</p>
             </div>
 
+            <% if notice %>
+              <div class="bg-sage/10 text-sage-dark p-4 rounded-xl text-sm mb-6 text-center font-medium animate-fade-in-up">
+                <%= notice %>
+              </div>
+            <% end %>
+
+            <% if alert %>
+              <div class="bg-rust/10 border border-rust/20 text-rust dark:text-rust p-4 rounded-xl text-sm mb-6 text-center font-medium animate-fade-in-up">
+                <%= alert %>
+              </div>
+            <% end %>
+
             <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true, class: "space-y-6 sm:space-y-8" }) do |f| %>
               <%= render "devise/shared/error_messages", resource: resource %>
 
@@ -51,7 +63,7 @@
                 
                 <div class="flex flex-col sm:flex-row gap-6 sm:gap-8 items-center sm:items-start mb-6 pb-6 border-b border-ink/5 dark:border-white/5">
                   <div class="flex flex-col items-center gap-2 sm:gap-3">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 overflow-hidden flex items-center justify-center text-3xl sm:text-4xl text-ink/20 dark:text-white/20 font-serif relative group cursor-pointer" data-controller="image-preview">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 overflow-hidden flex items-center justify-center text-3xl sm:text-4xl text-ink/20 dark:text-white/20 font-serif relative group cursor-pointer" data-controller="image-preview">
                       <% if resource.avatar.attached? %>
                         <%= image_tag resource.avatar, class: "w-full h-full object-cover", data: { image_preview_target: "preview" } %>
                       <% else %>
@@ -69,27 +81,27 @@
                   <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                     <div class="col-span-1">
                       <%= f.label :first_name, "Nome", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                      <%= f.text_field :first_name, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
+                      <%= f.text_field :first_name, class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
                     </div>
                     <div class="col-span-1">
                       <%= f.label :last_name, "Sobrenome", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                      <%= f.text_field :last_name, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
+                      <%= f.text_field :last_name, class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
                     </div>
                     <div class="col-span-1 sm:col-span-2">
                       <%= f.label :job_title, "Cargo / Função", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                      <%= f.text_field :job_title, placeholder: "Ex: Desenvolvedor Full Stack, Tech Lead, Product Manager", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
+                      <%= f.text_field :job_title, placeholder: "Ex: Desenvolvedor Full Stack, Tech Lead, Product Manager", class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
                     </div>
                   </div>
                 </div>
 
                 <div class="mb-4 sm:mb-6">
                   <%= f.label :bio, "Biografia", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                  <%= f.text_area :bio, rows: 3, placeholder: "Escreva um resumo sobre sua atuação profissional...", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
+                  <%= f.text_area :bio, rows: 3, placeholder: "Escreva um resumo sobre sua atuação profissional...", class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
                 </div>
 
                 <div>
                   <%= f.label :email, "Endereço de E-mail", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                  <%= f.email_field :email, class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
+                  <%= f.email_field :email, class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow placeholder:text-ink/30 dark:placeholder:text-white/30 duration-500" %>
                 </div>
               </div>
 
@@ -101,18 +113,18 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div class="col-span-1">
                     <%= f.label :password, "Nova Senha", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Deixe em branco para manter", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
+                    <%= f.password_field :password, autocomplete: "new-password", placeholder: "Deixe em branco para manter", class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
                   </div>
                   <div class="col-span-1">
                     <%= f.label :password_confirmation, "Confirmar Nova Senha", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repita a nova senha", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
+                    <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Repita a nova senha", class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
                   </div>
                 </div>
 
                 <div class="mt-4 pt-4 border-t border-ink/5 dark:border-white/5">
                   <div class="max-w-md">
                     <%= f.label :current_password, "Senha Atual", class: "block text-xs font-medium text-ink-light dark:text-white/60 mb-1.5" %>
-                    <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Obrigatória apenas ao trocar senha ou e-mail", class: "w-full px-3 py-2 bg-[#FDFBF7] dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
+                    <%= f.password_field :current_password, autocomplete: "current-password", placeholder: "Obrigatória apenas ao trocar senha ou e-mail", class: "w-full px-3 py-2 bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 rounded-lg text-sm text-ink dark:text-fable focus:outline-none focus:border-terracotta dark:focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-shadow duration-500" %>
                     <p class="text-[10px] text-ink-light/60 dark:text-white/40 mt-1">Não é necessária para alterações de nome, cargo, bio ou foto de perfil.</p>
                   </div>
                 </div>
@@ -125,12 +137,12 @@
             <% end %>
 
             <!-- Danger Zone / Delete Account Section (Separate standalone form) -->
-            <div class="bg-red-50/50 dark:bg-red-950/20 rounded-2xl border border-red-200/60 dark:border-red-900/40 p-4 sm:p-6 mt-8">
-              <h3 class="text-xs sm:text-sm font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider mb-2">Zona de Perigo</h3>
+            <div class="bg-rust/50 dark:bg-rust/20 rounded-2xl border border-rust/60 dark:border-rust/40 p-4 sm:p-6 mt-8">
+              <h3 class="text-xs sm:text-sm font-semibold text-rust dark:text-rust uppercase tracking-wider mb-2">Zona de Perigo</h3>
               <p class="text-xs text-ink-light dark:text-white/60 mb-4">Ao excluir sua conta, todos os seus workspaces, projetos, tarefas e documentos associados serão permanentemente removidos. Esta ação é irreversível.</p>
               
               <div class="flex justify-end">
-                <%= button_to registration_path(resource_name), method: :delete, data: { turbo_confirm: "Tem certeza absoluta que deseja excluir sua conta permanentemente? Todos os seus dados serão apagados.", turbo: false }, class: "px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-medium rounded-lg transition-colors cursor-pointer duration-300" do %>
+                <%= button_to registration_path(resource_name), method: :delete, data: { turbo_confirm: "Tem certeza absoluta que deseja excluir sua conta permanentemente? Todos os seus dados serão apagados.", turbo: false }, class: "px-4 py-2 bg-rust hover:bg-rust text-white text-xs font-medium rounded-lg transition-colors cursor-pointer duration-300" do %>
                   Excluir Conta Permanentemente
                 <% end %>
               </div>

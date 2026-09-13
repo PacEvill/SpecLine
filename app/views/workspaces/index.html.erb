@@ -1,5 +1,5 @@
 <!-- Top Header Bar -->
-<header class="h-16 border-b border-ink/5 dark:border-white/5 flex items-center justify-between px-4 sm:px-8 bg-[#FDFBF7]/80 dark:bg-ink-darker/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
+<header class="h-16 border-b border-ink/5 dark:border-white/5 flex items-center justify-between px-4 sm:px-8 bg-fable-light/80 dark:bg-ink-darker/80 backdrop-blur-md sticky top-0 z-10 shrink-0">
   <div class="flex items-center gap-3">
     <div class="w-8 h-8 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center text-ink dark:text-fable">
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
@@ -13,8 +13,8 @@
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light dark:text-white/60"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       <input type="text" placeholder="Busca rápida..." class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-full py-1.5 pl-9 pr-14 text-xs focus:outline-none focus:ring-1 focus:ring-terracotta focus:border-terracotta dark:focus:border-terracotta text-ink dark:text-fable w-64 transition-all shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)] placeholder:text-ink-light/60 dark:placeholder:text-white/60 duration-500">
       <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0.5">
-        <kbd class="font-sans text-[9px] bg-[#FDFBF7] dark:bg-ink-darker text-ink-light dark:text-white/60 px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">⌘</kbd>
-        <kbd class="font-sans text-[9px] bg-[#FDFBF7] dark:bg-ink-darker text-ink-light dark:text-white/60 px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">K</kbd>
+        <kbd class="font-sans text-[9px] bg-fable-light dark:bg-ink-darker text-ink-light dark:text-white/60 px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">⌘</kbd>
+        <kbd class="font-sans text-[9px] bg-fable-light dark:bg-ink-darker text-ink-light dark:text-white/60 px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10 shadow-sm dark:shadow-[0_1px_2px_rgba(0,0,0,0.5)]">K</kbd>
       </div>
     </div>
     
@@ -46,7 +46,7 @@
       </p>
     </div>
     
-    <%= link_to new_workspace_path, class: "inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors shrink-0 duration-500" do %>
+    <%= link_to new_workspace_path, class: "inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-terracotta rounded-lg hover:bg-terracotta-dark transition-colors shrink-0 duration-500" do %>
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
       Novo Workspace
     <% end %>
@@ -57,7 +57,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-12 animate-fade-in-up-delay-1">
       <!-- Stat 1 -->
       <div class="bg-white dark:bg-ink-paper rounded-2xl p-5 border border-ink/5 dark:border-white/5 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-ink/10 transition-all duration-300 flex items-center gap-4 group">
-        <div class="w-12 h-12 rounded-xl bg-[#FDFBF7] dark:bg-ink-darker border border-ink/5 dark:border-white/5 text-ink dark:text-fable flex items-center justify-center shrink-0 group-hover:bg-terracotta/5 group-hover:text-terracotta transition-colors duration-500">
+        <div class="w-12 h-12 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/5 dark:border-white/5 text-ink dark:text-fable flex items-center justify-center shrink-0 group-hover:bg-terracotta/5 group-hover:text-terracotta transition-colors duration-500">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
         </div>
         <div>
@@ -68,7 +68,7 @@
 
       <!-- Stat 2 -->
       <div class="bg-white dark:bg-ink-paper rounded-2xl p-5 border border-ink/5 dark:border-white/5 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)] hover:shadow-md hover:border-ink/10 transition-all duration-300 flex items-center gap-4 group">
-        <div class="w-12 h-12 rounded-xl bg-blue-50 border border-blue-100/50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors duration-500">
+        <div class="w-12 h-12 rounded-xl bg-slate/10 border border-slate/50 text-slate flex items-center justify-center shrink-0 group-hover:bg-slate transition-colors duration-500">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
         <div>
@@ -137,12 +137,12 @@
                   </summary>
                   
                   <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.12)] py-1.5 z-50">
-                    <%= link_to edit_workspace_path(workspace), class: "flex items-center gap-2.5 px-3 py-2 text-sm text-ink dark:text-fable hover:bg-[#FDFBF7] dark:hover:bg-white/5 transition-colors duration-500" do %>
+                    <%= link_to edit_workspace_path(workspace), class: "flex items-center gap-2.5 px-3 py-2 text-sm text-ink dark:text-fable hover:bg-fable-light dark:hover:bg-white/5 transition-colors duration-500" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                       Configurações
                     <% end %>
                     <div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div>
-                    <%= button_to workspace_path(workspace), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir '#{workspace.name}'? Isso apagará todos os projetos vinculados." } }, class: "w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors text-left duration-500 cursor-pointer" do %>
+                    <%= button_to workspace_path(workspace), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir '#{workspace.name}'? Isso apagará todos os projetos vinculados." } }, class: "w-full flex items-center gap-2.5 px-3 py-2 text-sm text-rust hover:bg-rust/10 transition-colors text-left duration-500 cursor-pointer" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                       Excluir
                     <% end %>
@@ -159,7 +159,7 @@
                 <% end %>
                 
                 <div class="flex flex-wrap items-center gap-2 mb-6 mt-auto">
-                  <div class="bg-[#FDFBF7] dark:bg-ink-darker px-2 py-1 rounded-md text-[10px] font-semibold text-ink-light dark:text-white/60 border border-ink/5 dark:border-white/5 uppercase tracking-wide">
+                  <div class="bg-fable-light dark:bg-ink-darker px-2 py-1 rounded-md text-[10px] font-semibold text-ink-light dark:text-white/60 border border-ink/5 dark:border-white/5 uppercase tracking-wide">
                     <%= workspace.projects.count %> Projetos
                   </div>
                   <div class="bg-sage/10 px-2 py-1 rounded-md text-[10px] font-semibold text-sage-dark uppercase tracking-wide">
@@ -212,7 +212,7 @@
               
               <div class="flex items-center gap-6 shrink-0 relative z-20">
                 <div class="hidden sm:flex items-center gap-3 pointer-events-none">
-                  <div class="bg-[#FDFBF7] dark:bg-ink-darker px-2.5 py-1 rounded-md text-[10px] font-semibold text-ink-light dark:text-white/60 border border-ink/5 dark:border-white/5 uppercase tracking-wide">
+                  <div class="bg-fable-light dark:bg-ink-darker px-2.5 py-1 rounded-md text-[10px] font-semibold text-ink-light dark:text-white/60 border border-ink/5 dark:border-white/5 uppercase tracking-wide">
                     <%= workspace.projects.count %> Projetos
                   </div>
                   <div class="bg-sage/10 px-2.5 py-1 rounded-md text-[10px] font-semibold text-sage-dark uppercase tracking-wide">
@@ -226,12 +226,12 @@
                   </summary>
                   
                   <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow-[0_8px_30px_-4px_rgba(0,0,0,0.12)] py-1.5 z-50">
-                    <%= link_to edit_workspace_path(workspace), class: "flex items-center gap-2.5 px-3 py-2 text-sm text-ink dark:text-fable hover:bg-[#FDFBF7] dark:hover:bg-white/5 transition-colors duration-500" do %>
+                    <%= link_to edit_workspace_path(workspace), class: "flex items-center gap-2.5 px-3 py-2 text-sm text-ink dark:text-fable hover:bg-fable-light dark:hover:bg-white/5 transition-colors duration-500" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
                       Configurações
                     <% end %>
                     <div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div>
-                    <%= button_to workspace_path(workspace), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir '#{workspace.name}'? Isso apagará todos os projetos vinculados." } }, class: "w-full flex items-center gap-2.5 px-3 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors text-left duration-500 cursor-pointer" do %>
+                    <%= button_to workspace_path(workspace), method: :delete, form: { data: { turbo_confirm: "Tem certeza que deseja excluir '#{workspace.name}'? Isso apagará todos os projetos vinculados." } }, class: "w-full flex items-center gap-2.5 px-3 py-2 text-sm text-rust hover:bg-rust/10 transition-colors text-left duration-500 cursor-pointer" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                       Excluir
                     <% end %>

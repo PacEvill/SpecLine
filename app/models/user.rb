@@ -27,8 +27,32 @@ class User < ApplicationRecord
   public
 
   def full_name
-    return email.split("@").first.capitalize if first_name.blank? && last_name.blank?
-    [ first_name, last_name ].compact.join(" ").strip
+    if first_name.present? || last_name.present?
+      [ first_name, last_name ].compact_blank.join(" ").strip
+    elsif email.present?
+      email.split("@").first.to_s.capitalize
+    else
+      ""
+    end
+  end
+
+  def name
+    if first_name.present? || last_name.present?
+      [ first_name, last_name ].compact_blank.join(" ").strip
+    else
+      ""
+    end
+  end
+
+  def name=(value)
+    if value.blank?
+      self.first_name = nil
+      self.last_name = nil
+      return
+    end
+    parts = value.to_s.strip.split(/\s+/, 2)
+    self.first_name = parts[0]
+    self.last_name = parts[1]
   end
 
   def self.from_omniauth(auth)

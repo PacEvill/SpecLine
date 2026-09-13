@@ -62,14 +62,17 @@ Rails.application.routes.draw do
   get "changelog", to: "changelog#index"
 
   # Features Pages
+  get "features", to: "features#index"
   get "features/docs", to: "features#docs"
   get "features/kanban", to: "features#kanban"
   get "features/chat", to: "features#chat"
   get "features/whiteboard", to: "features#whiteboard"
 
   # Philosophy & Solutions Pages
+  get "philosophy", to: "philosophy#index"
   get "philosophy/vision", to: "philosophy#vision"
   get "philosophy/focus", to: "philosophy#focus"
+  get "solutions", to: "solutions#index"
   get "solutions/startups", to: "solutions#startups"
   get "solutions/agencies", to: "solutions#agencies"
   get "solutions/product", to: "solutions#product"

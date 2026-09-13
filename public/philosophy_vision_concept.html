@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filosofia — Nossa Visão | SpecLine (Concept Interativo)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+  </script>
+
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(217, 122, 94, 0.2);
+    }
+    .scrollbar-subtle::-webkit-scrollbar {
+      height: 5px;
+      width: 5px;
+    }
+    .scrollbar-subtle::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.35);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="flex items-center justify-between border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase h-16 relative z-10 bg-fable-light dark:bg-[#18181A] px-6">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden lg:flex items-center justify-center gap-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Início</a>
+      <a href="/features/docs" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Documentos</a>
+      <a href="/features/kanban" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Tarefas</a>
+      <a href="/features/chat" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Comunicação</a>
+      <a href="/features/whiteboard" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Quadros</a>
+      <a href="/solutions" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Soluções</a>
+      
+      <!-- Philosophy Dropdown Menu -->
+      <div class="relative group py-4">
+        <button class="text-ink dark:text-white font-bold border-b-2 border-terracotta flex items-center gap-1.5 focus:outline-none">
+          <span>Filosofia</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="transition-transform group-hover:rotate-180"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="absolute top-full left-1/2 -translate-x-1/2 pt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 w-60">
+          <div class="bg-white dark:bg-ink-paper rounded-xl shadow-2xl border border-ink/10 dark:border-white/10 p-1.5 flex flex-col gap-1 text-left">
+            <a href="/philosophy_vision_concept.html" class="p-2.5 rounded-lg bg-terracotta/10 text-terracotta font-bold flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <span>Nossa Visão (Manifesto)</span>
+            </a>
+            <a href="/philosophy_focus_concept.html" class="p-2.5 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-ink/80 dark:text-white/80 transition-colors flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+              <span>O Poder do Foco</span>
+            </a>
+            <div class="border-t border-ink/10 dark:border-white/10 my-1"></div>
+            <a href="/philosophy_concept.html" class="p-2 rounded-lg text-terracotta hover:bg-terracotta/10 text-xs font-semibold flex items-center justify-between">
+              <span>Ver Central de Filosofia</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Preços</a>
+    </div>
+
+    <div class="flex items-center justify-end gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED PHILOSOPHY SUB-NAV BAR (SWITCH CONCEPTS DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-terracotta">Aba Filosofia:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/philosophy_vision_concept.html" class="px-3.5 py-1.5 rounded-lg bg-terracotta text-white font-bold flex items-center gap-2 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>1. Nossa Visão (Ativo)</span>
+        </a>
+        <a href="/philosophy_focus_concept.html" class="px-3.5 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-sage hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-2 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+          <span>2. O Poder do Foco</span>
+        </a>
+      </div>
+      <a href="/philosophy_concept.html" class="inline-flex items-center gap-1.5 text-terracotta hover:underline font-bold text-[11px] transition-colors">
+        <span>Ver Central de Filosofia</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <header class="py-20 md:py-28 px-6 text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-terracotta/5 via-transparent to-transparent -z-10"></div>
+    <div class="max-w-4xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta text-xs font-mono uppercase tracking-widest mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        <span>Manifesto de Produto & Arquitetura</span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight text-ink dark:text-white leading-[1.08] mb-8">
+        O fim da Era do <br class="hidden sm:inline"><span class="italic font-serif-italic text-terracotta">Malabarismo Digital</span>.
+      </h1>
+      <p class="text-lg sm:text-xl font-serif text-ink/70 dark:text-white/70 max-w-2xl mx-auto leading-relaxed mb-10">
+        Construímos o SpecLine porque acreditamos que o excesso de ferramentas se tornou o maior obstáculo para a criação real de software.
+      </p>
+
+      <!-- Key Value Badges -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-terracotta"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Zero Imposto Cognitivo
+        </span>
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-sage"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Sincronização Nativa
+        </span>
+        <span class="px-3.5 py-1.5 rounded-lg bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 text-ink/80 dark:text-white/80 flex items-center gap-1.5">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-ochre"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          Execução Focada
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN EDITORIAL CONTENT & INTERACTIVE LAB -->
+  <main class="max-w-6xl mx-auto px-6 pb-28 space-y-24">
+
+    <!-- INTERACTIVE LAB 1: O LABIRINTO DE ABAS VS. A TRINDADE UNIFICADA -->
+    <section class="bg-white dark:bg-ink-paper rounded-3xl border border-ink/10 dark:border-white/10 p-6 sm:p-10 shadow-xl relative overflow-hidden">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-ink/10 dark:border-white/10">
+        <div>
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-terracotta mb-2 font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            <span>Simulador Interativo de Atrito</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-serif text-ink dark:text-white font-medium">
+            O Labirinto de Abas vs. O Fluxo SpecLine
+          </h2>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 mt-1 max-w-xl">
+            Compare o ciclo de aprovar uma especificação no modelo fragmentado tradicional contra a trindade unificada do SpecLine.
+          </p>
+        </div>
+
+        <!-- Mode Switcher -->
+        <div class="inline-flex p-1 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-xs font-mono self-start md:self-auto">
+          <button id="btn-mode-chaotic" onclick="setFrictionMode('chaotic')" class="px-4 py-2 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 font-bold border border-red-500/20 transition-all flex items-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" x2="9" y1="9" y2="15"/><line x1="9" x2="15" y1="9" y2="15"/></svg>
+            <span>Modo Fragmentado</span>
+          </button>
+          <button id="btn-mode-specline" onclick="setFrictionMode('specline')" class="px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Modo SpecLine</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- WORKBENCH SCREEN SIMULATION -->
+      <div class="mt-8">
+        
+        <!-- CHAOTIC FRAGMENTED VIEW -->
+        <div id="view-chaotic" class="space-y-6">
+          <div class="p-4 rounded-xl bg-red-500/5 border border-red-500/20 text-xs font-mono text-red-700 dark:text-red-400 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+              <span>Ambiente: 4 navegadores abertos, 16 abas concorrentes, 3 apps desconectados.</span>
+            </div>
+            <span class="font-bold">Atrito Cognitivo: Extremo</span>
+          </div>
+
+          <!-- Fake OS Tabs Bar -->
+          <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-mono">
+            <div class="px-3 py-1.5 rounded-t-lg bg-ink/10 dark:bg-white/10 text-ink dark:text-white border-b-2 border-red-500 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>Doc v3_final_rev2.docx</span>
+            </div>
+            <div class="px-3 py-1.5 rounded-t-lg bg-ink/5 dark:bg-white/5 text-ink/60 dark:text-white/60 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" x2="9" y1="3" y2="21"/></svg>
+              <span>Gerenciador de Tarefas #402</span>
+            </div>
+            <div class="px-3 py-1.5 rounded-t-lg bg-ink/5 dark:bg-white/5 text-ink/60 dark:text-white/60 flex items-center gap-2 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Canal #projeto-auth (48 não lidas)</span>
+            </div>
+            <div class="px-3 py-1.5 rounded-t-lg bg-ink/5 dark:bg-white/5 text-ink/60 dark:text-white/60 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+              <span>Diagrama_arquitetura.png</span>
+            </div>
+          </div>
+
+          <!-- Fragmented Flow Interactive Simulation Area -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 space-y-3">
+              <div class="text-[11px] font-mono text-ink/50 dark:text-white/40 uppercase tracking-wider">Passo 1: Documentação</div>
+              <div class="font-serif font-medium text-ink dark:text-white">Requisito em App de Notas</div>
+              <p class="text-xs text-ink/70 dark:text-white/70">
+                O autor atualizou a regra de autenticação multifator no texto, mas esqueceu de notificar o time de engenharia.
+              </p>
+              <div class="p-2 rounded bg-amber-500/10 text-amber-700 dark:text-amber-300 text-[11px] font-mono">
+                Status: Desatualizado em relação ao código
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 space-y-3">
+              <div class="text-[11px] font-mono text-ink/50 dark:text-white/40 uppercase tracking-wider">Passo 2: Gestão de Tarefas</div>
+              <div class="font-serif font-medium text-ink dark:text-white">Ticket Isolado sem Contexto</div>
+              <p class="text-xs text-ink/70 dark:text-white/70">
+                O ticket diz apenas "Implementar 2FA". O link anexado aponta para uma versão antiga da documentação.
+              </p>
+              <div class="p-2 rounded bg-red-500/10 text-red-600 dark:text-red-400 text-[11px] font-mono">
+                Erro: Link quebrado ou permissão negada
+              </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 space-y-3">
+              <div class="text-[11px] font-mono text-ink/50 dark:text-white/40 uppercase tracking-wider">Passo 3: Comunicação</div>
+              <div class="font-serif font-medium text-ink dark:text-white">Debate Perdido no Chat</div>
+              <p class="text-xs text-ink/70 dark:text-white/70">
+                A dúvida técnica foi discutida numa thread com 60 mensagens. A decisão não foi documentada no ticket.
+              </p>
+              <div class="p-2 rounded bg-red-500/10 text-red-600 dark:text-red-400 text-[11px] font-mono">
+                Decisão esquecida no histórico
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Action to test the pain -->
+          <div class="p-6 rounded-2xl bg-ink/5 dark:bg-white/5 border border-ink/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+              <div class="font-serif font-medium text-ink dark:text-white text-base">Simular Alinhamento Tradicional</div>
+              <div class="text-xs text-ink/60 dark:text-white/60">Tente sincronizar a equipe entre 3 ferramentas isoladas</div>
+            </div>
+            <button onclick="simulateChaoticRun()" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-white text-white dark:text-ink font-mono text-xs uppercase tracking-wider hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white transition-all shadow-md active:scale-95 cursor-pointer">
+              Executar Tentativa de Sincronia
+            </button>
+          </div>
+
+          <div id="chaotic-result" class="hidden p-5 rounded-2xl bg-red-500/10 border border-red-500/20 text-xs font-mono space-y-2">
+            <div class="text-red-600 dark:text-red-400 font-bold flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+              <span>Resultado da Tentativa: Falha por Desalinhamento</span>
+            </div>
+            <div class="text-ink/80 dark:text-white/80">
+              • 4 trocas de janelas registradas.<br>
+              • 1 desenvolvedor construiu com requisitos de 2 semanas atrás.<br>
+              • Tempo consumido em reuniões de esclarecimento: 45 minutos.<br>
+              • Conclusão: Retrabalho inevitável no próximo deploy.
+            </div>
+          </div>
+        </div>
+
+        <!-- SPECLINE UNIFIED TRINITY VIEW -->
+        <div id="view-specline" class="hidden space-y-6">
+          <div class="p-4 rounded-xl bg-sage/10 border border-sage/20 text-xs font-mono text-sage-dark dark:text-sage flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Ambiente: Tela única integrada. Documento, tarefa viva e debate no mesmo contexto.</span>
+            </div>
+            <span class="font-bold">Atrito Cognitivo: Zero</span>
+          </div>
+
+          <!-- The SpecLine Live Trinity Card -->
+          <div class="p-6 rounded-2xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 space-y-6">
+            <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4">
+              <div class="flex items-center gap-2.5 text-xs font-mono">
+                <span class="px-2.5 py-1 rounded bg-terracotta/10 text-terracotta font-bold">SPEC-084</span>
+                <span class="text-ink dark:text-white font-medium">Fluxo de Autenticação Segura</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-mono">
+                <span id="spec-status-badge" class="px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                  Revisão Pendente
+                </span>
+              </div>
+            </div>
+
+            <!-- Content Area: Text + Live Linked Task + Inline Discussion -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              <!-- Document Block (2 cols) -->
+              <div class="lg:col-span-2 space-y-4 font-serif">
+                <h3 class="text-xl font-medium text-ink dark:text-white">1. Requisitos do Fator Duplo</h3>
+                <p class="text-sm text-ink/80 dark:text-white/80 leading-relaxed">
+                  O usuário deve receber um código de 6 dígitos via aplicativo autenticador com expiração a cada 30 segundos. Em caso de falha de conexão, uma chave de contingência pré-assinada poderá ser validada.
+                </p>
+
+                <!-- Embedded Interactive Kanban Ticket inside the Document -->
+                <div class="p-4 rounded-xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 flex items-center justify-between gap-4 font-sans text-xs">
+                  <div class="flex items-center gap-3">
+                    <div class="w-2.5 h-2.5 rounded-full bg-terracotta"></div>
+                    <div>
+                      <div class="font-semibold text-ink dark:text-white">Implementação do backend OTP</div>
+                      <div class="text-ink/50 dark:text-white/50 text-[11px]">Responsável: @lucas.eng · Estimativa: 4h</div>
+                    </div>
+                  </div>
+                  <span id="embedded-ticket-state" class="font-mono text-[11px] px-2.5 py-1 rounded bg-ink/5 dark:bg-white/5 text-ink/70 dark:text-white/70">
+                    Aguardando Spec
+                  </span>
+                </div>
+              </div>
+
+              <!-- Contextual Chat Thread (1 col) -->
+              <div class="p-4 rounded-xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-3 font-sans text-xs">
+                <div class="text-[11px] font-mono text-ink/50 dark:text-white/40 uppercase tracking-wider flex items-center justify-between">
+                  <span>Debate no Parágrafo #1</span>
+                  <span class="text-terracotta">2 msgs</span>
+                </div>
+                <div class="space-y-2">
+                  <div class="p-2.5 rounded-lg bg-fable-light dark:bg-ink-darker text-ink/80 dark:text-white/80">
+                    <strong class="text-ink dark:text-white font-semibold">Lucas:</strong> Validamos a biblioteca criptográfica no servidor?
+                  </div>
+                  <div class="p-2.5 rounded-lg bg-terracotta/5 border border-terracotta/10 text-ink/80 dark:text-white/80">
+                    <strong class="text-terracotta font-semibold">Mariana:</strong> Sim, aprovada em conformidade SOC2.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Single Click Action -->
+            <div class="pt-4 border-t border-ink/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="text-xs font-mono text-ink/60 dark:text-white/60">
+                Uma única ação sincroniza o documento, o Kanban e notifica o time.
+              </div>
+              <button onclick="approveSpecTrinity()" id="btn-approve-spec" class="px-5 py-2.5 rounded-xl bg-terracotta text-white font-mono text-xs uppercase tracking-wider hover:bg-terracotta/90 transition-all shadow-md active:scale-95 flex items-center gap-2 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Aprovar Spec e Iniciar Sprint</span>
+              </button>
+            </div>
+
+            <div id="specline-success-toast" class="hidden p-4 rounded-xl bg-sage/15 border border-sage/30 text-xs font-mono text-sage-dark dark:text-sage flex items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                <span>Especificação aprovada! Ticket movido para [Em Andamento] e histórico salvo na Wiki.</span>
+              </div>
+              <span class="font-bold">Tempo: 3 segundos · 0 trocas de aba</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EDITORIAL ESSAY: O MANIFESTO -->
+    <section class="max-w-3xl mx-auto space-y-12">
+      <div class="border-l-4 border-terracotta pl-6 py-2 my-8">
+        <blockquote class="text-2xl sm:text-3xl font-serif italic text-ink dark:text-white leading-snug">
+          "A complexidade das ferramentas de trabalho cresceu além da capacidade de gerenciá-las. A ferramenta ditou o processo, e o processo engoliu a criação."
+        </blockquote>
+      </div>
+
+      <div class="space-y-6 text-base sm:text-lg font-serif text-ink/80 dark:text-white/80 leading-relaxed">
+        <p>
+          Há uma crise silenciosa no trabalho do conhecimento. Especialistas de produto, engenharia e design passam mais tempo operando painéis de controle, copiando links entre chats e preenchendo campos redundantes do que exercendo o ofício criativo para o qual foram formados.
+        </p>
+        <p>
+          A indústria propagou o mito de que era necessário adotar uma ferramenta isolada para cada micro-etapa: um aplicativo para guardar notas, outro para mover cartões, outro para conversar em tempo real e mais um para diagramar. O resultado não foi a excelência, mas uma colcha de retalhos frágil e estressante.
+        </p>
+        <p>
+          O <strong>SpecLine</strong> nasceu de uma premissa fundamental: <strong>documentação de requisitos, execução de tarefas e conversas técnicas são manifestações inseparáveis da mesma entidade viva</strong>. Separar esses elementos em bancos de dados distintos é criar um abismo de descompasso.
+        </p>
+      </div>
+    </section>
+
+    <!-- CALCULADORA INTERATIVA: O IMPOSTO COGNITIVO DE FRAGMENTAÇÃO -->
+    <section class="bg-fable dark:bg-ink-paper/60 rounded-3xl border border-ink/10 dark:border-white/10 p-6 sm:p-10">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="text-center space-y-3">
+          <div class="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-terracotta font-bold">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Medição Empírica</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-serif text-ink dark:text-white font-medium">
+            Calculadora do Imposto Cognitivo
+          </h2>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 max-w-xl mx-auto">
+            Baseado na pesquisa de Gloria Mark (UC Irvine), cada interrupção e troca de contexto custa em média 23 minutos para restabelecer o foco profundo.
+          </p>
+        </div>
+
+        <!-- Interactive Sliders -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white dark:bg-ink-darker p-6 rounded-2xl border border-ink/10 dark:border-white/10">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/70 dark:text-white/70">Membros no Time de Produto:</span>
+              <span id="slider-team-label" class="font-bold text-terracotta text-sm">12 pessoas</span>
+            </div>
+            <input type="range" id="slider-team" min="2" max="60" value="12" oninput="updateTaxCalculator()" class="w-full accent-terracotta cursor-pointer">
+            <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+              <span>2</span>
+              <span>20</span>
+              <span>40</span>
+              <span>60+</span>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono">
+              <span class="text-ink/70 dark:text-white/70">Trocas de Ferramentas / Dia por Pessoa:</span>
+              <span id="slider-switches-label" class="font-bold text-terracotta text-sm">18 trocas</span>
+            </div>
+            <input type="range" id="slider-switches" min="4" max="40" value="18" oninput="updateTaxCalculator()" class="w-full accent-terracotta cursor-pointer">
+            <div class="flex justify-between text-[10px] font-mono text-ink/40 dark:text-white/40">
+              <span>4</span>
+              <span>15</span>
+              <span>30</span>
+              <span>40+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-5 rounded-2xl bg-white dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[11px] font-mono uppercase text-ink/50 dark:text-white/50">Tempo Diário Fragmentado</div>
+            <div id="stat-hours-lost" class="text-2xl sm:text-3xl font-serif text-terracotta font-semibold">3.2h / pessoa</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">perdidas em reajuste mental</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[11px] font-mono uppercase text-ink/50 dark:text-white/50">Horas de Flow Recuperadas</div>
+            <div id="stat-flow-saved" class="text-2xl sm:text-3xl font-serif text-sage font-semibold">+184h / mês</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">dedicadas ao código & design</div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-white dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-center space-y-1">
+            <div class="text-[11px] font-mono uppercase text-ink/50 dark:text-white/50">Retenção de Contexto</div>
+            <div id="stat-retention" class="text-2xl sm:text-3xl font-serif text-ochre font-semibold">98.4%</div>
+            <div class="text-[10px] text-ink/60 dark:text-white/60">com uma única fonte da verdade</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OS 3 PILARES INEFINÍVEIS DO SPECLINE -->
+    <section class="space-y-8">
+      <div class="text-center max-w-2xl mx-auto space-y-3">
+        <div class="text-xs font-mono uppercase tracking-widest text-terracotta font-bold">Fundamentos Arquiteturais</div>
+        <h2 class="text-3xl sm:text-4xl font-serif text-ink dark:text-white font-medium">Os Três Pilares da Nossa Promessa</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">1. Design Calmo</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            Eliminamos pontos vermelhos artificiais, notificações alarmistas e contadores agressivos. O software fornece apenas o que você precisa, no momento exato em que você precisa.
+          </p>
+        </div>
+
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-sage/15 text-sage-dark dark:text-sage flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">2. Fonte Única da Verdade</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            O fim dos links copiados de um chat genérico para dentro de um ticket esquecido. Especificações, tarefas e debates técnicos coabitam a mesma entidade de software.
+          </p>
+        </div>
+
+        <div class="hover-card-lift p-8 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-4">
+          <div class="w-12 h-12 rounded-2xl bg-ocean/15 text-ocean flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="text-xl font-serif font-medium text-ink dark:text-white">3. Reverência ao Fluxo</h3>
+          <p class="text-sm font-sans text-ink/70 dark:text-white/70 leading-relaxed">
+            Velocidade e leveza são requisitos inegociáveis. O software deve carregar instantaneamente, responder a comandos naturais e sair do caminho para você produzir.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE COMMUNITY SEAL / ASSINAR O MANIFESTO -->
+    <section class="bg-white dark:bg-ink-paper rounded-3xl border border-ink/10 dark:border-white/10 p-8 sm:p-12 shadow-lg">
+      <div class="max-w-2xl mx-auto text-center space-y-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono uppercase tracking-widest font-bold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Compromisso com o Foco</span>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-serif text-ink dark:text-white font-medium">
+          Apoie o Fim da Fragmentação
+        </h2>
+        <p class="text-sm font-sans text-ink/70 dark:text-white/70">
+          Gere seu selo de apoiador do manifesto por ferramentas com design calmo e respeito ao tempo do criador.
+        </p>
+
+        <!-- Signature input form -->
+        <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+          <input type="text" id="signer-role" placeholder="Seu papel (ex: Engenheiro, Tech Lead, Founder)" class="w-full sm:flex-1 px-4 py-3 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/10 dark:border-white/10 text-sm font-sans text-ink dark:text-white focus:outline-none focus:border-terracotta">
+          <button onclick="signManifesto()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-terracotta hover:bg-terracotta/90 text-white font-mono text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 whitespace-nowrap cursor-pointer">
+            Assinar Manifesto
+          </button>
+        </div>
+
+        <!-- Generated Seal Card -->
+        <div id="seal-container" class="hidden mt-6 p-6 rounded-2xl bg-fable-light dark:bg-ink-darker border border-terracotta/30 text-left space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-terracotta/10 text-terracotta flex items-center justify-center font-bold font-serif text-lg">
+                SL
+              </div>
+              <div>
+                <div class="font-serif font-semibold text-ink dark:text-white text-base">Selo de Apoiador do Manifesto</div>
+                <div id="seal-subtitle" class="text-xs font-mono text-ink/50 dark:text-white/50">Membro #4.182 · Tech Lead</div>
+              </div>
+            </div>
+            <div class="text-[10px] font-mono text-sage px-2.5 py-1 rounded bg-sage/10 border border-sage/20 font-bold">
+              VERIFICADO
+            </div>
+          </div>
+          <p class="text-xs text-ink/70 dark:text-white/70 italic font-serif">
+            "Comprometo-me a defender menos reuniões de status, zero notificações desnecessárias e ferramentas unificadas que respeitem a inteligência e o silêncio da equipe."
+          </p>
+          <div class="pt-2 border-t border-ink/10 dark:border-white/10 flex items-center justify-between text-[11px] font-mono text-ink/40 dark:text-white/40">
+            <span id="seal-hash">Hash: SL-MANIFESTO-9A2F8B</span>
+            <span>SpecLine Open Philosophy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION FOOTER CARDS -->
+    <div class="pt-12 border-t border-ink/10 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+        <span>Voltar ao Início</span>
+      </a>
+      <a href="/philosophy_focus_concept.html" class="px-5 py-2.5 rounded-xl bg-ink dark:bg-white text-white dark:text-ink font-bold hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white transition-all flex items-center gap-2 shadow-sm">
+        <span>Próximo: O Poder do Foco</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT FOR INTERACTIVE SIMULATORS -->
+  <script>
+    // 1. Friction Mode Switcher
+    function setFrictionMode(mode) {
+      const btnChaotic = document.getElementById('btn-mode-chaotic');
+      const btnSpecline = document.getElementById('btn-mode-specline');
+      const viewChaotic = document.getElementById('view-chaotic');
+      const viewSpecline = document.getElementById('view-specline');
+
+      if (mode === 'chaotic') {
+        btnChaotic.className = "px-4 py-2 rounded-lg bg-red-500/10 text-red-600 dark:text-red-400 font-bold border border-red-500/20 transition-all flex items-center gap-2 cursor-pointer";
+        btnSpecline.className = "px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer";
+        viewChaotic.classList.remove('hidden');
+        viewSpecline.classList.add('hidden');
+      } else {
+        btnSpecline.className = "px-4 py-2 rounded-lg bg-sage/20 text-sage-dark dark:text-sage font-bold border border-sage/30 transition-all flex items-center gap-2 cursor-pointer";
+        btnChaotic.className = "px-4 py-2 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-2 cursor-pointer";
+        viewSpecline.classList.remove('hidden');
+        viewChaotic.classList.add('hidden');
+      }
+    }
+
+    // 2. Chaotic Simulator Run
+    function simulateChaoticRun() {
+      const result = document.getElementById('chaotic-result');
+      result.classList.remove('hidden');
+    }
+
+    // 3. SpecLine Trinity Approval Action
+    function approveSpecTrinity() {
+      const badge = document.getElementById('spec-status-badge');
+      const ticket = document.getElementById('embedded-ticket-state');
+      const toast = document.getElementById('specline-success-toast');
+      const btn = document.getElementById('btn-approve-spec');
+
+      badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-sage"></span> Aprovado para Produção';
+      badge.className = 'px-2.5 py-1 rounded-full bg-sage/15 text-sage-dark dark:text-sage font-bold flex items-center gap-1.5';
+      
+      ticket.innerText = 'Em Andamento';
+      ticket.className = 'font-mono text-[11px] px-2.5 py-1 rounded bg-sage/15 text-sage-dark dark:text-sage font-bold';
+
+      toast.classList.remove('hidden');
+      btn.classList.add('opacity-50', 'pointer-events-none');
+      btn.innerText = 'Especificação em Execução';
+    }
+
+    // 4. Cognitive Tax Calculator
+    function updateTaxCalculator() {
+      const team = parseInt(document.getElementById('slider-team').value);
+      const switches = parseInt(document.getElementById('slider-switches').value);
+
+      document.getElementById('slider-team-label').innerText = `${team} pessoas`;
+      document.getElementById('slider-switches-label').innerText = `${switches} trocas`;
+
+      // Approximate cognitive interruption formula
+      const hoursLostPerPerson = ((switches * 10) / 60).toFixed(1);
+      const monthlyHoursSaved = Math.round(team * switches * 0.8 * 4.2);
+      const retention = Math.min(99.5, (90 + (switches * 0.25))).toFixed(1);
+
+      document.getElementById('stat-hours-lost').innerText = `${hoursLostPerPerson}h / pessoa`;
+      document.getElementById('stat-flow-saved').innerText = `+${monthlyHoursSaved}h / mês`;
+      document.getElementById('stat-retention').innerText = `${retention}%`;
+    }
+
+    // 5. Sign Manifesto
+    function signManifesto() {
+      const roleInput = document.getElementById('signer-role');
+      const role = roleInput.value.trim() || 'Criador de Tecnologia';
+      const container = document.getElementById('seal-container');
+      const subtitle = document.getElementById('seal-subtitle');
+      const hash = document.getElementById('seal-hash');
+
+      const randomId = Math.floor(4000 + Math.random() * 900);
+      const randomHex = Math.random().toString(16).substring(2, 8).toUpperCase();
+
+      subtitle.innerText = `Membro #${randomId} · ${role}`;
+      hash.innerText = `Hash: SL-MANIFESTO-${randomHex}`;
+      container.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

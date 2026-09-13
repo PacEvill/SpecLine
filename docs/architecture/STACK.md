@@ -19,7 +19,11 @@ Para garantir que o projeto seja desenvolvido em um sprint ágil (3 a 4 dias) po
 ## 2. Estilização, Design System e Frontend
 
 - **Tailwind CSS (v3.4.x):** Framework de CSS utilitário integrado via PostCSS e Autoprefixer, permitindo prototipação ágil e classes de componentes customizadas (`@layer components`).
-- **Design System Editorial / Fable:** Paleta de cores semântica personalizada (`fable`, `ink`, `terracotta`, `sage`) com tipografia moderna via Google Fonts (**Instrument Sans** para corpo de texto e **Newsreader** com serifa editorial para títulos).
+- **Design System Editorial / Fable:** Paleta de cores semântica estruturada:
+  - **Neutros de Fundo e Texto:** `fable` (bege quente/café com leite) e `ink` (grafite papel escuro).
+  - **Cores Complementares Principais:** **Laranja Terracota** (`terracotta`: `#D97A5E`) e **Verde Oliva** (`olive`: `#6B705C` / `sage`: `#A5B5A1`), compondo a identidade visual terrosa e acolhedora da plataforma.
+  - **Cores de Suporte e Semânticas:** **Vermelho** (`rust`: `#B54A4A` para erros, bugs e ações destrutivas), **Amarelo** (`ochre`: `#C1974A` para atenção, revisões e backlog) e **Azul** (`slate`: `#597485` para links, status em progresso e recursos técnicos).
+- **Tipografia:** Google Fonts modernas (**Instrument Sans / Inter** para corpo de texto e **Newsreader / Playfair** com serifa editorial para títulos e cabeçalhos).
 - **Lucide Icons / Heroicons:** Ícones vetoriais modernos em SVG inline, garantindo leveza e eliminando bibliotecas pesadas de fontes de ícones.
 
 ---

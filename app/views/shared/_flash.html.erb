@@ -1,0 +1,36 @@
+<% if flash.any? %>
+  <div id="flash-messages" class="fixed top-5 right-5 sm:right-8 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
+    <% flash.each do |type, message| %>
+      <% next if message.blank? %>
+      <% 
+        is_alert = (type.to_s == 'alert' || type.to_s == 'danger' || type.to_s == 'error')
+        is_warning = (type.to_s == 'warning')
+        
+        border_color = is_alert ? 'border-rust/30' : (is_warning ? 'border-ochre/30' : 'border-sage/40')
+        icon_bg = is_alert ? 'bg-rust/15 text-rust' : (is_warning ? 'bg-ochre/15 text-ochre' : 'bg-sage/15 text-sage')
+      %>
+      <div data-controller="flash" 
+           class="pointer-events-auto flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-ink-paper border <%= border_color %> shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.5)] transition-all duration-300 transform translate-y-0 opacity-100 animate-fade-in-up">
+        
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-8 h-8 rounded-xl <%= icon_bg %> flex items-center justify-center shrink-0">
+            <% if is_alert %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            <% elsif is_warning %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <% else %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <% end %>
+          </div>
+          <p class="text-xs sm:text-sm font-medium text-ink dark:text-fable leading-snug break-words">
+            <%= message %>
+          </p>
+        </div>
+
+        <button type="button" data-action="click->flash#dismiss" class="p-1 rounded-lg text-ink-light/50 dark:text-white/40 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 transition-colors shrink-0 cursor-pointer" aria-label="Fechar notificação">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+    <% end %>
+  </div>
+<% end %>

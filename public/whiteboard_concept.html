@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quadros & Diagramas — SpecLine (Sandbox Interativo Completo)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+            },
+            'pop-in': {
+              '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+            'cursor-drift': {
+              '0%, 100%': { transform: 'translate(0, 0)' },
+              '33%': { transform: 'translate(35px, 20px)' },
+              '66%': { transform: 'translate(-15px, 45px)' }
+            },
+            'data-flow': {
+              '0%': { strokeDashoffset: '24' },
+              '100%': { strokeDashoffset: '0' }
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+            'pop-in': 'pop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'cursor-drift': 'cursor-drift 7s ease-in-out infinite',
+            'data-flow': 'data-flow 1.2s linear infinite',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      if (window.renderMermaidDiagram) {
+        setTimeout(window.renderMermaidDiagram, 150);
+      }
+    }
+  </script>
+
+  <!-- Mermaid.js CDN for Live Code-to-Diagram Rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+
+  <style>
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 30px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(207, 160, 85, 0.2);
+      z-index: 20;
+    }
+    .canvas-dot-grid {
+      background-image: radial-gradient(#18181A 1.3px, transparent 1.3px);
+      background-size: 24px 24px;
+      opacity: 0.12;
+    }
+    .dark .canvas-dot-grid {
+      background-image: radial-gradient(#F8F5F0 1.3px, transparent 1.3px);
+      background-size: 24px 24px;
+      opacity: 0.10;
+    }
+    .scrollbar-subtle::-webkit-scrollbar {
+      height: 5px;
+      width: 5px;
+    }
+    .scrollbar-subtle::-webkit-scrollbar-thumb {
+      background: rgba(150, 150, 150, 0.35);
+      border-radius: 4px;
+    }
+    .mermaid svg, #mermaid-output svg {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      height: auto !important;
+      width: auto !important;
+      margin: auto;
+    }
+    .canvas-draggable-node {
+      user-select: none;
+      touch-action: none;
+    }
+    .canvas-draggable-node:active {
+      cursor: grabbing !important;
+    }
+    .node-selected-ring {
+      box-shadow: 0 0 0 3px #CFA055, 0 10px 25px -5px rgba(0,0,0,0.3) !important;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-ochre/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle for Prototype Review -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="grid grid-cols-12 border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase items-stretch h-16 relative z-10 bg-fable-light dark:bg-[#18181A]">
+    <div class="col-span-6 md:col-span-3 border-r border-ink/15 dark:border-white/10 flex items-center px-6 gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ochre group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden md:flex col-span-6 items-center justify-center gap-8 px-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-ochre hover:-translate-y-0.5 transition-all">Início</a>
+      <a href="/features/docs" class="text-ink/60 dark:text-white/60 hover:text-ochre hover:-translate-y-0.5 transition-all">Documentos</a>
+      <a href="/features/kanban" class="text-ink/60 dark:text-white/60 hover:text-ochre hover:-translate-y-0.5 transition-all">Tarefas</a>
+      <a href="/features/chat" class="text-ink/60 dark:text-white/60 hover:text-ochre hover:-translate-y-0.5 transition-all">Comunicação</a>
+      <a href="/features/whiteboard" class="text-ink dark:text-white font-bold border-b-2 border-ochre py-1">Quadros & Diagramas</a>
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-ochre hover:-translate-y-0.5 transition-all">Preços</a>
+    </div>
+
+    <div class="col-span-6 md:col-span-3 border-l border-ink/15 dark:border-white/10 flex items-center justify-end px-6 gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED FEATURES SUB-NAV BAR (SWITCH CONCEPTS DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-ochre">Aba Funcionalidades:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/docs_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-sage hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>1. Docs & Wiki</span>
+        </a>
+        <a href="/tasks_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-terracotta hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          <span>2. Tarefas</span>
+        </a>
+        <a href="/chat_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ocean hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>3. Chat</span>
+        </a>
+        <a href="/whiteboard_concept.html" class="px-3 py-1.5 rounded-lg bg-ochre text-ink font-bold flex items-center gap-1.5 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+          <span>4. Quadros (Ativo)</span>
+        </a>
+      </div>
+      <a href="/features_concept.html" class="inline-flex items-center gap-1.5 text-terracotta hover:underline font-bold text-[11px] transition-colors">
+        <span>Ver Central de Funcionalidades</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION: Editorial Brutalist Whiteboard Presentation -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Glow Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-ochre/15 dark:bg-ochre/10 blur-[130px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-ochre dark:text-ochre font-bold">
+        <span class="w-2 h-2 rounded-full bg-ochre inline-block"></span>
+        Canvas Infinito // Diagramas Como Código
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Pensamento visual.<br>
+        <i class="text-ochre font-serif-italic">Sem fronteiras nem apps isolados.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Pare de alternar entre aplicativos visuais externos e editores de texto. No SpecLine, você desenha arquiteturas à mão livre, move caixas com cabos dinâmicos ou compila diagramas Mermaid.js diretamente do código — tudo conectado às tarefas e aos documentos da sua equipe.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="pt-6 flex flex-wrap justify-center items-center gap-4">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Abrir Canvas Gratuito</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#workbench-showcase" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-ochre hover:text-ochre font-mono text-xs uppercase tracking-widest font-semibold transition-all">
+          Testar Simulador Interativo ↓
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- TELEMETRY BAROMETER (LIVE ENGINE METRICS) -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+      
+      <div class="flex items-center gap-4">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-ochre/15 text-ochre font-bold rounded">
+          <span class="w-1.5 h-1.5 rounded-full bg-ochre animate-pulse"></span>
+          ENGINE VETORIAL EM TEMPO REAL
+        </span>
+        <span class="text-ink-light dark:text-white/70">Cabos Dinâmicos Bezier + Mermaid v10</span>
+      </div>
+
+      <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+        <div class="flex items-center gap-2">
+          <span>Taxa de Quadros:</span>
+          <span class="text-sage font-bold">60 FPS Fluido</span>
+        </div>
+        <div class="hidden sm:flex items-center gap-2">
+          <span>Parsing Mermaid:</span>
+          <span class="text-sage font-bold">&lt;4ms</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>Multiplayer:</span>
+          <span class="text-ochre font-bold">2 Cursors Simulados</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INTERACTIVE WORKBENCH SHOWCASE (TRIPLE PERSPECTIVE: CANVAS LIVRE / MERMAID AS CODE / SPEC INTEGRADA) -->
+  <section id="workbench-showcase" class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-6 md:p-14 relative">
+    <div class="max-w-7xl mx-auto space-y-6">
+      
+      <!-- Controls Toolbar -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-ink/15 dark:border-white/10 pb-6">
+        <div>
+          <span class="font-mono text-xs text-ochre font-bold tracking-widest uppercase">Estúdio Visual Híbrido — Sandbox Operacional</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white mt-1">
+            Arraste os nós, conecte serviços e compile diagramas.
+          </h2>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- View Switcher Tabs -->
+          <div class="inline-flex border border-ink/20 dark:border-white/20 p-1 bg-fable-light dark:bg-[#18181A] rounded">
+            <button onclick="switchPerspective('canvas')" data-view="canvas" class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Canvas Livre & Nós</span>
+            </button>
+            <button onclick="switchPerspective('mermaid')" data-view="mermaid" class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <span>Diagramas Mermaid (Live)</span>
+            </button>
+            <button onclick="switchPerspective('embed')" data-view="embed" class="perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span>Incorporado no Documento</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSPECTIVE 1: CANVAS LIVRE COM DRAG & DROP E CABOS DINÂMICOS (DEFAULT) -->
+      <div id="view-canvas" class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl relative min-h-[660px] select-none flex flex-col justify-between">
+        
+        <!-- Whiteboard Studio Top Header Bar (Fiel ao App Real) -->
+        <div class="h-12 w-full bg-white/95 dark:bg-[#18181B]/95 backdrop-blur border-b border-ink/10 dark:border-white/10 px-4 flex items-center justify-between z-30 shrink-0 text-xs font-mono select-none">
+          
+          <!-- Left: Whiteboard Title & Status -->
+          <div class="flex items-center gap-3">
+            <div class="w-7 h-7 rounded-lg bg-ochre/15 text-ochre flex items-center justify-center shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-sans font-bold text-xs text-ink dark:text-white">Arquitetura Sync v2</span>
+              <span class="text-[9px] px-1.5 py-0.5 rounded bg-sage/20 text-sage font-bold uppercase">● Salvo</span>
+            </div>
+          </div>
+
+          <!-- Center: History Actions & Reset -->
+          <div class="hidden sm:flex items-center gap-1.5 text-ink-light/60 dark:text-white/60">
+            <button type="button" onclick="showToast('Ação desfeita')" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Desfazer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+            </button>
+            <button type="button" onclick="showToast('Ação refeita')" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Refazer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
+            </button>
+            <div class="w-px h-3.5 bg-ink/15 dark:bg-white/10 mx-1"></div>
+            <button type="button" onclick="resetCanvasElements()" class="px-2 py-1 text-[10px] hover:bg-ink/10 dark:hover:bg-white/10 rounded hover:text-ink dark:hover:text-white transition-colors cursor-pointer flex items-center gap-1" title="Restaurar posições originais">
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              <span>Resetar Nós</span>
+            </button>
+          </div>
+
+          <!-- Right: Grid Toggle, Zoom & Export -->
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="toggleCanvasGrid()" class="p-1.5 hover:bg-ink/10 dark:hover:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Alternar Grade">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </button>
+
+            <div class="flex items-center gap-1 bg-ink/5 dark:bg-white/5 px-2 py-1 rounded-lg">
+              <button onclick="adjustZoom(-0.15)" class="w-5 h-5 flex items-center justify-center hover:bg-ink/10 dark:hover:bg-white/10 rounded font-bold cursor-pointer">−</button>
+              <span id="canvas-zoom-indicator" class="w-10 text-center font-bold text-[10px]">100%</span>
+              <button onclick="adjustZoom(0.15)" class="w-5 h-5 flex items-center justify-center hover:bg-ink/10 dark:hover:bg-white/10 rounded font-bold cursor-pointer">+</button>
+            </div>
+
+            <button type="button" onclick="downloadCanvasAsSVG()" class="px-2.5 py-1 bg-ochre/15 hover:bg-ochre/25 text-ochre font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1 text-[11px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              <span>Exportar</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Canvas Dot Grid Background Layer -->
+        <div id="canvas-grid-layer" class="absolute inset-0 canvas-dot-grid pointer-events-none"></div>
+
+        <!-- Canvas Viewport / World Container with Transform Scaler -->
+        <div id="canvas-viewport" class="relative w-full h-[550px] overflow-hidden cursor-crosshair">
+          
+          <!-- Floating Tools Dock (Fiel ao Whiteboard do App) -->
+          <aside id="canvas-tools-dock" class="absolute left-4 top-4 z-30 bg-white/95 dark:bg-[#1A1A1E]/95 backdrop-blur-md border border-ink/10 dark:border-white/10 rounded-2xl shadow-xl p-1.5 flex flex-col gap-1 text-ink dark:text-white select-none">
+            
+            <!-- Select / Move -->
+            <button type="button" 
+                    id="tool-btn-select"
+                    onclick="showToast('Ferramenta Mover ativa')" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl bg-ochre text-ink font-bold shadow-sm transition-all cursor-pointer" 
+                    title="Mover / Selecionar">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="m3 3 7 18 3-7 7-3L3 3z"/></svg>
+            </button>
+
+            <!-- Rectangle / Service Box -->
+            <button type="button" 
+                    onclick="addNodeToCanvas('service')" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Adicionar Bloco de Serviço">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+            </button>
+
+            <!-- Post-it / Sticky Note -->
+            <button type="button" 
+                    onclick="addStickyNote()" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ochre hover:bg-ochre/15 transition-colors cursor-pointer" 
+                    title="Adicionar Post-it / Nota Adesiva">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15.5 3H5a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2V8.5L15.5 3Z"/><path d="M15 3v6h6"/></svg>
+            </button>
+
+            <!-- Arrow / Connector -->
+            <button type="button" 
+                    onclick="showToast('Conexão Inteligente: os cabos reativos se ajustam automaticamente!')" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Seta Conectora">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="10 5 19 5 19 14"/></svg>
+            </button>
+
+            <!-- Diamond / Decision -->
+            <button type="button" 
+                    onclick="addNodeToCanvas('decision')" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Adicionar Decisão / Losango">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 2 12l10 10 10-10L12 2z"/></svg>
+            </button>
+
+            <div class="w-full h-px bg-ink/10 dark:bg-white/10 my-0.5"></div>
+
+            <!-- Reset Canvas Positions -->
+            <button type="button" 
+                    onclick="resetCanvasElements()" 
+                    class="w-9 h-9 flex items-center justify-center rounded-xl text-ink/40 dark:text-white/40 hover:text-ink dark:hover:text-white hover:bg-ink/10 dark:hover:bg-white/10 transition-colors cursor-pointer" 
+                    title="Resetar Posições dos Nós">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            </button>
+
+          </aside>
+
+          <div id="canvas-world" class="absolute inset-0 w-full h-full origin-top-left transition-transform duration-75">
+
+            <!-- SVG DYNAMIC CABLES LAYER -->
+            <svg id="canvas-svg-layer" class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow-ochre" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#CFA055" />
+                </marker>
+                <marker id="arrow-ocean" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#4B6B78" />
+                </marker>
+                <marker id="arrow-terracotta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97A5E" />
+                </marker>
+              </defs>
+
+              <!-- Cable 1: Client -> Edge Proxy -->
+              <path id="cable-client-proxy" d="" fill="none" stroke="#CFA055" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-ochre)"/>
+              
+              <!-- Cable 2: Edge Proxy -> Rails Core -->
+              <path id="cable-proxy-rails" d="" fill="none" stroke="#4B6B78" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-ocean)"/>
+              
+              <!-- Cable 3: Rails Core -> Postgres Storage -->
+              <path id="cable-rails-postgres" d="" fill="none" stroke="#A5B5A1" stroke-width="2.5" stroke-dasharray="6,4"/>
+
+              <!-- Cable 4: Rails Core -> Solid Queue Worker -->
+              <path id="cable-rails-worker" d="" fill="none" stroke="#D97A5E" stroke-width="2.5" stroke-dasharray="6,4" class="animate-data-flow" marker-end="url(#arrow-terracotta)"/>
+            </svg>
+
+            <!-- NODE 1: Browser Client (Draggable) -->
+            <div id="node-client" 
+                 style="left: 60px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-44 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-ochre shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Web / Mobile Client" 
+                 data-desc="React SPA com sincronização em segundo plano e cache local SQLite WASM." 
+                 data-meta="RFC-089">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ochre font-bold pointer-events-none">
+                <span>CLIENTE</span>
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+              </div>
+              <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Web / Mobile App</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Cache Local LWW</div>
+            </div>
+
+            <!-- NODE 2: Edge Load Balancer (Draggable) -->
+            <div id="node-proxy" 
+                 style="left: 360px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-ocean shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Traefik Edge Proxy" 
+                 data-desc="Roteamento TLS, balanceamento e terminação de WebSockets com zero overhead." 
+                 data-meta="INFRA-GATEWAY">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ocean font-bold pointer-events-none">
+                <span>GATEWAY</span>
+                <span class="w-2 h-2 rounded-full bg-ocean animate-ping"></span>
+              </div>
+              <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Traefik Edge Proxy</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">HTTP/3 + WebSockets</div>
+            </div>
+
+            <!-- NODE 3: Rails 8 Core Backend (Draggable) -->
+            <div id="node-rails" 
+                 style="left: 690px; top: 110px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-terracotta shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Rails 8 Core Daemon" 
+                 data-desc="Monolito Ruby 3.3 com Solid Cable pub/sub em memória e persistência de eventos." 
+                 data-meta="CORE-API">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-terracotta font-bold pointer-events-none">
+                <span>BACKEND CORE</span>
+                <span class="text-[9px] bg-terracotta/20 text-terracotta px-1 rounded">v8.0</span>
+              </div>
+              <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Rails 8 Monolith</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Solid Cable Engine</div>
+            </div>
+
+            <!-- NODE 4: PostgreSQL Database (Draggable) -->
+            <div id="node-postgres" 
+                 style="left: 360px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-sage shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="PostgreSQL 16 Storage" 
+                 data-desc="Cluster de banco relacional com colunas JSONB indexadas para grafos e nós vetoriais." 
+                 data-meta="DB-CLUSTER">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-sage font-bold pointer-events-none">
+                <span>BANCO ACID</span>
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+              </div>
+              <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">PostgreSQL 16</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Armazenamento Vetorial</div>
+            </div>
+
+            <!-- NODE 5: Solid Queue Worker (Draggable) -->
+            <div id="node-worker" 
+                 style="left: 690px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border border-ink/20 dark:border-white/20 shadow-lg cursor-grab hover:shadow-2xl transition-shadow"
+                 data-title="Solid Queue Daemon" 
+                 data-desc="Filas de processamento assíncrono para exportar PDF, renderizar SVG e indexar busca." 
+                 data-meta="ASYNC-JOBS">
+              <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ink/60 dark:text-white/60 font-bold pointer-events-none">
+                <span>WORKER ASYNC</span>
+                <span class="text-ochre">SolidQueue</span>
+              </div>
+              <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Export Daemon</div>
+              <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Gera PNG & PDF</div>
+            </div>
+
+            <!-- STICKY NOTE: Architecture Annotation (Editable & Draggable) -->
+            <div id="node-sticky-1" 
+                 style="left: 70px; top: 330px;" 
+                 class="canvas-draggable-node absolute z-20 w-52 p-4 rounded bg-[#FFF7D1] text-[#634A00] dark:bg-[#E6C84F] dark:text-[#2A2300] shadow-xl rotate-[-2deg] font-sans text-xs border border-yellow-300 cursor-grab hover:rotate-0 transition-transform"
+                 data-title="Nota de Arquitetura" 
+                 data-desc="Post-it com anotação editável em tempo real." 
+                 data-meta="POST-IT">
+              <div class="flex justify-between items-center font-mono text-[9px] font-bold uppercase tracking-wider mb-1 opacity-70 pointer-events-none">
+                <span class="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+                  <span>Nota Editável (Clique p/ digitar)</span>
+                </span>
+              </div>
+              <p contenteditable="true" class="leading-snug font-medium outline-none focus:ring-1 focus:ring-yellow-500 rounded p-1 bg-yellow-200/40">
+                Arraste os nós pelo canvas e veja os cabos SVG se recalcularem dinamicamente!
+              </p>
+              <div class="mt-2 text-[9px] font-mono opacity-60 text-right pointer-events-none">— Você</div>
+            </div>
+
+            <!-- MULTIPLAYER CURSOR 1: Ana R. (Floating Animation) -->
+            <div class="absolute top-28 left-[45%] z-30 pointer-events-none animate-cursor-drift">
+              <svg class="w-5 h-5 text-terracotta drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+              </svg>
+              <div class="bg-terracotta text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md ml-3 -mt-1 inline-flex items-center gap-1">
+                <span>Ana R. (Tech Lead)</span>
+              </div>
+            </div>
+
+            <!-- MULTIPLAYER CURSOR 2: Carlos M. -->
+            <div class="absolute bottom-24 right-[25%] z-30 pointer-events-none" style="animation: cursor-drift 9s ease-in-out infinite reverse;">
+              <svg class="w-5 h-5 text-ocean drop-shadow-lg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+              </svg>
+              <div class="bg-ocean text-white font-mono text-[10px] font-bold px-2 py-0.5 rounded shadow-md ml-3 -mt-1 inline-flex items-center gap-1">
+                <span>Carlos M. (DevOps)</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Bottom Inspector Bar (Interactive Control of Selected Node) -->
+        <div class="border-t border-ink/10 dark:border-white/10 bg-white/90 dark:bg-[#18181B]/95 backdrop-blur px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 z-30 text-xs font-mono">
+          <div class="flex items-center gap-3 min-w-0">
+            <span class="text-ochre font-bold shrink-0">Elemento Ativo:</span>
+            <input id="inspector-node-title-input" 
+                   type="text" 
+                   value="Web / Mobile App" 
+                   oninput="onSelectedTitleChange(this.value)" 
+                   class="font-sans font-bold text-ink dark:text-white bg-ink/5 dark:bg-white/5 border border-ink/15 dark:border-white/15 rounded-lg px-2.5 py-1 text-xs outline-none focus:border-ochre max-w-[180px]">
+            
+            <div class="hidden md:flex items-center gap-1.5 ml-2">
+              <span class="text-[10px] text-ink-light/50 dark:text-white/40">Destaque:</span>
+              <button type="button" onclick="updateSelectedColor('#CFA055')" class="w-4 h-4 rounded-full bg-[#CFA055] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Ochre"></button>
+              <button type="button" onclick="updateSelectedColor('#4B6B78')" class="w-4 h-4 rounded-full bg-[#4B6B78] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Ocean"></button>
+              <button type="button" onclick="updateSelectedColor('#D97A5E')" class="w-4 h-4 rounded-full bg-[#D97A5E] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Terracotta"></button>
+              <button type="button" onclick="updateSelectedColor('#A5B5A1')" class="w-4 h-4 rounded-full bg-[#A5B5A1] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Sage"></button>
+              <button type="button" onclick="updateSelectedColor('#A855F7')" class="w-4 h-4 rounded-full bg-[#A855F7] border border-black/20 hover:scale-125 transition-transform cursor-pointer" title="Roxo"></button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0 text-[11px]">
+            <span id="inspector-node-meta" class="px-2 py-0.5 bg-ochre/15 text-ochre font-bold rounded">RFC-089</span>
+            <button onclick="deleteSelectedNode()" class="px-2.5 py-1 text-terracotta hover:bg-terracotta/10 border border-terracotta/20 rounded-lg transition-all cursor-pointer font-medium flex items-center gap-1" title="Exclui nó selecionado">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+              <span>Excluir</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- PERSPECTIVE 2: DIAGRAMAS COMO CÓDIGO (MERMAID.JS LIVE COMPILER & EXPORT) -->
+      <div id="view-mermaid" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl p-6 space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-ink/10 dark:border-white/10 pb-4 font-mono text-xs">
+          <div class="flex items-center gap-3">
+            <span class="px-2 py-0.5 bg-sage/20 text-sage font-bold rounded">MERMAID ENGINE v10 COMPILADOR ATIVO</span>
+            <span class="text-ink-light dark:text-white/70">Digite na esquerda e veja a compilação vetorial imediata à direita.</span>
+          </div>
+
+          <!-- Template Preset Switcher -->
+          <div class="flex items-center gap-2">
+            <span class="text-ink-light/60 dark:text-white/40">Exemplos:</span>
+            <button onclick="loadMermaidPreset('arch')" data-preset="arch" class="mermaid-preset-btn px-2.5 py-1 text-[10px] bg-ochre text-ink font-bold rounded shadow-sm transition-all cursor-pointer">
+              Arquitetura Sync
+            </button>
+            <button onclick="loadMermaidPreset('state')" data-preset="state" class="mermaid-preset-btn px-2.5 py-1 text-[10px] border border-ink/20 dark:border-white/20 rounded hover:bg-ink/10 dark:hover:bg-white/10 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Ciclo de Tarefa
+            </button>
+            <button onclick="loadMermaidPreset('sequence')" data-preset="sequence" class="mermaid-preset-btn px-2.5 py-1 text-[10px] border border-ink/20 dark:border-white/20 rounded hover:bg-ink/10 dark:hover:bg-white/10 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer">
+              Sequência OAuth
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
+          
+          <!-- Code Editor Pane -->
+          <div class="md:col-span-5 h-[520px] flex flex-col justify-between bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl p-5 shadow-inner">
+            <div class="flex items-center justify-between text-[11px] font-mono text-ink-light/60 dark:text-white/50 border-b border-ink/10 dark:border-white/10 pb-2.5 shrink-0">
+              <span class="flex items-center gap-1.5 font-bold text-ink dark:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                Editor Markdown / MMD
+              </span>
+              <button onclick="renderMermaidDiagram()" class="text-ochre hover:underline font-bold cursor-pointer text-[10px] flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Recompilar
+              </button>
+            </div>
+
+            <textarea id="mermaid-input" 
+                      oninput="onMermaidInput()"
+                      class="flex-1 w-full my-3 bg-ink text-fable dark:bg-ink-darker p-3.5 rounded-lg border border-ink/20 dark:border-white/10 font-mono text-xs leading-relaxed outline-none focus:border-ochre shadow-inner scrollbar-subtle resize-none overflow-y-auto">graph TD
+  A[Cliente Web / WASM] -->|WebSocket| B(Edge Proxy Traefik)
+  B -->|HTTP/2 Proxy| C{Rails 8 Core}
+  C -->|PubSub| D[(Solid Cable)]
+  C -->|Async Task| E[[Solid Queue Worker]]
+  C -->|ACID Storage| F[(PostgreSQL 16)]
+  E -.->|Gera Preview| F</textarea>
+            
+            <div class="flex items-center justify-between text-[10px] font-mono text-ink-light/50 dark:text-white/40 pt-2 border-t border-ink/10 dark:border-white/10 shrink-0">
+              <span>Edite o texto e veja o SVG atualizar</span>
+              <button onclick="copyMermaidCode()" class="text-ochre hover:underline font-bold cursor-pointer flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                Copiar Markdown
+              </button>
+            </div>
+          </div>
+
+          <!-- Live SVG Preview Pane (Equal Height) -->
+          <div class="md:col-span-7 h-[520px] bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-xl p-5 flex flex-col justify-between shadow-inner">
+            <div class="flex items-center justify-between text-[11px] font-mono text-ink-light/60 dark:text-white/50 border-b border-ink/10 dark:border-white/10 pb-2.5 shrink-0">
+              <span class="flex items-center gap-1.5 font-bold text-ink dark:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                Área de Visualização Vetorial (Mesmo Tamanho)
+              </span>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-sage"></span>
+                <span class="text-sage font-bold text-[10px]">100% Válido</span>
+              </div>
+            </div>
+
+            <!-- Fixed height visualization container: never shrinks or expands across presets -->
+            <div id="mermaid-output" class="mermaid flex-1 w-full h-full flex items-center justify-center overflow-auto p-3 my-2">
+              <!-- SVG is injected here by mermaid.js -->
+            </div>
+
+            <div class="border-t border-ink/10 dark:border-white/10 pt-2 flex items-center justify-between text-[10px] font-mono text-ink-light/50 dark:text-white/40 shrink-0">
+              <span>Sintaxe nativa sem plugins externos</span>
+              <button onclick="downloadMermaidSVG()" class="px-2.5 py-1 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5">
+                <span>Baixar SVG</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- PERSPECTIVE 3: SPEC INTEGRADA (EMBED REAL NO DOCUMENTO / WIKI) -->
+      <div id="view-embed" class="hidden border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden bg-fable-light dark:bg-ink-darker shadow-2xl p-4 md:p-8 space-y-6">
+        
+        <!-- Context Explainer Banner -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white/70 dark:bg-ink-paper/70 backdrop-blur border border-ink/10 dark:border-white/10 p-4 rounded-xl font-mono text-xs">
+          <div class="flex items-center gap-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-sage animate-ping"></span>
+            <div>
+              <span class="font-bold text-ink dark:text-white">Documentos Vivos SpecLine:</span>
+              <span class="text-ink-light dark:text-white/70"> O diagrama abaixo não é uma imagem estática — é um bloco interativo conectado diretamente ao Whiteboard #04.</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="simulateDocSync()" class="px-3 py-1.5 bg-ochre/20 hover:bg-ochre/30 text-ochre font-bold rounded-lg border border-ochre/30 transition-all cursor-pointer flex items-center gap-1.5 text-[11px]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+              <span>Simular Sync ao Vivo</span>
+            </button>
+            <button onclick="switchPerspective('canvas')" class="px-3 py-1.5 bg-ink text-white dark:bg-white dark:text-ink font-bold rounded-lg hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white transition-all cursor-pointer flex items-center gap-1.5 text-[11px]">
+              <span>Editar no Canvas Livre ↗</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Realistic SpecLine Document Workspace Window -->
+        <div class="max-w-4xl mx-auto bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden font-sans">
+          
+          <!-- Doc Window Header / Breadcrumb Bar -->
+          <div class="bg-fable-light/80 dark:bg-[#1A1A1E] border-b border-ink/10 dark:border-white/10 px-6 py-3 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+            <div class="flex items-center gap-2 text-ink-light/70 dark:text-white/60">
+              <span>SpecLine</span>
+              <span>/</span>
+              <span>Documentos</span>
+              <span>/</span>
+              <span>Arquitetura</span>
+              <span>/</span>
+              <span class="text-ink dark:text-white font-bold">RFC-042</span>
+            </div>
+            
+            <div class="flex items-center gap-3">
+              <span id="doc-sync-status-badge" class="px-2 py-0.5 rounded-full bg-sage/15 text-sage font-bold text-[10px] flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                <span>Sincronizado v2.4</span>
+              </span>
+              <span class="text-[11px] text-ink-light/50 dark:text-white/40">Leitura: 3 min</span>
+            </div>
+          </div>
+
+          <!-- Doc Main Content Article -->
+          <article class="p-6 md:p-12 space-y-8 text-ink dark:text-white">
+            
+            <!-- Article Header -->
+            <div class="space-y-4 border-b border-ink/10 dark:border-white/10 pb-6">
+              <div class="flex items-center gap-2 font-mono text-[11px] text-ochre uppercase font-bold tracking-wider">
+                <span>RFC Técnica de Engenharia</span>
+                <span>•</span>
+                <span class="text-sage">Status: Aprovado</span>
+              </div>
+
+              <h1 class="text-2xl md:text-4xl font-serif font-light text-ink dark:text-white leading-tight">
+                RFC-042: Especificação da Topologia de Sincronização Local-First
+              </h1>
+
+              <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-ink-light/60 dark:text-white/50 pt-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-full bg-ochre/20 text-ochre flex items-center justify-center font-bold text-[10px]">LC</div>
+                  <span>Lucas Carvalho (Principal Architect)</span>
+                </div>
+                <span>•</span>
+                <span>Revisado em 12 de Setembro, 2026</span>
+              </div>
+
+              <p class="font-serif italic text-base text-ink-light dark:text-white/70 leading-relaxed pt-2">
+                Esta especificação define como os nós do sistema orquestram mensagens em tempo real entre navegadores e o cluster Rails 8. Abaixo, o diagrama de arquitetura oficial está vinculado diretamente ao quadro visual do projeto.
+              </p>
+            </div>
+
+            <!-- Section 1: Contexto e Objetivos -->
+            <div class="space-y-3">
+              <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                <span class="font-mono text-xs text-ochre font-normal">01.</span>
+                Objetivos de Engenharia
+              </h2>
+              <p class="text-sm leading-relaxed text-ink-light dark:text-white/80 font-sans">
+                O objetivo principal é eliminar qualquer estado intermediário inconsistente durante desconexões parciais de rede. Para garantir velocidade máxima de renderização para o usuário, adotamos um buffer local baseado em SQLite WASM no navegador, com resolução de conflito tipo Last-Write-Wins (LWW).
+              </p>
+            </div>
+
+            <!-- Section 2: O BLOCO VIVO DO WHITEBOARD INCORPORADO -->
+            <div class="space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                  <span class="font-mono text-xs text-ochre font-normal">02.</span>
+                  Topologia Geral do Sistema (Whiteboard Dinâmico)
+                </h2>
+                <span class="text-[10px] font-mono text-ochre font-bold uppercase tracking-wider">Bloco /whiteboard</span>
+              </div>
+
+              <!-- Real Embedded Whiteboard Block Card -->
+              <div id="embedded-whiteboard-card" class="border-2 border-ochre/40 dark:border-ochre/30 rounded-2xl bg-fable-light dark:bg-[#141416] p-2 shadow-xl transition-all duration-300 relative group">
+                
+                <!-- Whiteboard Embed Mini Header Bar -->
+                <div class="bg-white/90 dark:bg-[#1C1C1F]/90 backdrop-blur rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 border border-ink/10 dark:border-white/10 text-xs font-mono">
+                  
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-6 h-6 rounded bg-ochre/15 text-ochre flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+                    <div>
+                      <span class="font-bold text-ink dark:text-white font-sans text-xs">Quadro #04 — Arquitetura Sync v2</span>
+                      <span class="text-[9px] text-ink-light/50 dark:text-white/40 ml-1.5">● Modo Leitura Live</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <div id="embed-sync-indicator" class="flex items-center gap-1.5 px-2 py-0.5 rounded bg-sage/20 text-sage text-[10px] font-bold">
+                      <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      <span>Sincronizado</span>
+                    </div>
+                    
+                    <button onclick="switchPerspective('canvas')" class="px-2.5 py-1 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white rounded text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1">
+                      <span>Editar no Canvas</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                    </button>
+                  </div>
+
+                </div>
+
+                <!-- Interactive Mini Canvas Viewport with Real Visual Representation -->
+                <div class="relative w-full overflow-x-auto scrollbar-subtle my-1">
+                  <div class="relative min-w-[720px] h-[320px] rounded-xl overflow-hidden bg-white dark:bg-[#18181B] border border-ink/10 dark:border-white/10 select-none">
+                    <!-- Canvas Dot Grid Background -->
+                    <div class="absolute inset-0 canvas-dot-grid"></div>
+
+                    <!-- SVG Dynamic Wiring between embedded nodes -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <marker id="embed-arrow-ochre" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#CFA055" />
+                        </marker>
+                        <marker id="embed-arrow-ocean" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#4B6B78" />
+                        </marker>
+                        <marker id="embed-arrow-sage" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#A5B5A1" />
+                        </marker>
+                        <marker id="embed-arrow-terracotta" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                          <path d="M 0 1 L 10 5 L 0 9 z" fill="#D97A5E" />
+                        </marker>
+                      </defs>
+                      <!-- Client -> Gateway -->
+                      <path d="M 184 69 L 244 69" fill="none" stroke="#CFA055" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-ochre)"/>
+                      <!-- Gateway -> Rails -->
+                      <path d="M 430 69 L 484 69" fill="none" stroke="#4B6B78" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-ocean)"/>
+                      <!-- Rails -> Postgres -->
+                      <path d="M 520 103 C 520 150, 340 150, 340 179" fill="none" stroke="#A5B5A1" stroke-width="2.5" stroke-dasharray="5,4" marker-end="url(#embed-arrow-sage)"/>
+                      <!-- Rails -> Worker -->
+                      <path d="M 580 103 L 580 179" fill="none" stroke="#D97A5E" stroke-width="2.5" stroke-dasharray="5,4" class="animate-data-flow" marker-end="url(#embed-arrow-terracotta)"/>
+                    </svg>
+
+                    <!-- Mini Architecture Nodes (Scaled & High-Fidelity) -->
+                    <!-- Node 1: Web Client -->
+                    <div style="left: 24px; top: 35px; width: 160px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-ochre shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ochre font-bold">
+                        <span>CLIENTE</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Web / Mobile App</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Cache Local SQLite</div>
+                    </div>
+
+                    <!-- Node 2: Traefik Proxy -->
+                    <div style="left: 250px; top: 35px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-ocean shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ocean font-bold">
+                        <span>GATEWAY</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-ocean animate-ping"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Traefik Edge Proxy</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">HTTP/3 + WebSockets</div>
+                    </div>
+
+                    <!-- Node 3: Rails Core -->
+                    <div style="left: 490px; top: 35px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-terracotta shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-terracotta font-bold">
+                        <span>BACKEND CORE</span>
+                        <span class="text-[8px] bg-terracotta/20 text-terracotta px-1 rounded font-bold">v8.0</span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Rails 8 Monolith</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Solid Cable Engine</div>
+                    </div>
+
+                    <!-- Node 4: PostgreSQL -->
+                    <div style="left: 250px; top: 185px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border-2 border-sage shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-sage font-bold">
+                        <span>BANCO ACID</span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">PostgreSQL 16</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Colunas JSONB</div>
+                    </div>
+
+                    <!-- Node 5: Solid Queue Worker -->
+                    <div style="left: 490px; top: 185px; width: 180px;" class="absolute z-20 p-3 rounded-xl bg-white dark:bg-ink-paper border border-ink/20 dark:border-white/20 shadow-md text-left">
+                      <div class="flex items-center justify-between text-[9px] font-mono text-ink/60 dark:text-white/60 font-bold">
+                        <span>WORKER ASYNC</span>
+                        <span class="text-ochre text-[8px] font-bold">SolidQueue</span>
+                      </div>
+                      <div class="font-bold text-[11px] text-ink dark:text-white mt-0.5">Export Daemon</div>
+                      <div class="text-[9px] font-mono text-ink-light/50 dark:text-white/40">Gera SVG & PDF</div>
+                    </div>
+
+                    <!-- Sticky note on diagram -->
+                    <div style="left: 24px; top: 185px; width: 160px;" class="absolute z-20 p-2.5 rounded-lg bg-[#FFF7D1] text-[#634A00] dark:bg-[#E6C84F] dark:text-[#2A2300] shadow-md rotate-[-2deg] text-[10px] font-sans border border-yellow-300">
+                      <div class="font-mono text-[8px] font-bold uppercase mb-0.5 flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+                        <span>Nota da RFC</span>
+                      </div>
+                      <div class="leading-tight">Atualizado via Whiteboard em tempo real.</div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Whiteboard Embed Caption & Sync Helper -->
+                <div class="px-4 py-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] font-mono text-ink-light/60 dark:text-white/50 border-t border-ink/10 dark:border-white/10 mt-1">
+                  <span>Figura 1.1 — Topologia de dados. Conectado dinamicamente ao Quadro #04.</span>
+                  <span class="text-ochre font-semibold">Sem screenshots desatualizados: o diagrama vive no documento.</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <!-- Section 3: Conclusão e Critérios de Aceite -->
+            <div class="space-y-3 pt-2">
+              <h2 class="font-serif text-xl font-bold text-ink dark:text-white flex items-center gap-2">
+                <span class="font-mono text-xs text-ochre font-normal">03.</span>
+                Critérios de Aceite da Arquitetura
+              </h2>
+              
+              <ul class="space-y-2 text-xs font-mono text-ink-light dark:text-white/80">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Conexões WebSockets estabelecidas em menos de 100ms pelo Traefik.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Solid Cable operando diretamente com persistência de buffer no PostgreSQL.</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sage shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Sincronização bidirecional entre documentos técnicos e quadros visuais.</span>
+                </li>
+              </ul>
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACTION TOAST NOTIFICATION -->
+  <div id="whiteboard-toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-50 bg-ink dark:bg-white text-white dark:text-ink px-5 py-3 rounded-xl shadow-2xl font-mono text-xs font-bold flex items-center gap-2 border border-white/20 animate-pop-in">
+    <span class="w-2 h-2 rounded-full bg-ochre animate-ping"></span>
+    <span id="whiteboard-toast-msg">Ação executada com sucesso!</span>
+  </div>
+
+  <!-- OS 3 PILARES DO PENSAMENTO VISUAL -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#151517] p-8 md:p-20 relative">
+    <div class="max-w-6xl mx-auto space-y-12">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-3">
+        <span class="font-mono text-xs text-ochre font-bold uppercase tracking-widest">Sem Fronteiras Entre Ideia e Código</span>
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          Arquitetura visual conectada ao que é construído.
+        </h2>
+        <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+          Chega de quadros brancos que viram screenshots obsoletos esquecidos em pastas do Google Drive.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ochre font-bold uppercase">[01] Código é Diagrama</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Mermaid.js Nativo</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Escreva fluxos, diagramas de sequência ou gráficos de arquitetura em texto puro. Mantenha diagramas versionados em commits sem precisar de designers para atualizar caixinhas.
+          </p>
+        </div>
+
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-sage font-bold uppercase">[02] Liberdade Espacial</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Canvas Infinito Suave</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Para brainstorming, wireframes e post-its rápidos, use o canvas infinito com navegação fluida a 60 FPS, conexões inteligentes entre formas e suporte a múltiplos quadros por projeto.
+          </p>
+        </div>
+
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-3">
+          <div class="font-mono text-xs text-ocean font-bold uppercase">[03] Nativamente Integrado</div>
+          <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Incorporação em Specs</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Incorpore qualquer quadro ou recorte dentro de especificações e PRDs no SpecLine Docs. Quando alguém altera a arquitetura, a especificação se mantém sempre atualizada.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- CALL TO ACTION SECTION -->
+  <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-xs tracking-widest text-ochre uppercase font-bold">Visual Primeiro, Código Sempre</p>
+      <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+        Dê espaço para as ideias ganharem forma.
+      </h2>
+      <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+        Quadros brancos infinitos e diagramas Mermaid integrados em um só lugar.
+      </p>
+      <div class="pt-4 flex justify-center">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-ochre dark:hover:bg-ochre dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Criar Conta Gratuita</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUMEN STUDIO FOOTER -->
+  <footer class="relative bg-fable-light dark:bg-ink text-ink dark:text-fable-light pt-24 pb-8 overflow-hidden border-t-0">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[50vh] bg-ink/5 dark:bg-fable-light/10 blur-[100px] rounded-[100%] pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
+      <div class="col-span-1 md:col-span-4 space-y-6">
+        <div class="flex items-center gap-3 group cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ochre group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+          <span class="font-sans font-semibold text-2xl tracking-tight text-ink dark:text-white">SpecLine</span>
+        </div>
+        <p class="font-sans text-ink-light dark:text-white/60 text-base leading-relaxed max-w-xs">
+          Ambiente de foco e produtividade para equipes, projetos e profissionais operarem com clareza todos os dias.
+        </p>
+      </div>
+
+      <div class="col-span-1 md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Produto</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Documentos & Wiki</a></li>
+            <li><a href="/features/kanban" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Tarefas & Gestão</a></li>
+            <li><a href="/features/chat" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Comunicação</a></li>
+            <li><a href="/features/whiteboard" class="hover:text-ochre hover:translate-x-1 inline-block transition-all font-semibold text-ochre">Quadros & Diagramas</a></li>
+            <li><a href="/pricing" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Preços</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Empresa</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/philosophy/vision" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Sobre Nós</a></li>
+            <li><a href="/contact" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Contato</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Recursos</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Documentação</a></li>
+            <li><a href="/changelog" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Changelog</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Legal</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/privacy" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Privacidade</a></li>
+            <li><a href="/terms" class="hover:text-ochre hover:translate-x-1 inline-block transition-all">Termos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-full overflow-hidden flex justify-center pb-12 z-10 pointer-events-none">
+      <div class="text-[18vw] leading-[0.75] font-sans font-bold tracking-tighter text-ink/10 dark:text-white/10" style="margin-bottom: -6vw;">
+        SpecLine
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-20 flex flex-col md:flex-row justify-between items-center text-xs font-sans text-ink-light/60 dark:text-white/40 pb-4">
+      <div>© 2026 SpecLine. All rights reserved.</div>
+      <div class="mt-4 md:mt-0">Feito com <span class="text-ochre">♥</span> no Brasil</div>
+    </div>
+  </footer>
+
+  <!-- ADVANCED REAL INTERACTIVE LOGIC (DRAG & DROP, DYNAMIC CABLES, ZOOM, EXPORT) -->
+  <script>
+    // --- 1. PERSPECTIVE SWITCHER ---
+    let currentPerspective = 'canvas';
+
+    function switchPerspective(perspective) {
+      currentPerspective = perspective;
+
+      document.querySelectorAll('.perspective-btn').forEach(b => {
+        if (b.dataset.view === perspective) {
+          b.className = "perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold rounded shadow-sm transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        } else {
+          b.className = "perspective-btn px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap";
+        }
+      });
+
+      const canvasView = document.getElementById('view-canvas');
+      const mermaidView = document.getElementById('view-mermaid');
+      const embedView = document.getElementById('view-embed');
+
+      if (perspective === 'canvas') {
+        canvasView.classList.remove('hidden');
+        canvasView.classList.add('animate-pop-in');
+        mermaidView.classList.add('hidden');
+        embedView.classList.add('hidden');
+        setTimeout(updateAllCables, 50);
+      } else if (perspective === 'mermaid') {
+        mermaidView.classList.remove('hidden');
+        mermaidView.classList.add('animate-pop-in');
+        canvasView.classList.add('hidden');
+        embedView.classList.add('hidden');
+        renderMermaidDiagram();
+      } else if (perspective === 'embed') {
+        embedView.classList.remove('hidden');
+        embedView.classList.add('animate-pop-in');
+        canvasView.classList.add('hidden');
+        mermaidView.classList.add('hidden');
+      }
+    }
+
+    // --- 2. DRAGGABLE NODES & REAL DYNAMIC SVG CABLES ---
+    let activeDragEl = null;
+    let dragStartX = 0;
+    let dragStartY = 0;
+    let initialElX = 0;
+    let initialElY = 0;
+    let selectedNode = null;
+    let currentZoom = 1.0;
+
+    function initDraggableNodes() {
+      document.querySelectorAll('.canvas-draggable-node').forEach(node => {
+        attachNodeListeners(node);
+      });
+      // Select the first node by default
+      const defaultNode = document.getElementById('node-client');
+      if (defaultNode) selectNode(defaultNode);
+      updateAllCables();
+    }
+
+    function attachNodeListeners(el) {
+      el.addEventListener('pointerdown', (e) => {
+        // If clicking an editable input or button inside, don't drag
+        if (e.target.isContentEditable || e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') {
+          return;
+        }
+
+        activeDragEl = el;
+        el.setPointerCapture(e.pointerId);
+        selectNode(el);
+
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+
+        initialElX = parseFloat(el.style.left) || el.offsetLeft;
+        initialElY = parseFloat(el.style.top) || el.offsetTop;
+
+        el.style.cursor = 'grabbing';
+      });
+
+      el.addEventListener('pointermove', (e) => {
+        if (activeDragEl !== el) return;
+        const deltaX = (e.clientX - dragStartX) / currentZoom;
+        const deltaY = (e.clientY - dragStartY) / currentZoom;
+
+        let newX = Math.max(10, initialElX + deltaX);
+        let newY = Math.max(10, initialElY + deltaY);
+
+        el.style.left = `${newX}px`;
+        el.style.top = `${newY}px`;
+
+        updateAllCables();
+      });
+
+      el.addEventListener('pointerup', (e) => {
+        if (activeDragEl === el) {
+          activeDragEl = null;
+          el.releasePointerCapture(e.pointerId);
+          el.style.cursor = 'grab';
+          updateAllCables();
+        }
+      });
+    }
+
+    function selectNode(el) {
+      if (selectedNode) {
+        selectedNode.classList.remove('node-selected-ring');
+      }
+      selectedNode = el;
+      el.classList.add('node-selected-ring');
+
+      const title = el.dataset.title || el.querySelector('.font-bold')?.innerText || 'Elemento';
+      const desc = el.dataset.desc || 'Nó ativo no canvas.';
+      const meta = el.dataset.meta || 'NÓ';
+
+      const titleInput = document.getElementById('inspector-node-title-input');
+      const descEl = document.getElementById('inspector-node-desc');
+      const metaEl = document.getElementById('inspector-node-meta');
+
+      if (titleInput) titleInput.value = title;
+      if (descEl) descEl.innerText = desc;
+      if (metaEl) metaEl.innerText = meta;
+    }
+
+    function onSelectedTitleChange(newVal) {
+      if (!selectedNode) return;
+      selectedNode.dataset.title = newVal;
+      const titleDisplay = selectedNode.querySelector('.font-bold');
+      if (titleDisplay) titleDisplay.innerText = newVal;
+    }
+
+    function deleteSelectedNode() {
+      if (!selectedNode) return;
+      const id = selectedNode.id;
+      selectedNode.classList.add('scale-75', 'opacity-0', 'transition-all', 'duration-200');
+      setTimeout(() => {
+        selectedNode.remove();
+        selectedNode = null;
+        updateAllCables();
+        showToast('Nó removido do canvas.');
+      }, 200);
+    }
+
+    // --- 3. DYNAMIC BEZIER SVG CABLES UPDATE ---
+    function updateCable(cableId, sourceId, targetId) {
+      const cable = document.getElementById(cableId);
+      const source = document.getElementById(sourceId);
+      const target = document.getElementById(targetId);
+
+      if (!cable || !source || !target) {
+        if (cable) cable.setAttribute('d', '');
+        return;
+      }
+
+      const sx = (parseFloat(source.style.left) || source.offsetLeft) + source.offsetWidth;
+      const sy = (parseFloat(source.style.top) || source.offsetTop) + (source.offsetHeight / 2);
+
+      const tx = parseFloat(target.style.left) || target.offsetLeft;
+      const ty = (parseFloat(target.style.top) || target.offsetTop) + (target.offsetHeight / 2);
+
+      // Smooth horizontal bezier curve
+      const dx = Math.abs(tx - sx) * 0.5;
+      const d = `M ${sx} ${sy} C ${sx + dx} ${sy}, ${tx - dx} ${ty}, ${tx} ${ty}`;
+      cable.setAttribute('d', d);
+    }
+
+    function updateAllCables() {
+      updateCable('cable-client-proxy', 'node-client', 'node-proxy');
+      updateCable('cable-proxy-rails', 'node-proxy', 'node-rails');
+      updateCable('cable-rails-postgres', 'node-rails', 'node-postgres');
+      updateCable('cable-rails-worker', 'node-rails', 'node-worker');
+    }
+
+    // --- 4. ADD DYNAMIC NODES & STICKIES ---
+    let extraNodeCount = 0;
+    function addNodeToCanvas(type) {
+      extraNodeCount++;
+      const world = document.getElementById('canvas-world');
+      if (!world) return;
+
+      const node = document.createElement('div');
+      const posX = 150 + (extraNodeCount * 30) % 250;
+      const posY = 180 + (extraNodeCount * 25) % 180;
+
+      node.id = `node-custom-${extraNodeCount}`;
+      node.style.left = `${posX}px`;
+      node.style.top = `${posY}px`;
+      node.className = "canvas-draggable-node absolute z-20 w-48 p-4 rounded-xl bg-white dark:bg-ink-paper border-2 border-ochre shadow-lg cursor-grab hover:shadow-2xl animate-pop-in";
+      node.dataset.title = `Micro-Serviço #${extraNodeCount}`;
+      node.dataset.desc = "Novo serviço modular adicionado ao canvas interativo.";
+      node.dataset.meta = `SRV-0${extraNodeCount}`;
+
+      node.innerHTML = `
+        <div class="flex items-center justify-between pb-1 text-[10px] font-mono text-ochre font-bold pointer-events-none">
+          <span>SERVIÇO</span>
+          <span class="w-2 h-2 rounded-full bg-ochre"></span>
+        </div>
+        <div class="font-sans font-bold text-xs text-ink dark:text-white pointer-events-none">Micro-Serviço #${extraNodeCount}</div>
+        <div class="text-[10px] font-mono text-ink-light/60 dark:text-white/50 mt-1 pointer-events-none">Porta :808${extraNodeCount}</div>
+      `;
+
+      world.appendChild(node);
+      attachNodeListeners(node);
+      selectNode(node);
+      showToast(`Novo bloco 'Micro-Serviço #${extraNodeCount}' inserido!`);
+    }
+
+    let stickyCount = 1;
+    function addStickyNote() {
+      stickyCount++;
+      const world = document.getElementById('canvas-world');
+      if (!world) return;
+
+      const colors = [
+        { bg: '#FFF7D1', border: '#FDE047', text: '#713F12' },
+        { bg: '#E2F0D9', border: '#A5B5A1', text: '#274E13' },
+        { bg: '#E0F2FE', border: '#7DD3FC', text: '#0369A1' },
+        { bg: '#FCE7F3', border: '#F472B6', text: '#831843' }
+      ];
+      const color = colors[stickyCount % colors.length];
+
+      const note = document.createElement('div');
+      note.id = `sticky-custom-${stickyCount}`;
+      const posX = 100 + (stickyCount * 40) % 280;
+      const posY = 140 + (stickyCount * 30) % 180;
+
+      note.style.left = `${posX}px`;
+      note.style.top = `${posY}px`;
+      note.style.backgroundColor = color.bg;
+      note.style.borderColor = color.border;
+      note.style.color = color.text;
+      note.style.transform = `rotate(${(stickyCount % 5) - 2}deg)`;
+      note.className = "canvas-draggable-node absolute z-20 w-48 p-3 rounded-lg shadow-xl font-sans text-xs border cursor-grab animate-pop-in";
+      note.dataset.title = `Post-it #${stickyCount}`;
+      note.dataset.desc = "Nota adesiva editável com clique direto.";
+      note.dataset.meta = "POST-IT";
+
+      note.innerHTML = `
+        <div class="flex justify-between items-center font-mono text-[9px] font-bold uppercase opacity-70 mb-1 pointer-events-none">
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="17" x2="12" y2="22"/><path d="M5 17h14v-1.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1v4.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24Z"/></svg>
+            <span>Post-it #\${stickyCount}</span>
+          </span>
+          <button onclick="this.closest('.canvas-draggable-node').remove()" class="hover:opacity-100 cursor-pointer pointer-events-auto">✕</button>
+        </div>
+        <p contenteditable="true" class="leading-tight outline-none rounded p-0.5">Clique para escrever sua anotação aqui...</p>
+      `;
+
+      world.appendChild(note);
+      attachNodeListeners(note);
+      selectNode(note);
+      showToast(`Post-it #${stickyCount} adicionado!`);
+    }
+
+    // Reset default positions
+    function resetCanvasElements() {
+      const client = document.getElementById('node-client');
+      const proxy = document.getElementById('node-proxy');
+      const rails = document.getElementById('node-rails');
+      const postgres = document.getElementById('node-postgres');
+      const worker = document.getElementById('node-worker');
+
+      if (client) { client.style.left = '48px'; client.style.top = '120px'; }
+      if (proxy) { proxy.style.left = '360px'; proxy.style.top = '120px'; }
+      if (rails) { rails.style.left = '690px'; rails.style.top = '120px'; }
+      if (postgres) { postgres.style.left = '360px'; postgres.style.top = '340px'; }
+      if (worker) { worker.style.left = '690px'; worker.style.top = '340px'; }
+
+      currentZoom = 1.0;
+      updateZoomTransform();
+      updateAllCables();
+      showToast('Posições do canvas reiniciadas.');
+    }
+
+    // --- 5. REAL ZOOM CONTROLS ---
+    function adjustZoom(delta) {
+      currentZoom = Math.min(1.8, Math.max(0.5, currentZoom + delta));
+      updateZoomTransform();
+    }
+
+    function updateZoomTransform() {
+      const world = document.getElementById('canvas-world');
+      const indicator = document.getElementById('canvas-zoom-indicator');
+      if (world) {
+        world.style.transform = `scale(${currentZoom})`;
+      }
+      if (indicator) {
+        indicator.innerText = `${Math.round(currentZoom * 100)}%`;
+      }
+      updateAllCables();
+    }
+
+    // --- 6. EXPORT CANVAS AS SVG (AESTHETIC DEMO ONLY) ---
+    function downloadCanvasAsSVG() {
+      showToast('Exportação SVG (Demo): No workspace, exporta o vetor completo.');
+    }
+
+    // --- 7. MERMAID.JS ENGINE PRESETS & RENDERING ---
+    const presets = {
+      arch: `graph TD
+  A[Cliente Web / WASM] -->|WebSocket| B(Edge Proxy Traefik)
+  B -->|HTTP/2 Proxy| C{Rails 8 Core}
+  C -->|PubSub| D[(Solid Cable)]
+  C -->|Async Task| E[[Solid Queue Worker]]
+  C -->|ACID Storage| F[(PostgreSQL 16)]
+  E -.->|Gera Preview| F`,
+
+      state: `stateDiagram-v2
+  [*] --> Backlog : Tarefa Criada
+  Backlog --> EmProgresso : Assumida pelo Dev
+  EmProgresso --> EmRevisao : Pull Request Aberto
+  EmRevisao --> EmProgresso : Mudanças Solicitadas
+  EmRevisao --> Concluido : Revisão Aprovada
+  Concluido --> [*] : Fechado no Release`,
+
+      sequence: `sequenceDiagram
+  autonumber
+  actor User as Desenvolvedor
+  participant Client as SpecLine App
+  participant Auth as OAuth Provider
+  participant API as Rails 8 Backend
+
+  User->>Client: Clica em "Entrar com GitHub"
+  Client->>Auth: Inicia Fluxo PKCE
+  Auth-->>User: Solicita Confirmação 2FA
+  User->>Auth: Autorizado
+  Auth-->>Client: Código de Acesso Temporário
+  Client->>API: Valida Código e Cria Sessão
+  API-->>Client: Token de Sessão Emitido`
+    };
+
+    function loadMermaidPreset(presetKey) {
+      document.querySelectorAll('.mermaid-preset-btn').forEach(btn => {
+        if (btn.dataset.preset === presetKey) {
+          btn.className = "mermaid-preset-btn px-2.5 py-1 text-[10px] bg-ochre text-ink font-bold rounded shadow-sm transition-all cursor-pointer";
+        } else {
+          btn.className = "mermaid-preset-btn px-2.5 py-1 text-[10px] border border-ink/20 dark:border-white/20 rounded hover:bg-ink/10 dark:hover:bg-white/10 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all cursor-pointer";
+        }
+      });
+
+      const input = document.getElementById('mermaid-input');
+      if (input && presets[presetKey]) {
+        input.value = presets[presetKey];
+        renderMermaidDiagram();
+        showToast(`Preset '${presetKey}' carregado!`);
+      }
+    }
+
+    function toggleCanvasGrid() {
+      const grid = document.getElementById('canvas-grid-layer');
+      if (grid) {
+        grid.classList.toggle('hidden');
+        showToast(grid.classList.contains('hidden') ? 'Grade de fundo oculta' : 'Grade de fundo visível');
+      }
+    }
+
+    function updateSelectedColor(colorHex) {
+      if (!selectedNode) {
+        showToast('Clique em um bloco para selecionar antes de trocar a cor.');
+        return;
+      }
+      selectedNode.style.borderColor = colorHex;
+      const tag = selectedNode.querySelector('span');
+      if (tag) tag.style.color = colorHex;
+      showToast('Cor do bloco atualizada!');
+    }
+
+    let inputTimeout = null;
+    function onMermaidInput() {
+      clearTimeout(inputTimeout);
+      inputTimeout = setTimeout(renderMermaidDiagram, 300);
+    }
+
+    window.renderMermaidDiagram = function() {
+      const input = document.getElementById('mermaid-input');
+      const output = document.getElementById('mermaid-output');
+      if (!input || !output || typeof mermaid === 'undefined') return;
+
+      const code = input.value;
+      const isDark = document.documentElement.classList.contains('dark');
+      
+      try {
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'neutral',
+          securityLevel: 'loose',
+          fontFamily: 'Inter, sans-serif'
+        });
+
+        const id = 'mermaid-svg-' + Math.round(Math.random() * 10000);
+        mermaid.render(id, code).then(({ svg }) => {
+          output.innerHTML = svg;
+        }).catch(err => {
+          output.innerHTML = `<div class="p-4 text-xs font-mono text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-lg">Erro de sintaxe no Mermaid: ${err.message || err}</div>`;
+        });
+      } catch (err) {
+        output.innerHTML = `<div class="p-4 text-xs font-mono text-terracotta bg-terracotta/10 border border-terracotta/30 rounded-lg">Erro ao compilar: ${err}</div>`;
+      }
+    };
+
+    function copyMermaidCode() {
+      const input = document.getElementById('mermaid-input');
+      if (input) {
+        navigator.clipboard.writeText("```mermaid\n" + input.value + "\n```");
+        showToast("Código Mermaid copiado em Markdown!");
+      }
+    }
+
+    function downloadMermaidSVG() {
+      showToast("Exportação Mermaid (Demo): No workspace, exporta o SVG em alta resolução.");
+    }
+
+    // --- 8. DOCUMENT EMBED LIVE SYNC SIMULATION ---
+    function simulateDocSync() {
+      const card = document.getElementById('embedded-whiteboard-card');
+      const badge = document.getElementById('embed-sync-indicator');
+      const docBadge = document.getElementById('doc-sync-status-badge');
+
+      if (card) {
+        card.classList.add('ring-4', 'ring-ochre', 'scale-[1.01]');
+        setTimeout(() => {
+          card.classList.remove('ring-4', 'ring-ochre', 'scale-[1.01]');
+        }, 700);
+      }
+
+      if (badge) {
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-ochre animate-ping"></span><span class="text-ochre">Sincronizando...</span>';
+        setTimeout(() => {
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-sage"></span><span class="text-sage font-bold">Sincronizado v2.4</span>';
+        }, 800);
+      }
+
+      if (docBadge) {
+        docBadge.classList.add('bg-ochre/20', 'text-ochre');
+        setTimeout(() => {
+          docBadge.classList.remove('bg-ochre/20', 'text-ochre');
+        }, 800);
+      }
+
+      showToast("Sincronização em tempo real: O documento refletiu a versão mais recente do Whiteboard #04!");
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('whiteboard-toast');
+      const msgEl = document.getElementById('whiteboard-toast-msg');
+      if (toast && msgEl) {
+        msgEl.innerText = msg;
+        toast.classList.remove('hidden');
+        setTimeout(() => { toast.classList.add('hidden'); }, 2500);
+      }
+    }
+
+    // --- 9. INITIALIZE ON LOAD ---
+    document.addEventListener('DOMContentLoaded', () => {
+      initDraggableNodes();
+      if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+        setTimeout(() => {
+          if (window.renderMermaidDiagram) window.renderMermaidDiagram();
+        }, 300);
+      }
+    });
+  </script>
+
+</body>
+</html>

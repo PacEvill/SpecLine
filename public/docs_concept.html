@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentos & Wiki — SpecLine</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'glow-pulse': {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+            },
+            'pop-in': {
+              '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            }
+          },
+          animation: {
+            'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+            'pop-in': 'pop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    let isZenActive = false;
+    function setWorkbenchMode(zen) {
+      isZenActive = zen;
+      const sidebar = document.getElementById('workbench-sidebar');
+      const canvas = document.getElementById('workbench-canvas');
+      const btnNormal = document.getElementById('btn-wb-normal');
+      const btnZen = document.getElementById('btn-wb-zen');
+      const typewriterParas = document.querySelectorAll('.typewriter-dim');
+      const zenStatusBar = document.getElementById('zen-status-bar');
+
+      if (isZenActive) {
+        // Switch to Zen Mode inside workbench
+        btnZen.className = "px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold transition-all shadow-sm";
+        btnNormal.className = "px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all";
+        
+        sidebar.classList.add('hidden');
+        canvas.className = "col-span-12 max-w-2xl mx-auto p-8 md:p-16 bg-white dark:bg-ink-paper transition-all duration-500 min-h-[580px] flex flex-col justify-between";
+        typewriterParas.forEach(el => el.classList.add('opacity-40', 'hover:opacity-100', 'transition-opacity'));
+        zenStatusBar.classList.remove('hidden');
+      } else {
+        // Switch to Normal Mode inside workbench
+        btnNormal.className = "px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold transition-all shadow-sm";
+        btnZen.className = "px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all";
+        
+        sidebar.classList.remove('hidden');
+        canvas.className = "col-span-12 md:col-span-8 lg:col-span-9 p-6 md:p-12 bg-white dark:bg-ink-paper overflow-y-auto max-h-[640px] transition-all duration-500";
+        typewriterParas.forEach(el => el.classList.remove('opacity-40', 'hover:opacity-100', 'transition-opacity'));
+        zenStatusBar.classList.add('hidden');
+      }
+    }
+
+    function selectDocTab(tabId) {
+      const tabs = ['tab-spec', 'tab-rfc', 'tab-guide'];
+      tabs.forEach(id => {
+        const btn = document.getElementById('btn-' + id);
+        const content = document.getElementById('content-' + id);
+        if (id === tabId) {
+          btn.classList.add('border-b-2', 'border-terracotta', 'text-ink', 'dark:text-white', 'font-bold');
+          btn.classList.remove('text-ink/60', 'dark:text-white/60');
+          content.classList.remove('hidden');
+          content.classList.add('animate-pop-in');
+        } else {
+          btn.classList.remove('border-b-2', 'border-terracotta', 'text-ink', 'dark:text-white', 'font-bold');
+          btn.classList.add('text-ink/60', 'dark:text-white/60');
+          content.classList.add('hidden');
+          content.classList.remove('animate-pop-in');
+        }
+      });
+    }
+  </script>
+  <style>
+    .bg-noise {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      mix-blend-mode: overlay;
+    }
+    .hover-card-lift {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+    .hover-card-lift:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.15), 0 0 1px 1px rgba(217, 122, 94, 0.15);
+      z-index: 20;
+    }
+    .active-line-accent {
+      position: relative;
+    }
+    .active-line-accent::before {
+      content: "";
+      position: absolute;
+      left: -16px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background-color: #D97A5E;
+    }
+  </style>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500">
+
+  <!-- Floating Dark Mode Toggle for Prototype Review -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- Navigation Grid Header -->
+  <nav class="grid grid-cols-12 border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase items-stretch h-16 relative z-10 bg-fable-light dark:bg-[#18181A]">
+    <div class="col-span-6 md:col-span-3 border-r border-ink/15 dark:border-white/10 flex items-center px-6 gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden md:flex col-span-6 items-center justify-center gap-8 px-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Início</a>
+      <a href="/features/docs" class="text-ink dark:text-white font-bold border-b-2 border-terracotta py-1">Documentos & Wiki</a>
+      <a href="/pricing" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Preços</a>
+      <a href="/philosophy/vision" class="text-ink/60 dark:text-white/60 hover:text-terracotta hover:-translate-y-0.5 transition-all">Filosofia</a>
+    </div>
+
+    <div class="col-span-6 md:col-span-3 border-l border-ink/15 dark:border-white/10 flex items-center justify-end px-6 gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <!-- DEDICATED FEATURES SUB-NAV BAR (SWITCH CONCEPTS DIRECTLY) -->
+  <div class="border-b border-ink/15 dark:border-white/10 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-md px-6 py-2.5 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase tracking-wider font-bold text-sage">Aba Funcionalidades:</span>
+      </div>
+      <div class="inline-flex flex-wrap items-center gap-1.5 bg-fable-light dark:bg-ink-darker p-1 rounded-xl border border-ink/10 dark:border-white/10">
+        <a href="/docs_concept.html" class="px-3 py-1.5 rounded-lg bg-sage text-ink font-bold flex items-center gap-1.5 shadow-sm transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>1. Docs & Wiki (Ativo)</span>
+        </a>
+        <a href="/tasks_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-terracotta hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+          <span>2. Tarefas</span>
+        </a>
+        <a href="/chat_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ocean hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>3. Chat</span>
+        </a>
+        <a href="/whiteboard_concept.html" class="px-3 py-1.5 rounded-lg text-ink/70 dark:text-white/70 hover:text-ochre hover:bg-white dark:hover:bg-white/5 font-semibold flex items-center gap-1.5 transition-all text-[11px] uppercase tracking-wider">
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+          <span>4. Quadros</span>
+        </a>
+      </div>
+      <a href="/features_concept.html" class="inline-flex items-center gap-1.5 text-terracotta hover:underline font-bold text-[11px] transition-colors">
+        <span>Ver Central de Funcionalidades</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO SECTION: Clean, Focused Editorial Presentation -->
+  <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+    
+    <!-- Ambient Light Flare -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[320px] bg-terracotta/10 dark:bg-terracotta/5 blur-[120px] rounded-full pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+      <div class="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold">
+        <span class="w-2 h-2 rounded-full bg-terracotta inline-block"></span>
+        Arquitetura do Conhecimento // Escrita Sem Ruído
+      </div>
+      
+      <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+        Clareza absoluta.<br>
+        <i class="text-sage font-serif-italic">Documentação viva.</i>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+        Esqueça wikis desorganizadas e arquivos perdidos. O editor do SpecLine une a fluidez do Markdown, diagramação nativa em Mermaid, blocos inteligentes e um ambiente sereno projetado para o estado de fluxo.
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="pt-6 flex justify-center items-center">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Começar Gratuitamente</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- INTERACTIVE WORKBENCH SHOWCASE (Seamlessly switches between Normal & Zen Mode) -->
+  <section id="editor-showcase" class="border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper p-6 md:p-16">
+    <div class="max-w-6xl mx-auto space-y-8">
+      
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-ink/15 dark:border-white/10 pb-6">
+        <div>
+          <span class="font-mono text-xs text-sage font-bold tracking-widest uppercase">Canvas Interativo</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white mt-1">
+            A interface se molda ao seu momento.
+          </h2>
+        </div>
+
+        <!-- Integrated View Switcher (Normal vs Zen) -->
+        <div class="flex items-center gap-3">
+          <div class="inline-flex border border-ink/20 dark:border-white/20 p-1 bg-fable-light dark:bg-[#18181A]">
+            <button id="btn-wb-normal" onclick="setWorkbenchMode(false)" class="px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink font-semibold transition-all shadow-sm">
+              Visão Completa
+            </button>
+            <button id="btn-wb-zen" onclick="setWorkbenchMode(true)" class="px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-all flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+              Modo Zen (Foco)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Workbench Frame -->
+      <div class="border border-ink/20 dark:border-white/15 shadow-2xl bg-fable-light dark:bg-ink-darker overflow-hidden grid grid-cols-12 min-h-[580px] transition-all">
+        
+        <!-- Left Sub-Sidebar (Collapsible in Zen Mode) -->
+        <div id="workbench-sidebar" class="col-span-12 md:col-span-4 lg:col-span-3 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 p-5 bg-fable-dark/40 dark:bg-ink flex flex-col justify-between transition-all">
+          <div class="space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono text-ink/60 dark:text-white/60 uppercase tracking-wider pb-2 border-b border-ink/10 dark:border-white/10">
+              <span>Árvore do Projeto</span>
+              <span class="text-terracotta font-bold text-[10px]">+ Documento</span>
+            </div>
+
+            <!-- Folder 1: Engenharia -->
+            <div class="space-y-1 text-sm font-sans">
+              <div class="flex items-center gap-2 text-ink/80 dark:text-white/80 font-medium py-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="m6 9 6 6 6-6"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500/80"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                <span>01. Arquitetura Core</span>
+              </div>
+              <div class="pl-6 space-y-1 font-mono text-xs">
+                <div class="p-1.5 bg-ink/10 dark:bg-white/10 text-terracotta font-semibold flex items-center justify-between">
+                  <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span>RFC-089: Sync Engine</span>
+                  </span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-sage animate-pulse"></span>
+                </div>
+                <div class="p-1.5 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span>ADR-012: Data Isolation</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Folder 2: Guias -->
+            <div class="space-y-1 text-sm font-sans pt-2">
+              <div class="flex items-center gap-2 text-ink/80 dark:text-white/80 font-medium py-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="m6 9 6 6 6-6"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-500/80"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                <span>02. Padrões de Design</span>
+              </div>
+              <div class="pl-6 space-y-1 font-mono text-xs text-ink/60 dark:text-white/60">
+                <div class="p-1.5 hover:text-ink dark:hover:text-white transition-colors flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span>Design Tokens & Brutalism</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Status in Sidebar -->
+          <div class="pt-4 border-t border-ink/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-ink-light/60 dark:text-white/50">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-sage"></div>
+              <span>Sincronizado</span>
+            </div>
+            <span>2 autores online</span>
+          </div>
+        </div>
+
+        <!-- Document Sheet Canvas -->
+        <div id="workbench-canvas" class="col-span-12 md:col-span-8 lg:col-span-9 p-6 md:p-12 bg-white dark:bg-ink-paper overflow-y-auto max-h-[640px] transition-all duration-500">
+          
+          <div class="space-y-6">
+            <!-- Document Meta Header -->
+            <div class="space-y-2 border-b border-ink/10 dark:border-white/10 pb-5">
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-[11px] bg-terracotta/10 text-terracotta px-2.5 py-0.5 font-bold">RFC-089</span>
+                <span class="font-mono text-xs text-sage font-medium">● Status: Aprovado</span>
+                <span class="font-mono text-[10px] text-ink-light/40 dark:text-white/40 ml-auto">428 palavras · 2 min de leitura</span>
+              </div>
+              <h1 class="text-3xl md:text-4xl font-serif font-bold text-ink dark:text-white tracking-tight">
+                Engine de Sincronização & Persistência Local
+              </h1>
+              <p class="text-xs font-mono text-ink-light/60 dark:text-white/50">
+                Atualizado pelo <b class="text-ink dark:text-white">Time de Arquitetura</b> há 3 minutos
+              </p>
+            </div>
+
+            <!-- Callout Block (Dimmed in Typewriter focus unless active) -->
+            <div class="typewriter-dim p-5 border-l-4 border-terracotta bg-terracotta/5 text-ink dark:text-white font-sans text-sm space-y-1">
+              <div class="font-mono font-bold text-xs uppercase tracking-wider text-terracotta flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                <span>Invariante Arquitetural</span>
+              </div>
+              <p class="leading-relaxed">
+                Todas as operações de edição devem suportar latência zero (*Optimistic UI*) com fallback para fila de reconciliação em background.
+              </p>
+            </div>
+
+            <div class="prose dark:prose-invert max-w-none text-ink-light dark:text-white/80 font-sans space-y-4">
+              <h3 class="typewriter-dim font-serif text-xl font-bold text-ink dark:text-white">1. Visão Geral da Arquitetura</h3>
+              
+              <!-- Active Line with subtle typewriter marker -->
+              <p class="active-line-accent text-sm leading-relaxed text-ink dark:text-white font-normal">
+                Para atingir o padrão brutalista de velocidade, a renderização dos blocos e árvores do documento opera através de nós imutáveis. Abaixo está a topologia de concorrência:
+              </p>
+
+              <!-- Code & Diagram Mockup -->
+              <div class="typewriter-dim bg-fable-light dark:bg-ink-darker border border-ink/20 dark:border-white/15 p-4 font-mono text-xs space-y-2 rounded-sm">
+                <div class="flex justify-between text-[10px] text-ink/40 dark:text-white/40 uppercase tracking-widest border-b border-ink/10 dark:border-white/10 pb-2">
+                  <span>mermaid.js // Sequence Flow</span>
+                  <span class="text-sage">Live Preview</span>
+                </div>
+                <div class="text-terracotta">
+                  Client(UI) --[Action: InsertBlock]--> Cache(IndexedDB)<br>
+                  Cache --[Async Stream]--> WebSockets(SolidCable)<br>
+                  SolidCable --[Broadcast]--> Collaborators(Peers)
+                </div>
+              </div>
+
+              <h3 class="typewriter-dim font-serif text-xl font-bold text-ink dark:text-white pt-2">2. Validações de Sistema</h3>
+              <ul class="typewriter-dim space-y-2 text-sm font-sans list-none pl-0">
+                <li class="flex items-center gap-2"><span class="text-sage font-bold">✓</span> Suporte completo a atalhos de Markdown (<code>#</code>, <code>&gt;</code>, <code>```</code>, <code>[]</code>)</li>
+                <li class="flex items-center gap-2"><span class="text-sage font-bold">✓</span> Preservação de histórico com diffs linha a linha</li>
+                <li class="flex items-center gap-2"><span class="text-terracotta font-bold">○</span> Integração de menções de Kanban (<code>@issue-402</code>)</li>
+              </ul>
+            </div>
+
+            <!-- Zen Mode Live Footer Status Bar (Only visible when Zen is active) -->
+            <div id="zen-status-bar" class="hidden pt-6 border-t border-ink/10 dark:border-white/10 flex items-center justify-between text-xs font-mono text-ink-light/50 dark:text-white/40">
+              <span>Modo Zen Ativo · Pressione ESC para visão completa</span>
+              <span class="text-sage font-semibold">● Foco Contínuo</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITORIAL DEEP DIVE: FOCO PROFUNDO & MODO ZEN -->
+  <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#151517] p-8 md:p-20 relative overflow-hidden">
+    <div class="max-w-6xl mx-auto space-y-16">
+      
+      <!-- Philosophy Statement -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div class="lg:col-span-5 space-y-4">
+          <div class="font-mono text-xs text-terracotta font-bold uppercase tracking-widest">
+            Filosofia de Escrita
+          </div>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white leading-[1.05]">
+            O silêncio é a base do trabalho técnico.
+          </h2>
+        </div>
+        <div class="lg:col-span-7 space-y-4 font-serif text-lg md:text-xl text-ink-light dark:text-white/80 italic leading-relaxed">
+          <p>
+            "A documentação técnica mais valiosa não é aquela cheia de botões e animações desnecessárias. É aquela onde o engenheiro ou designer pôde sentar e pensar sem interrupções."
+          </p>
+          <p class="font-sans text-sm text-ink-light/70 dark:text-white/60 not-italic">
+            No SpecLine, o <b>Modo Zen</b> não é um modo secundário — é o coração do nosso editor. Com um único atalho (<kbd class="font-mono text-xs bg-ink/5 dark:bg-white/10 px-1.5 py-0.5 text-terracotta">ESC</kbd>), toda a interface periférica se dissolve, deixando apenas a folha de pensamento puro.
+          </p>
+        </div>
+      </div>
+
+      <!-- 3 Zen Mechanics Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-4">
+          <div class="font-mono text-xs text-terracotta font-bold uppercase tracking-wider">
+            [01] Ocultação Fluida
+          </div>
+          <h3 class="font-serif text-2xl text-ink dark:text-white font-medium">Zero Distrações</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Nenhum pop-up, aviso ou menu concorre pela sua atenção. A barra lateral e cabeçalhos recolhem suavemente sem quebrar o layout.
+          </p>
+        </div>
+
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-4">
+          <div class="font-mono text-xs text-sage font-bold uppercase tracking-wider">
+            [02] Tipografia Editorial
+          </div>
+          <h3 class="font-serif text-2xl text-ink dark:text-white font-medium">Contraste Térmico</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Fontes serifadas e espaçamentos calibrados para leitura prolongada em pergaminho suave (<span class="font-mono text-xs">#F0F0F3</span>) ou nanquim escuro (<span class="font-mono text-xs">#18181A</span>).
+          </p>
+        </div>
+
+        <div class="p-8 border border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper hover-card-lift space-y-4">
+          <div class="font-mono text-xs text-ochre font-bold uppercase tracking-wider">
+            [03] Foco de Máquina de Escrever
+          </div>
+          <h3 class="font-serif text-2xl text-ink dark:text-white font-medium">Typewriter Focus</h3>
+          <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+            Os parágrafos ao redor da linha ativa suavizam suavemente, mantendo a sua mente 100% ancorada no parágrafo em desenvolvimento.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4 BENTO PILLARS OF SPECLINE DOCS -->
+  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+    
+    <!-- Pillar 1 -->
+    <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 hover-card-lift group bg-white dark:bg-ink-paper">
+      <div class="space-y-4">
+        <span class="font-mono text-[10px] text-terracotta font-bold tracking-widest uppercase">01 // FLUIDEZ</span>
+        <h3 class="font-serif text-2xl font-light text-ink dark:text-white">Editor Sem Atrito</h3>
+        <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+          Digite <code class="font-mono text-xs bg-ink/5 dark:bg-white/10 px-1 text-terracotta">/</code> para invocar títulos, listas, tabelas, código ou callouts sem nunca tirar as mãos do teclado.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pillar 2 -->
+    <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 hover-card-lift group bg-white dark:bg-ink-paper">
+      <div class="space-y-4">
+        <span class="font-mono text-[10px] text-sage font-bold tracking-widest uppercase">02 // ENGENHARIA</span>
+        <h3 class="font-serif text-2xl font-light text-ink dark:text-white">Mermaid & Código</h3>
+        <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+          Crie fluxogramas, diagramas de sequência e modelos de banco de dados renderizados nativamente em tempo real.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pillar 3 -->
+    <div class="p-8 md:p-10 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 hover-card-lift group bg-white dark:bg-ink-paper">
+      <div class="space-y-4">
+        <span class="font-mono text-[10px] text-ochre font-bold tracking-widest uppercase">03 // ESTRUTURA</span>
+        <h3 class="font-serif text-2xl font-light text-ink dark:text-white">Árvore Infinita</h3>
+        <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+          Organize por pastas, subpastas e projetos. Cada documento pode conter filhos sem perder a hierarquia lógica.
+        </p>
+      </div>
+    </div>
+
+    <!-- Pillar 4 -->
+    <div class="p-8 md:p-10 hover-card-lift group bg-white dark:bg-ink-paper">
+      <div class="space-y-4">
+        <span class="font-mono text-[10px] text-ocean font-bold tracking-widest uppercase">04 // SOBERANIA</span>
+        <h3 class="font-serif text-2xl font-light text-ink dark:text-white">Exportação Aberta</h3>
+        <p class="font-sans text-sm text-ink-light dark:text-white/70 leading-relaxed">
+          Exporte documentos em PDF executivo de alta fidelidade, Markdown puro ou JSON consolidado com um único clique.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CALL TO ACTION SECTION -->
+  <section class="p-12 md:p-24 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink text-center relative overflow-hidden">
+    <div class="max-w-3xl mx-auto space-y-6 relative z-10">
+      <p class="font-mono text-xs tracking-widest text-terracotta uppercase font-bold">Comece a Documentar com Clareza</p>
+      <h2 class="font-serif font-light text-4xl md:text-6xl tracking-tight text-ink dark:text-white">
+        A sua equipe merece um ambiente desenhado para o foco.
+      </h2>
+      <p class="font-serif italic text-lg text-ink-light dark:text-white/70">
+        Disponível no plano gratuito para até 5 pessoas com documentos e árvores ilimitadas.
+      </p>
+      <div class="pt-4 flex justify-center">
+        <a href="/users/sign_up" class="group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-xl hover:scale-105 active:scale-95 transition-all cursor-pointer">
+          <span>Criar Conta Gratuita</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LUMEN STUDIO FOOTER -->
+  <footer class="relative bg-fable-light dark:bg-ink text-ink dark:text-fable-light pt-24 pb-8 overflow-hidden border-t-0">
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80vw] h-[50vh] bg-ink/5 dark:bg-fable-light/10 blur-[100px] rounded-[100%] pointer-events-none animate-glow-pulse"></div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
+      <div class="col-span-1 md:col-span-4 space-y-6">
+        <div class="flex items-center gap-3 group cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+          <span class="font-sans font-semibold text-2xl tracking-tight text-ink dark:text-white">SpecLine</span>
+        </div>
+        <p class="font-sans text-ink-light dark:text-white/60 text-base leading-relaxed max-w-xs">
+          Ambiente de foco e produtividade para equipes, projetos e profissionais operarem com clareza todos os dias.
+        </p>
+      </div>
+
+      <div class="col-span-1 md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Produto</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all font-semibold text-terracotta">Documentos & Wiki</a></li>
+            <li><a href="/features/kanban" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Tarefas & Kanban</a></li>
+            <li><a href="/pricing" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Preços</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Empresa</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/philosophy/vision" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Sobre Nós</a></li>
+            <li><a href="/contact" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Contato</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Recursos</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/features/docs" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Documentação</a></li>
+            <li><a href="/changelog" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Changelog</a></li>
+          </ul>
+        </div>
+        <div class="space-y-6">
+          <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Legal</h4>
+          <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+            <li><a href="/privacy" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Privacidade</a></li>
+            <li><a href="/terms" class="hover:text-terracotta hover:translate-x-1 inline-block transition-all">Termos</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative w-full overflow-hidden flex justify-center pb-12 z-10 pointer-events-none">
+      <div class="text-[18vw] leading-[0.75] font-sans font-bold tracking-tighter text-ink/10 dark:text-white/10" style="margin-bottom: -6vw;">
+        SpecLine
+      </div>
+    </div>
+
+    <div class="max-w-[1400px] mx-auto px-8 md:px-16 relative z-20 flex flex-col md:flex-row justify-between items-center text-xs font-sans text-ink-light/60 dark:text-white/40 pb-4">
+      <div>© 2026 SpecLine. All rights reserved.</div>
+      <div class="mt-4 md:mt-0">Feito com <span class="text-terracotta">♥</span> no Brasil</div>
+    </div>
+  </footer>
+
+</body>
+</html>

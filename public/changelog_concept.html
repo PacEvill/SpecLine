@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — SpecLine (Notas de Versão & Engenharia)</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: {
+              DEFAULT: '#18181A',
+              light: '#3C3C30',
+              paper: '#222225',
+              darker: '#111112',
+            },
+            fable: {
+              light: '#F8F5F0',
+              DEFAULT: '#F3EFE6',
+              dark: '#EAE5D9',
+            },
+            terracotta: '#D97A5E',
+            sage: '#A5B5A1',
+            ochre: '#CFA055',
+            ocean: '#4B6B78',
+          },
+          fontFamily: {
+            serif: ['"Newsreader"', 'serif'],
+            'serif-italic': ['"Fraunces"', 'serif'],
+            sans: ['"Inter"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          keyframes: {
+            'pop-in': {
+              '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            }
+          },
+          animation: {
+            'pop-in': 'pop-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    function filterReleases(version) {
+      const buttons = document.querySelectorAll('[data-filter-btn]');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-filter-btn') === version) {
+          btn.className = 'px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink shadow-sm transition-all cursor-pointer';
+        } else {
+          btn.className = 'px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-white/60 dark:bg-white/5 text-ink/70 dark:text-white/70 border border-ink/10 dark:border-white/10 hover:border-ink/30 dark:hover:border-white/30 transition-all cursor-pointer';
+        }
+      });
+
+      const cards = document.querySelectorAll('[data-release-card]');
+      cards.forEach(card => {
+        const cardVer = card.getAttribute('data-release-card');
+        if (version === 'all' || cardVer === version) {
+          card.classList.remove('hidden');
+          card.classList.remove('animate-pop-in');
+          void card.offsetWidth;
+          card.classList.add('animate-pop-in');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    function copyCommitHash(element, hash) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(hash).then(() => {
+          const feedback = element.querySelector('.copy-feedback');
+          if (feedback) {
+            const original = feedback.textContent;
+            feedback.textContent = 'Copiado!';
+            setTimeout(() => {
+              feedback.textContent = original;
+            }, 1800);
+          }
+        });
+      }
+    }
+  </script>
+</head>
+<body class="w-full bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink min-h-screen flex flex-col transition-colors duration-500 relative">
+
+  <!-- Floating Dark Mode Toggle -->
+  <button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest border border-ink/20 dark:border-white/20 shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="dark:hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden dark:block"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    <span>Inverter Tema</span>
+  </button>
+
+  <!-- NAVIGATION HEADER -->
+  <nav class="flex items-center justify-between border-b border-ink/15 dark:border-white/10 text-xs font-mono tracking-widest uppercase h-16 relative z-10 bg-fable-light dark:bg-[#18181A] px-6">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta group-hover:rotate-12 transition-transform duration-300"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3-4.03 2.42Z"/><path d="m7 16.5-4.74-2.85"/><path d="m7 16.5 5-3"/><path d="M7 16.5v5.17"/><path d="M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5l-5 3Z"/><path d="m17 16.5-5-3"/><path d="m17 16.5 4.74-2.85"/><path d="M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0l-3 1.8Z"/><path d="M12 8 7.26 5.15"/><path d="m12 8 4.74-2.85"/><path d="M12 13.5V8"/></svg>
+      <a href="/" class="font-sans font-bold text-base tracking-tight text-ink dark:text-white">SpecLine</a>
+    </div>
+    
+    <div class="hidden lg:flex items-center justify-center gap-6 text-[11px]">
+      <a href="/" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Início</a>
+      <a href="/features_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Funcionalidades</a>
+      <a href="/solutions_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Soluções</a>
+      <a href="/philosophy_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Filosofia</a>
+      <a href="/pricing_concept.html" class="text-ink/60 dark:text-white/60 hover:text-terracotta transition-colors">Preços</a>
+      <a href="/changelog_concept.html" class="text-ink dark:text-white font-bold border-b-2 border-terracotta py-1">Changelog</a>
+    </div>
+
+    <div class="flex items-center justify-end gap-3">
+      <a href="/users/sign_in" class="hidden sm:block text-ink/70 dark:text-white/70 hover:text-ink dark:hover:text-white px-3 py-2 transition-colors">Entrar</a>
+      <a href="/users/sign_up" class="bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white px-4 py-2 font-medium tracking-normal hover:scale-105 active:scale-95 transition-all text-xs shadow-sm">Criar Conta</a>
+    </div>
+  </nav>
+
+  <main class="flex-grow w-full py-12 sm:py-20">
+    <div class="max-w-5xl mx-auto px-6 space-y-16">
+      
+      <!-- SOBER & SERIOUS HEADER -->
+      <header class="border-b border-ink/15 dark:border-white/10 pb-10 space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="space-y-1">
+            <span class="font-mono text-xs uppercase tracking-widest text-ink-light/60 dark:text-white/40 font-semibold">
+              SpecLine // Release Notes
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-serif text-ink dark:text-white font-light tracking-tight">
+              Changelog
+            </h1>
+          </div>
+
+          <!-- Current Release Status Pill -->
+          <div class="flex items-center gap-2.5 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 px-3.5 py-2 rounded-xl text-xs font-mono shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-sage inline-block"></span>
+            <span class="text-ink-light/70 dark:text-white/60">Versão atual:</span>
+            <span class="font-bold text-ink dark:text-white">v1.3.0</span>
+            <span class="text-ink-light/30 dark:text-white/20">/</span>
+            <span class="text-sage font-medium">Produção Estável</span>
+          </div>
+        </div>
+
+        <p class="text-sm sm:text-base text-ink-light dark:text-white/70 font-sans max-w-2xl leading-relaxed">
+          Registro cronológico de versões, atualizações de infraestrutura, notas de segurança e aprimoramentos de estabilidade na plataforma SpecLine.
+        </p>
+
+        <!-- SOBER FILTER PILLS -->
+        <div class="pt-2 flex flex-wrap items-center gap-2 font-mono text-xs">
+          <span class="text-ink-light/50 dark:text-white/40 text-[11px] uppercase tracking-wider mr-1">Filtrar:</span>
+          <button type="button" data-filter-btn="all" onclick="filterReleases('all')" class="px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-ink text-white dark:bg-white dark:text-ink shadow-sm transition-all cursor-pointer">
+            Todas as Versões
+          </button>
+          <button type="button" data-filter-btn="v1.3.0" onclick="filterReleases('v1.3.0')" class="px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-white/60 dark:bg-white/5 text-ink/70 dark:text-white/70 border border-ink/10 dark:border-white/10 hover:border-ink/30 dark:hover:border-white/30 transition-all cursor-pointer">
+            v1.3.0 (Atual)
+          </button>
+          <button type="button" data-filter-btn="v1.2.0" onclick="filterReleases('v1.2.0')" class="px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-white/60 dark:bg-white/5 text-ink/70 dark:text-white/70 border border-ink/10 dark:border-white/10 hover:border-ink/30 dark:hover:border-white/30 transition-all cursor-pointer">
+            v1.2.0
+          </button>
+          <button type="button" data-filter-btn="v1.1.0" onclick="filterReleases('v1.1.0')" class="px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-white/60 dark:bg-white/5 text-ink/70 dark:text-white/70 border border-ink/10 dark:border-white/10 hover:border-ink/30 dark:hover:border-white/30 transition-all cursor-pointer">
+            v1.1.0
+          </button>
+          <button type="button" data-filter-btn="v1.0.0" onclick="filterReleases('v1.0.0')" class="px-3 py-1 rounded-lg font-mono text-xs font-semibold uppercase tracking-wider bg-white/60 dark:bg-white/5 text-ink/70 dark:text-white/70 border border-ink/10 dark:border-white/10 hover:border-ink/30 dark:hover:border-white/30 transition-all cursor-pointer">
+            v1.0.0
+          </button>
+        </div>
+      </header>
+
+      <!-- TIMELINE RELEASES CONTAINER -->
+      <div class="space-y-16">
+        
+        <!-- RELEASE v1.3.0 -->
+        <article data-release-card="v1.3.0" class="flex flex-col md:flex-row gap-6 md:gap-10 border-b border-ink/10 dark:border-white/10 pb-16">
+          <div class="md:w-56 shrink-0 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-lg bg-ink dark:bg-white text-white dark:text-ink font-mono text-sm font-bold tracking-tight">
+                v1.3.0
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-sage/15 text-sage font-mono text-[10px] font-bold uppercase tracking-wider border border-sage/20">
+                Atual
+              </span>
+            </div>
+
+            <div class="space-y-1 text-xs font-mono text-ink-light/70 dark:text-white/60">
+              <time class="block font-medium text-ink dark:text-white">13 de setembro de 2026</time>
+              <button type="button" onclick="copyCommitHash(this, 'e7b419c')" class="inline-flex items-center gap-1.5 text-ink-light/60 dark:text-white/40 hover:text-terracotta transition-colors cursor-pointer" title="Copiar Commit Hash">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span class="copy-feedback">#e7b419c</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-grow space-y-6">
+            <div class="space-y-2">
+              <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-white font-normal">
+                Centrais de Experiência, Padronização Editorial & Expansão de Testes
+              </h2>
+              <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Grande atualização com a entrega das páginas dedicadas de Soluções e Filosofia, padronização visual das 3 centrais de diretório com o design system editorial brutalista, substituição universal de emojis por ícones vetoriais Lucide e ampliação da suíte automatizada para 123 testes com 100% de sucesso.
+              </p>
+            </div>
+
+            <div class="space-y-5 text-xs sm:text-sm font-sans">
+              <div class="space-y-2.5">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                  Novas Centrais & Páginas Dedicadas
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Soluções]</span>
+                    <strong>Páginas Dedicadas por Perfil:</strong> Implementação de rotas e concepts específicos para Startups, Agências e Times de Produto, equipadas com calculadora de runway, portal de aprovação multi-tenant e simulador da Tríade Viva SpecLine.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Filosofia]</span>
+                    <strong>Ensaios Conceituais:</strong> Páginas estruturadas para Nossa Visão com simulador de atrito cognitivo de abas e O Poder do Foco com visualizador empírico da jornada do Efeito Queijo Suíço e cronômetro de trabalho focado.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Padronização]</span>
+                    <strong>Harmonização das 3 Centrais:</strong> Redesenho simétrico das páginas centrais de Soluções, Filosofia e Funcionalidades com cabeçalhos com flare ambiente, pílulas de navegação rápida, cards com caixas de métricas e matrizes comparativas de 12 colunas.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="space-y-2.5 pt-2">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+                  Aprimoramentos de UI/UX & Acessibilidade
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Ícones]</span>
+                    <strong>Substituição Universal de Emojis:</strong> Varredura e substituição completa de emojis por ícones SVG semânticos do Lucide em todas as interfaces públicas e internas.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Eventos]</span>
+                    <strong>Remoção de Listeners de Teclado Globais:</strong> Eliminação de manipuladores de teclado acidentais, garantindo digitação limpa e sem atalhos conflitantes em formulários e inputs.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Changelog]</span>
+                    <strong>Interface Sóbria de Engenharia:</strong> Reestruturação da página com timeline em duas colunas, seletor de versões e remoção de firulas promocionais.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="space-y-2.5 pt-2">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-ocean"></span>
+                  Qualidade, Testes & CI/CD
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Testes]</span>
+                    <strong>Expansão da Cobertura de Testes:</strong> Adicionados testes de integração e controllers para as novas rotas centrais, alcançando 123 suítes e 374 asserções aprovadas com 0 falhas.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Segurança]</span>
+                    <strong>Auditoria Estática Aprovada:</strong> 0 vulnerabilidades detectadas pelo Brakeman e conformidade estrita de Content Security Policy mantida.
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="p-3 bg-white/60 dark:bg-ink-darker/60 border border-ink/10 dark:border-white/10 rounded-xl flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-ink-light/70 dark:text-white/60">
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Brakeman: 0 avisos</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>CI: 123 testes (100% aprovados)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-sage"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>CSP: Modo estrito ativo</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- RELEASE v1.2.0 -->
+        <article data-release-card="v1.2.0" class="flex flex-col md:flex-row gap-6 md:gap-10 border-b border-ink/10 dark:border-white/10 pb-16">
+          <div class="md:w-56 shrink-0 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-lg bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-mono text-sm font-bold tracking-tight">
+                v1.2.0
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-sage/15 text-sage font-mono text-[10px] font-bold uppercase tracking-wider border border-sage/20">
+                Estável
+              </span>
+            </div>
+
+            <div class="space-y-1 text-xs font-mono text-ink-light/70 dark:text-white/60">
+              <time class="block font-medium text-ink dark:text-white">21 de agosto de 2026</time>
+              <button type="button" onclick="copyCommitHash(this, 'c9f82d1')" class="inline-flex items-center gap-1.5 text-ink-light/60 dark:text-white/40 hover:text-terracotta transition-colors cursor-pointer" title="Copiar Commit Hash">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span class="copy-feedback">#c9f82d1</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-grow space-y-6">
+            <div class="space-y-2">
+              <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-white font-normal">
+                Hardening de Produção, Google OAuth 2.0 & Refinamento Mobile
+              </h2>
+              <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Versão focada em estabilidade operacional para o ambiente de produção (Render + Neon PostgreSQL + Cloudflare R2), resolução rigorosa de diretivas de Content Security Policy e aprimoramento da interface em dispositivos móveis.
+              </p>
+            </div>
+
+            <div class="space-y-5 text-xs sm:text-sm font-sans">
+              <div class="space-y-2.5">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+                  Funcionalidades Entregues
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Auth]</span>
+                    <strong>Autenticação Social Google:</strong> Integração completa via Google OAuth 2.0 com suporte a vinculação de contas e importação de foto de perfil.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Security]</span>
+                    <strong>Cloudflare Turnstile:</strong> Proteção invisível integrada aos formulários de autenticação contra abusos e tráfego automatizado.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Assets]</span>
+                    <strong>Favicons Universais:</strong> Geração e entrega nativa de <code class="font-mono text-[11px] px-1 py-0.5 bg-ink/5 dark:bg-white/10 rounded">icon.png</code>, <code class="font-mono text-[11px] px-1 py-0.5 bg-ink/5 dark:bg-white/10 rounded">icon.svg</code> e <code class="font-mono text-[11px] px-1 py-0.5 bg-ink/5 dark:bg-white/10 rounded">favicon.ico</code> com cache HTTP imutável.
+                  </li>
+                </ul>
+              </div>
+
+              <div class="space-y-2.5 pt-2">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-terracotta"></span>
+                  Aprimoramentos & Correções
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[CSP]</span>
+                    <strong>Eliminação de script-src-attr:</strong> Migração de ações inline do menu hambúrguer para o controller Stimulus dedicado (<code class="font-mono text-[11px] px-1 py-0.5 bg-ink/5 dark:bg-white/10 rounded">dropdown_controller.js</code>).
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Mobile]</span>
+                    <strong>Modo Zen Mobile:</strong> Ocultação automática de barras e elementos sobrepostos em viewports compactas para leitura e escrita focadas.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Database]</span>
+                    <strong>Drivers PostgreSQL no Dockerfile:</strong> Inclusão de bibliotecas nativas <code class="font-mono text-[11px] px-1 py-0.5 bg-ink/5 dark:bg-white/10 rounded">libpq5</code> para conexões seguras SSL com o Neon PostgreSQL.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- RELEASE v1.1.0 -->
+        <article data-release-card="v1.1.0" class="flex flex-col md:flex-row gap-6 md:gap-10 border-b border-ink/10 dark:border-white/10 pb-16">
+          <div class="md:w-56 shrink-0 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-lg bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-mono text-sm font-bold tracking-tight">
+                v1.1.0
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-ocean/15 text-ocean font-mono text-[10px] font-bold uppercase tracking-wider border border-ocean/20">
+                Estável
+              </span>
+            </div>
+
+            <div class="space-y-1 text-xs font-mono text-ink-light/70 dark:text-white/60">
+              <time class="block font-medium text-ink dark:text-white">19 de agosto de 2026</time>
+              <button type="button" onclick="copyCommitHash(this, 'a4e17b3')" class="inline-flex items-center gap-1.5 text-ink-light/60 dark:text-white/40 hover:text-ocean transition-colors cursor-pointer" title="Copiar Commit Hash">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span class="copy-feedback">#a4e17b3</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-grow space-y-6">
+            <div class="space-y-2">
+              <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-white font-normal">
+                Whiteboard Vetorial, Árvore de Documentos & Chat Integrado
+              </h2>
+              <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Expansão dos módulos centrais de colaboração técnica com canvas visual, aninhamento ilimitado de especificações e comunicação contextual em tempo real.
+              </p>
+            </div>
+
+            <div class="space-y-5 text-xs sm:text-sm font-sans">
+              <div class="space-y-2.5">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-ocean"></span>
+                  Recursos do Ciclo
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Whiteboard]</span>
+                    <strong>Diagramação com Mermaid.js:</strong> Criação de topologias visuais com cabos Bézier dinâmicos e exportação SVG/PNG.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Docs]</span>
+                    <strong>Árvore Hierárquica e Modo Word:</strong> Editor colaborativo com ordenação posicional de documentos e tickets embutidos.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Chat]</span>
+                    <strong>Mensageria com Solid Cable:</strong> ActionCable sobre banco relacional único com conversão direta de mensagens em tarefas.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Storage]</span>
+                    <strong>Validação Marcel de Magic Bytes:</strong> Inspeção de assinaturas binárias de arquivos enviados para Cloudflare R2 contra falsificação de extensões.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- RELEASE v1.0.0 -->
+        <article data-release-card="v1.0.0" class="flex flex-col md:flex-row gap-6 md:gap-10 border-b border-ink/10 dark:border-white/10 pb-16">
+          <div class="md:w-56 shrink-0 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="px-3 py-1 rounded-lg bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-mono text-sm font-bold tracking-tight">
+                v1.0.0
+              </span>
+              <span class="px-2 py-0.5 rounded-md bg-ink/10 dark:bg-white/10 text-ink dark:text-white font-mono text-[10px] font-bold uppercase tracking-wider border border-ink/20 dark:border-white/20">
+                Gênese
+              </span>
+            </div>
+
+            <div class="space-y-1 text-xs font-mono text-ink-light/70 dark:text-white/60">
+              <time class="block font-medium text-ink dark:text-white">12 de agosto de 2026</time>
+              <button type="button" onclick="copyCommitHash(this, 'f102c89')" class="inline-flex items-center gap-1.5 text-ink-light/60 dark:text-white/40 hover:text-ink dark:hover:text-white transition-colors cursor-pointer" title="Copiar Commit Hash">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                <span class="copy-feedback">#f102c89</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-grow space-y-6">
+            <div class="space-y-2">
+              <h2 class="text-xl sm:text-2xl font-serif text-ink dark:text-white font-normal">
+                Lançamento Inicial: Monólito Rails 8 Solid Stack
+              </h2>
+              <p class="text-xs sm:text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Fundação da plataforma unificada de engenharia e gestão de software. Estabelecida como monólito em Rails 8 para eliminar o imposto cognitivo da fragmentação de ferramentas.
+              </p>
+            </div>
+
+            <div class="space-y-5 text-xs sm:text-sm font-sans">
+              <div class="space-y-2.5">
+                <h3 class="font-mono text-xs uppercase tracking-wider text-ink-light/80 dark:text-white/70 font-bold flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-ink dark:bg-white"></span>
+                  Fundação Arquitetural
+                </h3>
+                <ul class="space-y-2 text-ink-light dark:text-white/80 pl-3 leading-relaxed">
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Stack]</span>
+                    <strong>Rails 8 Solid Stack:</strong> Solid Cache, Solid Queue e Solid Cable configurados sobre PostgreSQL único com isolamento de transações.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Security]</span>
+                    <strong>Sessões com Devise:</strong> Criptografia AES-256 em cookies de sessão e proteção contra ataques de injeção e CSRF.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Multi-Tenancy]</span>
+                    <strong>Workspaces Isolados:</strong> Controle granular de organizações, membros e permissões de projetos.
+                  </li>
+                  <li>
+                    <span class="font-mono text-[11px] px-1.5 py-0.5 rounded bg-ink/5 dark:bg-white/10 text-ink dark:text-white mr-1.5">[Design]</span>
+                    <strong>Design System Editorial:</strong> Construção de UI responsiva com Tailwind CSS e suporte bidirecional aos temas Claro e Escuro.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- SOBER FOOTER NOTE -->
+      <footer class="border-t border-ink/10 dark:border-white/10 pt-10 text-center space-y-2">
+        <p class="font-mono text-xs text-ink-light/70 dark:text-white/50">
+          Todas as alterações são validadas através de suítes de testes automatizados e análise estática antes de serem promovidas para o ambiente de produção.
+        </p>
+        <p class="font-mono text-[11px] text-ink-light/40 dark:text-white/30">
+          SpecLine Engineering · Canal de Lançamentos
+        </p>
+      </footer>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] py-12 px-6">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs font-mono">
+      <div class="flex items-center gap-3">
+        <span class="font-sans font-bold text-base text-ink dark:text-white">SpecLine</span>
+        <span class="text-ink-light/60 dark:text-white/40">// Release Notes & Engenharia</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6 text-ink/70 dark:text-white/70">
+        <a href="/features_concept.html" class="hover:text-terracotta transition-colors">Funcionalidades</a>
+        <a href="/solutions_concept.html" class="hover:text-terracotta transition-colors">Soluções</a>
+        <a href="/philosophy_concept.html" class="hover:text-terracotta transition-colors">Filosofia</a>
+        <a href="/pricing_concept.html" class="hover:text-terracotta transition-colors">Preços</a>
+        <a href="/changelog_concept.html" class="hover:text-terracotta font-semibold transition-colors">Changelog</a>
+      </div>
+
+      <div class="text-ink-light/60 dark:text-white/40">
+        &copy; 2026 SpecLine. Protótipo interativo sem menção a marcas terceiras.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

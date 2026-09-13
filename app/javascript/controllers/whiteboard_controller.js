@@ -384,16 +384,20 @@ export default class extends Controller {
   }
 
   toggleGrid() {
+    const isDark = document.documentElement.classList.contains('dark')
+    const gridColor = isDark ? "rgba(255, 255, 255, 0.08)" : "rgba(0, 0, 0, 0.08)"
+    const lineGridColor = isDark ? "rgba(255, 255, 255, 0.06)" : "rgba(0, 0, 0, 0.06)"
+
     if (this.gridMode === "dots") {
       this.gridMode = "lines"
-      this.canvasTarget.style.backgroundImage = "linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)"
+      this.canvasTarget.style.backgroundImage = `linear-gradient(to right, ${lineGridColor} 1px, transparent 1px), linear-gradient(to bottom, ${lineGridColor} 1px, transparent 1px)`
       this.canvasTarget.style.backgroundSize = "32px 32px"
     } else if (this.gridMode === "lines") {
       this.gridMode = "none"
       this.canvasTarget.style.backgroundImage = "none"
     } else {
       this.gridMode = "dots"
-      this.canvasTarget.style.backgroundImage = "radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)"
+      this.canvasTarget.style.backgroundImage = `radial-gradient(${gridColor} 1px, transparent 1px)`
       this.canvasTarget.style.backgroundSize = "24px 24px"
     }
   }

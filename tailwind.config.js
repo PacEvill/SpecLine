@@ -23,10 +23,14 @@ module.exports = {
         },
         terracotta: '#D97A5E',
         sage: '#A5B5A1',
+        ochre: '#CFA055',
+        ocean: '#4B6B78',
       },
       fontFamily: {
-        serif: ['Newsreader', 'Playfair Display', 'serif'],
-        sans: ['Inter', 'Instrument Sans', 'sans-serif'],
+        serif: ['"Newsreader"', 'serif'],
+        'serif-italic': ['"Fraunces"', 'serif'],
+        sans: ['"Inter"', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       keyframes: {
         'fade-in-up': {
@@ -44,6 +48,29 @@ module.exports = {
         'slide-in-right': {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0)' },
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        'marquee': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'dash': {
+          'to': { strokeDashoffset: '0' },
+        },
+        'glow-pulse': {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.85', transform: 'scale(1.03)' },
+        },
+        'pop-in': {
+          '0%': { opacity: '0', transform: 'translateY(6px) scale(0.97)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        'blink': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         }
       },
       animation: {
@@ -54,6 +81,12 @@ module.exports = {
         'fade-in': 'fade-in 1.5s ease-out forwards',
         'float': 'float 8s ease-in-out infinite',
         'slide-in-right': 'slide-in-right 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'marquee': 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
+        'dash': 'dash 20s linear infinite',
+        'glow-pulse': 'glow-pulse 4s ease-in-out infinite',
+        'pop-in': 'pop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        'blink': 'blink 1s step-end infinite',
       }
     },
   },

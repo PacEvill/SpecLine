@@ -2,10 +2,10 @@
   <!-- Backdrop -->
   <div class="fixed inset-0 bg-ink/20 backdrop-blur-sm z-40 flex justify-end" data-controller="modal" data-action="click->modal#closeBackground">
     <!-- Panel Container -->
-    <div class="bg-[#FDFBF7] dark:bg-ink-darker shadow-2xl w-full max-w-full sm:max-w-md h-full overflow-y-auto flex flex-col pointer-events-auto transform transition-transform duration-300 animate-slide-in-right pb-16 sm:pb-0" data-modal-target="container">
+    <div class="bg-fable-light dark:bg-ink-darker shadow-2xl w-full max-w-full sm:max-w-md h-full overflow-y-auto flex flex-col pointer-events-auto transform transition-transform duration-300 animate-slide-in-right pb-16 sm:pb-0" data-modal-target="container">
       
       <!-- Header -->
-      <div class="sticky top-0 bg-[#FDFBF7]/90 dark:bg-ink-darker/90 backdrop-blur-sm px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between z-20">
+      <div class="sticky top-0 bg-fable-light/90 dark:bg-ink-darker/90 backdrop-blur-sm px-6 py-4 border-b border-ink/5 dark:border-white/5 flex items-center justify-between z-20">
         <div>
           <h1 class="text-xl font-serif text-ink dark:text-fable font-medium">Minhas Tarefas</h1>
           <p class="text-xs text-ink-light dark:text-white/60 font-sans mt-0.5">Tarefas atribuídas a você.</p>
@@ -47,7 +47,7 @@
                     <% if issue.issue_status.category == 'todo' %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-ink-light dark:text-white/60"><circle cx="12" cy="12" r="10"/></svg>
                     <% elsif issue.issue_status.category == 'in_progress' %>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                     <% else %>
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage-dark"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                     <% end %>

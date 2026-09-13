@@ -1,52 +1,81 @@
-# SpecLine
+<div align="center">
 
-Plataforma unificada de engenharia de produto projetada para consolidar documentacao tecnica, gestao visual de demandas em quadros contextuais e comunicacao integrada em um unico ecossistema, mitigando a dispersao de informacoes e a perda de contexto operacional.
+  <img src="docs/img/specline-hero-banner.png" alt="SpecLine Banner" width="100%" />
 
-[![Rails Version](https://img.shields.io/badge/Rails-8.1.3-CC0000?style=flat-square&logo=rubyonrails&logoColor=white)](https://rubyonrails.org/)
-[![Ruby Version](https://img.shields.io/badge/Ruby-3.4.1-CC342D?style=flat-square&logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
-[![Hotwire](https://img.shields.io/badge/Hotwire-Turbo_%2B_Stimulus-FF7700?style=flat-square)](https://hotwired.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-[![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+  # SpecLine
+
+  **Plataforma Unificada de Engenharia de Produto e Documentação Técnica**
+
+  _Consolidação contextual de especificações de software, rastreabilidade de tarefas em quadros Kanban e modelagem visual de arquitetura em um ecossistema integrado._
+
+  <br />
+
+  [![Rails Version](https://img.shields.io/badge/Rails-8.1.3-CC0000?style=flat-square&logo=rubyonrails&logoColor=white)](https://rubyonrails.org/)
+  [![Ruby Version](https://img.shields.io/badge/Ruby-3.4.1-CC342D?style=flat-square&logo=ruby&logoColor=white)](https://www.ruby-lang.org/)
+  [![Hotwire](https://img.shields.io/badge/Hotwire-Turbo_%2B_Stimulus-FF7700?style=flat-square)](https://hotwired.dev/)
+  [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4_Semântico-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+  [![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+  [![Security Brakeman](https://img.shields.io/badge/Security-0_Vulnerabilities-2ea44f?style=flat-square&logo=shield&logoColor=white)](#7-verificação-de-qualidade-e-segurança)
+  [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+
+  <br />
+
+  [Visão Geral](#1-visão-geral-e-proposta-de-engenharia) •
+  [Galeria da Plataforma](#2-galeria-da-plataforma) •
+  [Arquitetura do Sistema](#3-arquitetura-do-sistema-e-topologia) •
+  [Matriz Tecnológica](#4-matriz-tecnológica) •
+  [Instalação e Execução](#6-ambiente-de-desenvolvimento-local) •
+  [Diretrizes de Contribuição](#9-como-contribuir)
+
+</div>
 
 ---
 
-## 1. Visao Geral e Proposta de Engenharia
+## 1. Visão Geral e Proposta de Engenharia
 
-O SpecLine aborda o problema critico da fragmentacao no desenvolvimento de software, no qual equipes técnicas mantem especificacoes, itens de backlog e discussoes em plataformas desconectadas.
+No ciclo de vida do desenvolvimento de software, equipes técnicas enfrentam perdas contínuas de contexto operacional decorrentes da dispersão de informações. Especificações funcionais (PRDs) residem em plataformas de texto isoladas, itens de backlog ficam dissociados em rastreadores de tarefas, diagramas de sistema permanecem em ferramentas gráficas externas e deliberações técnicas se perdem em canais de comunicação efêmeros.
 
-### Principais Diretrizes do Projeto
+O **SpecLine** foi concebido para unificar esses fluxos sob uma arquitetura de dados coesa:
 
-- **Centralizacao Contextual:** Integracao nativa entre documentos de produto (PRDs) e tarefas no fluxo Kanban.
-  - **Autenticação Descomplicada:** Suporte completo nativo a Google OAuth 2.0.
-  - **Monolito Modular de Alta Eficiência:** Arquitetura coesa em Ruby on Rails 8 que elimina serviços intermediários dedicados (como instâncias pagas de Redis), viabilizando operação de alto desempenho com custo zero de infraestrutura.
+* **Documentação Estruturada:** Criação e manutenção de especificações técnicas vinculadas diretamente aos módulos do sistema.
+* **Rastreabilidade Bidirecional:** Associação direta entre itens do quadro Kanban e suas respectivas seções no documento funcional.
+* **Modelagem Visual Integrada:** Elaboração de arquiteturas de software e fluxogramas em canvas vetorial interativo.
+* **Arquitetura de Alta Eficiência:** Desenvolvido sobre o **Ruby on Rails 8 Solid Stack**, eliminando a necessidade de serviços intermediários pagos (como instâncias dedicadas de Redis) ao empregar `Solid Queue`, `Solid Cable` e `Solid Cache` persistidos no PostgreSQL.
 
 ---
 
-## 2. Galeria da Plataforma (Screenshots)
+## 2. Galeria da Plataforma
 
-_Para adicionar os prints finais, basta salvar as imagens na pasta `docs/images/` e descomentar as linhas abaixo._
+<div align="center">
 
-### Painel Geral de Projetos
+### Painel Geral e Gestão de Workspaces
+_Métricas de velocidade, progresso consolidado de entregas e alternância rápida entre projetos e workspaces._
 
-![Painel de Projetos (Cole sua imagem em docs/images/projects-dashboard.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Painel+de+Projetos)
-_Visão central do Workspace, contendo as métricas principais e a lista de projetos ativos._
+<img src="docs/img/projects-dashboard.png" alt="Painel de Projetos SpecLine" width="100%" />
 
-### Quadro Kanban Interativo (Issues)
+<br /><br />
 
-![Quadro Kanban (Cole sua imagem em docs/images/kanban-board.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Kanban)
-_Gestão drag-and-drop de tarefas com edição diretamente em pop-ups rápidos (Turbo Frames)._
+### Quadro Kanban Contextual (Linear-Tier)
+_Gestão fluida de tarefas com agrupamento por Milestones, tags semânticas, estimativas e drag-and-drop instantâneo via Turbo Streams._
 
-### Documentações (Editor Contextual)
+<img src="docs/img/kanban-board.png" alt="Quadro Kanban SpecLine" width="100%" />
 
-![Documentos (Cole sua imagem em docs/images/documents-editor.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+do+Editor+de+Documentos)
-_Editor no estilo Notion para especificações de produto e documentação técnica._
+<br /><br />
 
-### Gestão de Metas (Milestones)
+### Editor de Especificações (TipTap & Modo Foco)
+_Editor técnico de alta performance com suporte a comandos rápidos (/), tabela de conteúdos dinâmica (TOC), capas gradientes, blocos de código e modo foco imersivo._
 
-![Milestones (Cole sua imagem em docs/images/milestones-view.png)](https://placehold.co/800x400/e2e8f0/475569?text=Print+das+Metas)
-_Acompanhamento e organização de agrupamentos de entregas visando previsibilidade._
+<img src="docs/img/documents-editor.png" alt="Editor de Documentos SpecLine" width="100%" />
+
+<br /><br />
+
+### Canvas de Arquitetura e Diagramação Vetorial
+_Área visual colaborativa com renderização vetorial artística via Rough.js, suporte a diagramas Mermaid.js e notas adesivas técnicas._
+
+<img src="docs/img/whiteboard-canvas.png" alt="Whiteboard SpecLine" width="100%" />
+
+</div>
 
 ---
 
@@ -54,15 +83,15 @@ _Acompanhamento e organização de agrupamentos de entregas visando previsibilid
 
 ```mermaid
 graph TD
-    Client([Cliente / Navegador]) -->|HTTPS / TLS 1.3| Cloudflare[Cloudflare Edge & CDN]
+    Client([Cliente / Navegador]) -->|HTTPS / TLS 1.3| Cloudflare[Cloudflare Edge & WAF]
 
     subgraph Infraestrutura de Producao
-        Cloudflare -->|Trafego Dinamico / HTML| Render[Render.com Web Service<br>Docker + Thruster + Puma<br>512 MB RAM / 0.1 vCPU]
-        Cloudflare -->|Assets Estaticos Cacheados<br>CSS / JS / Imagens| Cache[(Edge Cache)]
+        Cloudflare -->|Trafego Dinamico / HTML + Turbo| Render[Render.com Web Service<br>Docker + Thruster + Puma<br>512 MB RAM / 0.1 vCPU]
+        Cloudflare -->|Assets Estaticos Cacheados<br>CSS / JS / Favicons| Cache[(Edge Cache CDN)]
 
-        Render -->|PostgreSQL Wire Protocol<br>Connection Pooling PgBouncer| Neon[(Neon.tech Serverless PostgreSQL<br>Dados + Solid Queue + Solid Cable)]
+        Render -->|PostgreSQL Wire Protocol<br>PgBouncer Connection Pooling| Neon[(Neon.tech Serverless PostgreSQL<br>Dados + Solid Queue + Solid Cable)]
 
-        Render -->|API S3-Compatible / Zero Egress| R2[(Cloudflare R2 Object Storage<br>Anexos e Documentos)]
+        Render -->|S3-Compatible API / Zero Egress| R2[(Cloudflare R2 Object Storage<br>Anexos, Logos e Capas)]
 
         Render -->|SMTP / API Transacional| Resend[Resend Service<br>E-mails Transacionais]
     end
@@ -70,132 +99,136 @@ graph TD
 
 ---
 
-## 3. Modulos e Subsistemas
+## 4. Matriz Tecnológica
 
-| Subsistema                        | Escopo e Capacidades Tecnicas                                                              |
-| :-------------------------------- | :----------------------------------------------------------------------------------------- |
-| **Quadro Kanban Contextual**      | Gestao de fluxo com atualizacao em tempo real via Turbo Streams e persistencia assincrona. |
-| **Documentacao e Especificacoes** | Editor estruturado com suporte a Markdown, formatacao tecnica e anexos de midia.           |
-| **Comunicacao Contextual**        | Registro de mensagens e discussoes diretamente atrelado a cards e documentos.              |
-| **Canvas e Prototipacao**         | Area colaborativa para diagramacao de fluxos e especificacao visual.                       |
-| **Relatorios e Metricas**         | Consolidacao de indicadores de desempenho e exportacao em PDF.                             |
-| **Autenticacao e Seguranca**      | Gestao de sessoes, criptografia bcrypt via Devise e integracao Google OAuth2.              |
-
----
-
-## 4. Matriz Tecnologica
-
-| Camada                       | Tecnologia                 | Justificativa Arquitetural                                               |
-| :--------------------------- | :------------------------- | :----------------------------------------------------------------------- |
-| **Backend & Core**           | Ruby on Rails 8.1          | Framework full-stack coeso com arquitetura MVC e geradores de codigo.    |
-| **Reatividade**              | Hotwire (Turbo + Stimulus) | Reatividade em tempo real e navegacao acelerada sem complexidade de SPA. |
-| **Estilizacao**              | Tailwind CSS 3.4           | Framework utilitario com pipeline PostCSS e design system semantico.     |
-| **Filas e WebSockets**       | Solid Queue & Solid Cable  | Background jobs e mensageria em tempo real persistidos no PostgreSQL.    |
-| **Banco Local**              | SQLite3                    | Banco relacional leve e sem dependencia externa para desenvolvimento.    |
-| **Banco Producao**           | Neon.tech PostgreSQL       | Instancia serverless com auto-scaling e connection pooling integrado.    |
-| **Servidor de Aplicacao**    | Puma + Thruster            | Servidor concorrente protegido por proxy HTTP/2 com cache de memoria.    |
-| **Containerizacao**          | Docker Multi-Stage         | Imagem compacta e segura com otimizacao de memoria via `jemalloc`.       |
-| **Armazenamento de Objetos** | Cloudflare R2              | Storage compativel com S3 com isencao total de taxas de transferencia.   |
-| **E-mails Transacionais**    | Resend                     | Servico de envio de e-mails transacionais de alta entregabilidade.       |
+| Camada | Tecnologia | Justificativa Arquitetural |
+| :--- | :--- | :--- |
+| **Backend & Core** | **Ruby on Rails 8.1** | Monólito modular com padrão MVC, Active Storage e geradores de código. |
+| **Reatividade Frontend** | **Hotwire (Turbo 8 + Stimulus)** | Reatividade em tempo real e navegação acelerada sem complexidade de SPA. |
+| **Design System** | **Tailwind CSS v4** | Paleta semântica personalizada (Ink, Fable, Terracotta, Olive, Sage, Slate, Ochre, Rust). |
+| **Filas & WebSockets** | **Solid Queue & Solid Cable** | Processamento assíncrono e mensageria distribuída persistidos no PostgreSQL. |
+| **Editor Rich Text** | **TipTap Core + Extensions** | Editor estruturado em blocos com checklists, atalhos, tabelas e exportação Markdown. |
+| **Canvas Vetorial** | **Rough.js + Mermaid.js** | Diagramação de software e arquitetura com renderização leve no cliente. |
+| **Banco de Dados** | **PostgreSQL 16 (Neon.tech)** | Instância serverless de alta escala com pooling de conexões via PgBouncer. |
+| **Servidor & Proxy** | **Puma + Thruster** | Proxy HTTP/2 de alta performance com compressão gzip/brotli e cache de ativos. |
+| **Containerização** | **Docker Multi-Stage** | Imagem enxuta protegida com jemalloc e execução por usuário não-root. |
+| **Armazenamento** | **Cloudflare R2** | Armazenamento de arquivos compatível com S3 com isenção total de taxas de transferência. |
 
 ---
 
-## 5. Indice de Documentacao Tecnica
+## 5. Índice de Documentação Técnica
 
-Especificacoes detalhadas de engenharia estao disponiveis no diretorio `docs/`:
+Especificações aprofundadas de engenharia estão centralizadas no diretório `docs/`:
 
-- [Especificacao da Stack Tecnica](docs/STACK.md): Detalhamento dos componentes, gems, pacotes e versoes.
-- [Documento de Arquitetura e Engenharia de Capacidade](docs/INFRASTRUCTURE_AND_CAPACITY.md): Dimensionamento de volumetria, capacidade de usuarios simultaneos, analise de TCO e justificativa da estrategia zero-cost.
+* **[Constituição de Desenvolvimento (docs/SPECLINE_CONSTITUTION.md)](docs/SPECLINE_CONSTITUTION.md):** Princípios de arquitetura, qualidade e metodologia TDD.
+* **[Infraestrutura & Capacidade (docs/INFRASTRUCTURE_AND_CAPACITY.md)](docs/INFRASTRUCTURE_AND_CAPACITY.md):** Dimensionamento de volumetria, análise de TCO e estratégia zero-cost.
+* **[Blueprint de Segurança (docs/SECURITY_BLUEPRINT.md)](docs/SECURITY_BLUEPRINT.md):** Defesas contra IDOR, sanitização HTML, rate limiting via Rack::Attack e validação binária de arquivos.
+* **[Roadmap de Sprints (docs/SPRINTS.md)](docs/SPRINTS.md):** Histórico de entregas e módulos planejados.
+* **[Questionário de Discovery (docs/USER_RESEARCH_SURVEY.md)](docs/USER_RESEARCH_SURVEY.md):** Instrumento de pesquisa e validação com usuários.
 
 ---
 
 ## 6. Ambiente de Desenvolvimento Local
 
-### 6.1. Pre-requisitos do Sistema
+### 6.1. Pré-requisitos
+* **Ruby:** `3.4.1` (gerenciado via `asdf`, `rbenv` ou `mise`)
+* **Node.js:** `20.x` ou superior com `npm`
+* **SQLite3** (para desenvolvimento local) ou **PostgreSQL 16**
+* **Libvips** (dependência nativa para processamento de imagens)
 
-- **Ruby:** `3.4.x` (gerenciado via `asdf`, `rbenv` ou `mise`)
-- **Node.js:** `20.x` ou superior com gerenciador `npm`
-- **SQLite3:** `3.x`
-- **Libvips:** Dependencia nativa para processamento de imagens
+### 6.2. Procedimento de Instalação
 
-### 6.2. Procedimento de Instalacao
-
-1. Clone o repositorio:
-
+1. **Clonar o repositório:**
    ```bash
    git clone https://github.com/diego-silva/SpecLine.git
    cd SpecLine
    ```
 
-2. Configure as variaveis de ambiente:
-
+2. **Configurar as variáveis de ambiente:**
    ```bash
    cp .env.example .env
    ```
 
-3. Instale as dependencias do projeto:
-
+3. **Instalar as dependências do projeto:**
    ```bash
    bundle install
    npm install
    ```
 
-4. Inicialize a base de dados local:
-
+4. **Inicializar a base de dados e migrações:**
    ```bash
    bin/rails db:setup
    ```
 
-5. Inicie o servidor de desenvolvimento unificado:
-
+5. **Iniciar o servidor de desenvolvimento unificado:**
    ```bash
    bin/dev
    ```
 
-6. Acesse a aplicacao no endereco: `http://localhost:3000`
+6. **Acessar a aplicação:**
+   Abra no navegador o endereço `http://localhost:3000`.
 
 ---
 
-## 7. Verificacao de Qualidade e Seguranca
+## 7. Verificação de Qualidade e Segurança
 
-A suite de testes e analise estatica pode ser executada por meio dos seguintes comandos:
+O SpecLine adota rotinas de testes automatizados e análise estática contínua de vulnerabilidades:
 
 ```bash
-# Execucao dos testes unitarios e de integracao
+# Execução dos testes unitários e de integração (TDD)
 bin/rails test
 
-# Execucao dos testes de sistema end-to-end
-
+# Execução dos testes de sistema end-to-end
 bin/rails test:system
 
-# Analise estatica de codigo Ruby
+# Análise estática de código e padronização de estilo Ruby
 bin/rubocop
 
-# Auditoria de seguranca estatica para vulnerabilidades Rails
-bin/brakeman
+# Auditoria de segurança estática para vulnerabilidades Rails (Brakeman)
+bin/brakeman --no-pager
 
-# Auditoria de vulnerabilidades em dependencias (CVEs)
-bin/bundler-audit
+# Auditoria de vulnerabilidades em dependências Ruby (CVEs)
+bin/bundler-audit check --update
+
+# Auditoria de pacotes JavaScript
+npm audit
 ```
 
 ---
 
-## 8. Build e Execucao via Container Docker
+## 8. Build e Execução via Docker
 
-Para compilar e executar o container de producao com Thruster localmente:
+Para compilar e executar o contêiner de produção com Thruster localmente:
 
 ```bash
-# Compilacao da imagem Docker
+# Compilação da imagem Docker Multi-Stage
 docker build -t specline .
 
-# Execucao da imagem compilada
-docker run -d -p 8080:80 -e RAILS_MASTER_KEY=<chave_master> --name specline specline
+# Execução do contêiner compilado
+docker run -d -p 8080:80 \
+  -e RAILS_MASTER_KEY=<sua_chave_master> \
+  -e DATABASE_URL=<url_postgres> \
+  --name specline specline
 ```
 
 ---
 
-## 9. Contexto Institucional e Licenca
+## 9. Como Contribuir
 
-Projeto desenvolvido por **Diego Silva** no contexto da disciplina **Praticas Extensionistas Integradoras VI**.
+Contribuições para o aprimoramento da plataforma são bem-vindas. Para colaborar:
 
-Distribuido sob a licenca **MIT**. Consulte o arquivo `LICENSE` para informacoes complementares.
+1. Realize um **Fork** do repositório.
+2. Crie uma branch para sua funcionalidade: `git checkout -b feature/nome-da-funcionalidade`.
+3. Escreva testes automatizados cobrindo a nova lógica (`bin/rails test`).
+4. Assegure a conformidade de linters e segurança: `bin/rubocop` e `bin/brakeman`.
+5. Registre o commit das alterações: `git commit -m 'feat: implementa nova funcionalidade'`.
+6. Envie para o branch remoto: `git push origin feature/nome-da-funcionalidade`.
+7. Abra um **Pull Request** detalhando as mudanças realizadas.
+
+---
+
+## 10. Contexto Institucional e Licença
+
+Projeto desenvolvido por **Diego Silva** no âmbito da disciplina **Práticas Extensionistas Integradoras VI**.
+
+Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para termos complementares.
