@@ -25,10 +25,10 @@ class Issue < ApplicationRecord
   enum :priority, { no_priority: 0, low: 1, medium: 2, high: 3, urgent: 4 }
 
   after_update_commit -> {
-    broadcast_replace_to [project, :issues], target: self, partial: "projects/issue_card", locals: { issue: self, workspace: project.workspace, project: project }
+    broadcast_replace_to [ project, :issues ], target: self, partial: "projects/issue_card", locals: { issue: self, workspace: project.workspace, project: project }
   }
   after_destroy_commit -> {
-    broadcast_remove_to [project, :issues], target: self
+    broadcast_remove_to [ project, :issues ], target: self
   }
 
   before_validation :set_number_and_identifier, on: :create

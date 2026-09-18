@@ -33,7 +33,7 @@ class Activity < ApplicationRecord
     when "Whiteboard"
       workspace_project_whiteboard_path(workspace, trackable.project, trackable)
     when "Milestone"
-      workspace_project_path(workspace, trackable.project, view: 'milestones')
+      workspace_project_path(workspace, trackable.project, view: "milestones")
     else
       "#"
     end
@@ -45,7 +45,7 @@ class Activity < ApplicationRecord
     return nil unless trackable
     if trackable.respond_to?(:project) && trackable.project
       trackable.project.name
-    elsif trackable_type == 'Project'
+    elsif trackable_type == "Project"
       trackable.name
     else
       workspace.name
@@ -59,10 +59,10 @@ class Activity < ApplicationRecord
     when "issue_created"
       "criou a tarefa <span class='font-bold text-ink dark:text-white'>#{metadata['identifier']} #{metadata['title']}</span>"
     when "status_changed"
-      identifier = metadata['identifier'] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
+      identifier = metadata["identifier"] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
       "moveu <span class='font-bold text-ink dark:text-white'>#{identifier}</span> de <span class='line-through text-ink-light dark:text-white/40'>#{metadata['from'] || 'N/A'}</span> para <span class='text-terracotta font-bold'>#{metadata['to']}</span>"
     when "assignee_changed"
-      identifier = metadata['identifier'] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
+      identifier = metadata["identifier"] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
       "atribuiu <span class='font-bold text-ink dark:text-white'>#{identifier}</span> para <span class='font-bold text-olive'>#{metadata['to'] || 'ninguém'}</span>"
     when "project_created"
       "criou o projeto <span class='font-bold text-ink dark:text-white'>#{metadata['name']}</span>"

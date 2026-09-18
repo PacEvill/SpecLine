@@ -24,17 +24,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     Rails.logger.error("[OmniAuth Failure] Tipo: #{error_type.inspect} | Erro: #{error_obj.inspect} | Params: #{params.to_unsafe_h.except('controller', 'action')}")
 
     detail = case error_type&.to_s&.downcase
-             when "access_denied"
+    when "access_denied"
                "Permissão não concedida ou usuário cancelou a autorização"
-             when "csrf_detected"
+    when "csrf_detected"
                "Falha de validação de segurança da sessão (CSRF)"
-             when "invalid_credentials"
+    when "invalid_credentials"
                "Credenciais inválidas"
-             when "timeout"
+    when "timeout"
                "Tempo limite de conexão esgotado"
-             else
+    else
                error_type.present? ? error_type.humanize : "Autenticação cancelada ou não autorizada"
-             end
+    end
 
     flash[:alert] = "Não foi possível concluir o login com o Google (#{detail}). Tente novamente ou use e-mail e senha."
     redirect_to new_user_session_path

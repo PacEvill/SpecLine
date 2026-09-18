@@ -29,9 +29,9 @@ class OnboardingService
       )
 
       # 4. Fetch default statuses (assuming they are created via callbacks on project creation or seeds)
-      todo = project.issue_statuses.find_by(category: 'todo')
-      in_progress = project.issue_statuses.find_by(category: 'in_progress')
-      done = project.issue_statuses.find_by(category: 'done')
+      todo = project.issue_statuses.find_by(category: "todo")
+      in_progress = project.issue_statuses.find_by(category: "in_progress")
+      done = project.issue_statuses.find_by(category: "done")
 
       # 5. Create Demo Issues
       issues_data = [

@@ -28,7 +28,7 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
   - [ ] Sub-task 7.1: Modelagem de Datas de Entrega (Due Dates) para Issues.
   - [ ] Sub-task 7.2: Conexão do calendário do Dashboard para listar eventos pendentes nos dias selecionados (Event Stacking).
   - [ ] Sub-task 7.3: Visualização em Timeline/Gantt simplificada para o Roadmap do Projeto.
-  - [ ] Sub-task 7.4: Refinamento de UI (Alta Densidade) para Listas e Tabelas, inspirados em painéis utilitários modernos (Bagus Fikri / StartupVisuals).m nexo
+  - [ ] Sub-task 7.4: Refinamento de UI (Alta Densidade) para Listas e Tabelas, inspirados em painéis utilitários modernos (Bagus Fikri / StartupVisuals).
 
 - [ ] **Sprint 8: Comunicação Síncrona & Colaboração Multiplayer**
   - [ ] Sub-task 8.1: Chat em Tempo Real via Solid Cable (Sem Redis).

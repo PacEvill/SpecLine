@@ -120,11 +120,11 @@ graph TD
 
 Especificações aprofundadas de engenharia estão centralizadas no diretório `docs/`:
 
-* **[Constituição de Desenvolvimento (docs/SPECLINE_CONSTITUTION.md)](docs/SPECLINE_CONSTITUTION.md):** Princípios de arquitetura, qualidade e metodologia TDD.
-* **[Infraestrutura & Capacidade (docs/INFRASTRUCTURE_AND_CAPACITY.md)](docs/INFRASTRUCTURE_AND_CAPACITY.md):** Dimensionamento de volumetria, análise de TCO e estratégia zero-cost.
-* **[Blueprint de Segurança (docs/SECURITY_BLUEPRINT.md)](docs/SECURITY_BLUEPRINT.md):** Defesas contra IDOR, sanitização HTML, rate limiting via Rack::Attack e validação binária de arquivos.
+* **[Constituição de Desenvolvimento (docs/architecture/SPECLINE_CONSTITUTION.md)](docs/architecture/SPECLINE_CONSTITUTION.md):** Princípios de arquitetura, qualidade e metodologia TDD.
+* **[Infraestrutura & Capacidade (docs/architecture/INFRASTRUCTURE_AND_CAPACITY.md)](docs/architecture/INFRASTRUCTURE_AND_CAPACITY.md):** Dimensionamento de volumetria, análise de TCO e estratégia zero-cost.
+* **[Blueprint de Segurança (docs/architecture/SECURITY_BLUEPRINT.md)](docs/architecture/SECURITY_BLUEPRINT.md):** Defesas contra IDOR, sanitização HTML, rate limiting via Rack::Attack e validação binária de arquivos.
 * **[Roadmap de Sprints (docs/SPRINTS.md)](docs/SPRINTS.md):** Histórico de entregas e módulos planejados.
-* **[Questionário de Discovery (docs/USER_RESEARCH_SURVEY.md)](docs/USER_RESEARCH_SURVEY.md):** Instrumento de pesquisa e validação com usuários.
+* **[Planejamento Acadêmico & Gestão PEI VI (docs/academic/Planejamento_Gestao_SpecLine_PEI_VI.md)](docs/academic/Planejamento_Gestao_SpecLine_PEI_VI.md):** Planejamento acadêmico e EAP do projeto extensionista.
 
 ---
 
@@ -140,7 +140,7 @@ Especificações aprofundadas de engenharia estão centralizadas no diretório `
 
 1. **Clonar o repositório:**
    ```bash
-   git clone https://github.com/diego-silva/SpecLine.git
+   git clone https://github.com/PacEvill/SpecLine.git
    cd SpecLine
    ```
 
@@ -229,6 +229,6 @@ Contribuições para o aprimoramento da plataforma são bem-vindas. Para colabor
 
 ## 10. Contexto Institucional e Licença
 
-Projeto desenvolvido por **Diego Silva** no âmbito da disciplina **Práticas Extensionistas Integradoras VI**.
+Projeto desenvolvido por **Diego Silva Pereira Pacheco** (Matrícula: 202413831) no âmbito da disciplina **Práticas Extensionistas Integradoras VI** (6º Período - Engenharia de Software) da **Universidade de Vassouras — Campus Maricá (FUSVE)**, sob docência e orientação da **Profª. Laís Cristine Bordallo Pinheiro** e apoio técnico do **Prof. Me. Victor Andrade da Silveira**.
 
 Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para termos complementares.
