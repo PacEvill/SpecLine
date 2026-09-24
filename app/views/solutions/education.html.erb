@@ -1,0 +1,327 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink transition-colors duration-500 relative">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION: Educators & Mentors Pitch -->
+    <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-olive/15 dark:bg-olive/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-olive/15 text-olive-dark dark:text-olive text-xs font-mono font-bold tracking-wide uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+          <span>Solução Dedicada: Para Professores, Orientadores & Docência</span>
+        </div>
+        
+        <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+          Menos burocracia de planilhas,<br>
+          <i class="text-olive-dark dark:text-olive font-serif-italic">mais tempo orientando o saber.</i><br>
+          Da aula à banca final.
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Chega de caçar anexos perdidos de TCC em correntes intermináveis de e-mail e conferir entregas de projetos em formulários desconexos. O SpecLine unifica a orientação de monografias, projetos de extensão (PEI) e planos de ensino em um espaço claro, visual e 100% gratuito.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="pt-6 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-olive-dark hover:text-white dark:hover:bg-olive dark:hover:text-ink font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Criar Espaço de Orientação Grátis</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <a href="#fluxos-docentes" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-olive hover:text-olive-dark dark:hover:text-olive font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-2">
+            <span>Ver Como Funciona na Docência</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- TELEMETRY BAROMETER: EDUCATORS PILLARS -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-olive/20 text-olive-dark dark:text-olive font-bold rounded">
+            <span class="w-1.5 h-1.5 rounded-full bg-olive animate-pulse"></span>
+            100% GRATUITO PARA EDUCADORES
+          </span>
+          <span class="text-ink-light dark:text-white/70">Sem travas por número de orientandos ou turmas</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+          <div class="flex items-center gap-2">
+            <span>Organização:</span>
+            <span class="text-olive-dark dark:text-olive font-bold">Turmas & Grupos Isolados</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Multi-Áreas:</span>
+            <span class="text-terracotta font-bold">Saúde, Direito, Humanas & Exatas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 3 CORE EDUCATIONAL WORKFLOWS -->
+    <section id="fluxos-docentes" class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <span class="font-mono text-xs uppercase tracking-widest text-olive-dark dark:text-olive font-bold">Clareza Pedagógica</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+            Estruturado para as necessidades reais do professor
+          </h2>
+          <p class="text-sm md:text-base text-ink-light dark:text-white/70 font-sans">
+            Orientar requer acompanhar a evolução do pensamento do aluno, não apenas receber um arquivo final na véspera do prazo.
+          </p>
+        </div>
+
+        <!-- 3 CARDS DE FLUXO -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Card 1: Orientação de TCC & Monografias -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Orientação de TCC & Dissertações
+              </h3>
+              <p class="text-xs font-mono text-olive-dark dark:text-olive uppercase tracking-wide">
+                Fim dos Arquivos Perdidos no E-mail
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Acompanhe o desenvolvimento capítulo a capítulo. Defina marcos de revisão (Introdução, Metodologia, Resultados), registre apontamentos e veja o que foi ajustado sem confusão de versões duplicadas.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-olive shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Histórico contínuo de revisões e feedback</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Projetos de Extensão & Práticas (PEI) -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Práticas Extensionistas & Projetos Integradores
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                Controle de Equipes e Impacto
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Supervisione múltiplos grupos de extensão simultaneamente. Acompanhe relatórios de campo, validação de horas, evidências de aplicação na comunidade e entregas intermediárias em um quadro unificado.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Painel de supervisão de múltiplos grupos</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Plano de Ensino & Base de Conhecimento -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Ementas, Cronogramas & Materiais
+              </h3>
+              <p class="text-xs font-mono text-sage uppercase tracking-wide">
+                Caderno Docente Centralizado
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Mantenha suas referências bibliográficas, cronogramas de aulas, rubricas de avaliação e roteiros de seminários salvos para reutilizar e enriquecer a cada semestre com praticidade.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Repositório permanente de material didático</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MULTIDISCIPLINARY SHOWCASE: PARA EDUCADORES DE TODAS AS ÁREAS -->
+    <section class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-olive-dark dark:text-olive font-bold">Universalidade Acadêmica</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+            Adaptado para qualquer departamento universitário
+          </h2>
+          <p class="text-sm text-ink-light dark:text-white/70 font-sans max-w-2xl">
+            A pedagogia muda entre os cursos, mas a necessidade de clareza nas entregas é universal. Veja como diferentes docentes usam o SpecLine:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Exemplo 1: Saúde & Biológicas -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Saúde & Enfermagem</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Estágios & Casos</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Supervisão de relatórios de estágio em hospitais, acompanhamento de projetos de prevenção e aprovação de estudos de caso.
+            </p>
+            <div class="text-[11px] font-mono text-olive-dark dark:text-olive bg-olive/10 px-2.5 py-1 rounded inline-block">
+              Estágios + Estudos de Caso
+            </div>
+          </div>
+
+          <!-- Exemplo 2: Direito & Sociais Aplicadas -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-ocean/20 text-ocean flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Direito & Prática Jurídica</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Simulações & Casos</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Organização de casos do Núcleo de Prática Jurídica (NPJ), acompanhamento de prazos simulados e correções de peças processuais.
+            </p>
+            <div class="text-[11px] font-mono text-ocean bg-ocean/10 px-2.5 py-1 rounded inline-block">
+              Peças + Prazos + NPJ
+            </div>
+          </div>
+
+          <!-- Exemplo 3: Engenharias & Exatas -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-terracotta/15 text-terracotta flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Engenharia & TI</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Projetos & Protótipos</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Acompanhamento de protótipos em laboratório, validação de etapas de testes e cronograma de fabricação ou desenvolvimento.
+            </p>
+            <div class="text-[11px] font-mono text-terracotta bg-terracotta/10 px-2.5 py-1 rounded inline-block">
+              Prototipagem + Relatórios
+            </div>
+          </div>
+
+          <!-- Exemplo 4: Humanas & Educação -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-sage/20 text-sage flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Humanas & Letras</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Seminários & Ensaios</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Distribuição de temas de seminários, orientação de artigos teóricos e fichamentos conceituais de obras clássicas.
+            </p>
+            <div class="text-[11px] font-mono text-sage bg-sage/10 px-2.5 py-1 rounded inline-block">
+              Ensaios + Bibliografia Viva
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: COMPARATIVO DOCENTE -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] py-16 px-6">
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="text-center space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-olive-dark dark:text-olive font-bold">Comparativo Operacional</span>
+          <h2 class="text-3xl font-serif text-ink dark:text-white font-light">
+            A rotina tradicional vs. a orientação no SpecLine
+          </h2>
+        </div>
+
+        <div class="border border-ink/15 dark:border-white/10 rounded-2xl overflow-hidden shadow-sm">
+          <div class="grid grid-cols-12 bg-fable dark:bg-ink-darker p-4 border-b border-ink/15 dark:border-white/10 font-mono text-xs font-bold">
+            <div class="col-span-5 text-ink dark:text-white uppercase">Etapa de Orientação</div>
+            <div class="col-span-3 text-terracotta uppercase">Modelo Disperso</div>
+            <div class="col-span-4 text-olive-dark dark:text-olive uppercase">SpecLine Unificado</div>
+          </div>
+
+          <div class="divide-y divide-ink/10 dark:divide-white/10 text-xs font-mono">
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Envio de Capítulos do TCC</div>
+              <div class="col-span-3 text-terracotta font-bold">Anexos soltos no e-mail</div>
+              <div class="col-span-4 text-olive-dark dark:text-olive font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Documento vivo com histórico</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Prazos e Entregas Parciais</div>
+              <div class="col-span-3 text-terracotta font-bold">Esquecimento e atrasos</div>
+              <div class="col-span-4 text-olive-dark dark:text-olive font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Kanban e datas claras visíveis</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Projetos de Extensão (PEI)</div>
+              <div class="col-span-3 text-terracotta font-bold">Planilhas manuais cheias de abas</div>
+              <div class="col-span-4 text-olive-dark dark:text-olive font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Espaços por grupo com evidências</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Custo para a Instituição / Alunos</div>
+              <div class="col-span-3 text-terracotta font-bold">Licenças caras ou pirataria</div>
+              <div class="col-span-4 text-olive-dark dark:text-olive font-bold flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>100% Gratuito e Open-Source</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CTA FINAL -->
+    <section class="p-12 md:p-20 text-center bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          Transforme a sua orientação acadêmica.<br>
+          <i class="text-olive-dark dark:text-olive font-serif-italic">Mais foco pedagógico, zero ruído.</i>
+        </h2>
+        <p class="text-base text-ink-light dark:text-white/70 font-serif italic">
+          Crie agora o workspace da sua disciplina, grupo de pesquisa ou núcleo de TCC em poucos segundos.
+        </p>
+        <div class="pt-4 flex flex-wrap justify-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "px-8 py-4 bg-olive-dark dark:bg-olive text-white dark:text-ink hover:opacity-90 font-mono text-xs uppercase tracking-widest font-bold flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 transition-all" do %>
+            <span>Criar Espaço Docente Grátis</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <%= link_to solutions_path, class: "px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-olive font-mono text-xs uppercase tracking-widest font-semibold transition-all" do %>
+            <span>Ver Todas as Soluções</span>
+          <% end %>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

@@ -20,4 +20,19 @@ class SolutionsControllerTest < ActionDispatch::IntegrationTest
     get solutions_product_url
     assert_response :success
   end
+
+  test "should get academic" do
+    get solutions_academic_url
+    assert_response :success
+  end
+
+  test "should get education" do
+    get solutions_education_url
+    assert_response :success
+  end
+
+  test "should get creators" do
+    get solutions_creators_url
+    assert_response :success
+  end
 end

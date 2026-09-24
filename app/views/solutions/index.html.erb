@@ -15,16 +15,31 @@
         
         <h1 class="font-serif font-light text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-ink dark:text-fable">
           Páginas dedicadas para<br>
-          <i class="text-terracotta font-serif-italic">a realidade de cada equipe.</i>
+          <i class="text-terracotta font-serif-italic">a realidade de cada pessoa ou equipe.</i>
         </h1>
 
         <p class="max-w-2xl mx-auto text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
-          Cada modelo operacional possui desafios estruturais diferentes. Criamos uma página dedicada para cada perfil com simuladores interativos e fluxos reais. Selecione a solução desejada:
+          De um estudante organizando seu TCC ou caderno de matérias a um criador solo, startup ou squad técnico: o SpecLine elimina a dispersão de abas e centraliza seu trabalho em um único ecossistema elegante.
         </p>
 
         <!-- DEDICATED QUICK NAV SELECTOR -->
         <div class="pt-4 flex flex-wrap justify-center items-center gap-3 font-mono text-xs">
-          <%= link_to solutions_startups_path, class: "px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+          <%= link_to solutions_academic_path, class: "px-4 py-2.5 bg-terracotta/15 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2 shadow-sm" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            <span>Estudantes & Pesquisa</span>
+          <% end %>
+
+          <%= link_to solutions_education_path, class: "px-4 py-2.5 bg-olive/15 text-olive-dark dark:text-olive border border-olive/30 rounded-xl hover:bg-olive-dark hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+            <span>Educadores & Docência</span>
+          <% end %>
+
+          <%= link_to solutions_creators_path, class: "px-4 py-2.5 bg-terracotta/10 text-terracotta border border-terracotta/30 rounded-xl hover:bg-terracotta hover:text-white transition-all font-semibold flex items-center gap-2" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Criadores & Solo</span>
+          <% end %>
+
+          <%= link_to solutions_startups_path, class: "px-4 py-2.5 bg-ink/5 dark:bg-white/5 text-ink dark:text-white border border-ink/20 dark:border-white/20 rounded-xl hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-ink transition-all font-semibold flex items-center gap-2" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
             <span>Para Startups</span>
           <% end %>
@@ -42,20 +57,180 @@
       </div>
     </header>
 
-    <!-- DEDICATED CONCEPTS SHOWCASE: 3 DISTINCT CARDS -->
+    <!-- DEDICATED CONCEPTS SHOWCASE: 5 DISTINCT CARDS -->
     <div class="max-w-7xl mx-auto px-6 py-16 w-full space-y-12">
       <div class="text-center space-y-2 max-w-2xl mx-auto">
         <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Diretório de Experiências</span>
         <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
-          Conheça as três soluções em páginas dedicadas
+          Escolha a solução desenhada para a sua realidade
         </h2>
         <p class="text-sm text-ink-light dark:text-white/70 font-sans">
-          Cada página possui ferramentas interativas: calculadora de runway, portal de aprovação com assinatura e a Tríade Viva SpecLine.
+          Cada página foi estruturada com demonstrações contextuais, simuladores e fluxos dedicados.
         </p>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
-        <!-- CARD 1: STARTUPS -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- CARD 1: ESTUDANTES & PESQUISA -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm ring-1 ring-terracotta/20">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
+                Acadêmico & Pesquisa
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-terracotta transition-colors">
+                Estudantes & Pesquisa
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                TCC, Artigos, Extensão & Caderno Solo
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Para quem estuda sozinho ou em grupo, em qualquer curso (Saúde, Direito, Humanas, Negócios ou TI). Elimine as dezenas de pastas caóticas do Drive.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Anotações ricas com Markdown e referências bibliográficas</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Quadros visuais para etapas de entrega e cronograma</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-terracotta shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Diagramas conceituais e mapas mentais embutidos</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Acesso:</span>
+              <span class="text-olive-dark dark:text-olive font-bold font-mono">100% Gratuito</span>
+            </div>
+
+            <%= link_to solutions_academic_path, class: "w-full py-3.5 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Acadêmica</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 2: EDUCADORES & DOCÊNCIA -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm ring-1 ring-olive/20">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-olive/15 text-olive-dark dark:text-olive font-bold border border-olive/20">
+                Docência & Orientação
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-olive-dark dark:group-hover:text-olive transition-colors">
+                Educadores & Orientadores
+              </h3>
+              <p class="text-xs font-mono text-olive-dark dark:text-olive uppercase tracking-wide">
+                TCC, Extensão & Planos de Aula
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Acompanhe orientandos de monografia, supervisione equipes de extensão (PEI) e estruture planos de ensino sem caçar arquivos perdidos no e-mail.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Acompanhamento de TCC capítulo a capítulo</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Gestão visual de grupos de projetos de extensão</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Caderno docente com ementas e cronograma</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Acesso:</span>
+              <span class="text-olive-dark dark:text-olive font-bold font-mono">100% Gratuito</span>
+            </div>
+
+            <%= link_to solutions_education_path, class: "w-full py-3.5 px-4 bg-olive-dark dark:bg-olive text-white dark:text-ink hover:opacity-90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Educadores</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 3: CRIADORES SOLO & DEVS -->
+        <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
+          <div class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div class="w-12 h-12 rounded-xl bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </div>
+              <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-olive/15 text-olive-dark dark:text-olive font-bold border border-olive/20">
+                Solo & Autônomo
+              </span>
+            </div>
+
+            <div class="space-y-2">
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal group-hover:text-olive-dark dark:group-hover:text-olive transition-colors">
+                Criadores & Devs Solo
+              </h3>
+              <p class="text-xs font-mono text-olive-dark dark:text-olive uppercase tracking-wide">
+                Foco Radical em Execução Individual
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed pt-1">
+                Feito para quem constrói sozinho. Gerencie notas, tarefas, roadmap e canvas visual sem perder tempo configurando burocracias de times grandes.
+              </p>
+            </div>
+
+            <div class="space-y-2.5 border-t border-ink/10 dark:border-white/10 pt-4 font-mono text-xs text-ink/80 dark:text-white/80">
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Captura rápida de ideias e documentação limpa</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Kanban pessoal ágil sem cerimônias de sprint</span>
+              </div>
+              <div class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Substitui Notion + Trello + Miro em 1 só aba</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-8 space-y-4">
+            <div class="p-3 bg-fable dark:bg-ink-darker rounded-xl border border-ink/5 dark:border-white/5 flex items-center justify-between text-xs font-mono">
+              <span class="text-ink-light dark:text-white/60">Economia Anual:</span>
+              <span class="text-olive-dark dark:text-olive font-bold font-mono">~R$ 1.980 / ano</span>
+            </div>
+
+            <%= link_to solutions_creators_path, class: "w-full py-3.5 px-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]" do %>
+              <span>Acessar Solução Solo</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <% end %>
+          </div>
+        </article>
+
+        <!-- CARD 3: STARTUPS -->
         <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
           <div class="space-y-6">
             <div class="flex items-center justify-between">
@@ -63,7 +238,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
               </div>
               <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-terracotta/10 text-terracotta font-bold border border-terracotta/20">
-                Solução #01
+                Startups & MVP
               </span>
             </div>
 
@@ -108,7 +283,7 @@
           </div>
         </article>
 
-        <!-- CARD 2: AGENCIES -->
+        <!-- CARD 4: AGENCIES -->
         <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
           <div class="space-y-6">
             <div class="flex items-center justify-between">
@@ -116,7 +291,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
               </div>
               <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-ocean/15 text-ocean font-bold border border-ocean/20">
-                Solução #02
+                Agências & Clientes
               </span>
             </div>
 
@@ -161,7 +336,7 @@
           </div>
         </article>
 
-        <!-- CARD 3: PRODUCT SQUADS -->
+        <!-- CARD 5: PRODUCT SQUADS -->
         <article class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden group shadow-sm">
           <div class="space-y-6">
             <div class="flex items-center justify-between">
@@ -169,7 +344,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
               </div>
               <span class="font-mono text-[10px] uppercase tracking-wider px-3 py-1 rounded-full bg-sage/15 text-sage font-bold border border-sage/20">
-                Solução #03
+                Squads & Produto
               </span>
             </div>
 
@@ -213,6 +388,7 @@
             <% end %>
           </div>
         </article>
+
       </div>
     </div>
 
@@ -239,7 +415,7 @@
               <div class="col-span-3 text-terracotta font-bold">~$35 a $60+ somados</div>
               <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>1 assinatura consolidada e acessível</span>
+                <span>Plano individual 100% gratuito vitalício</span>
               </div>
             </div>
 
@@ -248,12 +424,12 @@
               <div class="col-span-3 text-terracotta font-bold">Constante e exaustiva</div>
               <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Zero trocas de contexto</span>
+                <span>Zero trocas de contexto (1 só aba)</span>
               </div>
             </div>
 
             <div class="grid grid-cols-12 p-4 items-center bg-white dark:bg-ink-paper">
-              <div class="col-span-5 font-semibold text-ink dark:text-white">Sincronia Especificação ↔ Tarefa</div>
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Sincronia Anotação / Documento ↔ Tarefa</div>
               <div class="col-span-3 text-terracotta font-bold">Manual, gera desvios</div>
               <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -262,11 +438,11 @@
             </div>
 
             <div class="grid grid-cols-12 p-4 items-center bg-fable/40 dark:bg-ink-darker/40">
-              <div class="col-span-5 font-semibold text-ink dark:text-white">Organização de Múltiplos Clientes</div>
-              <div class="col-span-3 text-terracotta font-bold">Canais avulsos e risco de dados</div>
+              <div class="col-span-5 font-semibold text-ink dark:text-white">Organização de Projetos Isolados</div>
+              <div class="col-span-3 text-terracotta font-bold">Canais avulsos e pastas dispersas</div>
               <div class="col-span-4 text-sage font-bold flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Workspaces isolados com aprovação</span>
+                <span>Workspaces limpos e multi-tenant</span>
               </div>
             </div>
           </div>

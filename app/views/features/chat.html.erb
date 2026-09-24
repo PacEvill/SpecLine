@@ -295,7 +295,7 @@
             <!-- Message 4: Decision Official Badge -->
             <div class="chat-bubble-item flex gap-3 p-4 rounded-xl bg-ochre/10 border-2 border-ochre/40" data-chat-workbench-target="chatBubble" data-is-decision="true" data-has-code="false">
               <div class="w-8 h-8 rounded-lg bg-ochre text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
-                ★
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
               </div>
               <div class="min-w-0 flex-1 space-y-1.5">
                 <div class="flex items-center justify-between">
@@ -365,8 +365,9 @@
             <p class="text-xs text-ink-light/80 dark:text-white/70 leading-relaxed">
               Consenso alcançado: simplicidade operacional superando micro-otimizações. Economia de $120/mês em infraestrutura.
             </p>
-            <div class="pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-sage font-bold">
-              ✓ Concluído e migrado no commit c85c695
+            <div class="pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-sage font-bold flex items-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Concluído e arquivado</span>
             </div>
           </div>
 
@@ -402,7 +403,9 @@
 
         <!-- Empty State Congratulations (Hidden initially) -->
         <div data-chat-workbench-target="inboxEmpty" class="hidden p-8 text-center bg-sage/10 border border-sage/30 rounded-xl space-y-2 animate-pop-in">
-          <div class="text-2xl">🎉</div>
+          <div class="w-10 h-10 rounded-full bg-sage/20 text-sage mx-auto flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
           <div class="font-serif font-bold text-base text-ink dark:text-white">Inbox Zero Alcançado!</div>
           <p class="font-sans text-xs text-ink-light dark:text-white/70">Nenhuma menção pendente. Seu estado de fluxo está protegido.</p>
         </div>
@@ -420,8 +423,9 @@
               </p>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer">
-                ✓ Resolvido
+              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Resolvido</span>
               </button>
             </div>
           </div>
@@ -437,8 +441,9 @@
               </p>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer">
-                ✓ Resolvido
+              <button type="button" data-action="click->chat-workbench#resolveInbox" class="px-3 py-1.5 font-mono text-[10px] bg-ink text-white dark:bg-white dark:text-ink font-bold rounded hover:bg-sage dark:hover:bg-sage dark:hover:text-white transition-all cursor-pointer inline-flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Resolvido</span>
               </button>
             </div>
           </div>

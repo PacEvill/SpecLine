@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   # Preferências do Usuário
   resource :preferences, only: [ :show, :update ]
 
+
   # Autenticação
   devise_for :users, controllers: {
     omniauth_callbacks: "users/omniauth_callbacks",
@@ -73,6 +74,9 @@ Rails.application.routes.draw do
   get "philosophy/vision", to: "philosophy#vision"
   get "philosophy/focus", to: "philosophy#focus"
   get "solutions", to: "solutions#index"
+  get "solutions/academic", to: "solutions#academic"
+  get "solutions/education", to: "solutions#education"
+  get "solutions/creators", to: "solutions#creators"
   get "solutions/startups", to: "solutions#startups"
   get "solutions/agencies", to: "solutions#agencies"
   get "solutions/product", to: "solutions#product"

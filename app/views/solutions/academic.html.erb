@@ -1,0 +1,376 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink transition-colors duration-500 relative">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION: Academic & Students Pitch -->
+    <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono font-bold tracking-wide uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <span>Solução Universal: Para Estudantes, Pesquisadores & Vida Acadêmica</span>
+        </div>
+        
+        <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+          Menos abas perdidas,<br>
+          <i class="text-terracotta font-serif-italic">mais foco no saber.</i><br>
+          Da anotação ao TCC.
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Chega de espalhar suas matérias em pastas caóticas do Google Drive, mensagens soltas de WhatsApp e quadros limitados. O SpecLine une anotações em texto rico, quadros de entregas visuais e mapas conceituais em um só espaço — 100% gratuito e pronto para qualquer área do conhecimento.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="pt-6 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Criar Meu Espaço de Estudo Grátis</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <a href="#fluxos-academicos" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-terracotta hover:text-terracotta font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-2">
+            <span>Ver Como Funciona na Prática</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- TELEMETRY BAROMETER: ACADEMIC PILLARS -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-olive/20 text-olive-dark dark:text-olive font-bold rounded">
+            <span class="w-1.5 h-1.5 rounded-full bg-olive animate-pulse"></span>
+            100% GRATUITO VITALÍCIO
+          </span>
+          <span class="text-ink-light dark:text-white/70">Sem pegadinhas, sem limite de blocos ou cartões</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+          <div class="flex items-center gap-2">
+            <span>Versatilidade:</span>
+            <span class="text-terracotta font-bold">1 Pessoa ou em Grupo</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Alcance:</span>
+            <span class="text-olive-dark dark:text-olive font-bold">Qualquer Curso / Não só TI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 3 CORE ACADEMIC USE CASES -->
+    <section id="fluxos-academicos" class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Flexibilidade Real</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-fable">
+            Três formas de revolucionar sua rotina de estudos
+          </h2>
+          <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+            Seja para passar de semestre, conduzir uma pesquisa de pós-graduação ou organizar um trabalho com cinco colegas sem ninguém se perder.
+          </p>
+        </div>
+
+        <!-- Bento Grid: The 3 Core Academic Use Cases -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          <!-- Use Case 1: TCC & Monografia -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:border-terracotta/40 transition-all group">
+            <div class="space-y-6">
+              <div class="w-12 h-12 rounded-2xl bg-terracotta/10 text-terracotta flex items-center justify-center font-bold text-lg font-serif">
+                01
+              </div>
+
+              <div class="space-y-2">
+                <h3 class="text-2xl font-serif font-bold text-ink dark:text-fable group-hover:text-terracotta transition-colors">
+                  TCC, Artigos & Monografias
+                </h3>
+                <p class="text-xs font-mono text-terracotta uppercase tracking-wider">Da Justificativa à Defesa Final</p>
+                <p class="text-xs text-ink-light dark:text-white/70 leading-relaxed pt-2">
+                  Escreva os capítulos no editor com modo foco, organize fichamentos de leitura e acompanhe as revisões solicitadas pelo orientador em um Kanban visual.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/5 dark:border-white/5 space-y-2 text-xs font-mono">
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Estrutura de Capítulos em Árvore</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Quadro: A Fazer → Revisão Orientador → Aprovado</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Cronograma de Entregas e Prazos</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-ink/5 dark:border-white/5 text-xs text-ink-light/70 dark:text-white/50 font-mono">
+              Ideal para: Graduação, Mestrado e Doutorado
+            </div>
+          </div>
+
+          <!-- Use Case 2: Trabalhos em Grupo & Extensão -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:border-olive/40 transition-all group">
+            <div class="space-y-6">
+              <div class="w-12 h-12 rounded-2xl bg-olive/15 text-olive-dark dark:text-olive flex items-center justify-center font-bold text-lg font-serif">
+                02
+              </div>
+
+              <div class="space-y-2">
+                <h3 class="text-2xl font-serif font-bold text-ink dark:text-fable group-hover:text-olive transition-colors">
+                  Trabalhos em Grupo & Extensão
+                </h3>
+                <p class="text-xs font-mono text-olive-dark dark:text-olive uppercase tracking-wider">Colaboração sem Sobrecarga</p>
+                <p class="text-xs text-ink-light dark:text-white/70 leading-relaxed pt-2">
+                  Divida tarefas com clareza entre os integrantes do grupo. Todo mundo sabe exatamente o que precisa entregar e os prazos finais de apresentação.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/5 dark:border-white/5 space-y-2 text-xs font-mono">
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Atribuição clara de responsáveis</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Projetos Integradores e Práticas</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Sem arquivos duplicados de Word</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-ink/5 dark:border-white/5 text-xs text-ink-light/70 dark:text-white/50 font-mono">
+              Ideal para: Grupos de 2 a 15 colegas
+            </div>
+          </div>
+
+          <!-- Use Case 3: Caderno de Estudos & Rotina Solo -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl p-8 shadow-sm flex flex-col justify-between hover:border-sage/40 transition-all group">
+            <div class="space-y-6">
+              <div class="w-12 h-12 rounded-2xl bg-sage/20 text-sage-dark dark:text-sage flex items-center justify-center font-bold text-lg font-serif">
+                03
+              </div>
+
+              <div class="space-y-2">
+                <h3 class="text-2xl font-serif font-bold text-ink dark:text-fable group-hover:text-sage transition-colors">
+                  Caderno de Estudos & Rotina Solo
+                </h3>
+                <p class="text-xs font-mono text-sage-dark dark:text-sage uppercase tracking-wider">Foco Profundo Individual</p>
+                <p class="text-xs text-ink-light dark:text-white/70 leading-relaxed pt-2">
+                  Um santuário digital para quem estuda sozinho para provas, concursos ou especializações. Anotações rápidas durante as aulas e listas de revisão ativas.
+                </p>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-fable-light/60 dark:bg-ink-darker/60 border border-ink/5 dark:border-white/5 space-y-2 text-xs font-mono">
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Modo Foco zen sem distrações</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Resumos com tabelas e citações</span>
+                </div>
+                <div class="flex items-center gap-2 text-ink dark:text-fable">
+                  <span class="w-2 h-2 rounded-full bg-olive"></span>
+                  <span>Minhas Tarefas com priorização diária</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 border-t border-ink/5 dark:border-white/5 text-xs text-ink-light/70 dark:text-white/50 font-mono">
+              Ideal para: Estudantes dedicados e autodidatas
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: NOT ONLY FOR TECH (MULTIDISCIPLINARY SHOWCASE) -->
+    <section class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable dark:bg-ink-darker">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="max-w-3xl space-y-3">
+          <span class="font-mono text-xs uppercase tracking-widest text-olive font-bold">Multidisciplinaridade Real</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-fable">
+            Não é só para quem faz TI. É para quem faz acontecer.
+          </h2>
+          <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+            Seja qual for a sua faculdade, o método de pensar com clareza, organizar etapas e produzir conhecimento com rigor é universal. Veja como o SpecLine se adapta ao seu curso:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Course Card 1: Saúde & Biológicas -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 shadow-xs space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-rust/10 text-rust flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <div>
+              <h3 class="text-base font-serif font-bold text-ink dark:text-fable">Saúde & Biológicas</h3>
+              <p class="text-xs text-ink-light dark:text-white/60 mt-1 leading-relaxed">
+                Relatórios de estágio, casos clínicos, fichamentos de artigos médicos e cronogramas de plantão ou laboratório.
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-rust">Medicina, Enfermagem, Nutrição...</div>
+          </div>
+
+          <!-- Course Card 2: Direito & Humanas -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 shadow-xs space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-terracotta/10 text-terracotta flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>
+            </div>
+            <div>
+              <h3 class="text-base font-serif font-bold text-ink dark:text-fable">Direito & Sociais</h3>
+              <p class="text-xs text-ink-light dark:text-white/60 mt-1 leading-relaxed">
+                Organização de jurisprudências, peças jurídicas simuladas, cronograma de leituras doutrinárias e preparação de seminários.
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-terracotta">Direito, História, Pedagogia...</div>
+          </div>
+
+          <!-- Course Card 3: Design & Criatividade -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 shadow-xs space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-sage/20 text-sage-dark dark:text-sage flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
+            <div>
+              <h3 class="text-base font-serif font-bold text-ink dark:text-fable">Design & Comunicação</h3>
+              <p class="text-xs text-ink-light dark:text-white/60 mt-1 leading-relaxed">
+                Briefings visuais, ideação em quadros brancos com rabisco vetorial, entregas de portfólio e campanhas experimentais.
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-sage-dark dark:text-sage">Design, Publicidade, Arquitetura...</div>
+          </div>
+
+          <!-- Course Card 4: Gestão & Exatas -->
+          <div class="p-6 rounded-3xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 shadow-xs space-y-4">
+            <div class="w-10 h-10 rounded-xl bg-olive/15 text-olive-dark dark:text-olive flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            </div>
+            <div>
+              <h3 class="text-base font-serif font-bold text-ink dark:text-fable">Negócios & Exatas</h3>
+              <p class="text-xs text-ink-light dark:text-white/60 mt-1 leading-relaxed">
+                Planos de negócio, modelagem de processos, projetos de engenharia, gestão financeira e estudos de caso corporativos.
+              </p>
+            </div>
+            <div class="text-[11px] font-mono text-olive-dark dark:text-olive">Administração, Engenharias, Economia...</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: COMPARISON (THE OLD WAY VS SPECLINE) -->
+    <section class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-5xl mx-auto space-y-12">
+        <div class="text-center space-y-2 max-w-2xl mx-auto">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Comparativo Direto</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-fable">
+            A dor da dispersão vs A paz do SpecLine
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- The Chaos -->
+          <div class="p-8 rounded-3xl bg-rust/5 border border-rust/20 space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-rust/10 text-rust flex items-center justify-center font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <h3 class="text-lg font-serif font-bold text-rust">O Caos das Ferramentas Fragmentadas</h3>
+            </div>
+            <ul class="space-y-3 text-xs text-ink-light dark:text-white/70">
+              <li class="flex items-start gap-2.5">
+                <span class="text-rust font-bold">•</span>
+                <span>Arquivos do trabalho espalhados em três contas diferentes do Google Drive.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-rust font-bold">•</span>
+                <span>Grupos de mensagens onde prazos e apontamentos de professores se perdem.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-rust font-bold">•</span>
+                <span>Ferramentas externas bloqueando o acesso e pedindo cartão de crédito em moeda estrangeira.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-rust font-bold">•</span>
+                <span>Sensação constante de estar esquecendo alguma entrega importante da faculdade.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- The SpecLine Solution -->
+          <div class="p-8 rounded-3xl bg-olive/10 border border-olive/30 space-y-6">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-xl bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center font-bold">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3 class="text-lg font-serif font-bold text-ink dark:text-fable">O Ambiente Unificado SpecLine</h3>
+            </div>
+            <ul class="space-y-3 text-xs text-ink-light dark:text-white/70">
+              <li class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Um único login:</strong> Documentos, quadros de tarefas e anotações visuais centralizados.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Sem custo de propriedade:</strong> Acesso 100% gratuito sem pegadinhas de limites.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Minhas Tarefas diárias:</strong> Visão consolidada de todas as matérias pendentes na semana.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-olive shrink-0 mt-0.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span><strong>Exportação limpa:</strong> Gere relatórios formatados prontos para entrega aos docentes.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL ACADEMIC CALL TO ACTION -->
+    <section class="p-12 md:p-24 bg-fable dark:bg-ink-darker text-center relative overflow-hidden">
+      <div class="max-w-3xl mx-auto space-y-8 relative z-10">
+        <div class="w-16 h-16 rounded-3xl bg-terracotta/15 text-terracotta flex items-center justify-center mx-auto shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+
+        <h2 class="text-4xl md:text-6xl font-serif font-light text-ink dark:text-fable tracking-tight">
+          Pronto para transformar sua rotina de estudos?
+        </h2>
+
+        <p class="text-base md:text-lg text-ink-light dark:text-white/70 font-serif italic max-w-xl mx-auto">
+          Crie seu espaço acadêmico em segundos. Seja para você estudar sozinho ou para o seu grupo de pesquisa se destacar.
+        </p>
+
+        <div class="pt-4 flex flex-wrap justify-center items-center gap-4">
+          <%= link_to new_user_registration_path, class: "group px-10 py-5 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Começar Meu Espaço Gratuito</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+        </div>
+
+        <p class="text-xs text-ink-light/60 dark:text-white/40 font-mono pt-2">
+          Disponível gratuitamente para estudantes e pesquisadores de qualquer instituição de ensino.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

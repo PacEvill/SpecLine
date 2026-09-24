@@ -37,12 +37,14 @@
     <!-- Links Grid -->
     <div class="col-span-1 md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
       <div class="space-y-6">
-        <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Produto</h4>
-        <ul class="space-y-4 font-sans text-sm text-ink-light dark:text-white/80">
+        <h4 class="font-mono text-[10px] tracking-widest uppercase text-ink-light/60 dark:text-white/40">Produto & Soluções</h4>
+        <ul class="space-y-3 font-sans text-sm text-ink-light dark:text-white/80">
           <li><%= link_to "Funcionalidades", "/features", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
-          <li><%= link_to "Soluções", "/solutions", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
+          <li><%= link_to "Estudantes & Pesquisa", "/solutions/academic", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
+          <li><%= link_to "Educadores & Docência", "/solutions/education", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
+          <li><%= link_to "Criadores & Solo", "/solutions/creators", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
+          <li><%= link_to "Todas as Soluções", "/solutions", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
           <li><%= link_to "Preços", pricing_path, class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
-          <li><%= link_to "Changelog", "/changelog", class: "hover:text-terracotta hover:translate-x-1 inline-block transition-all" %></li>
         </ul>
       </div>
       <div class="space-y-6">

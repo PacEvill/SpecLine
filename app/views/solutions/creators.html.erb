@@ -1,0 +1,338 @@
+<div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink transition-colors duration-500 relative">
+  <%= render 'shared/marketing_header' %>
+
+  <main class="flex-grow w-full">
+    <!-- HERO SECTION: Solo Creators & Makers -->
+    <header class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] relative overflow-hidden text-center">
+      <!-- Ambient Glow Flare -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[360px] bg-terracotta/15 dark:bg-terracotta/10 blur-[130px] rounded-full pointer-events-none animate-pulse"></div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono font-bold tracking-wide uppercase">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Solução Universal: Para Quem Constrói Sozinho</span>
+        </div>
+        
+        <h1 class="font-serif font-light text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight text-ink dark:text-fable">
+          Menos overhead,<br>
+          <i class="text-terracotta font-serif-italic">mais entrega individual.</i><br>
+          Da ideia ao lançamento.
+        </h1>
+
+        <p class="max-w-2xl mx-auto text-lg md:text-xl text-ink-light dark:text-white/70 font-serif italic leading-relaxed pt-2">
+          Ferramentas tradicionais foram desenhadas para comitês corporativos cheios de reuniões e relatórios. O SpecLine devolve a agilidade ao criador solo: notas ricas, kanban visual e diagramação livre em uma única aba limpa — sem assinaturas mensais abusivas.
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="pt-6 flex flex-wrap justify-center items-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "group px-8 py-4 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-xs uppercase tracking-widest font-semibold flex items-center gap-3 shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+            <span>Iniciar Meu Workspace Solo Grátis</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <a href="#fluxos-solo" class="px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-terracotta hover:text-terracotta font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center gap-2">
+            <span>Ver Como o Fluxo Funciona</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- TELEMETRY BAROMETER: SOLO PILLARS -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-dark/30 dark:bg-ink-paper/60 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
+        <div class="flex items-center gap-4">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-olive/20 text-olive-dark dark:text-olive font-bold rounded">
+            <span class="w-1.5 h-1.5 rounded-full bg-olive animate-pulse"></span>
+            PRODUTIVIDADE PURA
+          </span>
+          <span class="text-ink-light dark:text-white/70">Sem reuniões de alinhamento, sem burocracia de story points</span>
+        </div>
+
+        <div class="flex items-center gap-6 text-ink-light dark:text-white/60">
+          <div class="flex items-center gap-2">
+            <span>Custo Total:</span>
+            <span class="text-terracotta font-bold">R$ 0 / mês</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span>Economia de Abas:</span>
+            <span class="text-olive-dark dark:text-olive font-bold">1 app substitui 4</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 3 PILLARS FOR SOLO WORKERS -->
+    <section id="fluxos-solo" class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-7xl mx-auto space-y-16">
+        
+        <div class="text-center space-y-3 max-w-2xl mx-auto">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Simplicidade & Controle</span>
+          <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+            Construído para a velocidade de quem decide e executa
+          </h2>
+          <p class="text-sm md:text-base text-ink-light dark:text-white/70 font-sans">
+            Quando você trabalha sozinho ou lidera um projeto independente, cada clique conta. Menos tempo configurando painéis, mais tempo criando valor.
+          </p>
+        </div>
+
+        <!-- 3 CARDS DE FLUXO -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Card 1: Captura & Notas Livres -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Captura Rápida & Notas de Ideias
+              </h3>
+              <p class="text-xs font-mono text-terracotta uppercase tracking-wide">
+                Documentos Sem Complicação
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Centralize seus rascunhos, especificações de produtos, artigos e referências. Formate em Markdown, insira listas, tabelas e código com fluidez instantânea.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Substitui o editor de notas genérico</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Kanban Pessoal -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-ocean/20 text-ocean flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="9" x2="9" y1="3" y2="21"/><path d="M14 8h.01"/><path d="M14 16h.01"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Kanban de Execução Diária
+              </h3>
+              <p class="text-xs font-mono text-ocean uppercase tracking-wide">
+                Foco no que importa hoje
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Mova tarefas de <span class="font-mono text-xs">Pendente</span> para <span class="font-mono text-xs">Concluído</span> com drag-and-drop rápido. Defina prioridades, tags e prazos sem precisar de aprovações formais de terceiros.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-ocean shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Visão limpa de prioridades diárias</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Quadro Branco & Ideação Visual -->
+          <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-7 flex flex-col justify-between space-y-6 shadow-sm hover:shadow-md transition-shadow">
+            <div class="space-y-4">
+              <div class="w-12 h-12 rounded-xl bg-sage/20 text-sage flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z"/></svg>
+              </div>
+              <h3 class="text-2xl font-serif text-ink dark:text-white font-normal">
+                Diagramação & Canvas Infinito
+              </h3>
+              <p class="text-xs font-mono text-sage uppercase tracking-wide">
+                Mapeamento Visual Livre
+              </p>
+              <p class="text-sm text-ink-light dark:text-white/70 font-sans leading-relaxed">
+                Desenhe wireframes, arquiteturas de sistemas, jornadas de usuário e mapas conceituais diretamente pelo Whiteboard integrado ou diagramas Mermaid.js.
+              </p>
+            </div>
+            <div class="p-3 bg-fable/60 dark:bg-ink-darker rounded-xl border border-ink/10 dark:border-white/10 font-mono text-xs text-ink-light dark:text-white/70 flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Rascunhos visuais sem sair do fluxo</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MULTIDISCIPLINARY SHOWCASE: PARA QUALQUER CRIADOR SOLO -->
+    <section class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
+      <div class="max-w-7xl mx-auto space-y-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div class="space-y-2">
+            <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Ecossistema Aberto</span>
+            <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+              Feito para qualquer área de atuação
+            </h2>
+            <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+              Você não precisa ser programador para usar o SpecLine com maestria. Ele se molda ao seu processo de pensar e produzir.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Exemplo 1: Dev Solo / Indie Hacker -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-terracotta/15 text-terracotta flex items-center justify-center font-mono font-bold text-sm">
+                &lt;/&gt;
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Dev Solo & Maker</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">SaaS & Apps</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Organize o backlog de features, documentação técnica de APIs, notas de bugs e marcos de release sem a lentidão de softwares corporativos.
+            </p>
+            <div class="text-[11px] font-mono text-terracotta bg-terracotta/10 px-2.5 py-1 rounded inline-block">
+              Roadmap + Especificação + Bugs
+            </div>
+          </div>
+
+          <!-- Exemplo 2: Pesquisador Autônomo & Escritor -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-ocean/20 text-ocean flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Pesquisador & Autor</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Textos & Ensaios</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Esboce capítulos, estruture revisões de literatura, faça fichamentos e acompanhe o cronograma de submissões editoriais.
+            </p>
+            <div class="text-[11px] font-mono text-ocean bg-ocean/10 px-2.5 py-1 rounded inline-block">
+              Fichamentos + Capítulos + Prazos
+            </div>
+          </div>
+
+          <!-- Exemplo 3: Designer & Freelancer -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-sage/20 text-sage flex items-center justify-center font-mono font-bold text-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.563-2.512 5.563-5.563C22 6.5 17.5 2 12 2Z"/></svg>
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Designer Freelancer</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Projetos & Clientes</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Guarde briefings, moodboards conceituais no quadro branco e acompanhe as rodadas de entrega de cada cliente sem confusão de prazos.
+            </p>
+            <div class="text-[11px] font-mono text-sage bg-sage/10 px-2.5 py-1 rounded inline-block">
+              Briefings + Entregáveis + Canvas
+            </div>
+          </div>
+
+          <!-- Exemplo 4: Estudante Autodidata -->
+          <div class="p-6 rounded-2xl border border-ink/15 dark:border-white/10 bg-fable-light dark:bg-ink-darker space-y-4">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-lg bg-olive/20 text-olive-dark dark:text-olive flex items-center justify-center font-mono font-bold text-sm">
+                ◉
+              </div>
+              <div>
+                <h4 class="font-bold text-ink dark:text-white text-base">Estudante Autodidata</h4>
+                <span class="text-xs font-mono text-ink-light dark:text-white/50">Concursos & Certificações</span>
+              </div>
+            </div>
+            <p class="text-xs text-ink-light dark:text-white/70 font-sans leading-relaxed">
+              Trilhas de aprendizado personalizadas, resumos de livros, flash-points de revisão e painel de progresso nos tópicos do edital.
+            </p>
+            <div class="text-[11px] font-mono text-olive-dark dark:text-olive bg-olive/10 px-2.5 py-1 rounded inline-block">
+              Ciclos de Estudo + Resumos + Metas
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE CALCULATOR: ECONOMIA DO CRIADOR SOLO -->
+    <section class="p-8 md:p-20 border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-4xl mx-auto space-y-10">
+        <div class="text-center space-y-2">
+          <span class="font-mono text-xs uppercase tracking-widest text-terracotta font-bold">Calculadora de Custo & Sobrecarga</span>
+          <h2 class="text-3xl md:text-4xl font-serif font-light text-ink dark:text-white">
+            Quanto custa a sua fragmentação hoje?
+          </h2>
+          <p class="text-sm text-ink-light dark:text-white/70 font-sans">
+            Ferramentas pagas avulsas drenam seu dinheiro e dividem sua atenção em múltiplas notificações.
+          </p>
+        </div>
+
+        <div class="bg-white dark:bg-ink-paper border border-ink/15 dark:border-white/10 rounded-2xl p-8 shadow-sm space-y-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            
+            <div class="space-y-4">
+              <h3 class="text-lg font-mono font-bold uppercase tracking-wider text-ink dark:text-white">Pilha Tradicional Fragmentada:</h3>
+              <ul class="space-y-3 font-mono text-xs text-ink-light dark:text-white/70">
+                <li class="flex items-center justify-between p-2.5 bg-fable dark:bg-ink-darker rounded-lg">
+                  <span>App de Notas & Docs (ex: Notion Pro)</span>
+                  <span class="font-bold text-terracotta">~R$ 60 /mês</span>
+                </li>
+                <li class="flex items-center justify-between p-2.5 bg-fable dark:bg-ink-darker rounded-lg">
+                  <span>Kanban & Tarefas (ex: Trello / Linear)</span>
+                  <span class="font-bold text-terracotta">~R$ 50 /mês</span>
+                </li>
+                <li class="flex items-center justify-between p-2.5 bg-fable dark:bg-ink-darker rounded-lg">
+                  <span>Quadro Branco & Diagramas (ex: Miro / FigJam)</span>
+                  <span class="font-bold text-terracotta">~R$ 55 /mês</span>
+                </li>
+              </ul>
+              <div class="p-3 border-t border-ink/15 dark:border-white/15 flex items-center justify-between font-mono text-sm">
+                <span class="font-bold text-ink dark:text-white">Custo Total Anual:</span>
+                <span class="font-bold text-terracotta text-base">~R$ 1.980 / ano</span>
+              </div>
+            </div>
+
+            <div class="bg-fable/60 dark:bg-ink-darker border border-terracotta/30 rounded-xl p-6 text-center space-y-4 relative overflow-hidden">
+              <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-olive/20 text-olive-dark dark:text-olive rounded-full font-mono text-xs font-bold">
+                PROPOSTA SPECLINE
+              </div>
+              <div class="space-y-1">
+                <div class="text-4xl md:text-5xl font-serif text-terracotta font-normal">
+                  R$ 0,00
+                </div>
+                <div class="font-mono text-xs text-ink-light dark:text-white/70 uppercase tracking-widest">
+                  100% Gratuito & Open-Source
+                </div>
+              </div>
+              <p class="text-xs text-ink-light dark:text-white/80 font-sans leading-relaxed">
+                Tudo em uma única janela. Sem limites de blocos, sem bloqueio de exportação e com controle total dos seus dados.
+              </p>
+              <div class="pt-2">
+                <%= link_to new_user_registration_path, class: "w-full py-3 px-4 bg-terracotta text-white hover:bg-terracotta/90 rounded-xl font-mono text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-sm transition-all" do %>
+                  <span>Começar Imediatamente</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: CTA FINAL -->
+    <section class="p-12 md:p-20 text-center bg-fable-light dark:bg-[#18181A]">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <h2 class="text-3xl md:text-5xl font-serif font-light text-ink dark:text-white">
+          Sua mente organizada.<br>
+          <i class="text-terracotta font-serif-italic">Seus projetos em movimento.</i>
+        </h2>
+        <p class="text-base text-ink-light dark:text-white/70 font-serif italic">
+          Crie seu espaço solo agora mesmo. Leva menos de 30 segundos e não exige cartão nem configurações burocráticas.
+        </p>
+        <div class="pt-4 flex flex-wrap justify-center gap-4 font-mono text-xs">
+          <%= link_to new_user_registration_path, class: "px-8 py-4 bg-terracotta text-white hover:bg-terracotta/90 font-mono text-xs uppercase tracking-widest font-bold flex items-center gap-2 shadow-md hover:scale-105 active:scale-95 transition-all" do %>
+            <span>Criar Conta Gratuita</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <% end %>
+          <%= link_to solutions_path, class: "px-6 py-4 border border-ink/20 dark:border-white/20 text-ink dark:text-white hover:border-terracotta font-mono text-xs uppercase tracking-widest font-semibold transition-all" do %>
+            <span>Explorar Outras Soluções</span>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <%= render 'shared/marketing_footer' %>
+</div>

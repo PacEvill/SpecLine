@@ -112,11 +112,17 @@
           Minhas Tarefas
         <% end %>
 
+        <%= link_to practice_path, data: { action: "click->mobile-drawer#close" }, class: "flex items-center gap-2 px-3 py-2 text-xs font-medium text-terracotta hover:text-terracotta/90 rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors font-semibold" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          Práticas (PEI)
+        <% end %>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
         <%= link_to activities_path, data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2 px-3 py-2 text-xs font-medium text-ink-light dark:text-white/70 hover:text-ink dark:hover:text-white rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors" do %>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
           Atividades
         <% end %>
-      </div>
 
       <div class="grid grid-cols-2 gap-2 pt-1">
         <%= link_to edit_user_registration_path, data: { turbo_frame: "modal", action: "click->mobile-drawer#close" }, class: "flex items-center gap-2 px-3 py-2 text-xs font-medium text-ink-light dark:text-white/70 hover:text-ink dark:hover:text-white rounded-xl hover:bg-ink/5 dark:hover:bg-white/5 transition-colors" do %>

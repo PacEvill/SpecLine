@@ -367,7 +367,7 @@
                 <div class="font-sans font-semibold text-sm line-through text-ink-light dark:text-white/60">Setup de Autenticação Segura</div>
                 <div class="flex items-center justify-between pt-2 border-t border-ink/10 dark:border-white/10 text-[10px] font-mono text-ink-light/40 dark:text-white/40">
                   <span>Finalizado ontem</span>
-                  <span>✓ 4/4</span>
+                  <span class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><polyline points="20 6 9 17 4 12"/></svg> 4/4</span>
                 </div>
               </div>
             </div>
@@ -476,7 +476,7 @@
             <div class="col-span-5 font-sans font-semibold text-sm line-through text-ink dark:text-white">Setup de Autenticação Segura</div>
             <div class="col-span-2 text-ink/40 dark:text-white/40">—</div>
             <div class="col-span-2"><span class="px-2 py-0.5 bg-ink/10 dark:bg-white/10 text-[10px] rounded">NORMAL</span></div>
-            <div class="col-span-2 text-right text-sage font-bold">✓ CONCLUÍDO</div>
+            <div class="col-span-2 text-right text-sage font-bold inline-flex items-center justify-end gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> CONCLUÍDO</div>
           </div>
 
         </div>
@@ -504,7 +504,7 @@
             </div>
             <div class="w-full h-7 bg-ink/5 dark:bg-white/5 rounded relative overflow-hidden flex items-center px-3">
               <div class="absolute left-0 top-0 h-full w-full bg-sage/20 border-r-2 border-sage"></div>
-              <span class="relative z-10 text-[10px] font-bold text-sage">✓ 18/18 tarefas concluídas</span>
+              <span class="relative z-10 text-[10px] font-bold text-sage flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> 18/18 tarefas concluídas</span>
             </div>
           </div>
 
@@ -551,8 +551,10 @@
             <span id="drawer-task-id" data-tasks-workbench-target="drawerId" class="font-mono text-xs bg-terracotta/15 text-terracotta px-2.5 py-1 rounded font-bold">#T-104</span>
             <span class="font-mono text-xs text-sage font-semibold">● Em Progresso</span>
           </div>
-          <button type="button" data-action="click->tasks-workbench#closeDrawer" class="p-1.5 text-ink/50 dark:text-white/50 hover:text-ink dark:hover:text-white rounded hover:bg-ink/5 dark:hover:bg-white/5 font-mono text-xs cursor-pointer">
-            Fechar ✕ (ESC)
+          <button type="button" data-action="click->tasks-workbench#closeDrawer" class="p-1.5 text-ink/50 dark:text-white/50 hover:text-ink dark:hover:text-white rounded hover:bg-ink/5 dark:hover:bg-white/5 font-mono text-xs cursor-pointer inline-flex items-center gap-1.5">
+            <span>Fechar</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            <span class="text-[10px] text-ink/40 dark:text-white/40">(ESC)</span>
           </button>
         </div>
 

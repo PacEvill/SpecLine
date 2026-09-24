@@ -78,32 +78,47 @@
               <span class="text-terracotta font-bold text-[10px]">+ Documento</span>
             </div>
 
-            <!-- Folder 1: Engenharia -->
+            <!-- Folder 1: Estrutura do Projeto -->
             <div class="space-y-1 text-sm font-sans">
               <div class="flex items-center gap-2 text-ink/80 dark:text-white/80 font-medium py-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="m6 9 6 6 6-6"/></svg>
-                <span>📁 01. Arquitetura Core</span>
+                <span class="flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                  01. Estrutura do Projeto
+                </span>
               </div>
               <div class="pl-6 space-y-1 font-mono text-xs">
                 <div class="p-1.5 bg-ink/10 dark:bg-white/10 text-terracotta font-semibold flex items-center justify-between">
-                  <span>📄 RFC-089: Sync Engine</span>
+                  <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-terracotta"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Plano de Trabalho & Metas
+                  </span>
                   <span class="w-1.5 h-1.5 rounded-full bg-sage animate-pulse"></span>
                 </div>
                 <div class="p-1.5 text-ink/60 dark:text-white/60 hover:text-ink dark:hover:text-white transition-colors">
-                  <span>📄 ADR-012: Data Isolation</span>
+                  <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Metodologia & Referências
+                  </span>
                 </div>
               </div>
             </div>
 
-            <!-- Folder 2: Guias -->
+            <!-- Folder 2: Caderno de Notas -->
             <div class="space-y-1 text-sm font-sans pt-2">
               <div class="flex items-center gap-2 text-ink/80 dark:text-white/80 font-medium py-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="m6 9 6 6 6-6"/></svg>
-                <span>📁 02. Padrões de Design</span>
+                <span class="flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>
+                  02. Caderno de Notas
+                </span>
               </div>
               <div class="pl-6 space-y-1 font-mono text-xs text-ink/60 dark:text-white/60">
                 <div class="p-1.5 hover:text-ink dark:hover:text-white transition-colors">
-                  <span>📄 Design Tokens & Brutalism</span>
+                  <span class="flex items-center gap-1.5">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Diário de Bordo & Resumos
+                  </span>
                 </div>
               </div>
             </div>
@@ -140,7 +155,10 @@
 
             <!-- Callout Block (Dimmed in Typewriter focus unless active) -->
             <div data-docs-workbench-target="typewriter" class="p-5 border-l-4 border-terracotta bg-terracotta/5 text-ink dark:text-white font-sans text-sm space-y-1">
-              <div class="font-mono font-bold text-xs uppercase tracking-wider text-terracotta">💡 Invariante Arquitetural</div>
+              <div class="font-mono font-bold text-xs uppercase tracking-wider text-terracotta flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Princípio Fundamental
+              </div>
               <p class="leading-relaxed">
                 Todas as operações de edição devem suportar latência zero (*Optimistic UI*) com fallback para fila de reconciliação em background.
               </p>
@@ -169,9 +187,18 @@
 
               <h3 data-docs-workbench-target="typewriter" class="font-serif text-xl font-bold text-ink dark:text-white pt-2">2. Validações de Sistema</h3>
               <ul data-docs-workbench-target="typewriter" class="space-y-2 text-sm font-sans list-none pl-0">
-                <li class="flex items-center gap-2"><span class="text-sage font-bold">✓</span> Suporte completo a atalhos de Markdown (<code>#</code>, <code>&gt;</code>, <code>```</code>, <code>[]</code>)</li>
-                <li class="flex items-center gap-2"><span class="text-sage font-bold">✓</span> Preservação de histórico com diffs linha a linha</li>
-                <li class="flex items-center gap-2"><span class="text-terracotta font-bold">○</span> Integração de menções de Kanban (<code>@issue-402</code>)</li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Suporte completo a atalhos de Markdown (<code>#</code>, <code>&gt;</code>, <code>```</code>, <code>[]</code>)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-sage shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Preservação de histórico com diffs linha a linha</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="text-terracotta font-bold">○</span>
+                  <span>Integração de menções de Kanban (<code>@issue-402</code>)</span>
+                </li>
               </ul>
             </div>
 
