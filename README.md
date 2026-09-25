@@ -16,17 +16,19 @@
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4_Semântico-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
   [![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+  [![Live Demo](https://img.shields.io/badge/Demo-Live_on_Render-2ea44f?style=flat-square&logo=render&logoColor=white)](https://specline.onrender.com)
   [![Security Brakeman](https://img.shields.io/badge/Security-0_Vulnerabilities-2ea44f?style=flat-square&logo=shield&logoColor=white)](#7-verificação-de-qualidade-e-segurança)
   [![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
   <br />
 
   [Visão Geral](#1-visão-geral-e-proposta-de-engenharia) •
-  [Galeria da Plataforma](#2-galeria-da-plataforma) •
-  [Arquitetura do Sistema](#3-arquitetura-do-sistema-e-topologia) •
-  [Matriz Tecnológica](#4-matriz-tecnológica) •
-  [Instalação e Execução](#6-ambiente-de-desenvolvimento-local) •
-  [Diretrizes de Contribuição](#9-como-contribuir)
+  [Extensão PEI VI Maricá](#2-vínculo-territorial-e-extensão-universitária-pei-vi--maricárj) •
+  [Galeria da Plataforma](#3-galeria-da-plataforma) •
+  [Arquitetura do Sistema](#4-arquitetura-do-sistema-e-topologia) •
+  [Matriz Tecnológica](#5-matriz-tecnológica) •
+  [Instalação e Execução](#7-ambiente-de-desenvolvimento-local) •
+  [Diretrizes de Contribuição](#10-como-contribuir)
 
 </div>
 
@@ -42,6 +44,24 @@ O **SpecLine** foi concebido para unificar esses fluxos sob uma arquitetura de d
 * **Rastreabilidade Bidirecional:** Associação direta entre itens do quadro Kanban e suas respectivas seções no documento funcional.
 * **Modelagem Visual Integrada:** Elaboração de arquiteturas de software e fluxogramas em canvas vetorial interativo.
 * **Arquitetura de Alta Eficiência:** Desenvolvido sobre o **Ruby on Rails 8 Solid Stack**, eliminando a necessidade de serviços intermediários pagos (como instâncias dedicadas de Redis) ao empregar `Solid Queue`, `Solid Cable` e `Solid Cache` persistidos no PostgreSQL.
+
+---
+
+## 2. Vínculo Territorial e Extensão Universitária (PEI VI — Maricá/RJ)
+
+> **Declaração Institucional:** Entrega individual — PEI VI Maricá  
+> **Discente / Desenvolvedor Solo:** Diego Silva Pereira Pacheco ([@PacEvill](https://github.com/PacEvill)) — Matrícula: `202413831`  
+> **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro  
+> **Docente Orientador Técnico:** Prof. Me. Victor Andrade da Silveira  
+> **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá  
+> **Território de Atuação:** Município de Maricá/RJ  
+> **Local Parceiro / Espaço Físico da Ação:** Laboratório de Informática Avançada (Lab 02) — Campus Maricá (Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815) em cooperação com o ecossistema local e Polo de Inovação de Maricá / ICTIM.  
+> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 98765-4321 / (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`  
+> **Data e Horário da Oficina Presencial:** **17 de Outubro de 2026 (Sábado), das 09h00 às 11h30** (Oficina prática 'Mão na Massa' com coleta de lista de presença física assinada e avaliação Likert).  
+> **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)  
+> **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)  
+> **Status de Homologação em Produção:** 🟢 [https://specline.onrender.com](https://specline.onrender.com) (Ambiente Web Permanente)  
+
 
 ---
 

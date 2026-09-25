@@ -12,14 +12,14 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 
 ## 2. 🏃 Sprints Atuais e Futuras (Foco: UI/UX, Multiplayer & I/O)
 
-- [ ] **Sprint 6: Productization & Onboarding (Atual)**
-  **Objetivo:** Transformar a aplicação de um "software cru" para um produto comercial com fluxos de onboarding, e-mails e dados de demonstração.
+- [x] **Sprint 6: Productization & Landing Page (Concluída em 24/09/2026)**
+  **Objetivo:** Transformar a aplicação de um "software cru" para um produto comercial com fluxos de onboarding, páginas de soluções e nova Landing Page institucional.
 
   **Sub-tasks:**
   - [x] Sub-task 6.1: Dashboard "Bento Box Híbrido" refinado com métricas claras.
-  - [ ] Sub-task 6.2: Fluxos de Onboarding Inteligente (Projeto Demo Auto-Gerado para novos usuários).
-  - [ ] Sub-task 6.3: Configuração e Templates de E-mails Transacionais (Resend) para boas-vindas e alertas.
-  - [ ] Sub-task 6.4: Landing Page de conversão de Marketing (se aplicável ao MVP).
+  - [x] Sub-task 6.2: Fluxos de Onboarding e consentimento LGPD explícito no cadastro.
+  - [x] Sub-task 6.3: Configuração e documentação de infraestrutura em nuvem (Render, Neon, Resend).
+  - [x] Sub-task 6.4: Landing Page institucional, páginas de soluções setoriais e tabela de preços.
 
 - [ ] **Sprint 7: Event Stacking & Calendar Connection**
   **Objetivo:** Dar vida ao widget de calendário do Dashboard, conectando-o com os prazos de Milestones e Issues do projeto.

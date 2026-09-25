@@ -95,6 +95,13 @@
   <div data-controller="turnstile" data-turnstile-sitekey-value="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>" class="my-4 flex justify-center"></div>
 <% end %>
 
+        <div class="flex items-start gap-2.5 mt-5">
+          <input type="checkbox" id="terms_consent" required class="mt-1 w-4 h-4 rounded border-ink/20 text-terracotta focus:ring-terracotta accent-terracotta cursor-pointer">
+          <label for="terms_consent" class="text-xs text-ink-light dark:text-white/70 leading-relaxed cursor-pointer select-none">
+            Li e concordo com os <%= link_to "Termos de Uso", terms_path, target: "_blank", class: "text-terracotta underline hover:opacity-80" %> e com a <%= link_to "Política de Privacidade", privacy_path, target: "_blank", class: "text-terracotta underline hover:opacity-80" %> (tratamento de dados para fins acadêmicos e operacionais do projeto SpecLine — PEI VI Maricá).
+          </label>
+        </div>
+
         <%= f.button type: "submit", class: "group w-full bg-ink text-white dark:bg-fable-light dark:text-ink hover:bg-terracotta hover:text-white dark:hover:bg-terracotta dark:hover:text-white transition-all duration-500 py-4 font-sans font-medium tracking-wide flex items-center justify-center gap-2 mt-6 cursor-pointer" do %>
           Criar Conta
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
