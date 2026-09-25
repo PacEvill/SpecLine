@@ -21,9 +21,27 @@ module.exports = {
           DEFAULT: '#F3EFE6', // Light beige / café com leite
           dark: '#EAE5D9', // Slightly deeper beige
         },
-        terracotta: '#D97A5E',
-        sage: '#A5B5A1',
-        ochre: '#CFA055',
+        terracotta: {
+          DEFAULT: '#D97A5E',
+          hover: '#C2654B',
+        },
+        rust: {
+          DEFAULT: '#C45543',
+          dark: '#E57361',
+        },
+        sage: {
+          DEFAULT: '#5E7A5A',
+          dark: '#9BB397',
+        },
+        ochre: {
+          DEFAULT: '#B88636',
+          dark: '#E0B066',
+        },
+        olive: {
+          DEFAULT: '#556B2F',
+          dark: '#8FBC8F',
+        },
+        slate: '#6C757D',
         ocean: '#4B6B78',
       },
       fontFamily: {

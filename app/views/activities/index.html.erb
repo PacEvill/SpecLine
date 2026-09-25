@@ -16,14 +16,21 @@
           <% end %>
         </div>
         
-        <!-- Tabs -->
-        <div class="px-6 flex gap-4">
-          <%= link_to activities_path, data: { turbo_frame: "modal" }, class: "border-b-2 pb-3 #{params[:activity_filter] == 'mine' ? 'border-transparent hover:border-ink/20 dark:hover:border-white/20 transition-colors' : 'border-ink dark:border-white'}" do %>
-            <span class="text-xs font-bold uppercase tracking-wider cursor-pointer #{params[:activity_filter] == 'mine' ? 'text-ink-light dark:text-white/40 hover:text-ink dark:hover:text-white' : 'text-ink dark:text-white'}">Todas</span>
-          <% end %>
-          
-          <%= link_to activities_path(activity_filter: 'mine'), data: { turbo_frame: "modal" }, class: "border-b-2 pb-3 #{params[:activity_filter] == 'mine' ? 'border-ink dark:border-white' : 'border-transparent hover:border-ink/20 dark:hover:border-white/20 transition-colors'}" do %>
-            <span class="text-xs font-bold uppercase tracking-wider cursor-pointer #{params[:activity_filter] == 'mine' ? 'text-ink dark:text-white' : 'text-ink-light dark:text-white/40 hover:text-ink dark:hover:text-white'}">Minhas</span>
+        <!-- Tabs & Export -->
+        <div class="px-6 flex items-center justify-between gap-4">
+          <div class="flex gap-4">
+            <%= link_to activities_path, data: { turbo_frame: "modal" }, class: "border-b-2 pb-3 #{params[:activity_filter] == 'mine' ? 'border-transparent hover:border-ink/20 dark:hover:border-white/20 transition-colors' : 'border-ink dark:border-white'}" do %>
+              <span class="text-xs font-bold uppercase tracking-wider cursor-pointer #{params[:activity_filter] == 'mine' ? 'text-ink-light dark:text-white/40 hover:text-ink dark:hover:text-white' : 'text-ink dark:text-white'}">Todas</span>
+            <% end %>
+            
+            <%= link_to activities_path(activity_filter: 'mine'), data: { turbo_frame: "modal" }, class: "border-b-2 pb-3 #{params[:activity_filter] == 'mine' ? 'border-ink dark:border-white' : 'border-transparent hover:border-ink/20 dark:hover:border-white/20 transition-colors'}" do %>
+              <span class="text-xs font-bold uppercase tracking-wider cursor-pointer #{params[:activity_filter] == 'mine' ? 'text-ink dark:text-white' : 'text-ink-light dark:text-white/40 hover:text-ink dark:hover:text-white'}">Minhas</span>
+            <% end %>
+          </div>
+
+          <%= link_to activities_path(format: :csv, activity_filter: params[:activity_filter]), class: "pb-3 text-xs font-mono font-semibold text-terracotta hover:underline inline-flex items-center gap-1.5 transition-colors cursor-pointer", title: "Exportar registro de auditoria em CSV", data: { turbo: false } do %>
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Exportar CSV</span>
           <% end %>
         </div>
       </div>

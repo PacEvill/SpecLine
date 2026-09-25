@@ -1,5 +1,5 @@
 <% if flash.any? %>
-  <div id="flash-messages" class="fixed top-5 right-5 sm:right-8 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
+  <div id="flash-messages" role="region" aria-label="Notificações do sistema" class="fixed top-5 right-5 sm:right-8 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0">
     <% flash.each do |type, message| %>
       <% next if message.blank? %>
       <% 
@@ -9,7 +9,9 @@
         border_color = is_alert ? 'border-rust/30' : (is_warning ? 'border-ochre/30' : 'border-sage/40')
         icon_bg = is_alert ? 'bg-rust/15 text-rust' : (is_warning ? 'bg-ochre/15 text-ochre' : 'bg-sage/15 text-sage')
       %>
-      <div data-controller="flash" 
+      <div data-controller="flash"
+           role="<%= is_alert ? 'alert' : 'status' %>"
+           aria-live="<%= is_alert ? 'assertive' : 'polite' %>"
            class="pointer-events-auto flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-2xl bg-white dark:bg-ink-paper border <%= border_color %> shadow-[0_10px_30px_-5px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_30px_-5px_rgba(0,0,0,0.5)] transition-all duration-300 transform translate-y-0 opacity-100 animate-fade-in-up">
         
         <div class="flex items-center gap-3 min-w-0">
