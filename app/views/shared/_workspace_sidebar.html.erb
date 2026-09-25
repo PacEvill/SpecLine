@@ -73,7 +73,7 @@
         </div>
 
         <div class="space-y-1">
-          <%= link_to "#", class: "flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-olive/10 hover:text-olive-dark dark:hover:text-olive transition-colors" do %>
+          <%= link_to my_tasks_path, data: { turbo_frame: "modal" }, class: "flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-olive/10 hover:text-olive-dark dark:hover:text-olive transition-colors" do %>
             <div class="flex items-center gap-2.5">
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-olive"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
               <span>Minhas Issues</span>
@@ -84,17 +84,17 @@
             <% end %>
           <% end %>
 
-          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-rust/10 hover:text-rust-dark dark:hover:text-rust transition-colors" do %>
+          <%= link_to workspace_project_path(current_ws, @project, tab: "board"), class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-rust/10 hover:text-rust-dark dark:hover:text-rust transition-colors" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-rust"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             <span>Urgentes / Bloqueados</span>
           <% end %>
 
-          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-sage/10 hover:text-sage-dark dark:hover:text-sage transition-colors" do %>
+          <%= link_to activities_path, data: { turbo_frame: "modal" }, class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-sage/10 hover:text-sage-dark dark:hover:text-sage transition-colors" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-sage"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <span>Atualizações Recentes</span>
           <% end %>
           
-          <%= link_to "#", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-terracotta/10 hover:text-terracotta-dark dark:hover:text-terracotta transition-colors" do %>
+          <%= link_to edit_workspace_project_path(current_ws, @project), data: { turbo_frame: "modal" }, class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-terracotta/10 hover:text-terracotta-dark dark:hover:text-terracotta transition-colors" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-terracotta"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             <span>Membros da Equipe</span>
           <% end %>

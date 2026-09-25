@@ -38,10 +38,10 @@
 
     <!-- Center: Undo/Redo & Quick Blueprints Inserter -->
     <div class="flex items-center gap-1.5">
-      <button type="button" data-action="click->whiteboard#undo" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Desfazer (Ctrl+Z)">
+      <button type="button" data-action="click->whiteboard#undo" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Desfazer (Ctrl+Z)" aria-label="Desfazer última ação">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
       </button>
-      <button type="button" data-action="click->whiteboard#redo" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Refazer (Ctrl+Y / Ctrl+Shift+Z)">
+      <button type="button" data-action="click->whiteboard#redo" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Refazer (Ctrl+Y / Ctrl+Shift+Z)" aria-label="Refazer ação">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></svg>
       </button>
 
@@ -95,11 +95,11 @@
 
     <!-- Right: Grid Toggle, Export Suite & Status -->
     <div class="flex items-center gap-2.5">
-      <button type="button" data-action="click->whiteboard#toggleGrid" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Alternar Grade de Fundo (Pontos / Linhas / Limpo)">
+      <button type="button" data-action="click->whiteboard#toggleGrid" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer" title="Alternar Grade de Fundo (Pontos / Linhas / Limpo)" aria-label="Alternar grade de fundo">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       </button>
 
-      <button type="button" data-action="click->whiteboard#toggleShortcutsModal" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer hidden sm:block" title="Atalhos de Teclado (?)">
+      <button type="button" data-action="click->whiteboard#toggleShortcutsModal" class="p-1.5 hover:bg-ink/10 dark:bg-white/10 rounded-lg text-ink/60 dark:text-white/60 hover:text-ink dark:text-white transition-colors cursor-pointer hidden sm:block" title="Atalhos de Teclado (?)" aria-label="Ver atalhos de teclado">
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       </button>
 

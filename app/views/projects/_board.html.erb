@@ -15,12 +15,12 @@
           </div>
           
           <div class="flex items-center gap-0.5">
-            <%= link_to new_workspace_project_issue_path(workspace, project, issue_status_id: status.id), data: { turbo_frame: "modal" }, class: "w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer duration-500", title: "Adicionar Issue" do %>
+            <%= link_to new_workspace_project_issue_path(workspace, project, issue_status_id: status.id), data: { turbo_frame: "modal" }, class: "w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer duration-500", title: "Adicionar Issue", aria: { label: "Adicionar tarefa na coluna #{status.name}" } do %>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <% end %>
 
             <details class="relative" data-controller="dropdown" data-action="click->dropdown#toggle keydown.window->dropdown#closeOnEsc">
-              <summary class="list-none w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer focus:outline-none duration-500">
+              <summary class="list-none w-6 h-6 rounded flex items-center justify-center text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors cursor-pointer focus:outline-none duration-500" aria-label="Opções da coluna <%= status.name %>">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
               </summary>
             
