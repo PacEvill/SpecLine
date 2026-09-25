@@ -7,6 +7,13 @@
     <!-- Left Column: Typography & Action -->
     <div class="col-span-1 md:col-span-6 lg:col-span-6 flex flex-col justify-between p-8 md:p-16 lg:p-20 border-b md:border-b-0 md:border-r border-ink/15 dark:border-white/10 relative overflow-hidden bg-fable-light dark:bg-[#18181A]">
       <div class="space-y-6 relative z-10">
+        <!-- Extension Project Pill / Badge -->
+        <%= link_to extension_path, class: "inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono font-bold tracking-wide border border-terracotta/20 hover:bg-terracotta/20 hover:scale-[1.02] transition-all cursor-pointer shadow-sm group" do %>
+          <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+          <span>Ação Extensionista · PEI VI · Campus Maricá</span>
+          <span class="font-normal opacity-80 group-hover:translate-x-0.5 transition-transform">→</span>
+        <% end %>
+
         <h1 class="font-serif font-light text-6xl md:text-7xl lg:text-8xl leading-[0.9] tracking-tight text-ink dark:text-fable">
           O seu trabalho,<br>
           <i class="text-terracotta font-serif-italic">em um só</i> <br>
@@ -401,6 +408,30 @@
     </div>
   </section>
  
+  <!-- Ação Extensionista Maricá / PEI VI Highlight -->
+  <section class="p-8 md:p-16 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper relative overflow-hidden">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="space-y-4 max-w-2xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-mono font-bold tracking-wider uppercase border border-terracotta/20">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 21a9 9 0 0 0 9-9c0-4.97-4.03-9-9-9s-9 4.03-9 9a9 9 0 0 0 9 9Z"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg>
+          <span>Extensão Universitária · PEI VI · Universidade de Vassouras</span>
+        </div>
+        <h3 class="text-2xl md:text-4xl font-serif text-ink dark:text-white leading-tight">
+          Oficina de Engenharia de Software <i class="text-terracotta font-serif-italic">no Campus Maricá.</i>
+        </h3>
+        <p class="text-ink-light dark:text-white/70 font-sans text-sm md:text-base leading-relaxed">
+          Desenvolvido no 6º período de Engenharia de Software (FUSVE) como ação comunitária aberta. Conheça o diagnóstico territorial de Maricá, a oficina presencial de 17/10/2026 no Lab 02 e a documentação pública.
+        </p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <%= link_to extension_path, class: "px-6 py-3.5 bg-terracotta text-white hover:bg-terracotta/90 font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2 rounded-lg shadow-sm hover:scale-105 active:scale-95 transition-all cursor-pointer" do %>
+          <span>Página da Ação Extensionista</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
   <!-- Bottom Marquee Dividers (3 stacked bars: Black, Orange, Green) -->
   <div class="flex flex-col border-b border-ink/15 dark:border-white/10">
     <!-- Bar 1: Black / Ink -->

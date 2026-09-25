@@ -80,6 +80,8 @@ Rails.application.routes.draw do
   get "solutions/startups", to: "solutions#startups"
   get "solutions/agencies", to: "solutions#agencies"
   get "solutions/product", to: "solutions#product"
+  get "extension", to: "solutions#extension", as: :extension
+  get "acao-extensionista", to: "solutions#extension"
 
   # Legal & Institutional Pages
   get "terms", to: "legal#terms"

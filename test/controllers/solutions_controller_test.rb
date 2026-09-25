@@ -35,4 +35,12 @@ class SolutionsControllerTest < ActionDispatch::IntegrationTest
     get solutions_creators_url
     assert_response :success
   end
+
+  test "should get extension" do
+    get extension_url
+    assert_response :success
+    assert_select "h1", text: /Engenharia de Software/
+    get "/acao-extensionista"
+    assert_response :success
+  end
 end

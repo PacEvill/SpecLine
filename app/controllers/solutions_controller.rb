@@ -19,4 +19,7 @@ class SolutionsController < ApplicationController
 
   def creators
   end
+
+  def extension
+  end
 end
