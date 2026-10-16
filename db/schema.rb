@@ -172,6 +172,28 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_120000) do
     t.index ["project_id"], name: "index_milestones_on_project_id"
   end
 
+  create_table "practical_sessions", force: :cascade do |t|
+    t.string "check_in_code", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.datetime "ends_at"
+    t.integer "issue_id"
+    t.string "location", null: false
+    t.text "observations"
+    t.string "participant_email"
+    t.string "participant_name"
+    t.integer "project_id", null: false
+    t.datetime "scheduled_at", null: false
+    t.string "status", default: "scheduled", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["check_in_code"], name: "index_practical_sessions_on_check_in_code", unique: true
+    t.index ["issue_id"], name: "index_practical_sessions_on_issue_id"
+    t.index ["project_id"], name: "index_practical_sessions_on_project_id"
+    t.index ["user_id"], name: "index_practical_sessions_on_user_id"
+  end
+
   create_table "practice_evidences", force: :cascade do |t|
     t.integer "category", default: 0, null: false
     t.datetime "created_at", null: false
@@ -316,6 +338,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_120000) do
   add_foreign_key "issues", "users", column: "creator_id"
   add_foreign_key "labels", "workspaces"
   add_foreign_key "milestones", "projects"
+  add_foreign_key "practical_sessions", "issues"
+  add_foreign_key "practical_sessions", "projects"
+  add_foreign_key "practical_sessions", "users"
   add_foreign_key "practice_evidences", "practice_profiles"
   add_foreign_key "practice_logs", "issues"
   add_foreign_key "practice_logs", "practice_profiles"

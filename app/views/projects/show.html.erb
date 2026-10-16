@@ -96,6 +96,8 @@
     <%= render "projects/documents_view", documents: @documents, workspace: @workspace, project: @project %>
   <% elsif @view == "whiteboards" %>
     <%= render "projects/whiteboards_view", whiteboards: @whiteboards, workspace: @workspace, project: @project %>
+  <% elsif @view == "practical_sessions" %>
+    <%= render "projects/practical_sessions_view", practical_sessions: @practical_sessions, workspace: @workspace, project: @project %>
   <% elsif @view == "overview" %>
     <%= render "projects/overview_view", workspace: @workspace, project: @project %>
   <% end %>

@@ -1,0 +1,75 @@
+<%= form_with(model: [@workspace, @project, @practical_session], class: "space-y-4") do |f| %>
+  <% if @practical_session.errors.any? %>
+    <div class="p-4 mb-4 text-xs text-red-700 bg-red-100 rounded-lg dark:bg-red-950/40 dark:text-red-300 border border-red-200 dark:border-red-800">
+      <div class="font-bold mb-1"><%= pluralize(@practical_session.errors.count, "erro") %> impediram a gravação:</div>
+      <ul class="list-disc list-inside">
+        <% @practical_session.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "Título da Prática / Atividade Presencial *", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+    <%= f.text_field :title, placeholder: "Ex: Validação Prática do Protótipo em Bancada", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta", required: true %>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= f.label :location, "Local / Laboratório Presencial *", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.text_field :location, placeholder: "Ex: Lab 01 - Bancada de Testes 3", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta", required: true %>
+    </div>
+
+    <div>
+      <%= f.label :status, "Status da Prática", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.select :status, PracticalSession.status_options, {}, class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= f.label :scheduled_at, "Data e Horário de Início *", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.datetime_field :scheduled_at, class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta", required: true %>
+    </div>
+
+    <div>
+      <%= f.label :ends_at, "Horário de Término (Estimado)", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.datetime_field :ends_at, class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <%= f.label :participant_name, "Nome do Participante / Aluno", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.text_field :participant_name, placeholder: "Ex: Diego Silva Pacheco", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+    </div>
+
+    <div>
+      <%= f.label :participant_email, "E-mail do Participante", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+      <%= f.email_field :participant_email, placeholder: "aluno@universidade.edu.br", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.label :issue_id, "Vincular a uma Tarefa (Kanban)", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+    <%= f.collection_select :issue_id, @project.issues, :id, :title, { include_blank: "Nenhuma (Prática Livre)" }, class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+  </div>
+
+  <div>
+    <%= f.label :description, "Descrição / Objetivos da Prática Presencial", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+    <%= f.text_area :description, rows: 3, placeholder: "Descreva o que será feito ou testado no local presencialmente...", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+  </div>
+
+  <div>
+    <%= f.label :observations, "Observações / Evidências do Check-in", class: "block text-xs font-semibold text-ink dark:text-fable mb-1" %>
+    <%= f.text_area :observations, rows: 2, placeholder: "Notas ou resultados após o check-in no laboratório...", class: "w-full text-xs px-3 py-2 border border-ink/15 dark:border-white/15 rounded-lg bg-white dark:bg-ink-paper text-ink dark:text-fable focus:ring-terracotta focus:border-terracotta" %>
+  </div>
+
+  <div class="pt-4 flex items-center justify-end gap-3 border-t border-ink/10 dark:border-white/10">
+    <button type="button" data-action="click->modal#close" class="px-4 py-2 text-xs font-medium text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable transition-colors">
+      Cancelar
+    </button>
+    <%= f.submit @practical_session.new_record? ? "Agendar Prática Presencial" : "Salvar Alterações", class: "px-5 py-2 text-xs font-semibold text-white bg-terracotta rounded-lg hover:bg-[#c26244] shadow-sm transition-colors cursor-pointer" %>
+  </div>
+<% end %>

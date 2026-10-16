@@ -30,6 +30,11 @@ Rails.application.routes.draw do
           get :export_svg
         end
       end
+      resources :practical_sessions do
+        member do
+          patch :check_in
+        end
+      end
     end
   end
 

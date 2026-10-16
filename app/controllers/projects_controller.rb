@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
     @milestones = @project.milestones.ordered
     @documents = @project.documents.roots.ordered
     @whiteboards = @project.whiteboards.ordered
+    @practical_sessions = @project.practical_sessions.ordered
     @recent_documents = @project.documents.order(updated_at: :desc).limit(6)
     @recent_whiteboards = @project.whiteboards.order(updated_at: :desc).limit(4)
     @recent_activities = @workspace.activities.order(created_at: :desc).limit(8)

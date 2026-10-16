@@ -8,6 +8,7 @@ class Project < ApplicationRecord
   has_many :boards, dependent: :destroy
   has_many :documents, dependent: :destroy
   has_many :whiteboards, dependent: :destroy
+  has_many :practical_sessions, dependent: :destroy
 
   has_one_attached :logo
   validates :name, presence: true

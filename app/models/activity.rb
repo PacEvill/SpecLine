@@ -78,6 +78,10 @@ class Activity < ApplicationRecord
       "criou a especificação <span class='font-bold text-sage-dark dark:text-sage'>#{safe(metadata['title'])}</span>"
     when "whiteboard_created"
       "desenhou o quadro <span class='font-bold text-slate'>#{safe(metadata['title'])}</span>"
+    when "practical_session_created"
+      "agendou a prática presencial <span class='font-bold text-ink dark:text-white'>#{safe(metadata['title'])}</span> em <span class='text-sage-dark dark:text-sage'>#{safe(metadata['location'])}</span>"
+    when "practical_session_checkin"
+      "confirmou presença na prática <span class='font-bold text-olive'>#{safe(metadata['title'])}</span>"
     else
       "#{action.humanize.downcase}"
     end

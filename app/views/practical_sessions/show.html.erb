@@ -1,0 +1,196 @@
+<% content_for(:sidebar) do %>
+  <%= render "shared/workspace_sidebar", workspace: @workspace %>
+<% end %>
+
+<div class="min-h-screen bg-gray-50 dark:bg-ink-darker py-8 px-4 sm:px-6 lg:px-8 font-sans">
+  <div class="max-w-3xl mx-auto space-y-6">
+    
+    <!-- Top Action Bar -->
+    <div class="flex items-center justify-between no-print">
+      <%= link_to workspace_project_path(@workspace, @project, view: "practical_sessions"), class: "inline-flex items-center gap-2 text-xs font-semibold text-ink-light dark:text-white/70 hover:text-terracotta transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Voltar para Lista de Práticas</span>
+      <% end %>
+
+      <div class="flex items-center gap-2">
+        <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-ink rounded-lg shadow-sm hover:bg-terracotta transition-colors cursor-pointer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          <span>Imprimir / Gerar PDF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Official Certificate Card -->
+    <div class="bg-white dark:bg-ink-paper border-2 border-ink/10 dark:border-white/15 rounded-3xl p-8 shadow-2xl relative overflow-hidden print:border-black print:shadow-none">
+      
+      <!-- Decorative background accent -->
+      <div class="absolute top-0 right-0 w-48 h-48 bg-terracotta/10 rounded-bl-full pointer-events-none"></div>
+
+      <!-- Institutional Header -->
+      <div class="border-b-2 border-ink/10 dark:border-white/10 pb-6 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <div class="text-[11px] font-mono tracking-widest text-terracotta uppercase font-bold">
+            UNIVERSIDADE DE VASSOURAS · PRÁTICAS EXTENSIONISTAS VI
+          </div>
+          <h1 class="text-2xl md:text-3xl font-serif font-bold text-ink dark:text-fable tracking-tight mt-1">
+            SpecLine · Comprovante de Prática Presencial
+          </h1>
+          <p class="text-xs text-ink-light dark:text-white/60 mt-0.5">
+            Registro Oficial de Utilização Física de Espaço / Laboratório
+          </p>
+        </div>
+
+        <div class="flex flex-col items-end shrink-0">
+          <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold border shadow-xs <%= @practical_session.status_color %>">
+            <span class="w-2.5 h-2.5 rounded-full bg-current"></span>
+            <%= @practical_session.status_label.upcase %>
+          </span>
+          <span class="font-mono text-xs font-bold text-ink-light dark:text-white/60 mt-1">
+            <%= @practical_session.check_in_code %>
+          </span>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        
+        <!-- Left 2 Cols: Details -->
+        <div class="md:col-span-2 space-y-6">
+          
+          <div>
+            <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+              Título da Atividade / Prática Presencial
+            </span>
+            <h2 class="text-xl font-serif font-bold text-ink dark:text-fable">
+              <%= @practical_session.title %>
+            </h2>
+            <% if @practical_session.description.present? %>
+              <p class="text-xs text-ink-light dark:text-white/70 mt-2 bg-ink/5 dark:bg-white/5 p-3 rounded-xl border border-ink/5">
+                <%= @practical_session.description %>
+              </p>
+            <% end %>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-[#FDFBF7] dark:bg-ink-darker p-3.5 rounded-xl border border-ink/5 dark:border-white/5">
+              <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+                Local / Espaço Físico
+              </span>
+              <div class="text-sm font-bold text-ink dark:text-fable flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="text-terracotta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <%= @practical_session.location %>
+              </div>
+            </div>
+
+            <div class="bg-[#FDFBF7] dark:bg-ink-darker p-3.5 rounded-xl border border-ink/5 dark:border-white/5">
+              <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+                Data & Horário
+              </span>
+              <div class="text-sm font-bold text-ink dark:text-fable flex items-center gap-1.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <%= l(@practical_session.scheduled_at, format: :short) rescue @practical_session.scheduled_at.strftime("%d/%m/%Y às %H:%M") %>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+                Participante Presencial
+              </span>
+              <div class="text-xs font-semibold text-ink dark:text-fable">
+                <%= @practical_session.participant_name.presence || "Não especificado" %>
+              </div>
+              <div class="text-[11px] text-ink-light dark:text-white/60">
+                <%= @practical_session.participant_email.presence || "-" %>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+                Projeto / Workspace
+              </span>
+              <div class="text-xs font-semibold text-ink dark:text-fable">
+                <%= @project.name %>
+              </div>
+              <div class="text-[11px] text-ink-light dark:text-white/60">
+                <%= @workspace.name %>
+              </div>
+            </div>
+          </div>
+
+          <% if @practical_session.observations.present? %>
+            <div class="border-t border-ink/5 dark:border-white/5 pt-4">
+              <span class="text-[10px] font-semibold text-ink-light dark:text-white/60 uppercase tracking-wider block mb-1">
+                Evidências do Check-in / Observações da Prática
+              </span>
+              <p class="text-xs font-mono text-ink dark:text-fable bg-emerald-50 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-300 p-3 rounded-xl border border-emerald-200 dark:border-emerald-900/50">
+                <%= @practical_session.observations %>
+              </p>
+            </div>
+          <% end %>
+
+        </div>
+
+        <!-- Right Col: QR Code & Verification Stamp -->
+        <div class="bg-[#FDFBF7] dark:bg-ink-darker rounded-2xl p-6 border border-ink/10 dark:border-white/10 text-center flex flex-col items-center justify-between space-y-4">
+          <div class="text-[10px] font-mono font-bold tracking-widest text-ink-light dark:text-white/60 uppercase">
+            CÓDIGO DE VERIFICAÇÃO
+          </div>
+
+          <!-- Simulated QR Code SVG -->
+          <div class="w-36 h-36 bg-white p-2 rounded-xl shadow-inner border border-ink/10 flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full text-ink">
+              <!-- QR Code outer corners -->
+              <rect x="5" y="5" width="30" height="30" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="12" y="12" width="16" height="16" fill="currentColor"/>
+
+              <rect x="65" y="5" width="30" height="30" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="72" y="12" width="16" height="16" fill="currentColor"/>
+
+              <rect x="5" y="65" width="30" height="30" fill="none" stroke="currentColor" stroke-width="6"/>
+              <rect x="12" y="72" width="16" height="16" fill="currentColor"/>
+
+              <!-- Random data blocks -->
+              <rect x="42" y="10" width="8" height="8" fill="currentColor"/>
+              <rect x="50" y="25" width="8" height="8" fill="currentColor"/>
+              <rect x="42" y="42" width="16" height="16" fill="currentColor"/>
+              <rect x="68" y="48" width="8" height="8" fill="currentColor"/>
+              <rect x="80" y="68" width="12" height="12" fill="currentColor"/>
+              <rect x="48" y="72" width="12" height="8" fill="currentColor"/>
+              <rect x="68" y="82" width="8" height="8" fill="currentColor"/>
+            </svg>
+          </div>
+
+          <div class="font-mono text-sm font-bold text-ink dark:text-fable tracking-wider bg-white dark:bg-ink-paper px-3 py-1 rounded-lg border border-ink/10">
+            <%= @practical_session.check_in_code %>
+          </div>
+
+          <% if @practical_session.status != "completed" %>
+            <%= button_to check_in_workspace_project_practical_session_path(@workspace, @project, @practical_session), method: :patch, class: "w-full py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-md transition-colors cursor-pointer" do %>
+              Confirmar Check-in Agora
+            <% end %>
+          <% else %>
+            <div class="w-full py-2 px-4 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded-xl border border-emerald-300 dark:border-emerald-800 flex items-center justify-center gap-1.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>CHECK-IN REALIZADO</span>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+
+      <!-- Footer Stamp -->
+      <div class="mt-8 pt-6 border-t border-ink/5 dark:border-white/5 flex flex-col sm:flex-row items-center justify-between text-[11px] text-ink-light dark:text-white/50">
+        <div>
+          Validação de Atividade Prática Extensionista · SpecLine v1.0
+        </div>
+        <div>
+          Emitido em <%= Time.current.strftime("%d/%m/%Y às %H:%M") %>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

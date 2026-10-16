@@ -1,0 +1,160 @@
+<div class="p-6 lg:p-8 space-y-8 max-w-7xl mx-auto">
+  <!-- Header / Sub-hero Section -->
+  <div class="bg-gradient-to-r from-[#1a202c] via-[#2d3748] to-[#1a202c] rounded-2xl p-6 md:p-8 text-white shadow-xl border border-white/10 relative overflow-hidden">
+    <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-terracotta/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-fable backdrop-blur-md border border-white/10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-terracotta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Módulo Extensionista Presencial
+        </div>
+        <h2 class="text-2xl md:text-3xl font-serif font-bold text-white tracking-tight">Práticas Presenciais & Agendamentos</h2>
+        <p class="text-sm text-gray-300 max-w-2xl font-sans">
+          Agendamento de uso presencial, controle de presença em bancadas de laboratório e emissão de comprovantes de atividades extensionistas físicas.
+        </p>
+      </div>
+
+      <%= link_to new_workspace_project_practical_session_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center justify-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-terracotta rounded-xl shadow-lg hover:bg-[#c26244] transition-all transform hover:-translate-y-0.5 shrink-0" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>+ Agendar Prática Presencial</span>
+      <% end %>
+    </div>
+
+    <!-- Quick Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-terracotta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-400 font-medium">Total de Práticas</div>
+          <div class="text-lg font-bold text-white"><%= @practical_sessions.count %> registradas</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 12 2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-400 font-medium">Presenças Confirmadas</div>
+          <div class="text-lg font-bold text-emerald-400"><%= @practical_sessions.select { |s| s.status == "completed" }.count %> check-ins</div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <div class="text-xs text-gray-400 font-medium">Locais Físicos Utilizados</div>
+          <div class="text-lg font-bold text-blue-400"><%= @practical_sessions.map(&:location).uniq.count %> espaços</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Practical Sessions List / Grid -->
+  <% if @practical_sessions.empty? %>
+    <div class="text-center py-16 px-4 bg-white dark:bg-ink-paper rounded-2xl border border-ink/5 dark:border-white/5 shadow-sm">
+      <div class="w-16 h-16 rounded-full bg-terracotta/10 text-terracotta flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
+      </div>
+      <h3 class="text-lg font-serif font-medium text-ink dark:text-fable">Nenhuma prática presencial agendada ainda</h3>
+      <p class="text-xs text-ink-light dark:text-white/60 max-w-md mx-auto mt-1 mb-6">
+        Agende o uso presencial de um laboratório ou bancada física para realizar testes, monitorias ou oficinas extensionistas.
+      </p>
+      <%= link_to new_workspace_project_practical_session_path(@workspace, @project), data: { turbo_frame: "modal" }, class: "inline-flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-terracotta rounded-lg hover:bg-[#c26244] transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Agendar Primeira Prática</span>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% @practical_sessions.each do |session| %>
+        <div class="bg-white dark:bg-ink-paper rounded-2xl border border-ink/10 dark:border-white/10 p-6 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-5 relative group overflow-hidden">
+          <!-- Status Banner Top -->
+          <div class="flex items-center justify-between gap-2 border-b border-ink/5 dark:border-white/5 pb-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border <%= session.status_color %>">
+              <span class="w-2 h-2 rounded-full <%= session.status == 'completed' ? 'bg-emerald-500' : (session.status == 'in_progress' ? 'bg-amber-500' : 'bg-blue-500') %>"></span>
+              <%= session.status_label %>
+            </span>
+            <span class="font-mono text-[11px] font-bold text-ink-light dark:text-white/60 bg-ink/5 dark:bg-white/5 px-2 py-0.5 rounded-md">
+              <%= session.check_in_code %>
+            </span>
+          </div>
+
+          <!-- Body Info -->
+          <div class="space-y-3">
+            <h3 class="text-base font-serif font-bold text-ink dark:text-fable leading-snug group-hover:text-terracotta transition-colors">
+              <%= session.title %>
+            </h3>
+
+            <% if session.description.present? %>
+              <p class="text-xs text-ink-light dark:text-white/70 line-clamp-2">
+                <%= session.description %>
+              </p>
+            <% end %>
+
+            <div class="space-y-2 pt-2 text-xs text-ink dark:text-fable/80">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-md bg-terracotta/10 text-terracotta flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <span class="font-semibold text-ink dark:text-fable"><%= session.location %></span>
+              </div>
+
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-md bg-blue-500/10 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <span><%= l(session.scheduled_at, format: :short) rescue session.scheduled_at.strftime("%d/%m/%Y às %H:%M") %></span>
+              </div>
+
+              <% if session.participant_name.present? %>
+                <div class="flex items-center gap-2">
+                  <div class="w-6 h-6 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
+                  <span class="font-medium"><%= session.participant_name %></span>
+                </div>
+              <% end %>
+
+              <% if session.issue.present? %>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-ink/5 dark:bg-white/5 text-[11px] font-medium text-ink-light dark:text-white/60">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                  <span>Kanban: <%= session.issue.title %></span>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!-- Card Actions Footer -->
+          <div class="pt-4 border-t border-ink/5 dark:border-white/5 flex items-center justify-between gap-2">
+            <%= link_to workspace_project_practical_session_path(@workspace, @project, session), class: "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-ink dark:text-fable bg-ink/5 dark:bg-white/5 rounded-lg hover:bg-ink/10 dark:hover:bg-white/10 transition-colors", title: "Ver Comprovante para Fotos" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+              <span>Ver Comprovante</span>
+            <% end %>
+
+            <div class="flex items-center gap-1">
+              <% if session.status != "completed" %>
+                <%= button_to check_in_workspace_project_practical_session_path(@workspace, @project, session), method: :patch, class: "inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm transition-colors", title: "Realizar Check-in Presencial" do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span>Check-in</span>
+                <% end %>
+              <% end %>
+
+              <%= link_to edit_workspace_project_practical_session_path(@workspace, @project, session), data: { turbo_frame: "modal" }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable hover:bg-ink/5 dark:hover:bg-white/5 rounded-lg transition-colors" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+              <% end %>
+
+              <%= button_to workspace_project_practical_session_path(@workspace, @project, session), method: :delete, data: { turbo_confirm: "Deseja excluir esta prática presencial?" }, class: "p-1.5 text-ink-light dark:text-white/60 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 rounded-lg transition-colors" do %>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
