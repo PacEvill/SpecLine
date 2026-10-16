@@ -213,6 +213,17 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] Diffs avaliados e descartados: `bin/*` (apenas flips de modo locais ao clone) e `README.md` do clone (substituído pelo reestruturado de hoje).
 - [x] Regressão: `bin/rails test` → **148 runs, 440 assertions, 0 failures** (+6 testes do módulo).
 
+## Sprint 19.4: `test/system` preenchido com e2e real (skill `e2e-testing`) (16/10)
+**Objetivo:** sair do zero absoluto em testes end-to-end — browser de verdade (Chrome headless) percorrendo cadastro, login e navegação de projeto.
+
+- [x] `ApplicationSystemTestCase` criado com Chrome headless explícito (o kwarg `options:` cru do Selenium 4.47 não é aceito — driver registrado no estilo prebuilt do Capybara).
+- [x] 5 e2e verdes: cadastro com aceite (e `terms_accepted_at` gravado), cadastro sem aceite bloqueado sem criar conta, login pelo formulário até o painel, aba "Práticas Presenciais" listando sessão com status e código `PRAT-`, troca de abas mantendo contexto.
+- [x] **2 P0 reais pegos pelo e2e** (invisíveis nos testes de controller, Franken-audit não tinha visto): (1) checkbox de aceite sem `value="1"` fazia o browser enviar `"on"` — com o `accept: true` de 19.2 o cadastro por navegador dava 422 desde então; corrigido no form + validação aceita `["1", true]` + stamp aceita ambos; (2) o campo "nome" do cadastro era descartado pelo strong params (`permit` não listava `:name`) — todo cadastro gravava `name: null`.
+- [x] Corrida Turbo × cookie de sessão fechada: helper `login_com_fixture` espera o destino logado se estabelecer antes de qualquer navegação seguinte (o GET imediato ao projeto recebia 401 sem o cookie comitado).
+- [x] Task `bin/rails test:completo` = suíte default + system numa tacada (o `test` default exclui system por padrão do Rails 8).
+- [x] Regressão LGPD estendida para o formato real do checkbox (`"1"`).
+- [x] **Baseline: default 149/442 + system 5/12, zero falhas** (`bin/rails test:completo`).
+
 ---
 
 ## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)
