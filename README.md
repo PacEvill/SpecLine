@@ -56,7 +56,7 @@ O **SpecLine** foi concebido para unificar esses fluxos sob uma arquitetura de d
 > **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá  
 > **Território de Atuação:** Município de Maricá/RJ  
 > **Local Parceiro / Espaço Físico da Ação:** Laboratório de Informática Avançada (Lab 02) — Campus Maricá (Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815) em cooperação com o ecossistema local e Polo de Inovação de Maricá / ICTIM.  
-> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 98765-4321 / (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`  
+> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`  
 > **Data e Horário da Oficina Presencial:** **17 de Outubro de 2026 (Sábado), das 09h00 às 11h30** (Oficina prática 'Mão na Massa' com coleta de lista de presença física assinada e avaliação Likert).  
 > **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)  
 > **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)  

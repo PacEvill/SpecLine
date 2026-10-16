@@ -16,7 +16,7 @@
 * **Horário:** **09h00 às 11h30** (Duração total: 150 minutos)
 * **Local de Execução:** **Laboratório de Informática Avançada (Lab 02)** — Universidade de Vassouras (Campus Maricá)
 * **Endereço Completo:** Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815
-* **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 98765-4321 / (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`
+* **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`
 * **Ambiente Web Permanente:** [https://specline.onrender.com](https://specline.onrender.com)
 * **Público-Alvo:** 15 a 30 participantes (estudantes de ensino médio técnico de Maricá, discentes de graduação da região, programadores iniciantes e líderes de projetos comunitários locais).
 
