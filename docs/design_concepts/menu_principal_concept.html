@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Principal — SpecLine (Concept Isolado)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <!-- Concept via Rails: usa o CSS compilado do app (CSP-safe, sem CDN externo) -->
+  <link rel="stylesheet" href="/assets/application.css">
+  <script>
+    function toggleTheme() { document.documentElement.classList.toggle('dark'); }
+    function toggleMobile(id) { document.getElementById(id).classList.toggle('hidden'); }
+  </script>
+  <style>
+    .grain::after { content:''; position:absolute; inset:0; pointer-events:none; opacity:.06;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
+    .mock { border:1px solid rgba(0,0,0,.1); } .dark .mock { border-color: rgba(255,255,255,.12); }
+  </style>
+</head>
+<body class="bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans min-h-screen transition-colors">
+
+<button onclick="toggleTheme()" class="fixed bottom-6 right-6 z-50 bg-ink text-fable-light dark:bg-fable-light dark:text-ink px-4 py-2.5 font-mono text-xs uppercase tracking-widest shadow-2xl hover:scale-105 transition-all">Inverter tema</button>
+
+<div class="max-w-6xl mx-auto px-6 py-10 space-y-10">
+
+  <!-- CONTEXTO -->
+  <header class="space-y-4">
+    <div class="font-mono text-[11px] tracking-[0.25em] uppercase text-terracotta font-bold flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full bg-terracotta animate-ping"></span>
+      Concept isolado // fora do app — não altera produção
+    </div>
+    <h1 class="font-serif font-light text-4xl md:text-6xl leading-tight">Menu principal <i class="font-serif-italic text-terracotta">sem cara de Notion.</i></h1>
+    <p class="font-serif italic text-lg text-ink-light dark:text-white/60 max-w-3xl">Diagnóstico da docente: IA atual (Funcionalidades / Soluções / Filosofia / Preços / Changelog + dropdowns com ícone+título+subtítulo) replica o padrão Notion. Este concept testa 3 direções com identidade SpecLine — serif editorial, mono técnico, Terracotta/Olive, grão e glow — priorizando o dia da ação: <b>Estudantes, Educadores, Ação Extensionista</b>.</p>
+    <div class="flex flex-wrap gap-2 font-mono text-xs">
+      <span class="px-2.5 py-1 rounded bg-terracotta/15 text-terracotta border border-terracotta/30">Arquivo atual: app/views/shared/_marketing_header.html.erb</span>
+      <span class="px-2.5 py-1 rounded bg-ink/5 dark:bg-white/5 border border-ink/10 dark:border-white/10">2 arquivos novos p/ público: pei6-aula4-kit.pdf + ptt 04/10.ogg (modelos J/K/L)</span>
+    </div>
+  </header>
+
+  <!-- DIAGNÓSTICO -->
+  <section class="grid md:grid-cols-4 gap-3">
+    <div class="mock rounded-2xl p-4 bg-white dark:bg-ink-paper">
+      <div class="font-mono text-[11px] uppercase tracking-widest text-terracotta font-bold">01 · IA genérica</div>
+      <p class="text-sm mt-1">5 dropdowns iguais a Notion/Linear. Visitante do dia não entende onde clicar em 10s.</p>
+    </div>
+    <div class="mock rounded-2xl p-4 bg-white dark:bg-ink-paper">
+      <div class="font-mono text-[11px] uppercase tracking-widest text-terracotta font-bold">02 · Dropdowns frios</div>
+      <p class="text-sm mt-1">Painéis brancos com lista de links. Falta voz editorial, cor semântica e contexto PEI VI.</p>
+    </div>
+    <div class="mock rounded-2xl p-4 bg-white dark:bg-ink-paper">
+      <div class="font-mono text-[11px] uppercase tracking-widest text-terracotta font-bold">03 · Tipografia neutra</div>
+      <p class="text-sm mt-1">Sans em tudo = SaaS genérico. SpecLine tem Fraunces/Newsreader + mono e não usa no menu.</p>
+    </div>
+    <div class="mock rounded-2xl p-4 bg-white dark:bg-ink-paper">
+      <div class="font-mono text-[11px] uppercase tracking-widest text-terracotta font-bold">04 · Sem território</div>
+      <p class="text-sm mt-1">Ação Extensionista aparece como 7º item. No dia, ela deve ser o 1º destaque + QR.</p>
+    </div>
+  </section>
+
+  <!-- PROPOSTA A -->
+  <section class="space-y-3">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xs px-2 py-1 rounded bg-olive/20 text-olive font-bold">PROPOSTA A · RECOMENDADA</span>
+      <h2 class="font-serif text-2xl">Menu editorial enxuto para o dia</h2>
+    </div>
+    <p class="text-sm text-ink-light dark:text-white/60 max-w-3xl">Só 3 destinos + badge PEI VI. Frase serif no centro em desktop largo, nada de dropdown triplo. Mobile com alvos de 48px + botão QR da URL. Quebra a semelhança com Notion porque troca taxonomia de produto por <b>públicos do dia</b>.</p>
+
+    <div class="mock rounded-3xl overflow-hidden bg-fable dark:bg-ink-darker grain relative">
+      <nav class="flex items-center justify-between px-5 py-3.5 bg-fable/90 dark:bg-ink-darker/90 backdrop-blur border-b border-ink/10 dark:border-white/10">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-xl bg-terracotta text-white flex items-center justify-center font-serif font-bold">S</div>
+          <div class="leading-none">
+            <div class="font-serif font-semibold text-lg tracking-tight">SpecLine</div>
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-light dark:text-white/50">PEI VI · Maricá</div>
+          </div>
+        </div>
+        <div class="hidden md:flex items-center gap-1 font-sans text-sm">
+          <a href="#" class="px-3.5 py-2 rounded-full hover:bg-ink/5 dark:hover:bg-white/5 font-medium">Estudantes</a>
+          <a href="#" class="px-3.5 py-2 rounded-full hover:bg-ink/5 dark:hover:bg-white/5 font-medium">Educadores</a>
+          <a href="#" class="px-3.5 py-2 rounded-full bg-terracotta/15 text-terracotta border border-terracotta/30 font-semibold flex items-center gap-2">Ação Extensionista <span class="font-mono text-[9px] px-1.5 py-0.5 rounded bg-terracotta text-white">17 OUT · 9H</span></a>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="#" class="hidden sm:block text-sm text-ink-light dark:text-white/60 px-3 py-2">Entrar</a>
+          <a href="#" class="text-xs font-mono uppercase tracking-widest bg-ink text-white dark:bg-white dark:text-ink px-4 py-2.5 rounded-xl hover:bg-terracotta hover:text-white transition-all">Criar conta grátis</a>
+          <button onclick="toggleMobile('mA')" class="md:hidden p-2 rounded-lg border border-ink/15 dark:border-white/15" aria-label="Abrir menu">☰</button>
+        </div>
+      </nav>
+      <div id="mA" class="hidden md:hidden p-4 space-y-2 border-b border-ink/10 dark:border-white/10">
+        <a href="#" class="block p-3.5 rounded-2xl bg-white dark:bg-ink-paper font-serif text-lg">Estudantes <span class="block font-sans text-xs text-ink-light dark:text-white/50">TCC, matérias, grupos</span></a>
+        <a href="#" class="block p-3.5 rounded-2xl bg-white dark:bg-ink-paper font-serif text-lg">Educadores <span class="block font-sans text-xs text-ink-light dark:text-white/50">Orientação, turmas, PEI</span></a>
+        <a href="#" class="block p-3.5 rounded-2xl bg-terracotta text-white font-serif text-lg">Ação Extensionista — 17 Out 9h <span class="block font-sans text-xs opacity-80">Lab 02 · QR na entrada</span></a>
+        <div class="grid grid-cols-2 gap-2">
+          <a href="#" class="p-3 rounded-2xl border border-ink/15 dark:border-white/15 text-center font-mono text-xs uppercase tracking-widest">Entrar</a>
+          <a href="#" class="p-3 rounded-2xl bg-ink text-white dark:bg-white dark:text-ink text-center font-mono text-xs uppercase tracking-widest">Criar conta</a>
+        </div>
+      </div>
+      <div class="px-5 py-4 flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-light dark:text-white/50">
+        <span>Para o dia:</span><span class="px-2 py-1 rounded bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10">QR specline.onrender.com</span><span class="px-2 py-1 rounded bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10">Modelos J·K·L impressos</span><span class="px-2 py-1 rounded bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10">Contraste AA + alvos 48px</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROPOSTA B -->
+  <section class="space-y-3">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xs px-2 py-1 rounded bg-ochre/20 text-ochre font-bold">PROPOSTA B · EVOLUÇÃO</span>
+      <h2 class="font-serif text-2xl">Mantém dropdowns, troca a voz</h2>
+    </div>
+    <p class="text-sm text-ink-light dark:text-white/60 max-w-3xl">Se não quiser reduzir IA agora: manter estrutura, mas dropdown vira cartão editorial (kicker mono + título serif itálico + glow Terracotta). Já diferencia do Notion sem mudar rotas.</p>
+    <div class="mock rounded-3xl overflow-hidden bg-white dark:bg-ink-paper p-5">
+      <nav class="flex items-center justify-between">
+        <div class="font-serif font-semibold text-lg">SpecLine <span class="font-mono text-[10px] text-terracotta uppercase tracking-widest ml-1">foco, não abas</span></div>
+        <div class="hidden md:flex gap-5 text-sm font-medium">
+          <a href="#" class="hover:text-terracotta">Documentos <span class="font-serif italic text-ink-light dark:text-white/50">— modo foco</span></a>
+          <a href="#" class="hover:text-terracotta">Kanban <span class="font-serif italic text-ink-light dark:text-white/50">— arrastar e pronto</span></a>
+          <a href="#" class="text-terracotta font-semibold">Estudantes · Educadores · Maricá →</a>
+        </div>
+        <a href="#" class="text-xs font-mono uppercase tracking-widest bg-terracotta text-white px-4 py-2 rounded-xl">Começar</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- PROPOSTA C -->
+  <section class="space-y-3">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xs px-2 py-1 rounded bg-ocean/15 text-ocean font-bold">PROPOSTA C · RUPTURA</span>
+      <h2 class="font-serif text-2xl">Menu vira command-bar</h2>
+    </div>
+    <p class="text-sm text-ink-light dark:text-white/60 max-w-3xl">Menu quase some; busca ⌘K vira navegação principal (“ir para Estudantes…”, “abrir Ação Extensionista…”). Mais distinto de todos, porém exige JS e teste com público leigo no dia.</p>
+    <div class="mock rounded-3xl bg-ink text-white dark:bg-black p-5">
+      <div class="max-w-xl mx-auto flex items-center gap-3 bg-white/10 border border-white/15 rounded-2xl px-4 py-3">
+        <span class="font-mono text-xs text-white/50">⌘K</span>
+        <span class="text-sm text-white/80">Digite: estudantes, educadores, oficina 17 out…</span>
+        <span class="ml-auto font-mono text-[10px] px-2 py-1 rounded bg-terracotta">PEI VI</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DECISÃO -->
+  <section class="mock rounded-3xl p-6 bg-white dark:bg-ink-paper space-y-3">
+    <h3 class="font-mono text-xs uppercase tracking-[0.2em] text-terracotta font-bold">Decisão sugerida + próximos passos</h3>
+    <ol class="text-sm space-y-1.5 list-decimal ml-5">
+      <li><b>Adotar A no site público</b> para o dia (3 links + badge 17 Out). B fica como fallback se precisar de dropdowns.</li>
+      <li>Aplicar só em <span class="font-mono text-xs">_marketing_header</span> + drawer mobile. <b>Não tocar</b> em <span class="font-mono text-xs">_global_sidebar / _workspace_sidebar</span> nesta rodada (são internos, outra “cara de Notion” a tratar depois).</li>
+      <li>Checklist dia: QR + URL estável, modelos J (uso do app por tarefa), K (oficina 1–7), L (problema/ideia) impressos, fotos sem CPF visível, termos A/B assinados.</li>
+      <li>Documentos públicos citados: <span class="font-mono text-xs">pei6-aula4-2026-10-01-kit.pdf</span> (12 modelos) e <span class="font-mono text-xs">WhatsApp Ptt 2026-10-04.ogg</span> (orientação em áudio — transcrever pontos antes do dia).</li>
+    </ol>
+    <p class="font-mono text-[11px] text-ink-light dark:text-white/50">Como usar: abrir este arquivo com duplo-clique (sem Rails). Quando aprovar, replicamos A no Rails + teste solutions_header.</p>
+  </section>
+
+</div>
+</body>
+</html>

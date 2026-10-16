@@ -90,4 +90,10 @@ Rails.application.routes.draw do
 
   # Health Check
   get "up" => "rails/health#show", as: :rails_health_check
+
+  # Concepts isolados — preview SOMENTE em desenvolvimento (não toca o app real)
+  if Rails.env.development?
+    get "concepts/workspaces", to: "concepts#workspaces"
+    get "concepts/menu", to: "concepts#menu"
+  end
 end

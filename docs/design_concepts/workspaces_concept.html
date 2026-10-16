@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspaces — SpecLine (Concept Híbrido)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400;1,9..144,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/application.css">
+  <script>
+    function toggleTheme(){document.documentElement.classList.toggle('dark');}
+    function showGrid(){document.getElementById('gridView').classList.remove('hidden');document.getElementById('gridView').classList.add('grid');document.getElementById('listView').classList.add('hidden');document.getElementById('gridBtn').className='text-terracotta bg-terracotta/10 rounded p-1.5 transition-colors';document.getElementById('listBtn').className='text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 rounded p-1.5 transition-colors';}
+    function showList(){document.getElementById('listView').classList.remove('hidden');document.getElementById('gridView').classList.add('hidden');document.getElementById('gridView').classList.remove('grid');document.getElementById('listBtn').className='text-terracotta bg-terracotta/10 rounded p-1.5 transition-colors';document.getElementById('gridBtn').className='text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 rounded p-1.5 transition-colors';}
+    var firstLogin=false;
+    function toggleFirstLogin(){firstLogin=!firstLogin;
+      document.getElementById('heroTitle').innerHTML=firstLogin?'Bem-vindo ao <i class="font-serif-italic text-terracotta">SpecLine.</i>':'Bem-vindo de volta, <i class="font-serif-italic text-terracotta">Diego.</i>';
+      document.getElementById('heroSub').textContent=firstLogin?'Crie seu primeiro workspace para começar — leva menos de 1 minuto.':'';
+      if(!firstLogin){document.getElementById('heroSub').innerHTML='Você tem <strong class="not-italic font-sans text-ink dark:text-white">3 workspaces</strong> ativos · 1 para o dia da ação em Maricá.';}
+      document.getElementById('heroBtn').textContent=firstLogin?'+ Criar meu primeiro workspace':'+ Novo Workspace';
+      document.getElementById('firstLoginBtn').textContent=firstLogin?'voltar: com dados':'simular 1º acesso';
+      document.getElementById('statsRow').classList.toggle('hidden',firstLogin);
+      document.getElementById('gridView').classList.toggle('hidden',firstLogin);document.getElementById('gridView').classList.toggle('grid',!firstLogin);
+      document.getElementById('listView').classList.add('hidden');
+      document.getElementById('emptyState').classList.toggle('hidden',!firstLogin);
+      if(firstLogin){switchCtx('global');}}
+    function switchCtx(m){['global','workspace','projeto'].forEach(function(k){document.getElementById('ctx-'+k).classList.toggle('hidden',k!==m);document.getElementById('tab-'+k).className='flex-1 px-2 py-1.5 rounded-md transition-colors '+(k===m?'bg-white dark:bg-ink-paper shadow text-terracotta font-bold':'text-ink-light dark:text-white/50 hover:text-ink dark:hover:text-white');});document.getElementById('identity-ws').classList.toggle('hidden',m==='global');document.getElementById('trocarLink').classList.toggle('hidden',m==='global');document.getElementById('cfg-global').classList.toggle('hidden',m!=='global');document.getElementById('cfg-workspace').classList.toggle('hidden',m!=='workspace');document.getElementById('cfg-projeto').classList.toggle('hidden',m!=='projeto');}
+  </script>
+  <style>
+    .grain::after{content:'';position:absolute;inset:0;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");}
+    .spine{width:6px;border-radius:99px;}
+    details>summary::-webkit-details-marker{display:none;}
+  </style>
+</head>
+<body class="bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans min-h-screen">
+<button onclick="toggleTheme()" class="fixed bottom-20 md:bottom-5 right-5 z-50 bg-ink text-white dark:bg-white dark:text-ink px-4 py-2 font-mono text-xs uppercase tracking-widest rounded-xl shadow-2xl">Tema</button>
+
+<div class="flex min-h-screen pb-16 md:pb-0">
+  <!-- TRILHA universal: ordem por uso (descoberta → acompanhamento → planejamento → execução).
+       Regra: zero dependência de @workspace/@project. Inbox/calendário/agenda marcados "breve"
+       (sem rota real: inbox=Sprint 8, calendário/agenda=Sprint 7/12) — eram links "#" mortos no original. -->
+  <div class="hidden md:flex flex-col w-[104px] shrink-0 relative">
+    <aside class="m-4 h-[calc(100vh-2rem)] sticky top-4 bg-white/80 dark:bg-ink-paper/80 backdrop-blur-xl border border-ink/5 dark:border-white/10 rounded-3xl shadow flex flex-col items-center py-3 gap-2 grain relative">
+      <a href="#" title="SpecLine — voltar ao principal (workspaces_path)" class="w-10 h-10 rounded-2xl bg-terracotta text-white flex items-center justify-center font-serif font-bold text-xl shrink-0 hover:scale-105 transition-transform">S</a>
+      <nav class="flex flex-col gap-1 mt-1 w-full px-2">
+        <a href="#" title="Busca rápida — search_path (⌘K)" class="rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 flex flex-col items-center py-1.5 text-ink-light dark:text-white/55"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">buscar</span></a>
+        <a href="#" aria-current="page" title="Workspaces — workspaces_path · aqui estou / voltar ao principal" class="rounded-2xl bg-ink text-white dark:bg-white dark:text-ink flex flex-col items-center py-1.5 shadow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">workspaces</span></a>
+        <a href="#" onclick="return false" aria-disabled="true" title="Inbox — em breve (Sprint 8: notificações)" class="rounded-2xl flex flex-col items-center py-1.5 text-ink-light/50 dark:text-white/30 relative cursor-not-allowed"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">inbox</span><span class="absolute top-0.5 right-1 font-mono text-[7px] uppercase px-1 rounded bg-ink/10 dark:bg-white/10">breve</span></a>
+        <a href="#" title="Atividades — activities_path" class="rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 flex flex-col items-center py-1.5 text-ink-light dark:text-white/55"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">atividades</span></a>
+        <a href="#" onclick="return false" aria-disabled="true" title="Calendário — em breve (Sprint 7/12)" class="rounded-2xl flex flex-col items-center py-1.5 text-ink-light/50 dark:text-white/30 relative cursor-not-allowed"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">calendário</span><span class="absolute top-0.5 right-1 font-mono text-[7px] uppercase px-1 rounded bg-ink/10 dark:bg-white/10">breve</span></a>
+        <a href="#" onclick="return false" aria-disabled="true" title="Agenda — em breve (Sprint 12)" class="rounded-2xl flex flex-col items-center py-1.5 text-ink-light/50 dark:text-white/30 relative cursor-not-allowed"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8.01" y2="14"/><line x1="12" y1="14" x2="12.01" y2="14"/><line x1="16" y1="14" x2="16.01" y2="14"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">agenda</span><span class="absolute top-0.5 right-1 font-mono text-[7px] uppercase px-1 rounded bg-ink/10 dark:bg-white/10">breve</span></a>
+        <a href="#" title="Minhas tarefas — my_tasks_path (3 em aberto)" class="rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 flex flex-col items-center py-1.5 text-ink-light dark:text-white/55 relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="font-mono text-[8px] uppercase mt-0.5 whitespace-nowrap">minhas tarefas</span><span class="absolute top-0.5 right-1.5 bg-terracotta text-white text-[9px] font-bold px-1 rounded-full">3</span></a>
+      </nav>
+      <div class="mt-auto w-full px-2 flex flex-col items-center gap-1">
+        <details class="relative w-full">
+          <summary class="list-none cursor-pointer rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 flex flex-col items-center py-1.5 w-full" title="Diego Silva — perfil e configurações do website"><span class="w-8 h-8 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta flex items-center justify-center font-serif text-sm">D</span><span class="font-mono text-[8px] uppercase mt-0.5 text-ink-light dark:text-white/55 whitespace-nowrap">perfil</span></summary>
+          <div class="absolute bottom-full left-0 mb-2 w-60 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-2xl p-2 z-50 text-left">
+            <div class="px-3 py-2 mb-1 border-b border-ink/5 dark:border-white/5"><div class="text-sm font-medium truncate">Diego Silva</div><div class="text-xs text-ink-light dark:text-white/50 truncate">diego@exemplo.com</div></div>
+            <a href="#" class="block px-3 py-2 text-[13px] font-medium rounded-lg hover:bg-ink/5 dark:hover:bg-white/5">Editar Perfil</a>
+            <a href="#" class="block px-3 py-2 text-[13px] font-medium rounded-lg hover:bg-ink/5 dark:hover:bg-white/5">Preferências</a>
+            <a href="#" class="block px-3 py-2 text-[13px] font-medium rounded-lg hover:bg-ink/5 dark:hover:bg-white/5">Site Institucional</a>
+            <div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div>
+            <a href="#" class="block px-3 py-2 text-[13px] font-medium text-red-600 rounded-lg hover:bg-red-500/10">Sair</a>
+          </div>
+        </details>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Painel CONTEXTUAL: só sabe onde você está. 3 modos (espelha a regra do _workspace_sidebar):
+       global (sem @workspace, ex. /workspaces) → seletor de workspaces · workspace (@workspace) → projetos + tags · projeto (@project) → soma filtros.
+       Correção vs original: no índice global o app caía no `workspaces.first` — aqui o modo global não finge contexto. -->
+  <div class="hidden md:flex flex-col w-[272px] shrink-0 py-4 pr-4 pl-1">
+    <aside class="w-full h-[calc(100vh-2rem)] sticky top-4 bg-white/70 dark:bg-ink-paper/70 backdrop-blur-xl border border-ink/5 dark:border-white/10 rounded-3xl flex flex-col shrink-0 overflow-hidden">
+      <div class="px-5 pt-4 pb-3 border-b border-ink/5 dark:border-white/5">
+        <div class="flex items-center justify-between mb-2 relative">
+          <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-ink-light/60 dark:text-white/40">Workspace</span>
+          <details id="trocarLink">
+            <summary class="list-none text-[11px] font-medium text-ink-light dark:text-white/50 hover:text-terracotta transition-colors cursor-pointer focus:outline-none" title="Troca rápida de contexto sem sair da página">Trocar ▾</summary>
+            <div class="absolute left-5 right-5 top-full mt-2 max-h-80 overflow-y-auto bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-2xl shadow-2xl p-2 z-50">
+              <div class="px-2.5 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40">Neste workspace</div>
+              <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-xl text-xs font-semibold bg-ink/[0.03] dark:bg-white/5"><span class="w-5 h-5 rounded-lg bg-terracotta/20 text-terracotta flex items-center justify-center font-serif text-[10px] font-bold shrink-0">RO</span><span class="truncate flex-1">Roteiro Oficina</span><span class="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-terracotta/15 text-terracotta shrink-0">aqui</span></a>
+              <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5"><span class="w-5 h-5 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">C2</span><span class="truncate flex-1">Capítulo 2</span></a>
+              <div class="h-px bg-ink/5 dark:bg-white/5 my-1.5"></div>
+              <div class="px-2.5 pt-1.5 pb-1 text-[10px] font-bold uppercase tracking-wider text-ink-light/50 dark:text-white/40">Workspaces</div>
+              <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-xl text-xs font-semibold bg-ink/[0.03] dark:bg-white/5"><span class="w-5 h-5 rounded-lg flex items-center justify-center font-serif text-[10px] font-bold shrink-0" style="background-color:#D97A5E15;color:#D97A5E;">A</span><span class="truncate flex-1">Ação Extensionista</span><span class="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-terracotta/15 text-terracotta shrink-0">atual</span></a>
+              <a href="#" class="flex items-center gap-2 px-2 py-1.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5"><span class="w-5 h-5 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">T</span><span class="truncate flex-1">TCC — Documentação</span><span class="font-mono text-[10px] shrink-0">2</span></a>
+              <div class="h-px bg-ink/5 dark:bg-white/5 my-1.5"></div>
+              <a href="#" class="flex items-center justify-between px-2 py-1.5 rounded-xl text-xs font-semibold text-terracotta hover:bg-terracotta/10"><span>Ver todos</span><span>→</span></a>
+            </div>
+          </details>
+        </div>
+        <div id="identity-ws" class="hidden flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl flex items-center justify-center font-serif text-sm font-bold shrink-0" style="background-color:#D97A5E15;color:#D97A5E;border:1px solid #D97A5E40;">A</div>
+          <div class="flex flex-col min-w-0">
+            <h2 class="text-sm font-serif font-bold truncate leading-tight">Ação Extensionista</h2>
+            <span class="text-[10px] text-ink-light/60 dark:text-white/40 truncate">4 projetos · <span class="text-terracotta font-semibold">para o dia 17 out</span></span>
+          </div>
+        </div>
+        <div class="flex gap-1 mt-3 bg-ink/5 dark:bg-white/5 rounded-lg p-1 font-mono text-[10px] uppercase tracking-widest">
+          <button id="tab-global" onclick="switchCtx('global')" class="flex-1 px-2 py-1.5 rounded-md transition-colors bg-white dark:bg-ink-paper shadow text-terracotta font-bold">Global</button>
+          <button id="tab-workspace" onclick="switchCtx('workspace')" class="flex-1 px-2 py-1.5 rounded-md transition-colors text-ink-light dark:text-white/50 hover:text-ink dark:hover:text-white">Workspace</button>
+          <button id="tab-projeto" onclick="switchCtx('projeto')" class="flex-1 px-2 py-1.5 rounded-md transition-colors text-ink-light dark:text-white/50 hover:text-ink dark:hover:text-white">Projeto</button>
+        </div>
+      </div>
+
+      <div class="px-4 py-4 flex-1 overflow-y-auto">
+        <!-- MODO GLOBAL: sem @workspace — seletor de workspaces, sem projetos/filtros/tags -->
+        <div id="ctx-global">
+          <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 px-2 mb-2">Todos os workspaces</h3>
+          <div class="space-y-0.5">
+            <a href="#" class="flex items-center gap-2.5 p-2 rounded-2xl text-[13px] font-semibold bg-ink/[0.03] dark:bg-white/5"><span class="w-6 h-6 rounded-lg flex items-center justify-center font-serif text-[11px] font-bold shrink-0" style="background-color:#D97A5E15;color:#D97A5E;">A</span><span class="truncate flex-1">Ação Extensionista</span><span class="font-mono text-[10px] text-ink-light/50">4</span></a>
+            <a href="#" class="flex items-center gap-2.5 p-2 rounded-2xl text-[13px] font-medium text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5"><span class="w-6 h-6 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[11px] font-bold shrink-0">T</span><span class="truncate flex-1">TCC — Documentação</span><span class="font-mono text-[10px] text-ink-light/50">2</span></a>
+            <a href="#" class="flex items-center gap-2.5 p-2 rounded-2xl text-[13px] font-medium text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5"><span class="w-6 h-6 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[11px] font-bold shrink-0">C</span><span class="truncate flex-1">Caderno do período</span><span class="font-mono text-[10px] text-ink-light/50">1</span></a>
+          </div>
+          <a href="#" class="mt-3 flex items-center justify-center gap-2 p-2.5 rounded-2xl border-2 border-dashed border-ink/15 dark:border-white/15 text-xs font-semibold text-ink-light dark:text-white/60 hover:border-terracotta/50 hover:text-terracotta transition-colors">+ Novo workspace</a>
+          <div class="mt-5 px-2">
+            <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40 mb-2">Continuar de onde parou</h3>
+            <div class="space-y-0.5">
+              <a href="#" class="flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 group"><span class="w-6 h-6 rounded-lg flex items-center justify-center font-serif text-[11px] font-bold shrink-0" style="background-color:#D97A5E15;color:#D97A5E;">R</span><span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">Roteiro Oficina</span><span class="block text-[10px] text-ink-light/60 dark:text-white/40 truncate">Ação Extensionista · há 2h</span></span><span class="text-terracotta text-xs opacity-0 group-hover:opacity-100 transition-opacity">→</span></a>
+              <a href="#" class="flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5 group"><span class="w-6 h-6 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[11px] font-bold shrink-0">C</span><span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">Capítulo 2</span><span class="block text-[10px] text-ink-light/60 dark:text-white/40 truncate">TCC — Documentação · ontem</span></span><span class="text-terracotta text-xs opacity-0 group-hover:opacity-100 transition-opacity">→</span></a>
+            </div>
+          </div>
+          <p class="px-2 mt-3 text-[11px] font-serif italic text-ink-light/60 dark:text-white/40">Sem @workspace: sem lista de projetos, sem filtros, sem tags. Selecione um workspace.</p>
+        </div>
+
+        <!-- MODO WORKSPACE: @workspace sem @project — projetos + tags, sem filtros -->
+        <div id="ctx-workspace" class="hidden">
+        <div class="flex items-center justify-between px-2 mb-2">
+          <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Projetos</h3>
+          <a href="#" class="hover:text-terracotta p-1 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-sm" title="Novo Projeto">+</a>
+        </div>
+        <div class="space-y-1">
+          <a href="#" class="group flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-8 h-8 rounded-xl bg-terracotta/15 text-terracotta flex items-center justify-center font-serif text-xs font-bold shrink-0">RO</span>
+            <span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">Roteiro Oficina</span><span class="block font-mono text-[10px] text-ink-light/50 dark:text-white/40 truncate">5 abertas · há 2h</span></span>
+            <span class="text-terracotta text-sm opacity-0 group-hover:opacity-100 transition-opacity shrink-0">→</span>
+          </a>
+          <a href="#" class="group flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-8 h-8 rounded-xl bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-xs font-bold shrink-0">C2</span>
+            <span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">Capítulo 2</span><span class="block font-mono text-[10px] text-ink-light/50 dark:text-white/40 truncate">3 abertas · ontem</span></span>
+            <span class="text-terracotta text-sm opacity-0 group-hover:opacity-100 transition-opacity shrink-0">→</span>
+          </a>
+          <a href="#" class="group flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-8 h-8 rounded-xl bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-xs font-bold shrink-0">MC</span>
+            <span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">Mapa conceitual</span><span class="block font-mono text-[10px] text-ink-light/50 dark:text-white/40 truncate">2 abertas · há 5d</span></span>
+            <span class="text-terracotta text-sm opacity-0 group-hover:opacity-100 transition-opacity shrink-0">→</span>
+          </a>
+          <a href="#" class="group flex items-center gap-2.5 p-2 rounded-2xl hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-8 h-8 rounded-xl bg-sage/10 text-sage flex items-center justify-center font-serif text-xs font-bold shrink-0">QR</span>
+            <span class="min-w-0 flex-1"><span class="block text-[13px] font-medium truncate">QR e recepção</span><span class="block font-mono text-[10px] text-sage truncate">tudo concluído · há 2 sem</span></span>
+            <span class="text-terracotta text-sm opacity-0 group-hover:opacity-100 transition-opacity shrink-0">→</span>
+          </a>
+        </div>
+        <p class="px-2 mt-3 text-[11px] font-serif italic text-ink-light/60 dark:text-white/40">Sem @project: filtros ocultos. Abra um projeto para filtrar.</p>
+
+        <div class="mt-6 pt-4 border-t border-ink/5 dark:border-white/5 px-2">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Tags</h4>
+            <a href="#" class="hover:text-terracotta p-1 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-xs" title="Nova Tag">+</a>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#D97A5E15;color:#D97A5E;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#D97A5E;"></span>oficina</a>
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#556B2F15;color:#556B2F;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#556B2F;"></span>pei-vi</a>
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#4B6B7815;color:#4B6B78;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#4B6B78;"></span>maricá</a>
+          </div>
+        </div>
+        </div>
+
+        <!-- MODO PROJETO: @project — projetos com ativo + filtros + tags + configurar -->
+        <div id="ctx-projeto" class="hidden">
+        <div class="flex items-center justify-between px-2 mb-2">
+          <h3 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Projetos</h3>
+          <a href="#" class="hover:text-terracotta p-1 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-sm" title="Novo Projeto">+</a>
+        </div>
+        <div class="space-y-0.5">
+          <a href="#" class="relative flex items-center gap-2 p-1.5 pl-2.5 rounded-xl text-[13px] font-semibold bg-ink/[0.03] dark:bg-white/5">
+            <span class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-terracotta rounded-r-full"></span>
+            <span class="w-5 h-5 rounded-lg bg-terracotta/20 text-terracotta flex items-center justify-center font-serif text-[10px] font-bold shrink-0">RO</span>
+            <span class="truncate flex-1">Roteiro Oficina</span>
+            <span class="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-terracotta/15 text-terracotta shrink-0">aqui</span>
+          </a>
+          <a href="#" title="Trocar para Capítulo 2" class="flex items-center gap-2 p-1.5 pl-2.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-5 h-5 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">C2</span>
+            <span class="truncate">Capítulo 2</span>
+          </a>
+          <a href="#" title="Trocar para Mapa conceitual" class="flex items-center gap-2 p-1.5 pl-2.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-5 h-5 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">MC</span>
+            <span class="truncate">Mapa conceitual</span>
+          </a>
+          <a href="#" title="Trocar para QR e recepção" class="flex items-center gap-2 p-1.5 pl-2.5 rounded-xl text-xs text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5">
+            <span class="w-5 h-5 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center font-serif text-[10px] font-bold shrink-0">QR</span>
+            <span class="truncate">QR e recepção</span>
+          </a>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-ink/5 dark:border-white/5 px-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Filtros do Projeto</span>
+          <div class="space-y-1 mt-2">
+            <a href="#" title="Só este projeto — o global fica em minhas tarefas (trilha)" class="flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs font-medium hover:bg-olive/10 hover:text-olive"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/></svg>Minhas Issues</span><span class="text-[10px] font-bold bg-olive/10 text-olive px-1.5 py-0.5 rounded-full">2</span></a>
+            <a href="#" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium hover:bg-red-500/10 hover:text-red-600"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Urgentes / Bloqueados</span></a>
+            <a href="#" title="Só este projeto — o feed global fica em atividades (trilha)" class="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium hover:bg-sage/10 hover:text-sage"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Atualizações do projeto</span></a>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-ink/5 dark:border-white/5 px-2">
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-[11px] font-bold uppercase tracking-wider text-ink-light/70 dark:text-white/40">Tags</h4>
+            <a href="#" class="hover:text-terracotta p-1 rounded-lg hover:bg-ink/5 dark:hover:bg-white/5 text-xs" title="Nova Tag">+</a>
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#D97A5E15;color:#D97A5E;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#D97A5E;"></span>oficina</a>
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#556B2F15;color:#556B2F;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#556B2F;"></span>pei-vi</a>
+            <a href="#" class="inline-flex items-center text-[10px] font-semibold px-2 py-0.5 rounded-full border border-black/5" style="background-color:#4B6B7815;color:#4B6B78;"><span class="w-1.5 h-1.5 rounded-full mr-1.5" style="background-color:#4B6B78;"></span>maricá</a>
+          </div>
+        </div>
+        </div>
+      </div>
+      <!-- Zona de configuração fixa no rodapé: o painel detecta a nuance e troca o bloco.
+           global (tela principal) → geral · workspace → funções do workspace · projeto → funções do projeto.
+           Regra Rails: if @project / elsif @workspace / else (sem depender da trilha). -->
+      <div class="border-t border-ink/5 dark:border-white/5 px-4 py-3 shrink-0">
+        <div id="cfg-global">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-ink-light/60 dark:text-white/40 mb-1.5 px-2">Geral</div>
+          <a href="#" title="new_workspace_path" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium hover:bg-ink/5 dark:hover:bg-white/5"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Novo workspace</span></a>
+          <a href="#" title="Preferências do website — preferences_path" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>Preferências</span></a>
+        </div>
+        <div id="cfg-workspace" class="hidden">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-ink-light/60 dark:text-white/40 mb-1.5 px-2 truncate">Workspace · Ação Extensionista</div>
+          <a href="#" title="edit_workspace_path" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium hover:bg-ink/5 dark:hover:bg-white/5"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Editar workspace</span></a>
+          <a href="#" title="workspace_path (DELETE + confirm)" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium text-red-600 hover:bg-red-500/10"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Excluir workspace</span></a>
+        </div>
+        <div id="cfg-projeto" class="hidden">
+          <div class="font-mono text-[10px] uppercase tracking-widest text-ink-light/60 dark:text-white/40 mb-1.5 px-2 truncate">Projeto · Roteiro Oficina</div>
+          <a href="#" title="edit_workspace_project_path" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium hover:bg-ink/5 dark:hover:bg-white/5"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Editar projeto</span></a>
+          <a href="#" title="Membros — mesmo destino de edição no original" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium hover:bg-terracotta/10 hover:text-terracotta"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Membros</span></a>
+          <a href="#" title="workspace_project_path (DELETE + confirm)" class="flex items-center gap-2.5 px-2 py-1.5 rounded-xl text-xs font-medium text-red-600 hover:bg-red-500/10"><span class="flex items-center gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Excluir projeto</span></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <main class="flex-1 min-w-0">
+    <div class="px-4 sm:px-8 lg:px-12 pt-4 max-w-6xl mx-auto w-full">
+      <div class="rounded-xl border border-terracotta/30 bg-terracotta/10 px-4 py-2 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-terracotta">
+        <span class="w-2 h-2 rounded-full bg-terracotta animate-pulse"></span>
+        Concept — trilha universal (busca → workspaces → inbox → atividades → calendário → agenda → tarefas) + painel contextual em 3 modos · fictício · sem banco
+      </div>
+    </div>
+
+    <!-- Header original funcional + voz v1 -->
+    <header class="min-h-16 border-b border-ink/5 dark:border-white/5 px-4 sm:px-8 bg-fable-light/80 dark:bg-ink-darker/80 backdrop-blur-md sticky top-0 z-10 py-3">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-8 h-8 rounded-lg bg-ink/5 dark:bg-white/5 flex items-center justify-center shrink-0">▦</div>
+          <div class="min-w-0">
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-light dark:text-white/40">visão geral · qui 08 out</div>
+            <h2 class="font-serif text-lg leading-tight truncate">Workspaces</h2>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-3">
+          <div class="relative hidden md:block">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light dark:text-white/50 flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+            <input type="text" placeholder="Busca rápida..." class="bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-full py-1.5 pl-9 pr-14 text-xs w-64 shadow-sm">
+            <div class="absolute right-2 top-1/2 -translate-y-1/2 flex gap-0.5"><kbd class="font-sans text-[9px] px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10">⌘</kbd><kbd class="font-sans text-[9px] px-1.5 py-0.5 rounded border border-ink/10 dark:border-white/10">K</kbd></div>
+          </div>
+          <div class="h-4 w-px bg-ink/10 hidden sm:block"></div>
+          <button class="w-8 h-8 hidden sm:flex items-center justify-center rounded-full hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60" title="Ajuda"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+          <button class="relative w-8 h-8 flex items-center justify-center rounded-full hover:bg-ink/5 dark:hover:bg-white/5 text-ink-light dark:text-white/60" title="Notificações"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="absolute top-1.5 right-2 w-2 h-2 bg-terracotta rounded-full border border-white dark:border-ink-darker"></span></button>
+        </div>
+      </div>
+      <div class="md:hidden mt-2 relative">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-ink-light dark:text-white/50 flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <input type="text" placeholder="Busca rápida..." class="w-full bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-full py-2 pl-9 pr-4 text-xs">
+      </div>
+    </header>
+
+    <div class="p-4 sm:p-8 xl:p-10 w-full max-w-[1440px] mx-auto">
+      <!-- Hero: estado com dados vs 1º acesso (0 workspaces) — alterne em "simular 1º acesso" -->
+      <div class="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 id="heroTitle" class="text-2xl sm:text-4xl font-serif font-light mb-1">Bem-vindo de volta, <i class="font-serif-italic text-terracotta">Diego.</i></h1>
+          <p id="heroSub" class="text-ink-light dark:text-white/60 text-xs sm:text-sm font-serif italic">Você tem <strong class="not-italic font-sans text-ink dark:text-white">3 workspaces</strong> ativos · 1 para o dia da ação em Maricá.</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="toggleFirstLogin()" id="firstLoginBtn" class="font-mono text-[10px] uppercase tracking-widest text-ink-light dark:text-white/45 hover:text-terracotta px-2 py-2.5">simular 1º acesso</button>
+          <a id="heroBtn" href="#" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-medium text-white bg-terracotta rounded-xl hover:brightness-95 shadow">+ Novo Workspace</a>
+        </div>
+      </div>
+
+      <!-- Stats: só existem com dados; ocultos no 1º acesso -->
+      <div id="statsRow" class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-10">
+        <div class="bg-white dark:bg-ink-paper rounded-2xl p-5 border border-ink/5 dark:border-white/5 border-t-2 border-t-terracotta/60 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-fable-light dark:bg-ink-darker border border-ink/5 dark:border-white/5 flex items-center justify-center shrink-0">▦</div>
+          <div><p class="text-[10px] font-mono font-bold uppercase tracking-widest mb-1 text-ink-light dark:text-white/55">Workspaces</p><p class="text-2xl font-serif leading-none">3</p></div>
+        </div>
+        <div class="bg-white dark:bg-ink-paper rounded-2xl p-5 border border-ink/5 dark:border-white/5 border-t-2 border-t-slate-500/50 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-slate-500/10 border border-slate-500/30 text-slate-500 flex items-center justify-center shrink-0">◈</div>
+          <div><p class="text-[10px] font-mono font-bold uppercase tracking-widest mb-1 text-ink-light dark:text-white/55">Projetos Ativos</p><p class="text-2xl font-serif leading-none">7</p></div>
+        </div>
+        <div class="bg-white dark:bg-ink-paper rounded-2xl p-5 border border-ink/5 dark:border-white/5 border-t-2 border-t-sage/60 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-sage/10 border border-sage/20 text-sage flex items-center justify-center shrink-0">✓</div>
+          <div><p class="text-[10px] font-mono font-bold uppercase tracking-widest mb-1 text-ink-light dark:text-white/55">Projetos Concluídos</p><p class="text-2xl font-serif leading-none">2</p></div>
+        </div>
+      </div>
+
+      <div class="flex flex-col lg:flex-row gap-8 xl:gap-12 w-full">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4 mb-6">
+            <h2 class="text-lg font-serif font-medium flex items-center gap-2">Meus Espaços de Trabalho <span class="bg-ink/5 dark:bg-white/5 font-mono text-[10px] font-bold px-2 py-0.5 rounded-full">3</span></h2>
+            <div class="flex items-center gap-1 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-lg p-1">
+                <button id="listBtn" onclick="showList()" class="text-ink-light dark:text-white/60 hover:bg-ink/5 dark:hover:bg-white/5 rounded p-1.5" title="Lista">☰</button>
+                <button id="gridBtn" onclick="showGrid()" class="text-terracotta bg-terracotta/10 rounded p-1.5" title="Grade">▦</button>
+            </div>
+          </div>
+
+          <div id="gridView" class="grid grid-cols-1 sm:grid-cols-2 min-[1600px]:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl flex overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all">
+              <div class="spine bg-terracotta my-4 ml-4 shrink-0"></div>
+              <div class="p-5 flex-1 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="w-12 h-12 rounded-xl border border-ink/10 dark:border-white/10 flex items-center justify-center font-serif text-xl font-bold" style="background-color:#D97A5E15;color:#D97A5E;">A</div>
+                  <details class="relative"><summary class="list-none cursor-pointer p-1 text-ink-light dark:text-white/60 flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></summary>
+                    <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow py-1.5 z-50 text-sm"><a href="#" class="block px-3 py-2 hover:bg-fable-light dark:hover:bg-white/5">Configurações</a><div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div><a href="#" class="block px-3 py-2 text-red-600">Excluir</a></div>
+                  </details>
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-terracotta">PEI VI · Maricá · para o dia</div>
+                <h2 class="font-serif text-xl mt-0.5">Ação Extensionista — Oficina 17 Out</h2>
+                <p class="font-serif italic text-xs text-ink-light dark:text-white/55 mt-1 mb-4">Roteiro, lista de presença, avaliação J·K·L e QR da plataforma.</p>
+                <div class="flex flex-wrap gap-2 mb-5 mt-auto font-mono text-[10px] font-semibold uppercase tracking-wide">
+                  <span class="bg-fable-light dark:bg-ink-darker px-2 py-1 rounded-md border border-ink/5 dark:border-white/5">4 Projetos</span>
+                  <span class="bg-sage/10 px-2 py-1 rounded-md text-sage">1 Concluído</span>
+                </div>
+                <div class="pt-4 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-xs text-ink-light dark:text-white/60">
+                  <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-ink text-white dark:bg-white dark:text-ink flex items-center justify-center text-[8px] font-bold">D</span><span class="text-[11px]">Você (Admin)</span></span>
+                  <span class="text-terracotta font-medium">Acessar →</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl flex overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all">
+              <div class="spine bg-olive my-4 ml-4 shrink-0 opacity-70"></div>
+              <div class="p-5 flex-1 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="w-12 h-12 rounded-xl border border-ink/10 dark:border-white/10 flex items-center justify-center font-serif text-xl font-bold" style="background-color:#556B2F15;color:#556B2F;">T</div>
+                  <details class="relative"><summary class="list-none cursor-pointer p-1 text-ink-light dark:text-white/60 flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></summary>
+                    <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow py-1.5 z-50 text-sm"><a href="#" class="block px-3 py-2 hover:bg-fable-light dark:hover:bg-white/5">Configurações</a><div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div><a href="#" class="block px-3 py-2 text-red-600">Excluir</a></div>
+                  </details>
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-olive">Estudos · TCC 2026.2</div>
+                <h2 class="font-serif text-xl mt-0.5">TCC — Documentação e Kanban</h2>
+                <p class="font-serif italic text-xs text-ink-light dark:text-white/55 mt-1 mb-4">Capítulos, referências e quadro de entregas da banca.</p>
+                <div class="flex flex-wrap gap-2 mb-5 mt-auto font-mono text-[10px] font-semibold uppercase tracking-wide">
+                  <span class="bg-fable-light dark:bg-ink-darker px-2 py-1 rounded-md border border-ink/5 dark:border-white/5">2 Projetos</span>
+                  <span class="bg-sage/10 px-2 py-1 rounded-md text-sage">0 Concluídos</span>
+                </div>
+                <div class="pt-4 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-xs text-ink-light dark:text-white/60">
+                  <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-ink text-white dark:bg-white dark:text-ink flex items-center justify-center text-[8px] font-bold">D</span><span class="text-[11px]">Você (Admin)</span></span>
+                  <span class="text-terracotta font-medium">Acessar →</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl flex overflow-hidden hover:-translate-y-1 hover:shadow-xl transition-all">
+              <div class="spine bg-ocean my-4 ml-4 shrink-0 opacity-70"></div>
+              <div class="p-5 flex-1 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                  <div class="w-12 h-12 rounded-xl border border-ink/10 dark:border-white/10 flex items-center justify-center font-serif text-xl font-bold" style="background-color:#4B6B7815;color:#4B6B78;">C</div>
+                  <details class="relative"><summary class="list-none cursor-pointer p-1 text-ink-light dark:text-white/60 flex"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg></summary>
+                    <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-xl shadow py-1.5 z-50 text-sm"><a href="#" class="block px-3 py-2 hover:bg-fable-light dark:hover:bg-white/5">Configurações</a><div class="h-px bg-ink/5 dark:bg-white/5 my-1"></div><a href="#" class="block px-3 py-2 text-red-600">Excluir</a></div>
+                  </details>
+                </div>
+                <div class="font-mono text-[10px] uppercase tracking-[0.18em] text-ocean">Solo · leituras</div>
+                <h2 class="font-serif text-xl mt-0.5">Caderno — Matérias do período</h2>
+                <p class="font-serif italic text-xs text-ink-light dark:text-white/55 mt-1 mb-4">Resumos, mapas conceituais e revisões.</p>
+                <div class="flex flex-wrap gap-2 mb-5 mt-auto font-mono text-[10px] font-semibold uppercase tracking-wide">
+                  <span class="bg-fable-light dark:bg-ink-darker px-2 py-1 rounded-md border border-ink/5 dark:border-white/5">1 Projeto</span>
+                  <span class="bg-sage/10 px-2 py-1 rounded-md text-sage">1 Concluído</span>
+                </div>
+                <div class="pt-4 border-t border-ink/5 dark:border-white/5 flex items-center justify-between text-xs text-ink-light dark:text-white/60">
+                  <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-ink text-white dark:bg-white dark:text-ink flex items-center justify-center text-[8px] font-bold">D</span><span class="text-[11px]">Você (Admin)</span></span>
+                  <span class="text-terracotta font-medium">Acessar →</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="listView" class="hidden space-y-3">
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl p-4 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-4 min-w-0"><div class="w-11 h-11 rounded-xl flex items-center justify-center font-serif text-lg font-bold shrink-0" style="background-color:#D97A5E15;color:#D97A5E;">A</div>
+              <div class="min-w-0"><h2 class="font-serif truncate">Ação Extensionista — Oficina 17 Out</h2><p class="text-xs text-ink-light dark:text-white/55 truncate">Você (Admin) • 4 projetos • há 2h</p></div></div>
+              <div class="hidden sm:flex gap-2 font-mono text-[10px] font-semibold uppercase"><span class="px-2.5 py-1 rounded-md bg-fable-light dark:bg-ink-darker border border-ink/5 dark:border-white/5">4 Projetos</span><span class="px-2.5 py-1 rounded-md bg-sage/10 text-sage">1 Concluído</span></div>
+            </div>
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl p-4 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-4 min-w-0"><div class="w-11 h-11 rounded-xl flex items-center justify-center font-serif text-lg font-bold shrink-0" style="background-color:#556B2F15;color:#556B2F;">T</div>
+              <div class="min-w-0"><h2 class="font-serif truncate">TCC — Documentação e Kanban</h2><p class="text-xs text-ink-light dark:text-white/55 truncate">Você (Admin) • 2 projetos • ontem</p></div></div>
+              <div class="hidden sm:flex gap-2 font-mono text-[10px] font-semibold uppercase"><span class="px-2.5 py-1 rounded-md bg-fable-light dark:bg-ink-darker border border-ink/5 dark:border-white/5">2 Projetos</span><span class="px-2.5 py-1 rounded-md bg-sage/10 text-sage">0 Concluídos</span></div>
+            </div>
+            <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl p-4 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-4 min-w-0"><div class="w-11 h-11 rounded-xl flex items-center justify-center font-serif text-lg font-bold shrink-0" style="background-color:#4B6B7815;color:#4B6B78;">C</div>
+              <div class="min-w-0"><h2 class="font-serif truncate">Caderno — Matérias do período</h2><p class="text-xs text-ink-light dark:text-white/55 truncate">Você (Admin) • 1 projeto • há 5d</p></div></div>
+              <div class="hidden sm:flex gap-2 font-mono text-[10px] font-semibold uppercase"><span class="px-2.5 py-1 rounded-md bg-fable-light dark:bg-ink-darker border border-ink/5 dark:border-white/5">1 Projeto</span><span class="px-2.5 py-1 rounded-md bg-sage/10 text-sage">1 Concluído</span></div>
+            </div>
+          </div>
+
+          <div id="emptyState" class="hidden bg-white dark:bg-ink-paper border border-dashed border-ink/15 dark:border-white/15 rounded-2xl p-12 text-center">
+            <p class="font-serif italic text-ink-light dark:text-white/60 mb-3">Você ainda não tem nenhum espaço de trabalho.</p>
+            <a href="#" class="text-terracotta font-medium hover:underline">Criar meu primeiro Workspace</a>
+          </div>
+        </div>
+
+        <div class="w-full xl:w-80 shrink-0">
+          <div class="flex items-center justify-between border-b border-ink/10 dark:border-white/10 pb-4 mb-6">
+            <h2 class="font-serif text-lg">Diário <span class="font-mono text-[10px] uppercase tracking-widest text-ink-light dark:text-white/40 ml-1">atividade recente</span></h2>
+          </div>
+          <div class="bg-white dark:bg-ink-paper border border-ink/5 dark:border-white/5 rounded-2xl p-6">
+            <div class="space-y-6">
+              <div class="flex items-start gap-4"><div class="w-2.5 h-2.5 rounded-full bg-terracotta mt-2 shrink-0"></div>
+                <div class="min-w-0"><div class="flex items-center justify-between gap-2 mb-0.5"><span class="font-bold text-xs">Novo Projeto</span><time class="font-mono text-[10px] text-ink-light dark:text-white/50">há 2h</time></div>
+                <div class="text-[11px] text-ink-light dark:text-white/60">Criou <b class="text-ink dark:text-white">Roteiro Oficina</b> em <b class="text-ink dark:text-white">Ação Extensionista</b></div></div></div>
+              <div class="flex items-start gap-4"><div class="w-2.5 h-2.5 rounded-full bg-olive mt-2 shrink-0"></div>
+                <div class="min-w-0"><div class="flex items-center justify-between gap-2 mb-0.5"><span class="font-bold text-xs">Novo Projeto</span><time class="font-mono text-[10px] text-ink-light dark:text-white/50">ontem</time></div>
+                <div class="text-[11px] text-ink-light dark:text-white/60">Criou <b class="text-ink dark:text-white">Capítulo 2</b> em <b class="text-ink dark:text-white">TCC</b></div></div></div>
+              <div class="flex items-start gap-4"><div class="w-2.5 h-2.5 rounded-full bg-ocean mt-2 shrink-0"></div>
+                <div class="min-w-0"><div class="flex items-center justify-between gap-2 mb-0.5"><span class="font-bold text-xs">Novo Projeto</span><time class="font-mono text-[10px] text-ink-light dark:text-white/50">há 5d</time></div>
+                <div class="text-[11px] text-ink-light dark:text-white/60">Criou <b class="text-ink dark:text-white">Mapa conceitual</b> em <b class="text-ink dark:text-white">Caderno</b></div></div></div>
+            </div>
+            <a href="#" class="block w-full text-center text-[11px] font-semibold mt-8 hover:text-terracotta">Ver todo o histórico</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Bottom nav mobile (responsivo, espelha a trilha: volta ao site + perfil) -->
+<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-ink-paper/95 backdrop-blur border-t border-ink/10 dark:border-white/10 px-4 py-2.5 flex items-center justify-between">
+  <a href="#" class="flex flex-col items-center gap-0.5 text-ink-light dark:text-white/55"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="font-mono text-[8px] uppercase">site</span></a>
+  <a href="#" class="flex flex-col items-center gap-0.5 text-terracotta"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg><span class="font-mono text-[8px] uppercase">workspaces</span></a>
+  <a href="#" class="flex flex-col items-center gap-0.5 text-ink-light dark:text-white/55"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="font-mono text-[8px] uppercase">buscar</span></a>
+  <a href="#" class="flex flex-col items-center gap-0.5 text-ink-light dark:text-white/55 relative"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span class="font-mono text-[8px] uppercase">tarefas</span><span class="absolute top-0 right-2 bg-terracotta text-white text-[9px] font-bold px-1 rounded-full">3</span></a>
+  <a href="#" class="flex flex-col items-center gap-0.5 text-ink-light dark:text-white/55"><span class="w-6 h-6 rounded-full bg-terracotta/10 border border-terracotta/20 text-terracotta flex items-center justify-center font-serif text-xs">D</span><span class="font-mono text-[8px] uppercase">perfil</span></a>
+</nav>
+</body>
+</html>
