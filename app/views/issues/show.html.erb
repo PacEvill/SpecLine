@@ -108,7 +108,7 @@
         <% if @issue.due_date %>
           <div>
             <span class="text-[10px] font-bold text-ink-light dark:text-white/60 uppercase tracking-wider">Prazo</span>
-            <p class="mt-1.5 text-xs <%= @issue.due_date < Date.current ? 'text-rust font-semibold' : 'text-ink' %>"><%= @issue.due_date.strftime("%d de %B de %Y") %></p>
+            <p class="mt-1.5 text-xs <%= @issue.due_date < Date.current ? 'text-rust font-semibold' : 'text-ink dark:text-fable' %>"><%= @issue.due_date.strftime("%d de %B de %Y") %></p>
           </div>
         <% end %>
 
