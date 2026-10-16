@@ -204,6 +204,7 @@ npm audit
 
 > **Declaração Institucional:** Entrega individual — PEI VI Maricá
 > **Discente / Desenvolvedor Solo:** Diego Silva Pereira Pacheco ([@PacEvill](https://github.com/PacEvill)) — Matrícula: `202413831`
+> **WhatsApp (Discente):** (21) 99370-3252 | **E-mail pessoal:** <a href="mailto:diegospp20@gmail.com">diegospp20@gmail.com</a>
 > **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro
 > **Docente Orientador Técnico:** Prof. Me. Victor Andrade da Silveira
 > **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá
