@@ -203,6 +203,16 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] `bin/rails test` → **142 runs, 422 assertions, 0 failures**; CSS regenerado.
 - [ ] Acessível em produção em `/academic/extension` — visível para professores/comunidade via URL/documentos acadêmicos, mas NÃO posicionada como produto (sem links de marketing). Gate total (404 em produção, 1 linha) fica como opção a pedir.
 
+## Sprint 19.3: Resgate do módulo de sessões práticas do clone antigo (16/10)
+**Objetivo:** portar o trabalho do clone `SpecLineRepo/` (10/09/2026, nunca commitado) — registrado no vault como "próximo passo" — com avaliação de diff, não cópia cega.
+- [x] Módulo completo: `PracticalSession` (estados scheduled/in_progress/completed/cancelled, check_in_code único `PRAT-XXXXXX`), controller (escopo multi-tenant já correto), CRUD + `check_in`, views (modal form, certificado presencial) e `_practical_sessions_view` no show do projeto.
+- [x] Integração no repo atual: rota `resources :practical_sessions` (member `patch :check_in`), `has_many` no Project, `@practical_sessions` no show, aba "Práticas Presenciais" no header do projeto.
+- [x] Melhorias no porte: badge da aba sem classe fantasma (`py-0.5`); `status_options` mapa único no modelo — fim dos emojis 📅🟢✅❌ do select; feed de atividades com casos `practical_session_*` e metadados escapados (padrão Sprint 19).
+- [x] Seeds extensionistas idempotentes (3 sessões nos 3 estados) — revelam que o aceite LGPD bloqueia `User.find_or_create_by!` sem consentimento (comportamento esperado: seeds ganham `terms_consent: true`).
+- [x] Migration `20260911000000` aplicada; seeds carregados no dev.
+- [x] Diffs avaliados e descartados: `bin/*` (apenas flips de modo locais ao clone) e `README.md` do clone (substituído pelo reestruturado de hoje).
+- [x] Regressão: `bin/rails test` → **148 runs, 440 assertions, 0 failures** (+6 testes do módulo).
+
 ---
 
 ## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)
