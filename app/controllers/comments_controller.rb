@@ -32,6 +32,13 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = @issue.comments.find(params[:id])
+    unless @comment.user == current_user
+      respond_to do |format|
+        format.turbo_stream { head :forbidden }
+        format.html { redirect_to workspace_project_issue_path(@workspace, @project, @issue), alert: "Somente o autor pode remover o comentário." }
+      end
+      return
+    end
     @comment.destroy
     respond_to do |format|
       format.turbo_stream { head :ok }

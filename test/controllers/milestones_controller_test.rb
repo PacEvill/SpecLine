@@ -41,4 +41,10 @@ class MilestonesControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to workspace_project_path(@workspace, @project, view: "milestones")
   end
+
+  test "deve persistir start_date no update" do
+    patch workspace_project_milestone_url(@workspace, @project, @milestone), params: { milestone: { start_date: "2026-10-20" } }
+    assert_redirected_to workspace_project_path(@workspace, @project, view: "milestones")
+    assert_equal Date.new(2026, 10, 20), @milestone.reload.start_date
+  end
 end

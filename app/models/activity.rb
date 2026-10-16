@@ -54,24 +54,30 @@ class Activity < ApplicationRecord
     nil
   end
 
+  # Metadados são entrada do usuário (títulos, nomes de coluna). Ao montar HTML que
+  # vai para .html_safe, escapamos os valores para bloquear XSS armazenado no feed.
+  def safe(value)
+    ERB::Util.html_escape(value.presence.to_s)
+  end
+
   def formatted_message
     case action
     when "issue_created"
-      "criou a tarefa <span class='font-bold text-ink dark:text-white'>#{metadata['identifier']} #{metadata['title']}</span>"
+      "criou a tarefa <span class='font-bold text-ink dark:text-white'>#{safe(metadata['identifier'])} #{safe(metadata['title'])}</span>"
     when "status_changed"
       identifier = metadata["identifier"] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
-      "moveu <span class='font-bold text-ink dark:text-white'>#{identifier}</span> de <span class='line-through text-ink-light dark:text-white/40'>#{metadata['from'] || 'N/A'}</span> para <span class='text-terracotta font-bold'>#{metadata['to']}</span>"
+      "moveu <span class='font-bold text-ink dark:text-white'>#{safe(identifier)}</span> de <span class='line-through text-ink-light dark:text-white/40'>#{safe(metadata['from']) || 'N/A'}</span> para <span class='text-terracotta font-bold'>#{safe(metadata['to'])}</span>"
     when "assignee_changed"
       identifier = metadata["identifier"] || (trackable.identifier if trackable.respond_to?(:identifier)) || "Tarefa"
-      "atribuiu <span class='font-bold text-ink dark:text-white'>#{identifier}</span> para <span class='font-bold text-olive'>#{metadata['to'] || 'ninguém'}</span>"
+      "atribuiu <span class='font-bold text-ink dark:text-white'>#{safe(identifier)}</span> para <span class='font-bold text-olive'>#{safe(metadata['to']) || 'ninguém'}</span>"
     when "project_created"
-      "criou o projeto <span class='font-bold text-ink dark:text-white'>#{metadata['name']}</span>"
+      "criou o projeto <span class='font-bold text-ink dark:text-white'>#{safe(metadata['name'])}</span>"
     when "comment_created"
-      "comentou na tarefa <span class='font-bold text-ink dark:text-white'>#{metadata['issue_identifier']}</span>"
+      "comentou na tarefa <span class='font-bold text-ink dark:text-white'>#{safe(metadata['issue_identifier'])}</span>"
     when "document_created"
-      "criou a especificação <span class='font-bold text-sage-dark dark:text-sage'>#{metadata['title']}</span>"
+      "criou a especificação <span class='font-bold text-sage-dark dark:text-sage'>#{safe(metadata['title'])}</span>"
     when "whiteboard_created"
-      "desenhou o quadro <span class='font-bold text-slate'>#{metadata['title']}</span>"
+      "desenhou o quadro <span class='font-bold text-slate'>#{safe(metadata['title'])}</span>"
     else
       "#{action.humanize.downcase}"
     end

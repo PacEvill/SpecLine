@@ -85,7 +85,7 @@ class WhiteboardsController < ApplicationController
   private
 
   def set_workspace
-    @workspace = current_user.workspaces.find_by(id: params[:workspace_id]) || Workspace.find(params[:workspace_id])
+    @workspace = current_user.workspaces.find(params[:workspace_id])
   end
 
   def set_project

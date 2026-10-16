@@ -36,4 +36,13 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to workspace_project_issue_path(@workspace, @project, @issue)
     assert_equal "Comentário removido.", flash[:notice]
   end
+
+  test "não deve apagar comentário de outro usuário" do
+    @foreign_comment = @issue.comments.create!(user: users(:two), body: "De terceiro")
+    assert_no_difference("Comment.count") do
+      delete workspace_project_issue_comment_url(@workspace, @project, @issue, @foreign_comment)
+    end
+    assert_redirected_to workspace_project_issue_path(@workspace, @project, @issue)
+    assert_equal "Somente o autor pode remover o comentário.", flash[:alert]
+  end
 end

@@ -100,7 +100,16 @@ class IssuesController < ApplicationController
     end
 
     if params[:new_project_id].present? && params[:new_project_id] != @project.id.to_s
-      update_params[:project_id] = params[:new_project_id]
+      # Escopo multi-tenant: o destino precisa ser um projeto do MESMO workspace
+      new_project = @workspace.projects.find(params[:new_project_id])
+      update_params[:project_id] = new_project.id
+    end
+
+    if update_params[:board_id].present?
+      target_project = update_params[:project_id] ? Project.find(update_params[:project_id]) : @project
+      unless Board.exists?(id: update_params[:board_id], project_id: target_project.id)
+        raise ActiveRecord::RecordNotFound, "Quadro não pertence ao projeto de destino"
+      end
     end
 
     @issue.update!(update_params)
@@ -150,10 +159,30 @@ class IssuesController < ApplicationController
   end
 
   def issue_params
-    params.require(:issue).permit(
+    permitted = params.require(:issue).permit(
       :title, :description, :issue_status_id, :assignee_id,
       :priority, :due_date, :start_date, :parent_id,
       :milestone_id, :position, label_ids: []
     )
+    scope_issue_references!(permitted)
+    permitted
+  end
+
+  # Escopo multi-tenant: referências de outro projeto/workspace são descartadas
+  def scope_issue_references!(permitted)
+    if permitted[:label_ids].present?
+      permitted[:label_ids] = permitted[:label_ids] & @workspace.labels.pluck(:id).map(&:to_s)
+    end
+
+    if permitted[:milestone_id].present? && !@project.milestones.exists?(id: permitted[:milestone_id])
+      permitted[:milestone_id] = nil
+    end
+
+    if permitted[:parent_id].present?
+      parent = @project.issues.find_by(id: permitted[:parent_id])
+      if parent.nil? || parent.id == @issue.try(:id)
+        permitted[:parent_id] = nil
+      end
+    end
   end
 end

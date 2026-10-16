@@ -6,7 +6,7 @@ class VscodeExplorerTreeSprintTest < ActionDispatch::IntegrationTest
     @workspace = workspaces(:one)
     @project = projects(:one)
     @doc1 = documents(:one)
-    @doc2 = documents(:two)
+    @doc2 = @project.documents.create!(workspace: @workspace, author: @user, title: "Doc Dois", content: "Sub", icon: "document", position: 2)
     sign_in @user
   end
 

@@ -16,8 +16,11 @@ module TurnstileVerifiable
       end
     end
 
-    # In production, bypass only if no secret key is configured
-    return true if ENV["CLOUDFLARE_TURNSTILE_SECRET_KEY"].blank?
+    # In production, a missing secret means verification is impossible — allow only with loud logging
+    if ENV["CLOUDFLARE_TURNSTILE_SECRET_KEY"].blank?
+      Rails.logger.error("[Turnstile] CLOUDFLARE_TURNSTILE_SECRET_KEY ausente em produção — verificação anti-bot INATIVA. Configure a variável de ambiente.")
+      return true
+    end
 
     token = params["cf-turnstile-response"]
     if token.blank?

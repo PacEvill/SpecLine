@@ -69,6 +69,6 @@ class MilestonesController < ApplicationController
   end
 
   def milestone_params
-    params.require(:milestone).permit(:title, :description, :target_date, :status)
+    params.require(:milestone).permit(:title, :description, :target_date, :start_date, :status)
   end
 end

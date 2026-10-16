@@ -75,4 +75,16 @@ class WhiteboardsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to workspace_project_whiteboards_path(@workspace, @project)
   end
+
+  test "não deve acessar quadro de workspace alheio (multi-tenant)" do
+    foreign = Whiteboard.create!(workspace: workspaces(:two), project: projects(:two), user: users(:two), title: "Quadro alheio", mode: "hybrid")
+    get workspace_project_whiteboard_path(workspaces(:two), projects(:two), foreign)
+    assert_response :not_found
+  end
+
+  test "não deve ler json de quadro de workspace alheio" do
+    foreign = Whiteboard.create!(workspace: workspaces(:two), project: projects(:two), user: users(:two), title: "Quadro alheio 2", mode: "hybrid")
+    get export_json_workspace_project_whiteboard_path(workspaces(:two), projects(:two), foreign)
+    assert_response :not_found
+  end
 end

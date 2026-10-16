@@ -22,7 +22,8 @@ class DocumentsController < ApplicationController
   end
 
   def new
-    @document = @project.documents.build(parent_id: params[:parent_id], is_folder: params[:is_folder] == "true")
+    parent_scope = params[:parent_id].present? && @project.documents.exists?(id: params[:parent_id]) ? params[:parent_id] : nil
+    @document = @project.documents.build(parent_id: parent_scope, is_folder: params[:is_folder] == "true")
     @document.icon = "📁" if @document.is_folder?
   end
 
@@ -63,6 +64,11 @@ class DocumentsController < ApplicationController
     position = params[:position].to_i
 
     if parent_id.present?
+      # Escopo multi-tenant: o destino precisa estar no MESMO projeto do documento atual
+      unless @project.documents.exists?(id: parent_id)
+        return render json: { status: "error", message: "Destino não encontrado neste projeto." }, status: :not_found
+      end
+
       if parent_id.to_s == @document.id.to_s || @document.descendant_ids.map(&:to_s).include?(parent_id.to_s)
         return render json: { status: "error", message: "Não é permitido mover um item para dentro de si mesmo ou de suas sub-pastas." }, status: :unprocessable_entity
       end
@@ -118,6 +124,11 @@ class DocumentsController < ApplicationController
     end
 
     def document_params
-      params.require(:document).permit(:title, :content, :parent_id, :icon, :cover_image, :is_folder, :position)
+      permitted = params.require(:document).permit(:title, :content, :parent_id, :icon, :cover_image, :is_folder, :position)
+      # Escopo multi-tenant: pai de outra árvore é descartado silenciosamente
+      if permitted[:parent_id].present? && !@project.documents.exists?(id: permitted[:parent_id])
+        permitted[:parent_id] = nil
+      end
+      permitted
     end
 end
