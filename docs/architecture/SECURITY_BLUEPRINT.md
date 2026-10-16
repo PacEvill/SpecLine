@@ -535,3 +535,27 @@ After applying the fixes:
 1. Run the project test suite: `bin/rails test`. Ensure all features continue to work as expected.  
 2. Re-run `bundle exec brakeman -q` to confirm 0 remaining warnings.  
 3. Delete all temporary JSON reports created by the sub-agents (`leaks.json`, `brakeman.json`, `semgrep.json`).
+
+---
+
+## 5. Gestão de Segredos e Decisões da Auditoria (Sprint 19)
+
+### 5.1 `RAILS_MASTER_KEY` (resolução da dupla fonte)
+O par de credenciais passou por dois fluxos (SSH local e ambiente posterior). Decisão registrada (16/10/2026):
+
+- **Fonte de verdade local:** `config/master.key` do clone de desenvolvimento, **excluído do git** via `.gitignore`. Só existe no disco local.
+- **Fonte de verdade de produção:** variável `RAILS_MASTER_KEY` configurada no painel do Render (nunca em arquivo commitado).
+- **`config/credentials.yml.enc`:** cifrado com a mesma chave; conteúdo de referência apenas. Nenhum segredo real além do próprio cifrado é commitado.
+- **Regra:** se a chave for trocada, é preciso girar os 3 lugares **na mesma janela**: `master.key` local, `RAILS_MASTER_KEY` no Render e re-cifrar `credentials.yml.enc` (`EDITOR="vi" bin/rails credentials:edit`).
+
+### 5.2 Cloudflare Turnstile — política de falha
+Código: `app/controllers/concerns/turnstile_verifiable.rb`.
+
+- Produção **com** segredo configurado: verificação real na `siteverify`, falha fechada (token inválido trava o cadastro).
+- Produção **sem** segredo (misconfiguração): não bloqueia o	app inteiro, mas emite `Rails.logger.error "[Turnstile] ... INATIVA"` para observabilidade imediata. De P0 a P2 assim que o deploy for auditado.
+
+### 5.3 CSP — adiamento justificado (P2)
+`config/initializers/content_security_policy.rb` mantém `unsafe-eval`/`unsafe-inline` por ora. Removê-los sem QA manual de navegador (Turbo, Stimulus inline e a *** tag de tema) pode quebrar o deploy em produção. O XSS foi tratado **na fonte** (metadados do feed escapados, §1.4), e o tighten da CSP fica para uma sessão com browser aberto.
+
+### 5.4 Contas R2/Neon
+Segredos da Neon.tech e do Cloudflare R2 vivem só no `.env` local e nas variáveis do Render; `.env` está no `.gitignore`. Regra idêntica à 5.1 para rotação.

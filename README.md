@@ -23,12 +23,12 @@
   <br />
 
   [Visão Geral](#1-visão-geral-e-proposta-de-engenharia) •
-  [Extensão PEI VI Maricá](#2-vínculo-territorial-e-extensão-universitária-pei-vi--maricárj) •
-  [Galeria da Plataforma](#3-galeria-da-plataforma) •
-  [Arquitetura do Sistema](#4-arquitetura-do-sistema-e-topologia) •
-  [Matriz Tecnológica](#5-matriz-tecnológica) •
-  [Instalação e Execução](#7-ambiente-de-desenvolvimento-local) •
-  [Diretrizes de Contribuição](#10-como-contribuir)
+  [Galeria da Plataforma](#2-galeria-da-plataforma) •
+  [Arquitetura do Sistema](#3-arquitetura-do-sistema-e-topologia) •
+  [Matriz Tecnológica](#4-matriz-tecnológica) •
+  [Instalação e Execução](#6-ambiente-de-desenvolvimento-local) •
+  [Extensão PEI VI Maricá](#8-extensão-universitária-pei-vi--maricárj) •
+  [Como Contribuir](#10-como-contribuir)
 
 </div>
 
@@ -45,23 +45,7 @@ O **SpecLine** foi concebido para unificar esses fluxos sob uma arquitetura de d
 * **Modelagem Visual Integrada:** Elaboração de arquiteturas de software e fluxogramas em canvas vetorial interativo.
 * **Arquitetura de Alta Eficiência:** Desenvolvido sobre o **Ruby on Rails 8 Solid Stack**, eliminando a necessidade de serviços intermediários pagos (como instâncias dedicadas de Redis) ao empregar `Solid Queue`, `Solid Cable` e `Solid Cache` persistidos no PostgreSQL.
 
----
-
-## 2. Vínculo Territorial e Extensão Universitária (PEI VI — Maricá/RJ)
-
-> **Declaração Institucional:** Entrega individual — PEI VI Maricá  
-> **Discente / Desenvolvedor Solo:** Diego Silva Pereira Pacheco ([@PacEvill](https://github.com/PacEvill)) — Matrícula: `202413831`  
-> **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro  
-> **Docente Orientador Técnico:** Prof. Me. Victor Andrade da Silveira  
-> **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá  
-> **Território de Atuação:** Município de Maricá/RJ  
-> **Local Parceiro / Espaço Físico da Ação:** Laboratório de Informática Avançada (Lab 02) — Campus Maricá (Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815) em cooperação com o ecossistema local e Polo de Inovação de Maricá / ICTIM.  
-> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`  
-> **Data e Horário da Oficina Presencial:** **17 de Outubro de 2026 (Sábado), das 09h00 às 11h30** (Oficina prática 'Mão na Massa' com coleta de lista de presença física assinada e avaliação Likert).  
-> **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)  
-> **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)  
-> **Status de Homologação em Produção:** 🟢 [https://specline.onrender.com](https://specline.onrender.com) (Ambiente Web Permanente)  
-
+O SpecLine é, antes de tudo, **um produto de software independente**: uma ferramenta genérica de engenharia, útil para qualquer equipe técnica que documenta, planeja e desenha sistemas — gratuita, sem necessidade de instalação e acessível direto do navegador. A ação extensionista do **PEI VI (Maricá/RJ)**, descrita na [Seção 8](#8-extensão-universitária-pei-vi--maricárj), é a aplicação concreta desse produto em território maricaense: o mesmo software que serve a um time de engenharia serve à comunidade, sem paywall e em português.
 
 ---
 
@@ -216,7 +200,26 @@ npm audit
 
 ---
 
-## 8. Build e Execução via Docker
+## 8. Extensão Universitária (PEI VI — Maricá/RJ)
+
+> **Declaração Institucional:** Entrega individual — PEI VI Maricá
+> **Discente / Desenvolvedor Solo:** Diego Silva Pereira Pacheco ([@PacEvill](https://github.com/PacEvill)) — Matrícula: `202413831`
+> **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro
+> **Docente Orientador Técnico:** Prof. Me. Victor Andrade da Silveira
+> **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá
+> **Território de Atuação:** Município de Maricá/RJ
+> **Local Parceiro / Espaço Físico da Ação:** Laboratório de Informática Avançada (Lab 02) — Campus Maricá (Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815) em cooperação com o ecossistema local e Polo de Inovação de Maricá / ICTIM.
+> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`
+> **Data e Horário da Oficina Presencial:** **17 de Outubro de 2026 (Sábado), das 09h00 às 11h30** (Oficina prática 'Mão na Massa' com coleta de lista de presença física assinada e avaliação Likert).
+> **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)
+> **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)
+> **Status de Homologação em Produção:** 🟢 [https://specline.onrender.com](https://specline.onrender.com) (Ambiente Web Permanente)
+
+O projeto é desenvolvido por **Diego Silva Pereira Pacheco** no âmbito da disciplina **Práticas Extensionistas Integradoras VI** (6º Período — Engenharia de Software) da **Universidade de Vassouras — Campus Maricá (FUSVE)**. Distribuído sob a licença **MIT** — consulte o arquivo [LICENSE](LICENSE) para termos complementares.
+
+---
+
+## 9. Build e Execução via Docker
 
 Para compilar e executar o contêiner de produção com Thruster localmente:
 
@@ -233,7 +236,7 @@ docker run -d -p 8080:80 \
 
 ---
 
-## 9. Como Contribuir
+## 10. Como Contribuir
 
 Contribuições para o aprimoramento da plataforma são bem-vindas. Para colaborar:
 
@@ -244,11 +247,3 @@ Contribuições para o aprimoramento da plataforma são bem-vindas. Para colabor
 5. Registre o commit das alterações: `git commit -m 'feat: implementa nova funcionalidade'`.
 6. Envie para o branch remoto: `git push origin feature/nome-da-funcionalidade`.
 7. Abra um **Pull Request** detalhando as mudanças realizadas.
-
----
-
-## 10. Contexto Institucional e Licença
-
-Projeto desenvolvido por **Diego Silva Pereira Pacheco** (Matrícula: 202413831) no âmbito da disciplina **Práticas Extensionistas Integradoras VI** (6º Período - Engenharia de Software) da **Universidade de Vassouras — Campus Maricá (FUSVE)**, sob docência e orientação da **Profª. Laís Cristine Bordallo Pinheiro** e apoio técnico do **Prof. Me. Victor Andrade da Silveira**.
-
-Distribuído sob a licença **MIT**. Consulte o arquivo [LICENSE](LICENSE) para termos complementares.

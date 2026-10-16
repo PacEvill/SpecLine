@@ -163,6 +163,26 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
   - [x] `(21) 98765-4321` removido de `.docx`, README e roteiros; mantido `(21) 2637-0000` — confirmar números reais.
   - [ ] Reexportar `PLANO DE AÇÃO EXTENSIONISTA.pdf` e `oficina-marica.pdf` do `.docx` (sem LibreOffice neste ambiente) + transcrever o áudio do WhatsApp + remover um dos 2 Planos de Gerenciamento duplicados.
 
+- [x] **Sprint 19: Correções da Auditoria de Código (P0) — backend, frontend e design (16/10)**
+  **Objetivo:** Fechar os achados P0/P1 da auditoria backend+frontend+design, com regressão coberta (140 runs verdes).
+  - [x] IDOR Whiteboards: `set_workspace` agora `current_user.workspaces.find` (sem fallback global) — `whiteboards_controller.rb`.
+  - [x] XSS no feed de atividades: `Activity.formatted_message` escapa todo metadado (ERB::Util) antes do `html_safe`; testes com payload malicioso (`activity_test.rb`).
+  - [x] Cross-tenant em Issues: `move` só aceita projeto do mesmo workspace; `board_id` validado no projeto de destino; `label_ids` recuperadas do escopo do workspace; `milestone_id`/`parent_id` do escopo do projeto (`scope_issue_references!`).
+  - [x] Cross-tenant em Documents: `move` rejeita pai fora do projeto (404 JSON); `new`/`document_params` descartam pai de outra árvore.
+  - [x] Comments: somente o autor remove; dono do workspace recebe alerta "Somente o autor pode remover o comentário." (não há conceito de membros ainda — caso negativo real).
+  - [x] Milestones: `start_date` entra no permit e persiste (coluna já existia no schema).
+  - [x] Turnstile: se segredo ausente em produção, loga erro explícito `[Turnstile] ... INATIVA` (evita bloqueio total em misconfiguração; nota no SECURITY_BLUEPRINT §5).
+  - [x] Higiene: rota morta `home/index` removida (duplicada da raiz) e `OnboardingService` sem referências apagado.
+  - [x] Links mortos `_overview_view`: `view: 'docs'` → `view: 'documents'` (2 ocorrências).
+  - [x] Sidebar "Urgentes / Bloqueados": vira **"Prioridade alta"** com filtro real `view=list&filter=priority` (issues urgentes + alta) — sem vocabulário inventado.
+  - [x] OAuth: botões GitHub/Apple mortos removidos de login e cadastro; Google efetivo em ambos.
+  - [x] Fontes internas: `app.html.erb` carrega Inter/Fraunces/Newsreader/JetBrains Mono (fim do `Instrument Sans` residual da raiz comum).
+  - [x] Dropdown: `closeOnEsc` como método nomeado (usado por `data-action` em `_board` e outros) e listener de `keydown` removido no `disconnect`.
+  - [x] Kanban: hint de coluna vazia permanente no DOM (`hidden unless column_issues.empty?`), sincronizada no drag-and-drop por `updateCounts()`.
+  - [x] Design tokens: `terracotta-dark` (inexistente) → `terracotta-hover` (10 arquivos); `py-0.2` → `py-0.5`; pares `dark:` faltantes em `issues/show` (Prazo) e `_list_view` (prioridade sem etiqueta, data).
+  - [x] Regressão: `bin/rails test` → **140 runs, 416 assertions, 0 failures** (+12 testes dos P0 sobre o baseline 128/386). Prova grep: 0 ocorrências de `find_by…|| Workspace.find`, `#{metadata`, `view: 'docs'`, `tab: "board"`, `terracotta-dark`, `py-0.2`, `Instrument+Sans`, botões OAuth mortos e rota `home/index`.
+  - [ ] Pendente P2: CSP `unsafe-eval`/`unsafe-inline` (cirurgia exige QA manual de navegador — adiado sem quebrar o deploy).
+
 ---
 
 ## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)
