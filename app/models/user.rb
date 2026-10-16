@@ -23,7 +23,7 @@ class User < ApplicationRecord
   attr_accessor :terms_consent
 
   validates :terms_consent,
-            acceptance: { accept: true, allow_nil: false, message: "É obrigatório aceitar os Termos de Uso e a Política de Privacidade." },
+            acceptance: { accept: ["1", true], allow_nil: false, message: "É obrigatório aceitar os Termos de Uso e a Política de Privacidade." },
             on: :create,
             if: -> { provider.blank? }
 
@@ -32,7 +32,7 @@ class User < ApplicationRecord
   private
 
   def stamp_terms_consent
-    self.terms_accepted_at = Time.current if terms_consent == true
+    self.terms_accepted_at = Time.current if ["1", true].include?(terms_consent)
   end
 
   def validate_avatar_attachment

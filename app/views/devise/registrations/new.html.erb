@@ -96,7 +96,7 @@
 <% end %>
 
         <div class="flex items-start gap-2.5 mt-5">
-          <input type="checkbox" id="terms_consent" name="user[terms_consent]" required class="mt-1 w-4 h-4 rounded border-ink/20 text-terracotta focus:ring-terracotta accent-terracotta cursor-pointer">
+          <input type="checkbox" id="terms_consent" name="user[terms_consent]" value="1" required class="mt-1 w-4 h-4 rounded border-ink/20 text-terracotta focus:ring-terracotta accent-terracotta cursor-pointer">
           <label for="terms_consent" class="text-xs text-ink-light dark:text-white/70 leading-relaxed cursor-pointer select-none">
             Li e concordo com os <%= link_to "Termos de Uso", terms_path, target: "_blank", rel: "noopener noreferrer", class: "text-terracotta underline hover:opacity-80" %> e com a <%= link_to "Política de Privacidade", privacy_path, target: "_blank", rel: "noopener noreferrer", class: "text-terracotta underline hover:opacity-80" %> (tratamento de dados para fins acadêmicos e operacionais do projeto SpecLine — PEI VI Maricá).
           </label>

@@ -36,6 +36,14 @@ class UserTest < ActiveSupport::TestCase
     assert_not_nil user.terms_accepted_at
   end
 
+  test "aceite aceita a string do checkbox do browser (\"1\") e grava timestamp" do
+    user = User.new(email: "consent_1@example.com", password: "password123", password_confirmation: "password123")
+    user.terms_consent = "1"
+    assert user.valid?, "deve aceitar a string \"1\" (checkbox com value=1)"
+    user.save!
+    assert_not_nil user.terms_accepted_at
+  end
+
   test "cadastro via google não exige aceite prévio e não grava timestamp" do
     user = User.create!(provider: "google_oauth2", uid: "consent-ok", email: "consent_oauth@example.com", password: Devise::Encryptor.digest(User, "password123"))
     assert_nil user.terms_accepted_at

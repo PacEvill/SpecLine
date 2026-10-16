@@ -50,7 +50,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :first_name, :last_name, :terms_consent ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :first_name, :last_name, :terms_consent ])
   end
 
   def configure_account_update_params
