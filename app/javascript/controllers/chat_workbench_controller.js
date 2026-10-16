@@ -97,7 +97,7 @@ export default class extends Controller {
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <span class="font-bold text-xs text-ink dark:text-white">Você</span>
-            <span class="text-[9px] font-mono bg-terracotta/15 text-terracotta px-1.5 py-0.2 rounded font-semibold uppercase">Agora</span>
+            <span class="text-[9px] font-mono bg-terracotta/15 text-terracotta px-1.5 py-0.5 rounded font-semibold uppercase">Agora</span>
           </div>
           <span class="text-[10px] font-mono text-ink-light/50 dark:text-white/40">Agora mesmo</span>
         </div>
