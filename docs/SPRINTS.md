@@ -175,13 +175,22 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
   - [x] Higiene: rota morta `home/index` removida (duplicada da raiz) e `OnboardingService` sem referências apagado.
   - [x] Links mortos `_overview_view`: `view: 'docs'` → `view: 'documents'` (2 ocorrências).
   - [x] Sidebar "Urgentes / Bloqueados": vira **"Prioridade alta"** com filtro real `view=list&filter=priority` (issues urgentes + alta) — sem vocabulário inventado.
-  - [x] OAuth: botões GitHub/Apple mortos removidos de login e cadastro; Google efetivo em ambos.
+  - [x] OAuth: botões GitHub/Apple mantidos como **placeholders desabilitados** (`disabled`, selo `Em breve`) para integração futura no roadmap — honestos na UI; Google efetivo em login e cadastro.
   - [x] Fontes internas: `app.html.erb` carrega Inter/Fraunces/Newsreader/JetBrains Mono (fim do `Instrument Sans` residual da raiz comum).
   - [x] Dropdown: `closeOnEsc` como método nomeado (usado por `data-action` em `_board` e outros) e listener de `keydown` removido no `disconnect`.
   - [x] Kanban: hint de coluna vazia permanente no DOM (`hidden unless column_issues.empty?`), sincronizada no drag-and-drop por `updateCounts()`.
   - [x] Design tokens: `terracotta-dark` (inexistente) → `terracotta-hover` (10 arquivos); `py-0.2` → `py-0.5`; pares `dark:` faltantes em `issues/show` (Prazo) e `_list_view` (prioridade sem etiqueta, data).
   - [x] Regressão: `bin/rails test` → **140 runs, 416 assertions, 0 failures** (+12 testes dos P0 sobre o baseline 128/386). Prova grep: 0 ocorrências de `find_by…|| Workspace.find`, `#{metadata`, `view: 'docs'`, `tab: "board"`, `terracotta-dark`, `py-0.2`, `Instrument+Sans`, botões OAuth mortos e rota `home/index`.
   - [ ] Pendente P2: CSP `unsafe-eval`/`unsafe-inline` (cirurgia exige QA manual de navegador — adiado sem quebrar o deploy).
+
+- [x] **Sprint 19.1: LGPD — consentimento provável e contatos reais (16/10)**
+  - [x] Zero rastreadores confirmado: nenhum Google Analytics/pixel de terceiros no código (grep em `app/`+`config/`); Privacy Policy atualizada com a declaração explícita.
+  - [x] Checkbox "Li e concordo com os Termos e a Política de Privacidade": ganhou `name="user[terms_consent]"` (antes nunca subia), `rel="noopener"` nos links e **enforcement server-side** — `User.terms_consent` `acceptance` com `allow_nil: false` (bloqueia cadastro forjado sem o campo) e `terms_accepted_at` stampado por `before_create` (migração `20261016120000`).
+  - [x] Google OAuth dispensa o checkbox (`if provider.blank?`) — política vigente cobre contas Google.
+  - [x] Páginas legais (`/terms`, `/privacy`, `/contact`) saneadas: fim de `privacy@specline.com (fictício)`, `@specline.local` e `github.com/diego-silva` trocados por **diegospp20@gmail.com**, WhatsApp **(21) 99370-3252** (`wa.me/5521993703252`) e `github.com/PacEvill/SpecLine`.
+  - [x] Rodapé marketing: e-mail real, ícone GitHub → repo; redes sem perfil (X/LinkedIn) e links mortos (Carreiras/Blog/Comunidade/Tutoriais) removidos do rodapé.
+  - [x] Regressão: `bin/rails test` → **142 runs, 421 assertions, 0 failures** (+2 testes de consentimento).
+  - [ ] Pendente: avaliar lockdown `(21) 2637-0000` no README/docx (continua placeholder até confirmação do Victor).
 
 ---
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_20_013655) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_16_120000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -172,6 +172,55 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_013655) do
     t.index ["project_id"], name: "index_milestones_on_project_id"
   end
 
+  create_table "practice_evidences", force: :cascade do |t|
+    t.integer "category", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.date "evidence_date"
+    t.integer "practice_profile_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["practice_profile_id"], name: "index_practice_evidences_on_practice_profile_id"
+  end
+
+  create_table "practice_logs", force: :cascade do |t|
+    t.date "activity_date", null: false
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.decimal "hours", precision: 5, scale: 2, null: false
+    t.integer "issue_id"
+    t.string "location", default: "Campus Maricá"
+    t.integer "phase", default: 0, null: false
+    t.integer "practice_profile_id", null: false
+    t.string "title", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id"], name: "index_practice_logs_on_issue_id"
+    t.index ["practice_profile_id"], name: "index_practice_logs_on_practice_profile_id"
+  end
+
+  create_table "practice_profiles", force: :cascade do |t|
+    t.string "advisor_name", default: "Profª. Laís Cristine Bordallo Pinheiro"
+    t.string "campus", default: "Campus Maricá"
+    t.string "course", default: "Engenharia de Software"
+    t.datetime "created_at", null: false
+    t.string "discipline", default: "Práticas Extensionistas Integradoras VI"
+    t.string "institution", default: "Universidade de Vassouras"
+    t.string "period", default: "6º Período"
+    t.integer "project_id"
+    t.string "status", default: "in_progress", null: false
+    t.string "student_name"
+    t.string "student_registration", default: "202413831"
+    t.integer "target_hours", default: 60, null: false
+    t.string "target_territory", default: "Município de Maricá/RJ"
+    t.string "technical_advisor", default: "Prof. Me. Victor Andrade da Silveira"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.integer "workspace_id"
+    t.index ["project_id"], name: "index_practice_profiles_on_project_id"
+    t.index ["user_id"], name: "index_practice_profiles_on_user_id"
+    t.index ["workspace_id"], name: "index_practice_profiles_on_workspace_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "color"
     t.datetime "created_at", null: false
@@ -201,6 +250,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_013655) do
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"
     t.string "reset_password_token"
+    t.datetime "terms_accepted_at"
     t.string "uid"
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -266,6 +316,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_20_013655) do
   add_foreign_key "issues", "users", column: "creator_id"
   add_foreign_key "labels", "workspaces"
   add_foreign_key "milestones", "projects"
+  add_foreign_key "practice_evidences", "practice_profiles"
+  add_foreign_key "practice_logs", "issues"
+  add_foreign_key "practice_logs", "practice_profiles"
+  add_foreign_key "practice_profiles", "projects"
+  add_foreign_key "practice_profiles", "users"
+  add_foreign_key "practice_profiles", "workspaces"
   add_foreign_key "projects", "workspaces"
   add_foreign_key "whiteboards", "projects"
   add_foreign_key "whiteboards", "users"

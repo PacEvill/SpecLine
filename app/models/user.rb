@@ -18,7 +18,22 @@ class User < ApplicationRecord
   has_one_attached :avatar
   validate :validate_avatar_attachment
 
+  # LGPD: consentimento provável (Art. 8) no cadastro por senha.
+  # Sign-ups via Google dispensam o checkbox — a política vigente cobre a conta.
+  attr_accessor :terms_consent
+
+  validates :terms_consent,
+            acceptance: { accept: true, allow_nil: false, message: "É obrigatório aceitar os Termos de Uso e a Política de Privacidade." },
+            on: :create,
+            if: -> { provider.blank? }
+
+  before_create :stamp_terms_consent
+
   private
+
+  def stamp_terms_consent
+    self.terms_accepted_at = Time.current if terms_consent == true
+  end
 
   def validate_avatar_attachment
     validate_secure_attachment(:avatar)
