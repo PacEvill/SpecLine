@@ -206,11 +206,10 @@ npm audit
 > **Discente / Desenvolvedor Solo:** Diego Silva Pereira Pacheco ([@PacEvill](https://github.com/PacEvill)) — Matrícula: `202413831`
 > **WhatsApp (Discente):** (21) 99370-3252 | **E-mail pessoal:** <a href="mailto:diegospp20@gmail.com">diegospp20@gmail.com</a>
 > **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro
-> **Docente Orientador Técnico:** Prof. Me. Victor Andrade da Silveira
 > **Instituição de Ensino:** Universidade de Vassouras (FUSVE) — Campus Maricá
 > **Território de Atuação:** Município de Maricá/RJ
 > **Local Parceiro / Espaço Físico da Ação:** Laboratório de Informática Avançada (Lab 02) — Campus Maricá (Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815) em cooperação com o ecossistema local e Polo de Inovação de Maricá / ICTIM.
-> **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`
+> **Contato no Local:** *a definir — em avaliação a inclusão do contato do próprio discente (WhatsApp (21) 99370-3252 · diegospp20@gmail.com)*
 > **Data e Horário da Oficina Presencial:** **17 de Outubro de 2026 (Sábado), das 09h00 às 11h30** (Oficina prática 'Mão na Massa' com coleta de lista de presença física assinada e avaliação Likert).
 > **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)
 > **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)

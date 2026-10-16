@@ -31,5 +31,5 @@
 - **Planejamento+Prazo (0):** 5 atividades com prazo + responsável + indicador, 01/08 a 27/11 (plano linhas 11–15).
 - **Objetivos (−0,3 → corrigido):** OE1/OE2 traduziam só stack; acréscimo de benefício extensionista no `.docx`.
 - **Consistência (−0,3 → corrigido):** atividade dizia "5 a 10", resultados "8 a 15"; unificado em **5 a 10** (plano + roteiro).
-- **Forma/Dados (−0,4 → corrigido na fonte):** linha do diagnóstico tinha o corpo duplicado na coluna estreita (texto "verticalizado" p.2–3) — rótulo próprio aplicado; `(21) 98765-4321` removido de `.docx`, README e roteiros (mantido `(21) 2637-0000` + e-mail — **confirmar os números reais**).
+- **Forma/Dados (−0,4 → corrigido na fonte):** linha do diagnóstico tinha o corpo duplicado na coluna estreita (texto "verticalizado" p.2–3) — rótulo próprio aplicado; `(21) 98765-4321` removido de `.docx`, README e roteiros (placeholder do professor antigo "Victor" + `(21) 2637-0000` removidos em 16/10 — Apoio Técnico/Contato no Local agora *a definir*).
 - ⏳ Falta: reexportar os 2 PDFs e confirmar telefones/e-mail de contato reais.

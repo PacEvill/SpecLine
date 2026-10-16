@@ -3,7 +3,7 @@
 > **Projeto:** SpecLine — Plataforma Unificada de Engenharia de Produto
 > **Disciplina:** Práticas Extensionistas Integradoras VI (2026.2) — FUSVE Campus Maricá
 > **Discente:** Diego Silva Pereira Pacheco (202413831)
-> **Docente:** Profª. Laís Cristine Bordallo Pinheiro | **Apoio:** Prof. Me. Victor Andrade da Silveira
+> **Docente:** Profª. Laís Cristine Bordallo Pinheiro | **Apoio:** *a definir*
 > **Oficina:** 17/10/2026 (sábado) 09h00–11h30 — Lab 02, Av. Roberto Silveira 437, Flamengo, Maricá/RJ
 > **Arquivo gerado em:** 08/10/2026 — para revisão antes da oficina
 
@@ -70,7 +70,7 @@ Quem completa as 5 ganha "Certificado Mão na Massa" digital na hora (print ou P
 |---|---|---|
 | 09h00–09h15 **Acolhimento** | Lista Anexo A + entrega Kit A4 + cartão trilha | Kit 1 folha frente-verso: QR + login demo `convidado-maricaXX` + 3 passos + espaço ideia. Tenha **5 contas demo já criadas** para quem não consegue OAuth. |
 | 09h15–09h35 **Abertura** | 5min dólar x zero + 10min caso Quentinhas + 5min trilhas | Corte slide teórico. Demo viva no projetor. |
-| 09h35–10h15 **Prática guiada** | Missões por trilha, não passo-a-passo único | Você narra no microfone, Victor circula. Música baixa. Projetor mostra cronômetro. |
+| 09h35–10h15 **Prática guiada** | Missões por trilha, não passo-a-passo único | Você narra no microfone, o apoio circula pelas bancadas. Música baixa. Projetor mostra cronômetro. |
 | 10h15–10h35 **Clínica / Mentoria** | Pergunta padrão: "qual projeto você trouxe?" | Modele 1 ideia real por bancada. Fotografe tela + rosto (com autorização). |
 | 10h35–10h55 **Avaliação** | Likert papel + Google Forms juntos | Papel garante 100% recolhimento, Forms facilita tabular. Adicionar Q6/Q7 (seção 3). 5-10 fotos datadas aqui. |
 | 10h55–11h30 **Roda** | Demo Relâmpago 3x3 | 3 voluntários (1 por trilha), 3 min cada no projetor. Brinde simbólico (adesivo, menção no changelog). Foto coletiva com banner + QR. |
@@ -168,7 +168,7 @@ Criar também `docs/academic/indicadores-oficina.md` pós-evento: inscritos, pre
 
 1. **Hoje–10/10:** declarar ODS em `extension.html.erb` + criar seed Quentinhas + 5 contas demo.
 2. **11–13/10:** imprimir Kit A4 + listas + Likert novo + cartazes QR; testar Lab.
-3. **14–15/10:** divulgar; confirmar Victor (infra/login) e Laís (validação evidências); preparar pendrive plano B.
+3. **14–15/10:** divulgar; apurar apoio de infra/login (Lab 02) e confirmar Laís (validação evidências); preparar pendrive plano B.
 4. **16/10:** dry-run 30min sozinho no Lab; lacrar envelope; carregar câmera.
 5. **17/10:** executar roteiro seção 2; recolher tudo; foto coletiva.
 6. **18–25/10:** tabular Likert, contar workspaces, mandar follow-up 7 dias, escrever `indicadores-oficina.md` e atualizar relatório final.
@@ -200,7 +200,7 @@ graph TD
 > 🛠️ Oficina gratuita MÃO NA MASSA — SpecLine FUSVE Maricá
 > Sáb 17/10 9h–11h30 Lab 02 (Roberto Silveira 437, Flamengo).
 > Traga ideia no papel, saia com projeto organizado + certificado.
-> Vagas 15–30. QR inscrição: [link]. Info: Victor (21) 2637-0000.
+> Vagas 15–30. QR inscrição: [link]. Info: *contato a definir — em avaliação os contatos do discente*.
 
 ---
 

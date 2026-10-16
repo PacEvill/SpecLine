@@ -5,7 +5,7 @@
 **Instituição:** Universidade de Vassouras — Campus Maricá (FUSVE)  
 **Discente / Moderador Responsável:** Diego Silva Pereira Pacheco (Matrícula: 202413831)  
 **Docente Responsável:** Profª. Laís Cristine Bordallo Pinheiro  
-**Orientador Técnico / Apoio de Infraestrutura:** Prof. Me. Victor Andrade da Silveira  
+**Apoio de Infraestrutura:** *a definir* (confirmar com a docente)  
 
 ---
 
@@ -16,7 +16,7 @@
 * **Horário:** **09h00 às 11h30** (Duração total: 150 minutos)
 * **Local de Execução:** **Laboratório de Informática Avançada (Lab 02)** — Universidade de Vassouras (Campus Maricá)
 * **Endereço Completo:** Av. Roberto Silveira, nº 437, Bairro Flamengo, Maricá - RJ, CEP: 24903-815
-* **Contato no Local:** Prof. Me. Victor Andrade da Silveira — Tel: (21) 2637-0000 | E-mail: `victor.silveira@univassouras.edu.br`
+* **Contato no Local:** *a definir — em avaliação a inclusão do contato do próprio discente (WhatsApp (21) 99370-3252 · diegospp20@gmail.com)*
 * **Ambiente Web Permanente:** [https://specline.onrender.com](https://specline.onrender.com)
 * **Público-Alvo:** 15 a 30 participantes (estudantes de ensino médio técnico de Maricá, discentes de graduação da região, programadores iniciantes e líderes de projetos comunitários locais).
 
@@ -42,7 +42,7 @@ Capacitar jovens estudantes, profissionais iniciantes e empreendedores de Maric�
 | Papel | Responsável | Atribuições |
 | :--- | :--- | :--- |
 | **Moderador / Instrutor Principal** | Diego Silva Pereira Pacheco | Condução da apresentação, demonstração técnica, instrução passo a passo e orientação dos exercícios. |
-| **Apoio Técnico e Institucional** | Prof. Me. Victor Andrade da Silveira | Suporte à infraestrutura de rede, login nas máquinas e acolhimento dos participantes. |
+| **Apoio Técnico e Institucional** | *a definir* | Suporte à infraestrutura de rede, login nas máquinas e acolhimento dos participantes. |
 | **Supervisão Pedagógica** | Profª. Laís Cristine Bordallo Pinheiro | Avaliação da aderência aos objetivos extensionistas e validação das evidências. |
 | **Público Participante** | Estudantes e Comunidade de Maricá | Execução das práticas guiadas, assinatura da lista física e resposta ao questionário Likert. |
 
