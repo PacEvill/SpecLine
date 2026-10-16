@@ -134,6 +134,8 @@ export default class extends Controller {
       if (list && countBadge) {
         const cards = list.querySelectorAll('[data-kanban-target="card"]')
         countBadge.textContent = cards.length
+        const hint = list.querySelector('.kanban-empty-hint')
+        if (hint) hint.classList.toggle('hidden', cards.length > 0)
       }
     })
   }

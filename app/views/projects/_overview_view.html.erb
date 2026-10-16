@@ -135,7 +135,7 @@
     </div>
 
     <!-- Documentos -->
-    <div class="p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between hover:border-olive/30 transition-colors cursor-pointer group min-h-[140px]" onclick="Turbo.visit('<%= workspace_project_path(@workspace, @project, view: 'docs') %>')">
+    <div class="p-6 bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 rounded-3xl shadow-sm flex flex-col justify-between hover:border-olive/30 transition-colors cursor-pointer group min-h-[140px]" onclick="Turbo.visit('<%= workspace_project_path(@workspace, @project, view: 'documents') %>')">
        <div class="flex items-start justify-between mb-4">
          <div class="w-10 h-10 rounded-xl bg-sage/20 text-olive flex items-center justify-center group-hover:scale-110 transition-transform">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -216,7 +216,7 @@
              <svg class="w-4 h-4 text-olive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
              Documentação Técnica Recente
            </h3>
-           <%= link_to "Ver todos →", workspace_project_path(@workspace, @project, view: 'docs'), class: "text-[10px] font-bold text-olive hover:underline uppercase tracking-wider" %>
+           <%= link_to "Ver todos →", workspace_project_path(@workspace, @project, view: 'documents'), class: "text-[10px] font-bold text-olive hover:underline uppercase tracking-wider" %>
         </div>
         
         <div class="flex-1 flex flex-col gap-3">

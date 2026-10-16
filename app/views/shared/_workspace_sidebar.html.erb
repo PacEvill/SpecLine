@@ -156,9 +156,9 @@
             <% end %>
           <% end %>
 
-          <%= link_to workspace_project_path(current_ws, @project, tab: "board"), class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-rust/10 hover:text-rust-dark dark:hover:text-rust transition-colors" do %>
+          <%= link_to workspace_project_path(current_ws, @project, view: "list", filter: "priority"), title: "Tarefas com prioridade Urgente ou Alta", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-rust/10 hover:text-rust dark:hover:text-rust transition-colors" do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-70 text-rust"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            <span>Urgentes / Bloqueados</span>
+            <span>Prioridade alta</span>
           <% end %>
 
           <%= link_to activities_path, data: { turbo_frame: "modal" }, title: "Feed global — em breve com escopo do projeto", class: "flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-xs font-medium text-ink-light dark:text-white/60 hover:bg-sage/10 hover:text-sage-dark dark:hover:text-sage transition-colors" do %>

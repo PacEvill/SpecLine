@@ -2,6 +2,7 @@
 <div class="px-4 sm:px-6 lg:px-8 py-4 sm:py-6 pb-20 md:pb-8" data-controller="kanban" data-kanban-move-url-value="<%= workspace_project_path(workspace, project) %>">
   <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory sm:snap-none scroll-smooth" style="min-height: calc(100vh - 200px);" data-kanban-target="board">
     <% statuses.each do |status| %>
+      <% column_issues = issues.select { |i| i.issue_status_id == status.id } %>
       <div class="flex-shrink-0 w-[82vw] sm:w-72 flex flex-col snap-center" data-kanban-target="column" data-status-id="<%= status.id %>">
         
         <!-- Column Header -->
@@ -10,7 +11,7 @@
             <div class="w-2.5 h-2.5 rounded-full" style="background-color: <%= status.color %>"></div>
             <h3 class="text-xs font-bold text-ink dark:text-fable uppercase tracking-wider"><%= status.name %></h3>
             <span class="text-[10px] text-ink-light dark:text-white/60 bg-ink/5 dark:bg-white/5 px-1.5 py-0.5 rounded-full font-semibold">
-              <%= issues.select { |i| i.issue_status_id == status.id }.count %>
+              <%= column_issues.count %>
             </span>
           </div>
           
@@ -46,9 +47,12 @@
              data-project-id="<%= project.id %>"
              <%= "data-assignee-id=\"#{local_assigns[:assignee_id]}\"".html_safe if local_assigns.has_key?(:assignee_id) %>
              <%= "data-board-id=\"#{local_assigns[:board_id]}\"".html_safe if local_assigns.has_key?(:board_id) %>>
-          <% issues.select { |i| i.issue_status_id == status.id }.sort_by { |i| i.position || i.number }.each do |issue| %>
+          <% column_issues.sort_by { |i| i.position || i.number }.each do |issue| %>
             <%= render "projects/issue_card", issue: issue, workspace: workspace, project: project %>
           <% end %>
+          <div class="kanban-empty-hint pointer-events-none select-none rounded-lg border border-dashed border-ink/15 dark:border-white/10 px-3 py-4 text-center <%= "hidden" unless column_issues.empty? %>">
+            <p class="text-[11px] text-ink-light/70 dark:text-white/40">Nenhuma tarefa — arraste um cartão para cá</p>
+          </div>
         </div>
       </div>
     <% end %>

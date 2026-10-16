@@ -11,6 +11,9 @@ class ProjectsController < ApplicationController
   def show
     @statuses = @project.issue_statuses.ordered
     @issues = @project.issues.includes(:issue_status, :assignee, :labels, :creator).ordered
+    if params[:view] == "list" && params[:filter] == "priority"
+      @issues = @issues.where(priority: Issue.priorities.values_at(:urgent, :high))
+    end
     @milestones = @project.milestones.ordered
     @documents = @project.documents.roots.ordered
     @whiteboards = @project.whiteboards.ordered

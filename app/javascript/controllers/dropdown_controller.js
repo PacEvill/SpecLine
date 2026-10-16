@@ -5,14 +5,18 @@ export default class extends Controller {
 
   connect() {
     this.closeOutside = this.closeOutside.bind(this)
+    this.onKeydown = (e) => {
+      if (e.key === "Escape") {
+        this.closeOnEsc()
+      }
+    }
     document.addEventListener("click", this.closeOutside)
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") this.close()
-    })
+    document.addEventListener("keydown", this.onKeydown)
   }
 
   disconnect() {
     document.removeEventListener("click", this.closeOutside)
+    document.removeEventListener("keydown", this.onKeydown)
   }
 
   toggle(event) {
@@ -41,5 +45,10 @@ export default class extends Controller {
     if (!this.element.contains(event.target)) {
       this.close()
     }
+  }
+
+  closeOnEsc(event) {
+    if (event) event.stopPropagation()
+    this.close()
   }
 }
