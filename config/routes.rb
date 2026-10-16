@@ -79,8 +79,11 @@ Rails.application.routes.draw do
   get "solutions/startups", to: "solutions#startups"
   get "solutions/agencies", to: "solutions#agencies"
   get "solutions/product", to: "solutions#product"
-  get "extension", to: "solutions#extension", as: :extension
-  get "acao-extensionista", to: "solutions#extension"
+  # Área Acadêmica — material da disciplina PEI VI. Separado do produto:
+  # sem links no chrome de marketing (landing/header/rodapé) e fora das rotas de produto.
+  scope "academic", as: :academic do
+    get "extension", to: "solutions#extension"
+  end
 
   # Legal & Institutional Pages
   get "terms", to: "legal#terms"

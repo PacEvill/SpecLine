@@ -36,11 +36,13 @@ class SolutionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get extension" do
-    get extension_url
+  test "ação extensionista vive na área acadêmica, isolada do produto" do
+    get academic_extension_url
     assert_response :success
     assert_select "h1", text: /Engenharia de Software/
+    get "/extension"
+    assert_response :missing
     get "/acao-extensionista"
-    assert_response :success
+    assert_response :missing
   end
 end

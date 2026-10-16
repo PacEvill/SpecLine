@@ -192,6 +192,17 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
   - [x] Regressão: `bin/rails test` → **142 runs, 421 assertions, 0 failures** (+2 testes de consentimento).
   - [ ] Pendente: avaliar lockdown `(21) 2637-0000` no README/docx (continua placeholder até confirmação do Victor).
 
+## Sprint 19.2: Isolamento da Área Acadêmica — `/academic/extension` (16/10)
+**Objetivo:** a página da ação extensionista (material da disciplina PEI VI) sai das costuras do produto e passa a viver em território próprio, sem aparecer em produção como feature do SpecLine.
+
+- [x] Rota: `/extension` (+ alias `/acao-extensionista`) removidos; a página agora é `GET /academic/extension` (`academic_extension_path`), em bloco de rotas próprio da área acadêmica.
+- [x] Zero costuras no produto (grep prova = 0): badge do hero da landing, seção "Oficina no Campus Maricá" inteira na landing, card no menu do marketing header, chip "Ação Extensionista PEI VI" e link no rodapé de marketing — todos removidos.
+- [x] Chrome próprio da página: barra acadêmica de contexto no topo (selo "Área Acadêmica" + instituição + Documentação + "Produto SpecLine") e rodapé disciplinar com contatos do discente (diegospp20@gmail.com / WhatsApp (21) 99370-3252) + nota "fora do escopo do produto SpecLine"; sem `marketing_header`/`marketing_footer`.
+- [x] Setas em glyph ("→", "←") trocadas por SVG (padrão do projeto: ícones são SVG).
+- [x] Teste cobre os 3 lados: `academic_extension_url` 200; `/extension` e `/acao-extensionista` agora 404 — a porta de volta está fechada.
+- [x] `bin/rails test` → **142 runs, 422 assertions, 0 failures**; CSS regenerado.
+- [ ] Acessível em produção em `/academic/extension` — visível para professores/comunidade via URL/documentos acadêmicos, mas NÃO posicionada como produto (sem links de marketing). Gate total (404 em produção, 1 linha) fica como opção a pedir.
+
 ---
 
 ## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)

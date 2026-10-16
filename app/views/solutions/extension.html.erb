@@ -1,5 +1,21 @@
 <div class="min-h-screen flex flex-col bg-fable-light dark:bg-[#18181A] text-ink dark:text-white font-sans selection:bg-terracotta/30 selection:text-ink transition-colors duration-500 relative">
-  <%= render 'shared/marketing_header' %>
+
+  <!-- Área Acadêmica: chrome próprio — NÃO é o chrome de produto (marketing) -->
+  <header class="border-b border-ink/15 dark:border-white/10 bg-ink dark:bg-ink-darker text-white">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3 font-mono text-xs">
+        <span class="px-2.5 py-1 rounded bg-terracotta/20 text-terracotta font-bold uppercase tracking-widest text-[10px]">Área Acadêmica</span>
+        <span class="text-white/60 uppercase tracking-wider hidden sm:inline">PEI VI Maricá · Universidade de Vassouras · 2026.2</span>
+      </div>
+      <nav class="flex items-center gap-5 font-mono text-xs">
+        <a href="https://github.com/PacEvill/SpecLine#8-extens%C3%A3o-universit%C3%A1ria-pei-vi--maric%C3%A1rj" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-terracotta transition-colors">Documentação</a>
+        <%= link_to root_path, class: "flex items-center gap-1.5 text-white/60 hover:text-terracotta transition-colors" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 5 5"></polyline></svg>
+          <span>Produto SpecLine</span>
+        <% end %>
+      </nav>
+    </div>
+  </header>
 
   <main class="flex-grow w-full">
     <!-- HERO SECTION: Extensão Universitária & Vínculo Territorial Maricá -->
@@ -280,5 +296,14 @@
     </section>
   </main>
 
-  <%= render 'shared/marketing_footer' %>
+  <!-- Rodapé da área acadêmica (não usa o rodapé de produto) -->
+  <footer class="border-t border-ink/10 dark:border-white/10 bg-fable-light dark:bg-[#18181A] py-10 text-center space-y-2 px-6">
+    <p class="font-mono text-[11px] uppercase tracking-widest text-ink-light/70 dark:text-white/40">Material acadêmico da disciplina PEI VI — fora do escopo do produto SpecLine</p>
+    <p class="font-sans text-sm text-ink-light dark:text-white/60">
+      <strong>Diego Silva Pereira Pacheco</strong> — <a href="mailto:diegospp20@gmail.com" class="text-terracotta hover:underline">diegospp20@gmail.com</a> · <a href="https://wa.me/5521993703252" target="_blank" rel="noopener noreferrer" class="text-terracotta hover:underline">WhatsApp (21) 99370-3252</a>
+    </p>
+    <p class="font-mono text-[11px] text-ink-light/60 dark:text-white/30">
+      Universidade de Vassouras — Campus Maricá (FUSVE) · <a href="https://github.com/PacEvill/SpecLine" target="_blank" rel="noopener noreferrer" class="hover:underline">github.com/PacEvill/SpecLine</a>
+    </p>
+  </footer>
 </div>
