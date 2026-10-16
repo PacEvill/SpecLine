@@ -58,7 +58,6 @@ Rails.application.routes.draw do
 
   # Marketing / Institucional
   root "home#index"
-  get "home/index"
   get "pricing", to: "home#pricing"
   get "changelog", to: "changelog#index"
 
