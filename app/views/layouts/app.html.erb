@@ -31,11 +31,11 @@
     <!-- Desktop Global Sidebar -->
     <%= render "shared/global_sidebar" %>
 
-    <!-- Contextual Workspace Sidebar (Desktop / Tablet) -->
+    <!-- Contextual Workspace Sidebar (Desktop / Tablet): nil = modo global (seletor) -->
     <% if content_for?(:sidebar) %>
       <%= yield :sidebar %>
     <% elsif current_user %>
-      <%= render "shared/workspace_sidebar", workspace: (@workspace || current_user.workspaces.first) %>
+      <%= render "shared/workspace_sidebar", workspace: @workspace %>
     <% end %>
 
     <!-- Slide-over Drawer for Mobile Navigation -->
