@@ -2,7 +2,7 @@
   <%= render "shared/workspace_sidebar", workspace: @workspace %>
 <% end %>
 
-<div class="px-8 py-10 max-w-6xl mx-auto w-full">
+<div class="px-4 sm:px-8 xl:px-10 py-10 w-full max-w-[1440px] mx-auto">
   <div class="flex items-center justify-between mb-8">
     <div>
       <h1 class="text-3xl font-serif text-ink dark:text-fable tracking-tight mb-1">Projetos</h1>
@@ -15,7 +15,7 @@
     <% end %>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-[1700px]:grid-cols-4 gap-5">
     <% @projects.each do |project| %>
       <% 
         colors = ['sage', 'olive', 'ochre', 'slate', 'rust', 'blush', 'terracotta']
