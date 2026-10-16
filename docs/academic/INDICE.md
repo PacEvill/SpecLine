@@ -19,7 +19,7 @@
 |---|---|
 | `Feedback · SpecLine — Code Review · PEI VI Maricá · 24_09_2026.pdf` | Code review da docente (P0/P1/P2) — origem da Sprint 16 |
 | `pei6-aula4-2026-10-01-kit.pdf` | Kit de campo oficial aula 4 (modelos A–L: presença, Likert, uso do app, oficina) |
-| `WhatsApp Ptt 2026-10-04 at 14.33.06.ogg` | Orientação em áudio — ⏳ transcrever pontos antes da oficina |
+| `WhatsApp Ptt 2026-10-04 at 14.33.06.ogg` | Orientação em áudio — ~~transcrever~~ **descartado (16/10)**: arquivo removido do repo, sem transcrição |
 | `Plano de Gerenciamento do Projeto - SpecLine.pdf` e `SpecLine - Plano de Gerenciamento do Projeto.pdf` | ⚠️ Conteúdo idêntico com nomes diferentes — manter só um antes da entrega |
 | `Relatório de Pesquisa e Mercado - SpecLine.pdf` | Pesquisa de mercado (base dos 78,9% / 65,8%) |
 | `Relatório de Práticas Extensionistas Integradoras VI - SpecLine.pdf` | Relatório parcial de 20/08 |
