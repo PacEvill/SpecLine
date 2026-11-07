@@ -133,6 +133,40 @@
       </div>
     </section>
 
+    <!-- POR QUE ESTE PROJETO (linguagem para o público) -->
+    <section class="border-b border-ink/15 dark:border-white/10 bg-fable-light dark:bg-[#18181A] py-14 px-6 md:px-12 md:py-20">
+      <div class="max-w-6xl mx-auto space-y-10">
+        <div class="max-w-3xl space-y-4">
+          <span class="font-mono text-[11px] uppercase tracking-widest text-terracotta font-bold">Por que este projeto existe</span>
+          <h2 class="font-serif font-light text-3xl md:text-5xl text-ink dark:text-fable leading-tight">
+            Antes da oficina,<br><i class="text-terracotta">a gente ouviu Maricá.</i>
+          </h2>
+          <p class="text-sm md:text-base text-ink-light dark:text-white/65 leading-relaxed">
+            Este é um projeto da Universidade de Vassouras — Campus Maricá, feito por estudantes de engenharia de software para a cidade. Antes de construir qualquer coisa, aplicamos uma pesquisa com a própria comunidade. O resultado explicou o problema e moldou a ação:
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <% @impacto_publico.each do |item| %>
+            <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 space-y-3">
+              <div class="font-mono text-4xl font-bold text-<%= item[:cor] %>"><%= item[:numero] %></div>
+              <p class="text-sm text-ink-light dark:text-white/65 leading-relaxed"><%= item[:texto] %></p>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-sage/25 space-y-3">
+          <p class="text-sm md:text-base text-ink-light dark:text-white/70 leading-relaxed">
+            <strong class="text-ink dark:text-white">Por que isso é projeto de extensão?</strong> Porque não termina dentro da sala de aula: leva o que a universidade produz de melhor — método e ferramenta profissional — para quem normalmente nunca recebe isso. A oficina acontece em Maricá, com pessoas de Maricá, diante dos números acima. Todo mundo sai com um projeto real organizado — e a comunidade fica com a ferramenta, de graça, para continuar usando depois.
+          </p>
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <%= link_to "Responder à pesquisa da comunidade", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center gap-2 px-5 py-2.5 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all" %>
+            <span class="font-mono text-[10px] uppercase tracking-wider text-ink-light/60 dark:text-white/40">sua resposta entra no próximo diagnóstico</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- MEU PROJETO EM 3 PERGUNTAS -->
     <section id="tres-perguntas" class="scroll-mt-24 px-6 py-14 md:px-12 md:py-20 border-b border-ink/15 dark:border-white/10 bg-white dark:bg-ink-paper">
       <div class="max-w-6xl mx-auto space-y-10">
@@ -297,10 +331,10 @@
 
         <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-terracotta/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="space-y-1">
-            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Feedback + certificado</h3>
-            <p class="text-sm text-ink-light dark:text-white/65">No fim do roteiro, responda em 1 minuto. O feedback também registra sua participação.</p>
+            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Pesquisa + certificado</h3>
+            <p class="text-sm text-ink-light dark:text-white/65">No fim do roteiro, responda à pesquisa no celular. Ela registra sua participação e libera o certificado.</p>
           </div>
-          <%= link_to "Responder feedback", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-button inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all shrink-0" %>
+          <%= link_to "Abrir pesquisa", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-button inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all shrink-0" %>
         </div>
       </div>
     </section>
@@ -554,7 +588,7 @@
 
         <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-terracotta/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="space-y-1">
-            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Feedback + certificado</h3>
+            <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Pesquisa + certificado</h3>
             <p class="text-sm text-ink-light dark:text-white/65">Responda pelo celular. Leva menos de 1 minuto, registra sua participação e libera o certificado.</p>
           </div>
           <%= link_to "Abrir formulário", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-button inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all shrink-0" %>
@@ -723,7 +757,7 @@
 
           <%= link_to @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-card group p-5 rounded-2xl bg-white dark:bg-ink-paper border border-ink/10 dark:border-white/10 hover:border-terracotta/40 transition-colors space-y-2" do %>
             <span class="font-mono text-[9px] uppercase tracking-wider text-terracotta font-bold">Online</span>
-            <h3 class="font-serif text-lg font-bold text-ink dark:text-white group-hover:text-terracotta transition-colors">Feedback + certificado</h3>
+            <h3 class="font-serif text-lg font-bold text-ink dark:text-white group-hover:text-terracotta transition-colors">Pesquisa + certificado</h3>
             <p class="text-xs text-ink-light dark:text-white/60 leading-relaxed">Formulário rápido para participantes responderem pelo celular e receberem o certificado.</p>
           <% end %>
 

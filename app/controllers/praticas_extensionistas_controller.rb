@@ -7,7 +7,9 @@ class PraticasExtensionistasController < ApplicationController
   ACAO_ENDERECO = "Av. Roberto Silveira, 437 — Flamengo, Maricá/RJ"
 
   GITHUB_RAW = "https://github.com/PacEvill/SpecLine/raw/main/docs/academic"
-  FORMS_URL = "https://forms.gle/JmWxcvbgtv3uGtpr5"
+  # Formulário do Google "SpecLine — Questionário de Pesquisa & Validação de Usuários"
+  # (o mesmo desde 2026): o participante responde no celular e libera o certificado.
+  FORMS_URL = "https://forms.gle/ZsonoocHk5KvYpSx5"
 
   # Pesquisa empírica original com a comunidade (38 respondentes) —
   # continua aberta para agregar mais respostas.
@@ -76,6 +78,25 @@ class PraticasExtensionistasController < ApplicationController
       item.merge(status: status_para(item[:data]))
     end
 
+    # "Por que este projeto" — em linguagem de quem não é de tecnologia.
+    @impacto_publico = [
+      {
+        numero: "78,9%",
+        texto: "das pessoas da pesquisa disseram que perdem o fio da meada: os arquivos, as tarefas e as ideias do projeto ficam espalhados em papel, caderno e conversas.",
+        cor: "terracotta"
+      },
+      {
+        numero: "65,8%",
+        texto: "não conseguem usar as ferramentas famosas de organização porque custam em dólar, com mensalidade no cartão — fora do bolso de um projeto de bairro.",
+        cor: "ochre"
+      },
+      {
+        numero: "R$ 0,00",
+        texto: "é o custo do que entra em campo: a plataforma fica online de graça para a comunidade e a oficina é aberta, no campus, para qualquer pessoa.",
+        cor: "sage"
+      }
+    ].freeze
+
     @tres_perguntas = [
       {
         numero: "01",
@@ -99,7 +120,7 @@ class PraticasExtensionistasController < ApplicationController
       { tempo: "1–6 min", titulo: "Três perguntas", descricao: "Responde às 3 perguntas e o app monta o projeto." },
       { tempo: "6–8 min", titulo: "Um ajuste", descricao: "O aluno passa, olha e sugere um ajuste." },
       { tempo: "8–9 min", titulo: "Exportação", descricao: "Manda o projeto para o próprio WhatsApp ou baixa em PDF." },
-      { tempo: "9–10 min", titulo: "Feedback", descricao: "Feedback em 1 clique e certificado." }
+      { tempo: "9–10 min", titulo: "Certificado", descricao: "Responde à pesquisa rápida no celular e recebe o certificado de participação." }
     ]
 
     @atendimento = [
@@ -189,8 +210,8 @@ class PraticasExtensionistasController < ApplicationController
         link: @links[:kit]
       },
       {
-        titulo: "Feedback + certificado",
-        descricao: "Uma pergunta no início e uma no fim; ao final, o certificado.",
+        titulo: "Pesquisa + certificado",
+        descricao: "Responde à pesquisa no celular em 1 minuto; é o registro da sua participação e libera o certificado.",
         detalhe: "Formulário online",
         link: @links[:forms]
       },

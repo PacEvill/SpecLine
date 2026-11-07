@@ -261,6 +261,15 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] Tabela Metas × Alcançado com `overflow-x-auto` + `min-w-[480px]` para telas até 360px.
 - [x] `test/controllers/praticas_extensionistas_controller_test.rb`: 5 testes (render, links de formulário, captação, honeypot, validação) — 5/5.
 
+## Sprint 19.8: página decolada para o público, sem jargão (07/11)
+**Objetivo:** a página da oficina falar com pessoas de fora — por que a ação é extensão, com o formulário oficial da pesquisa como porta de entrada.
+
+- [x] Seção "Por que este projeto existe": diagnóstico em material de rua (78,9%, 65,8%, R$ 0,00) e CTA para o questionário da comunidade.
+- [x] Todos os CTAs apontando para o formulário real `https://forms.gle/ZsonoocHk5KvYpSx5` ("Questionário de Pesquisa & Validação de Usuários", o antigo) — os links anteriores apontavam para o mesmo form sem identificar.
+- [x] Botões renomeados de "Feedback + certificado" para "Pesquisa + certificado" no roteiro, nas evidências e nos documentos.
+- [x] Auditoria de linguagem: zero jargão (TipTap, Hotwire, Rails, TDD fora da página — permanecem só no dossiê técnico).
+- [x] `bin/rails test test/controllers` → 121 runs, 284 assertions, 0 falhas.
+
 ---
 
 ---
