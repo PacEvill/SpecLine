@@ -5,4 +5,10 @@ class ChangelogControllerTest < ActionDispatch::IntegrationTest
     get changelog_url
     assert_response :success
   end
+
+  test "should link to the public extension page" do
+    get changelog_url
+
+    assert_select "a[href=?]", praticas_extensionistas_path
+  end
 end

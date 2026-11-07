@@ -224,6 +224,45 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] Regressão LGPD estendida para o formato real do checkbox (`"1"`).
 - [x] **Baseline: default 149/442 + system 5/12, zero falhas** (`bin/rails test:completo`).
 
+## Sprint 19.5: Dossiê público da disciplina, sem login (27/10)
+**Objetivo:** dar à professora e à comunidade uma página única, local e pública com os prazos oficiais, o checklist de execução e as evidências da ação — sem depender de login e sem misturar com o produto.
+
+- [x] Rota pública `GET /praticas-extensionistas` (+ alias `/extensao`), sem autenticação e sem consultas ao banco.
+- [x] Conteúdo da orientação de 22/10: datas (22/10, 05/11, 10/11, 19/11 e 04/12), checklist antes/durante/depois, riscos reais e aviso de P2.
+- [x] Estrutura de evidências: lista de presença, termos de imagem/voz, termo para menor, avaliação, fotos datadas, depoimentos, carga horária, metas x alcançado e dificuldades/aprendizados.
+- [x] Links oficiais: Plano de Ação, roteiro, kit de campo, pesquisa, relatório parcial, repositório, formulário e plataforma.
+- [x] Espaço de resultados e resumo para a Mostra de Extensão (04/12), com campos a preencher após a ação.
+- [x] Chrome acadêmico extraído para `shared/_academic_header` e `shared/_academic_footer`, reutilizado por `/academic/extension` e pelo dossiê.
+- [x] Link discreto "Extensão PEI VI" ao lado do Changelog no header de marketing e na navegação mobile.
+- [x] Teste de controller cobre 200 sem login, o alias `/extensao` e o link ao lado do Changelog; página renderiza com 0 queries.
+- [x] `bin/rails test` → **152 runs, 464 assertions, 0 failures**.
+
+## Sprint 19.6: Página pública vira a experiência da oficina (28/10)
+**Objetivo:** transformar o dossiê em uma página que o participante entende sozinho no dia, com a dinâmica dos 10 minutos por pessoa e o assistente de 3 perguntas no centro.
+
+- [x] Hero público "Seu projeto em 3 perguntas", sem cadastro, com o resumo do que a pessoa leva.
+- [x] Seção "Meu projeto em 3 perguntas": perguntas, exemplo "Bolos da Dona Ana", documento curto, 3 tarefas e fluxograma.
+- [x] Roteiro de 10 minutos por pessoa e CTA de feedback + certificado.
+- [x] Atendimento simultâneo: grupos de 4 a 6, botão "Preciso de ajuda", painel do aluno, exemplo pronto e monitores.
+- [x] "O que fica de fora" e prioridades da equipe para os próximos dias.
+- [x] Divisor "Para a disciplina" mantém cronograma, checklist, evidências, resultados, Mostra, ODS e documentos.
+- [x] Formulário atualizado para `https://forms.gle/JmWxcvbgtv3uGtpr5`.
+- [x] Impressão/salvar em PDF revisada: 14 páginas, sem cartões cortados e com cabeçalho de tabela repetido.
+- [x] Teste de controller cobre o novo conteúdo e o formulário; `bin/rails test` → **152 runs, 480 assertions, 0 failures**.
+
+## Sprint 19.7: Captação na página pública + formulário de pesquisa agregando (07/11)
+**Objetivo:** transformar a página da oficina em canal de coleta: mini-formulário de interesse sem cadastro e card do formulário de pesquisa da comunidade.
+
+- [x] `PraticaRegistro` (migration + model): nome, contato, ideia opcional e origem "site" — dado mínimo, LGPD.
+- [x] `POST /praticas-extensionistas/registro` com honeypot (`website`) e redirecionamento por âncora com flash.
+- [x] Bloco colapsado `<details id="inscricao">` ("Quer garantir vaga?") na página pública.
+- [x] Throttle Rack::Attack dedicado: 5 posts/10min/IP no mini-form.
+- [x] Card "Contar como você organiza" apontando para o formulário da pesquisa com a comunidade (`PESQUISA_URL`).
+- [x] Tabela Metas × Alcançado com `overflow-x-auto` + `min-w-[480px]` para telas até 360px.
+- [x] `test/controllers/praticas_extensionistas_controller_test.rb`: 5 testes (render, links de formulário, captação, honeypot, validação) — 5/5.
+
+---
+
 ---
 
 ## 3. 📦 Funcionalidades Engavetadas (Fase Enterprise / Pós-MVP)

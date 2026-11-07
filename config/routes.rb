@@ -66,6 +66,15 @@ Rails.application.routes.draw do
   get "pricing", to: "home#pricing"
   get "changelog", to: "changelog#index"
 
+  # Página pública da oficina (sem login), ao lado do Changelog.
+  get "praticas-extensionistas", to: "praticas_extensionistas#index", as: :praticas_extensionistas
+  get "extensao", to: "praticas_extensionistas#index"
+
+  # Mini-formulário de captação (escondido na página da oficina).
+  # Publico, rate-limited via Rack::Attack e com honeypot — sem conta, sem senha.
+  post "praticas-extensionistas/registro", to: "praticas_extensionistas#registro",
+    as: :pratica_registro
+
   # Features Pages
   get "features", to: "features#index"
   get "features/docs", to: "features#docs"

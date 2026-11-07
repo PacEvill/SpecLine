@@ -7,6 +7,8 @@
 **Data de Solicitação da Atividade:** 27 de Agosto de 2026
 **Prazo Final de Homologação:** 27 de Novembro de 2026
 
+> **Atualização da orientação de 22/10/2026:** a entrega do Relatório Final + evidências (P2) foi marcada para **19/11/2026**, e a Mostra de Extensão de Engenharia de Software para **04/12/2026**, no Campus Maricá. O cronograma abaixo permanece como histórico de planejamento; para os prazos oficiais atualizados, use a [página pública da oficina](/praticas-extensionistas) e o [índice acadêmico](INDICE.md).
+
 **Projeto:** SpecLine — Unified Product Engineering Workspace
 **Repositório Base:** https://github.com/PacEvill/SpecLine
 **Ambiente de Produção:** https://specline.onrender.com

@@ -7,7 +7,7 @@
     </a>
     
     <!-- Centered Menu Items (Desktop) -->
-    <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 items-center gap-6 font-sans text-sm font-medium">
+    <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 items-center gap-4 xl:gap-6 font-sans text-sm font-medium">
       
       <!-- Dropdown Funcionalidades -->
       <div class="relative group">
@@ -174,6 +174,10 @@
 
       <a href="/pricing" class="py-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">Preços</a>
       <a href="/changelog" class="py-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">Changelog</a>
+      <a href="/praticas-extensionistas" class="flex items-center gap-1.5 py-2 text-ink-light dark:text-white/60 hover:text-ink dark:hover:text-fable dark:hover:text-white transition-colors duration-500">
+        Extensão
+        <span class="text-[9px] font-mono px-1.5 py-0.5 rounded bg-terracotta/10 text-terracotta border border-terracotta/20 font-bold uppercase tracking-wider whitespace-nowrap">PEI VI</span>
+      </a>
     </div>
 
     <!-- Right Side (Auth & Mobile Toggle) -->
@@ -248,6 +252,7 @@
       <div class="flex items-center gap-4 text-xs font-medium">
         <a href="/pricing" class="text-ink dark:text-fable hover:text-terracotta">Preços</a>
         <a href="/changelog" class="text-ink dark:text-fable hover:text-terracotta">Changelog</a>
+        <a href="/praticas-extensionistas" class="flex items-center gap-1 text-ink dark:text-fable hover:text-terracotta">Extensão <span class="text-[9px] font-mono px-1 py-0.5 rounded bg-terracotta/10 text-terracotta border border-terracotta/20 font-bold uppercase whitespace-nowrap">PEI VI</span></a>
       </div>
       <% unless user_signed_in? %>
         <%= link_to "Entrar", new_user_session_path, class: "text-xs font-medium text-terracotta hover:underline" %>

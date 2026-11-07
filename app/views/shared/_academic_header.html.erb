@@ -1,0 +1,19 @@
+<!-- Área Acadêmica: chrome próprio — NÃO é o chrome de produto (marketing) -->
+<% dossie_ativo = current_page?(praticas_extensionistas_path) || request.path == "/extensao" %>
+<header class="no-print border-b border-ink/15 dark:border-white/10 bg-ink dark:bg-ink-darker text-white">
+  <div class="max-w-6xl mx-auto px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-3 font-mono text-xs">
+      <span class="px-2.5 py-1 rounded bg-terracotta/20 text-terracotta font-bold uppercase tracking-widest text-[10px]">Área Acadêmica</span>
+      <span class="text-white/60 uppercase tracking-wider hidden sm:inline">PEI VI Maricá · Universidade de Vassouras · 2026.2</span>
+    </div>
+    <nav class="flex flex-wrap items-center gap-4 sm:gap-5 font-mono text-xs">
+      <%= link_to "Ação extensionista", academic_extension_path, class: "#{current_page?(academic_extension_path) ? 'text-terracotta' : 'text-white/60 hover:text-terracotta'} transition-colors" %>
+      <%= link_to "Dossiê PEI VI", praticas_extensionistas_path, class: "#{dossie_ativo ? 'text-terracotta' : 'text-white/60 hover:text-terracotta'} transition-colors" %>
+      <a href="https://github.com/PacEvill/SpecLine#8-extens%C3%A3o-universit%C3%A1ria-pei-vi--maric%C3%A1rj" target="_blank" rel="noopener noreferrer" class="text-white/60 hover:text-terracotta transition-colors">Documentação</a>
+      <%= link_to root_path, class: "flex items-center gap-1.5 text-white/60 hover:text-terracotta transition-colors" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 5 5"></polyline></svg>
+        <span>Produto SpecLine</span>
+      <% end %>
+    </nav>
+  </div>
+</header>

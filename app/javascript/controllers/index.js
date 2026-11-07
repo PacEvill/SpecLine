@@ -64,6 +64,9 @@ application.register("password-visibility", PasswordVisibilityController)
 import PricingController from "./pricing_controller"
 application.register("pricing", PricingController)
 
+import PrintController from "./print_controller"
+application.register("print", PrintController)
+
 import SidebarController from "./sidebar_controller"
 application.register("sidebar", SidebarController)
 

@@ -3,6 +3,9 @@
   <head>
     <title><%= content_for(:title) || "Spec Line" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <% if content_for?(:description) %>
+      <meta name="description" content="<%= content_for(:description) %>">
+    <% end %>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Spec Line">
     <meta name="mobile-web-app-capable" content="yes">

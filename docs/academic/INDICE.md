@@ -1,6 +1,12 @@
 # Índice das Fontes Acadêmicas — SpecLine / PEI VI Maricá
 
-> Organização das fontes oficiais da disciplina. Atualizado em 16/10/2026 (auditoria da rubrica de avaliação).
+> Organização das fontes oficiais da disciplina. Atualizado em 28/10/2026 (página pública da oficina + orientação de 22/10).
+
+## Página pública da oficina (sem login)
+
+| Endereço | Conteúdo |
+|---|---|
+| `/praticas-extensionistas` (alias `/extensao`) | Experiência do participante (3 perguntas, roteiro de 10 min, atendimento em grupo, botão de ajuda e painel do aluno), prazos oficiais, checklist antes/durante/depois, evidências, metas x alcançado, resumo para a Mostra, ODS e documentos |
 
 ## Documentos oficiais (valem nota)
 
@@ -10,7 +16,7 @@
 | `PLANO DE AÇÃO EXTENSIONISTA.pdf` | Export do plano | ⚠️ **DESATUALIZADO** — reexportar do .docx após as correções (neste ambiente não há LibreOffice/Word; abrir o .docx e exportar) |
 | `oficina-marica.md` (+ cópia idêntica em `docs/oficina-marica.md`) | Roteiro da oficina 17/10 | ✅ Fone corrigido; conteúdo idêntico nos dois caminhos (canônico: `docs/oficina-marica.md`, referenciado no README) |
 | `oficina-marica.pdf` | Export do roteiro | ⚠️ Reexportar junto com o plano |
-| `RELATÓRIO FINAL DISCIPLINA EXTENSIONISTA.docx` | Relatório final (P2, 27/11) | 📝 Rascunho — sem contagens de foto conflitantes verificadas |
+| `RELATÓRIO FINAL DISCIPLINA EXTENSIONISTA-3.docx` | Relatório final (P2, **19/11** — modelo oficial com Anexos A–D) | 📝 Template em branco a preencher após a ação (cópia local também em `p2-preencher-e-imprimir/`, fora do repo). O rascunho antigo de 17/09 foi excluído em 07/11 (recuperável no git) |
 | `Planejamento_Gestao_SpecLine_PEI_VI.md` (+ `.pdf`) | Planejamento e EAP | ✅ Base das rubricas Local+Data e Planejamento+Prazo |
 
 ## Fontes de referência (não valem nota, sustentam o trabalho)
@@ -20,6 +26,7 @@
 | `Feedback · SpecLine — Code Review · PEI VI Maricá · 24_09_2026.pdf` | Code review da docente (P0/P1/P2) — origem da Sprint 16 |
 | `pei6-aula4-2026-10-01-kit.pdf` | Kit de campo oficial aula 4 (modelos A–L: presença, Likert, uso do app, oficina) |
 | `WhatsApp Ptt 2026-10-04 at 14.33.06.ogg` | Orientação em áudio — ~~transcrever~~ **descartado (16/10)**: arquivo removido do repo, sem transcrição |
+| `WhatsApp Unknown 2026-10-27 at 13.28.09.zip` | Fotos das orientações de 22/10: datas oficiais (22/10, 05/11, 10/11, 19/11, 04/12) e checklist antes/durante/depois |
 | `Plano de Gerenciamento do Projeto - SpecLine.pdf` e `SpecLine - Plano de Gerenciamento do Projeto.pdf` | ⚠️ Conteúdo idêntico com nomes diferentes — manter só um antes da entrega |
 | `Relatório de Pesquisa e Mercado - SpecLine.pdf` | Pesquisa de mercado (base dos 78,9% / 65,8%) |
 | `Relatório de Práticas Extensionistas Integradoras VI - SpecLine.pdf` | Relatório parcial de 20/08 |

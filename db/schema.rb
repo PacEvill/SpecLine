@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_16_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_05_090000) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -241,6 +241,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_16_120000) do
     t.index ["project_id"], name: "index_practice_profiles_on_project_id"
     t.index ["user_id"], name: "index_practice_profiles_on_user_id"
     t.index ["workspace_id"], name: "index_practice_profiles_on_workspace_id"
+  end
+
+  create_table "pratica_registros", force: :cascade do |t|
+    t.string "contato", null: false
+    t.datetime "created_at", null: false
+    t.text "ideia"
+    t.string "nome", null: false
+    t.string "origem", default: "site", null: false
+    t.datetime "updated_at", null: false
+    t.index ["contato"], name: "index_pratica_registros_on_contato"
+    t.index ["created_at"], name: "index_pratica_registros_on_created_at"
   end
 
   create_table "projects", force: :cascade do |t|

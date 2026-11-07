@@ -49,6 +49,13 @@ class Rack::Attack
     end
   end
 
+  # Page mini-form (/praticas-extensionistas/registro) - Max 5 per 10 min per IP
+  throttle("pratica_registro/ip", limit: 5, period: 10.minutes) do |req|
+    if req.path == "/praticas-extensionistas/registro" && req.post?
+      req.ip
+    end
+  end
+
   # WebSockets Connection Protection (/cable) - Max 10 connections every 10s
   throttle("cable/ip", limit: 10, period: 10.seconds) do |req|
     if req.path == "/cable"

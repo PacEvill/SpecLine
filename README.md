@@ -214,6 +214,7 @@ npm audit
 > **Roteiro Pedagógico da Oficina:** [`docs/oficina-marica.md`](docs/oficina-marica.md)
 > **Plano de Ação Extensionista Preenchido:** [`docs/academic/PLANO DE AÇÃO EXTENSIONISTA.docx`](docs/academic/PLANO%20DE%20AÇÃO%20EXTENSIONISTA.docx)
 > **Status de Homologação em Produção:** 🟢 [https://specline.onrender.com](https://specline.onrender.com) (Ambiente Web Permanente)
+> **Página pública da oficina (sem login):** 🟢 [https://specline.onrender.com/praticas-extensionistas](https://specline.onrender.com/praticas-extensionistas) (roteiro de 10 min, 3 perguntas, dinâmica em grupo, prazos, evidências e documentos)
 
 O projeto é desenvolvido por **Diego Silva Pereira Pacheco** no âmbito da disciplina **Práticas Extensionistas Integradoras VI** (6º Período — Engenharia de Software) da **Universidade de Vassouras — Campus Maricá (FUSVE)**. Distribuído sob a licença **MIT** — consulte o arquivo [LICENSE](LICENSE) para termos complementares.
 
