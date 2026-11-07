@@ -258,6 +258,10 @@ class PraticasExtensionistasController < ApplicationController
     @participante = params[:nome].to_s.squish
     return redirect_to praticas_extensionistas_path(anchor: "certificado") if @participante.blank?
 
+    # Navegadores embutidos em apps (WhatsApp, Instagram, Facebook) não têm
+    # caixa de impressão — avisamos a pessoa para abrir no Chrome/Safari.
+    @dentro_de_app = request.user_agent.to_s =~ /WhatsApp|FBAN|FBAV|FB_IAB|Instagram|Twitter|Snapchat/i
+
     render layout: false
   end
 

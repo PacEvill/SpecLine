@@ -279,6 +279,12 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] Revisão de texto: a pesquisa não "libera" mais o certificado — passou a registrar a participação/opinião; certificado é autosserviço.
 - [x] `bin/rails test test/controllers` → 124 runs, 302 assertions, 0 falhas.
 
+**Fix P1 (mesmo dia):** o botão "Salvar em PDF" não respondia em produção.
+- Causa: em produção o CSP gera nonce para `script-src` e **remove `unsafe-inline`** — o `onclick="window.print()"` inline era bloqueado silenciosamente (funcionava em dev, onde `unsafe_inline` é permitido).
+- Correção: página usa `csrf_meta_tags` + `csp_meta_tag` + `javascript_include_tag`; botão e auto-impressão migrados para o controlador Stimulus `print` (agora com `data-print-auto-value`, imprime sozinho ao abrir, e `data-action="click->print#print"` no botão).
+- Extra: banner de aviso quando a página é aberta em navegador embutido de apps (WhatsApp/Instagram/Facebook — não têm caixa de impressão), com instrução "Abrir no navegador".
+- Re-teste: 124 runs, 306 assertions, 0 falhas.
+
 ---
 
 ---

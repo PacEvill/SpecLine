@@ -51,8 +51,10 @@ class PraticasExtensionistasControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "p.nome-participante", "Dona Ana"
     assert_select "h1", /Certificado/
-    assert_includes @response.body, "Salvar em PDF"
+    assert_select "button[data-action=?]", "click->print#print"
+    assert_includes @response.body, "data-print-auto-value=\"true\""
     assert_includes @response.body, "Mão na Massa"
+    refute_includes @response.body, "onclick"
   end
 
   test "certificado redirects back when nome is blank" do

@@ -7,6 +7,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Certificado de Participação — Oficina Mão na Massa (SpecLine)</title>
+  <%# Metas do app: o csp_meta_tag injeta o nonce que libera o JS (asset) em produção %>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%# Bundler do app: precisa do Stimulus para o botão "Salvar em PDF" %>
+  <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
   <style>
     :root {
       --ink: #212122;
@@ -143,10 +148,15 @@
     }
   </style>
 </head>
-<body>
+<body data-controller="print" data-print-auto-value="true">
   <div class="barra">
-    <button type="button" onclick="window.print()">Salvar em PDF</button>
-    <p>Preferimos deixar simples: se a tela de impressão não abrir sozinha, toque no botão e escolha “Salvar como PDF”.</p>
+    <% if @dentro_de_app %>
+      <p style="width: 100%; color: #E57361; font-weight: bold;">
+        Você abriu o link dentro de um aplicativo (WhatsApp, Instagram ou similar), e eles não deixam salvar em PDF. Toque em ⋮ ou ↗ e escolha “Abrir no navegador” (Chrome ou Safari) — aí funciona.
+      </p>
+    <% end %>
+    <button type="button" data-action="click->print#print">Salvar em PDF</button>
+    <p>Se a tela de impressão não abrir sozinha, toque no botão e escolha “Salvar como PDF”.</p>
   </div>
 
   <div class="certificado">
@@ -184,11 +194,7 @@
     </div>
   </div>
 
-  <script>
-    // Abre a caixa de "Salvar como PDF" sozinha (se o navegador permitir).
-    window.addEventListener("load", function () {
-      setTimeout(function () { window.print(); }, 400);
-    });
-  </script>
+  <%# A impressão automática fica a cargo do controlador Stimulus "print"
+      (data-print-auto-value no body) — script inline é bloqueado pelo CSP em produção. %>
 </body>
 </html>
