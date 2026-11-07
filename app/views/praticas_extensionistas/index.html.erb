@@ -332,10 +332,12 @@
         <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-terracotta/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="space-y-1">
             <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Pesquisa + certificado</h3>
-            <p class="text-sm text-ink-light dark:text-white/65">No fim do roteiro, responda à pesquisa no celular. Ela registra sua participação e libera o certificado.</p>
+            <p class="text-sm text-ink-light dark:text-white/65">No fim do roteiro, basta digitar o nome no site e o certificado sai em PDF. A pesquisa do lado registra sua opinião para as próximas oficinas.</p>
           </div>
           <%= link_to "Abrir pesquisa", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-button inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all shrink-0" %>
         </div>
+
+        <%= render "certificado_cta" %>
       </div>
     </section>
 
@@ -589,10 +591,12 @@
         <div class="print-card p-6 rounded-2xl bg-white dark:bg-ink-paper border border-terracotta/25 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div class="space-y-1">
             <h3 class="font-serif text-xl font-bold text-ink dark:text-white">Pesquisa + certificado</h3>
-            <p class="text-sm text-ink-light dark:text-white/65">Responda pelo celular. Leva menos de 1 minuto, registra sua participação e libera o certificado.</p>
+            <p class="text-sm text-ink-light dark:text-white/65">Responda pelo celular. Leva menos de 1 minuto e é o registro da sua participação na ação.</p>
           </div>
           <%= link_to "Abrir formulário", @links[:forms], target: "_blank", rel: "noopener noreferrer", class: "print-button inline-flex items-center justify-center gap-2 px-5 py-3 bg-ink text-white dark:bg-white dark:text-ink hover:bg-terracotta dark:hover:bg-terracotta dark:hover:text-white font-mono text-[11px] uppercase tracking-widest font-semibold transition-all shrink-0" %>
         </div>
+
+        <%= render "certificado_cta" %>
       </div>
     </section>
 

@@ -120,7 +120,7 @@ class PraticasExtensionistasController < ApplicationController
       { tempo: "1–6 min", titulo: "Três perguntas", descricao: "Responde às 3 perguntas e o app monta o projeto." },
       { tempo: "6–8 min", titulo: "Um ajuste", descricao: "O aluno passa, olha e sugere um ajuste." },
       { tempo: "8–9 min", titulo: "Exportação", descricao: "Manda o projeto para o próprio WhatsApp ou baixa em PDF." },
-      { tempo: "9–10 min", titulo: "Certificado", descricao: "Responde à pesquisa rápida no celular e recebe o certificado de participação." }
+      { tempo: "9–10 min", titulo: "Certificado", descricao: "Digita o nome no site e o certificado de participação sai em PDF, na hora." }
     ]
 
     @atendimento = [
@@ -211,7 +211,7 @@ class PraticasExtensionistasController < ApplicationController
       },
       {
         titulo: "Pesquisa + certificado",
-        descricao: "Responde à pesquisa no celular em 1 minuto; é o registro da sua participação e libera o certificado.",
+        descricao: "Responde à pesquisa no celular em 1 minuto; é o registro da sua participação e orienta as próximas oficinas.",
         detalhe: "Formulário online",
         link: @links[:forms]
       },
@@ -250,6 +250,15 @@ class PraticasExtensionistasController < ApplicationController
     @resumo_mostra = <<~TEXTO
       O SpecLine é uma plataforma gratuita que ajuda estudantes, profissionais iniciantes e pequenos empreendedores de Maricá a organizar documentos, tarefas e diagramas em um só lugar. Na ação extensionista, cada participante respondeu a 3 perguntas e saiu com um documento curto, 3 tarefas com prazo e um fluxograma simples. A oficina atendeu [NÚMERO] pessoas em cerca de 10 minutos por participante; [NÚMERO] concluíram o projeto e [NÚMERO] exportaram para WhatsApp ou PDF. A experiência mostrou [PRINCIPAL APRENDIZADO] e deixou como continuidade [O QUE FICA PARA A COMUNIDADE].
     TEXTO
+  end
+
+  # Certificado de participação: recebe só o nome e mostra a página pronta para
+  # salvar em PDF (o próprio navegador do celular imprime para PDF — sem login).
+  def certificado
+    @participante = params[:nome].to_s.squish
+    return redirect_to praticas_extensionistas_path(anchor: "certificado") if @participante.blank?
+
+    render layout: false
   end
 
   # Mini-formulário escondido: guarda interesse da comunidade sem cadastro.

@@ -75,6 +75,10 @@ Rails.application.routes.draw do
   post "praticas-extensionistas/registro", to: "praticas_extensionistas#registro",
     as: :pratica_registro
 
+  # Certificado de participação: a pessoa digita o nome e baixa o PDF sozinha.
+  get "praticas-extensionistas/certificado", to: "praticas_extensionistas#certificado",
+    as: :pratica_certificado
+
   # Features Pages
   get "features", to: "features#index"
   get "features/docs", to: "features#docs"

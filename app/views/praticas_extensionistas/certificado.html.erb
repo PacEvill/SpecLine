@@ -1,0 +1,194 @@
+<%# -*- pagina de certificado, autocontida (sem layout, sem asset externo) -*-
+  A pessoa chega aqui com ?nome= na URL; abre direto a caixa de impressão,
+  onde basta escolher "Salvar como PDF" no celular ou no computador. %>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Certificado de Participação — Oficina Mão na Massa (SpecLine)</title>
+  <style>
+    :root {
+      --ink: #212122;
+      --terracotta: #D97A5E;
+      --rust: #C45543;
+      --sage: #5E7A5A;
+      --papel: #F8F5F0;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #EFEAE2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+    }
+    /* Barra de ação (não sai na impressão) */
+    .barra {
+      width: 100%;
+      padding: 14px 20px;
+      background: var(--ink);
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .barra p { font-size: 13px; opacity: .8; }
+    .barra button {
+      background: var(--terracotta);
+      color: #fff;
+      border: 0;
+      padding: 12px 26px;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .barra button:hover { background: var(--rust); }
+
+    /* Certificado (A4 horizontal) */
+    .certificado {
+      background: var(--papel);
+      width: 29.7cm;
+      max-width: 96vw;
+      min-height: 21cm;
+      margin: 28px auto;
+      padding: 1.2cm;
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+    .moldura {
+      border: 3px solid var(--ink);
+      outline: 1px solid var(--ink);
+      outline-offset: -6px;
+      min-height: calc(21cm - 2.4cm);
+      padding: 1.4cm 1.6cm;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
+    .titulo-topo {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 10px;
+    }
+    h1 {
+      font-size: 44px;
+      font-weight: normal;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 small {
+      display: block;
+      font-size: 15px;
+      letter-spacing: .2em;
+      margin-top: 6px;
+      color: var(--terracotta);
+      font-weight: bold;
+    }
+    .linha { width: 70px; height: 3px; background: var(--terracotta); margin: 22px auto; }
+    .texto { font-size: 16.5px; line-height: 1.7; max-width: 21cm; }
+    .nome-participante {
+      font-size: 34px;
+      margin: 14px 0;
+      font-style: italic;
+      color: var(--ink);
+    }
+    .sub-nome {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: #8a857d;
+      margin-bottom: 16px;
+    }
+    .assinaturas {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      gap: 30px;
+      margin-top: 24px;
+    }
+    .assinatura { max-width: 260px; }
+    .assinatura .linha-firma { border-top: 1px solid var(--ink); padding-top: 8px; font-size: 13.5px; }
+    .assinatura .papel { font-size: 11.5px; color: #6d6861; margin-top: 3px; }
+
+    @media print {
+      @page { size: A4 landscape; margin: 0; }
+      body { background: #fff; }
+      .barra { display: none !important; }
+      .certificado {
+        width: 29.7cm;
+        min-height: 21cm;
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+    @media (max-width: 720px) {
+      .certificado { margin: 12px 8px 28px; padding: .5cm; }
+      .moldura { padding: 1cm .8cm; min-height: 0; }
+      h1 { font-size: 26px; }
+      .nome-participante { font-size: 24px; }
+      .texto { font-size: 13.5px; }
+      .assinaturas { flex-direction: column; align-items: center; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="barra">
+    <button type="button" onclick="window.print()">Salvar em PDF</button>
+    <p>Preferimos deixar simples: se a tela de impressão não abrir sozinha, toque no botão e escolha “Salvar como PDF”.</p>
+  </div>
+
+  <div class="certificado">
+    <div class="moldura">
+      <div>
+        <p class="titulo-topo">Universidade de Vassouras — Campus Maricá</p>
+        <h1>
+          Certificado
+          <small>de Participação</small>
+        </h1>
+        <div class="linha"></div>
+        <p class="texto">
+          Certificamos que a pessoa indicada abaixo participou da oficina gratuita
+          <strong>“Mão na Massa: organizando sua ideia em 3 perguntas”</strong>, realizada no
+          dia 17 de outubro de 2026, das 09h00 às 11h30, no Lab 02 do Campus Maricá
+          (Av. Roberto Silveira, 437 — Maricá/RJ), com carga horária de 2h30.
+        </p>
+      </div>
+
+      <div>
+        <p class="sub-nome">Participante</p>
+        <p class="nome-participante"><%= @participante %></p>
+      </div>
+
+      <div class="assinaturas">
+        <div class="assinatura">
+          <p class="linha-firma">Diego Silva Pereira Pacheco</p>
+          <p class="papel">Ministrante da oficina</p>
+        </div>
+        <div class="assinatura">
+          <p class="linha-firma">Profª. Laís Cristine Bordallo Pinheiro</p>
+          <p class="papel">Professora orientadora</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Abre a caixa de "Salvar como PDF" sozinha (se o navegador permitir).
+    window.addEventListener("load", function () {
+      setTimeout(function () { window.print(); }, 400);
+    });
+  </script>
+</body>
+</html>

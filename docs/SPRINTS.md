@@ -270,6 +270,15 @@ Este documento centraliza o Roadmap (EAP) do SpecLine, detalhando as entregas de
 - [x] Auditoria de linguagem: zero jargão (TipTap, Hotwire, Rails, TDD fora da página — permanecem só no dossiê técnico).
 - [x] `bin/rails test test/controllers` → 121 runs, 284 assertions, 0 falhas.
 
+## Sprint 19.9: certificado autosserviço — digita o nome, baixa o PDF (07/11)
+**Objetivo:** participante tira o certificado sozinho, sem depender de ninguém: só o nome, arquivo salvo no celular.
+
+- [x] `GET /praticas-extensionistas/certificado?nome=`: sem nome volta para a página da oficina; com nome abre o certificado.
+- [x] `certificado.html.erb` autocontida (sem layout/asset): A4 horizontal em CSS puro, cores da marca, via `@page size: A4 landscape` — o próprio navegador imprime/salva como PDF (funciona no celular).
+- [x] Partial `_certificado_cta` no roteiro de 10 min e nas evidências: campo de nome + botão "Baixar certificado" (form GET, `required`).
+- [x] Revisão de texto: a pesquisa não "libera" mais o certificado — passou a registrar a participação/opinião; certificado é autosserviço.
+- [x] `bin/rails test test/controllers` → 124 runs, 302 assertions, 0 falhas.
+
 ---
 
 ---
